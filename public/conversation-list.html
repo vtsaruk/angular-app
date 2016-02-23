@@ -1,0 +1,116 @@
+<nav class="navbar navbar-default navbar-fixed-top" >
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">IRINA DATING PARTNER PANEL</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><p class="navbar-text">Hello, Username</p></li>
+                <li><p class="navbar-text">Balance: 9999$</p></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<!-- Begin page content -->
+<div class="container">
+ <div id="navbar" class="collapse navbar-collapse nav-bar-bottom text-center">
+        <ul class="nav navbar-nav center-block">
+                <li><a href="#">Summary</a></li>
+                <li><a href="#">Chat</a></li>
+                <li  class="active"><a href="#">Mail</a></li>
+                <li><a href="#">Distribution</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Girls <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Show girls</a></li>
+                        <li><a href="#">Add girl</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Gifts delivery</a></li>
+                <li><a href="#">Settings</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Payments <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Balance statistics</a></li>
+                        <li><a href="#">Withdrawal</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Translators <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Show all</a></li>
+                        <li><a href="#">New</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Users</a></li>
+                <li><a href="#">Contact admin</a></li>
+                <li><a href="#">Statistics</a></li>
+            </ul>
+</div>
+</div>
+<div class="container pad_off mail-container">
+    <h1>Mail</h1>
+    <div class="form-group">
+        <select class="form-control" id="sel1">
+            <option>All letters</option>
+            <option>Unread letters</option>
+            <option>Received letters</option>
+            <option>Sent letters</option>
+        </select>
+    </div>
+        <div class="form-group">
+        <select class="form-control" id="sel1">
+            <option>All time</option>
+            <option>Today</option>
+            <option>Mounth</option>
+        </select>
+    </div>
+    <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Lady's ID</th>
+        <th>Lady's name</th>
+        <th>Conversations amount</th>
+        <th>Last incoming letter</th>
+        <th>Last outgoing letter</th>
+        <th>Go to conversations</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="lady in ctrl.conversations">
+        <td>{{lady.id}}</td>
+        <td><a href="#">{{lady.name}}</a></td>
+        <td>{{lady.amount}}</td>
+        <td>{{lady.incomingLetter}}</td>
+        <td>{{lady.outgoingLetter}}</td>
+        <td><a href="#">View letters</a></td>
+      </tr>
+
+
+    </tbody>
+  </table>
+  <button type="button" class="btn btn-primary pull-right">Show next 40</button>
+  <button type="button" class="btn btn-default pull-right">Show next 20</button>
+
+</div>
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <a href="#">Home</a> &nbsp;&nbsp;&nbsp; <a href="#">Agency details</a>
+        </div>
+
+        <div class="row">
+            <p>Copyright &copy; 2016 Irinadating.com</p>
+        </div>
+    </div>
+</footer>

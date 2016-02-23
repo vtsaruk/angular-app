@@ -1,0 +1,32 @@
+require('angular');
+require('ui-router');
+require('angular-resource');
+require('angular-cookies');
+
+var conversationsController = require('./controllers/conversationsController');
+var mailController = require('./mail/mailController');
+
+var mailService = require('./mail/mail_service');
+
+var app = angular.module('app', ['ui.router', 'ngResource', 'ngCookies'])
+
+.config(function($stateProvider, $urlRouterProvider) {
+  $urlRouterProvider.otherwise("/e-mail");
+  $stateProvider
+    .state('main', {
+      url: '/main',
+      templateUrl: 'conversation-list.html',
+      controller: conversationsController,
+      controllerAs: 'ctrl'
+    })
+    .state('e-mail', {
+      url: '/e-mail',
+      templateUrl: 'e-mail.html',
+      controller: mailController,
+      controllerAs: 'ctrl'
+    });
+})
+
+.controller('conversationsController', conversationsController)
+.controller('mailController', ['mailService', '$cookies', mailController])
+.factory('mailService', ['$resource', mailService]);

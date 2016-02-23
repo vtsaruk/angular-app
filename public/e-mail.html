@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>Message</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+  <link rel="stylesheet" href="stylesheets/bootstrap-select.css">
+  <link href="stylesheets/screen.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+
+
+
+  <!-- end header -->
+  <!-- page-message -->
+<main class="page-message">
+  <div class="container">
+    <div class="row">
+        <div class="col-md-12">
+          <div class="main-content clearfix">
+            <div class="message-tabs">
+              <div class="message-tabs-item">
+                <p>Introductions</p>
+              </div>
+              <div class="message-tabs-item active">
+                <p>Inbox <span>(5)</span></p>
+              </div>
+              <div class="message-tabs-item">
+                <p>Mail</p>
+              </div>
+              <div class="message-tabs-item">
+                <p>Deleted</p>
+              </div>
+            </div>
+
+            <div class="message-sort clearfix">
+              <div class="message-sort-left">
+                <div class="message-sort-left-1">
+                  <label class="checkbox-1">
+                      <input type="checkbox">
+                      <span></span>
+                  </label>
+                  <i class="fa fa-caret-right"></i>
+                </div>
+                <p class="p-sort"><img src="img/calendar.png" alt="">Sort by Date</p>
+
+                <p class="p-delete"><i class="fa fa-caret-down"></i><img src="img/delete.png" alt="">Delete</p>
+
+              </div>
+              <div class="message-sort-right">
+                <a href="#" class="prev"><i class="fa fa-chevron-left"></i>prev</a>
+              <ul>
+                <li><a href="#"><b>1</b></a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">6</a></li>
+                <li><a href="#">7</a></li>
+                <li><a href="#">8</a></li>
+              </ul>
+              <a href="#" class="next"><i class="fa fa-chevron-right"></i>next</a>
+              <p class="pages">1-20 of 134</p>
+              </div>
+
+            </div>
+            <div class="message-filter clearfix">
+              <a href="#" class="active">On this week</a>
+              <a href="#" class="on-last-week">On last week</a>
+              <div class="message-filter-select clearfix">
+                <select name="" id="" class="selectpicker">
+                  <option value="">From date</option>
+                  <option value="">19</option>
+                  <option value="">20</option>
+                  <option value="">21</option>
+                </select>
+                <span class="message-filter-select-line"> - </span>
+                <select name="" id="" class="selectpicker">
+                  <option value="">To Date</option>
+                  <option value="">31</option>
+                  <option value="">32</option>
+                  <option value="">33</option>
+                </select>
+              </div>
+              <p><a href="#" class="active">Sort</a><a href="#">Reset</a></p>
+
+            </div>
+            <div class="girls-messages" ng-repeat="messag in ctrl.messages ">
+              <div class="girls-message-item active">
+                <div class="girls-messega-item-content">
+                  <div class="girls-message-checkbox">
+                  <label class="checkbox-1">
+                      <input type="checkbox">
+                      <span></span>
+                  </label>
+                </div>
+                <ul>
+                  <li>
+                    <p class="tooltips add-f">Add to favorites</p>
+                    <a href="#" class="add-f-icon"></a></li>
+                  <li>
+                    <p class="tooltips add-gift">Send a gift</p><a href="#" class="add-f-gift"></a></li>
+                  <li>
+                    <p class="tooltips add-chat">Chat</p>
+                    <a href="#" class="add-f-chat"></a></li>
+                </ul>
+                <img src="img/girl-message-1.jpg" alt="">
+                <div class="girls-message-item-info">
+                  <div>
+                    <a href="#"><span>{{messag.senderId}}</span>, 27</a>
+                    <p><span></span>online</p>
+                  </div>
+                  <a href="#">{{messag.country}}</a>
+                  <div class="clear"></div>
+                  <span>{{messag.text}}</span>
+                </div>
+                <p class="girl-message-date">14.09.2015 10:58</p>
+                <a href="#" class="girl-message-photo"><img src="img/photo.png" alt=""><span>3</span></a>
+                <button class="btn-send">Read the letter</button>
+                </div>
+              </div>
+
+
+
+
+
+              <!--<div class="girls-message-item red-bg">
+
+                <div class="girls-messega-item-content">
+                <div class="girls-message-checkbox">
+                    <label class="checkbox-1">
+                      <input type="checkbox">
+                      <span></span>
+                    </label>
+                </div>
+                <ul>
+                  <li>
+                    <p class="tooltips add-f">Add to favorites</p>
+                    <a href="#" class="add-f-icon"></a></li>
+                  <li>
+                    <p class="tooltips add-gift">Send a gift</p><a href="#" class="add-f-gift"></a></li>
+                  <li>
+                    <p class="tooltips add-chat">Chat</p>
+                    <a href="#" class="add-f-chat"></a></li>
+                </ul>
+                <img src="img/girl-message-1.jpg" alt="">
+                <div class="girls-message-item-info">
+                  <div>
+                    <a href="#"><span>Natasha</span>, 27</a>
+                    <p><span></span>online</p>
+                  </div>
+                  <a href="#">Ukraine, Kiev</a>
+                  <div class="clear"></div>
+                  <!-- <span>Hello my dear)) today morning was fun, went with a friend to walk the dog. He breaks out of the ...</span>
+                  <p class="girl-message-date">14.09.2015 10:58</p>
+                </div>
+
+                <a href="#" class="new">NEW</a>
+                <button class="btn-send">Read the letter</button>
+                </div>
+              </div>
+
+
+              <div class="girls-message-item">
+
+                <div class="girls-messega-item-content">
+                  <div class="girls-message-checkbox">
+                    <label class="checkbox-1">
+                      <input type="checkbox">
+                      <span></span>
+                    </label>
+                </div>
+                <ul>
+                  <li>
+                    <p class="tooltips add-f">Add to favorites</p>
+                    <a href="#" class="add-f-icon"></a></li>
+                  <li>
+                    <p class="tooltips add-gift">Send a gift</p><a href="#" class="add-f-gift"></a></li>
+                  <li>
+                    <p class="tooltips add-chat">Chat</p>
+                    <a href="#" class="add-f-chat"></a></li>
+                </ul>
+                <img src="img/girl-message-1.jpg" alt="">
+                <div class="girls-message-item-info">
+                  <div>
+                    <a href="#"><span>Natasha</span>, 27</a>
+                    <p class="span-offline"><span></span>offline</p>
+                  </div>
+                  <a href="#">Ukraine, Kiev</a>
+                  <div class="clear"></div>
+                  <span>Hello my dear)) today morning was fun, went with a friend to walk the dog. He breaks out of the ...</span>
+                </div>
+                <p class="girl-message-date">14.09.2015 10:58</p>
+                <a href="#" class="girl-message-photo"><img src="img/photo.png" alt=""><span>3</span></a>
+                <button class="btn-send">Read the letter</button>
+                </div>
+              </div>
+              <div class="girls-message-item">
+
+                <div class="girls-messega-item-content">
+                  <div class="girls-message-checkbox">
+                <label class="checkbox-1">
+                  <input type="checkbox">
+                  <span></span>
+                </label>
+                </div>
+                <ul>
+                  <li>
+                    <p class="tooltips add-f">Add to favorites</p>
+                    <a href="#" class="add-f-icon"></a></li>
+                  <li>
+                    <p class="tooltips add-gift">Send a gift</p><a href="#" class="add-f-gift"></a></li>
+                  <li>
+                    <p class="tooltips add-chat">Chat</p>
+                    <a href="#" class="add-f-chat"></a></li>
+                </ul>
+                <img src="img/girl-message-1.jpg" alt="">
+                <div class="girls-message-item-info">
+                  <div>
+                    <a href="#"><span>Natasha</span>, 27</a>
+                    <p><span></span>online</p>
+                  </div>
+                  <a href="#">Ukraine, Kiev</a>
+                  <div class="clear"></div>
+                  <span>Hello my dear)) today morning was fun, went with a friend to walk the dog. He breaks out of the ...</span>
+                </div>
+                <p class="girl-message-date">14.09.2015 10:58</p>
+                <a href="#" class="girl-message-photo"><img src="img/photo.png" alt=""><span>3</span></a>
+                <button class="btn-send">Read the letter</button>
+                </div>
+              </div>-->
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</main>
+<!-- end page-message -->
+
+  <!-- footer -->
+ <!-- <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-2 col-sm-offset-1 col-md-2 col-md-offset-1 f-key-1">
+          <ul class="footer-list">
+            <li>
+              <a href="#">About Us</a>
+            </li>
+            <li>
+              <a href="#">F.A.Q.</a>
+            </li>
+            <li>
+              <a href="#">Anti-Scam Policy</a>
+            </li>
+            <li>
+              <a href="#">Privacy Policy</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-sm-2 col-md-2 f-key-2">
+          <ul class="footer-list">
+            <li>
+              <a href="#" class="transp">Privacy Policy</a>
+            </li>
+            <li>
+              <a href="#">Terms & Conditions</a>
+            </li>
+            <li>
+              <a href="#">Blog</a>
+            </li>
+            <li>
+              <a href="#">Contact Us</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-sm-2 col-md-3 col-lg-2 f-key-3">
+          <a href="#">
+            <img src="img/footer-logo.png" alt=""></a>
+        </div>
+        <div class="col-sm-3 col-md-3 f-key-4">
+          <div class="footer-right-side">
+            <button>Live Support 24/7</button>
+            <div class="clear"></div>
+            <p>Follow Irinadating on</p>
+            <ul>
+              <li>
+                <a href="#" class="fb">
+                  <img src="img/fb.png" alt=""></a>
+              </li>
+              <li>
+                <a href="#" class="tt">
+                  <img src="img/tb.png" alt=""></a>
+              </li>
+              <li>
+                <a href="#" class="g-plus">
+                  <img src="img/g-plus.png" alt=""></a>
+              </li>
+              <li>
+                <a href="#" class="yb">
+                  <img src="img/yb.png" alt=""></a>
+              </li>
+              <li>
+                <a href="#" class="pp">
+                  <img src="img/p.png" alt="">
+                </a>
+              </li>
+              <li>
+                <a href="#" class="insta">
+                  <img src="img/insta.png" alt="">
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- end footer -->
+
+  <!-- copyright -->
+  <div class="copyright">
+    <p>IrinaDating &copy; 2009-2015</p>
+  </div>
+  <!-- end copyright -->
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script src="js/bootstrap-select.min.js"></script>
+  <script>
+      //bootstrap select picker
+      $('.selectpicker').selectpicker({
+        style: 'btn-info',
+        size: 4
+      });
+
+  </script>
+  <script src="js/main.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+
+</body>
+</html>
