@@ -51,15 +51,16 @@ function mailController (mailService, $cookies) {
 
   $cookies.put('PHPSESSID', 'jar9vlgoddf0puj6fl6scuifh6');
   this.getMessages = function () {
+     var self = this;
      mailService.getAllMessages().$promise.then(
       function(data) {
-        this.messages = data;
+        self.messages = data;
       }, function(error) {
         console.log(error);
       }
   )};
-     this.getMessages();
-console.log(this.messages);
+  this.getMessages();
+  console.log(this.messages);
 
 
  // this.messges = mailService.getAllMessages().$promise.then(
