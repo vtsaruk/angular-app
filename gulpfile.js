@@ -50,4 +50,4 @@ gulp.task('watch', function() {
 
 });
 
-gulp.task('default', ['connect', 'watch'])
+gulp.task('default', ['watch'])

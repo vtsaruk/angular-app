@@ -1,23 +1,26 @@
-module.exports = mailService;
+module.exports = mailService;;
 
 function mailService ($resource) {
 
-  var mailResource = $resource('http://mahmud.com.ua/api/mail/', {}, {
+  var mailResource = $resource('/api/mail/:mail_id',
+    { mail_id:'@id' },
+    {
       getMessages: {
         method: 'GET',
         params: {
-          user_id: '@id',
-          type: '@type'
+          type: '@type',
+          relations: 'Sender,Recipient',
+
         }
       }
     });
 
   this.getAllMessages = function () {
-    return mailResource.get({user_id: 1, type: 'inbox'});
+    return mailResource.get({type: 'inbox', relations: 'Sender,Recipient'});
   };
 
   return this;
 };
 
 
-mailService.$inject = ['$resource'];
+mailService.$inject = ['$resource'];;

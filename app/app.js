@@ -1,7 +1,7 @@
 require('angular');
 require('ui-router');
 require('angular-resource');
-require('angular-cookies');
+require('angular-cookies');;
 
 var conversationsController = require('./controllers/conversationsController');
 var mailController = require('./mail/mailController');
@@ -15,13 +15,13 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'ngCookies'])
   $stateProvider
     .state('main', {
       url: '/main',
-      templateUrl: 'conversation-list.html',
+      templateUrl: 'assets/angular-app/public/conversation-list.html',
       controller: conversationsController,
       controllerAs: 'ctrl'
     })
     .state('e-mail', {
       url: '/e-mail',
-      templateUrl: 'e-mail.html',
+      templateUrl: 'assets/angular-app/public/e-mail.html',
       controller: mailController,
       controllerAs: 'ctrl'
     });

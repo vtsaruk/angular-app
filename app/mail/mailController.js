@@ -1,4 +1,4 @@
-module.exports = mailController;
+module.exports = mailController;;
 
 function mailController (mailService, $cookies) {
   $cookies.put('PHPSESSID', 'jar9vlgoddf0puj6fl6scuifh6');
@@ -12,7 +12,7 @@ function mailController (mailService, $cookies) {
       }, function(error) {
         console.log(error);
       }
-    ));
+    ));;
 }
 
 mailController.$inject = ['mailService', '$cookies'];
