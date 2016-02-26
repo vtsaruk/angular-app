@@ -29,6 +29,6 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'ngCookies'])
 })
 
 .controller('conversationsController', conversationsController)
-.controller('mailController', ['mailService', '$cookies', mailController])
-.factory('mailService', ['$resource', mailService])
-.factory('userService', ['$resource', userService]);
+.controller('mailController', ['mailService','userService', '$cookies', mailController])
+.factory('userService', ['$resource', userService])
+.factory('mailService', ['$resource', mailService]);

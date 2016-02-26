@@ -30,9 +30,9 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'ngCookies'])
 })
 
 .controller('conversationsController', conversationsController)
-.controller('mailController', ['mailService', '$cookies', mailController])
-.factory('mailService', ['$resource', mailService])
-.factory('userService', ['$resource', userService]);
+.controller('mailController', ['mailService','userService', '$cookies', mailController])
+.factory('userService', ['$resource', userService])
+.factory('mailService', ['$resource', mailService]);
 
 },{"./controllers/conversationsController":2,"./mail/mailController":3,"./mail/mail_service":4,"./mail/user_service":5,"angular":11,"angular-cookies":7,"angular-resource":9,"ui-router":12}],2:[function(require,module,exports){
 module.exports = function() {
@@ -51,24 +51,30 @@ module.exports = mailController;
 
 function mailController (mailService, userService, $cookies) {
 
-  this.getUser = function () {
-     var self = this;
-     userService.getUser(type).$promise.then(
+  this.getUserData = function () {
+    var self = this;
+    console.log('hi');
+    console.log(userService.getUser());
+
+    userService.getUser().$promise.then(
       function(data) {
         self.user = data;
-        console.log(self.user + "hello")
-      }, function(error) {
+        console.log(self.user + "hello");
+      },
+      function(error) {
         console.log(error);
-      });
-   };
+      }
+    );
+  };
 
+  this.getUserData();
   // $cookies.put('PHPSESSID', 'jar9vlgoddf0puj6fl6scuifh6');
   this.getMessages = function (type) {
      var self = this;
      mailService.getAllMessages(type).$promise.then(
       function(data) {
         self.messages = data;
-        angular.forEach(self.messages.letters, function(letter, index){
+        angular.forEach(self.messages.letters, function(letter, index) {
           self.messages.letters[index]['deleted'] = false;
         });
       }, function(error) {
@@ -76,14 +82,14 @@ function mailController (mailService, userService, $cookies) {
       });
    };
 
-  this.change = function(type){
+  this.change = function(type) {
     this.getMessages(type);
   };
   this.getMessages('inbox');
 
   this.deleteMessages = function() {
     var self = this;
-    angular.forEach(this.messages.letters, function(letter){
+    angular.forEach(this.messages.letters, function(letter) {
       if(letter.deleted) {
         mailService.deleteMessage(letter.id).$promise.then(
           function(data) {
@@ -97,7 +103,7 @@ function mailController (mailService, userService, $cookies) {
 
 }
 
-mailController.$inject = ['mailService', '$cookies'];
+mailController.$inject = ['mailService', 'userService', '$cookies'];
 
 },{}],4:[function(require,module,exports){
 module.exports = mailService;
@@ -133,28 +139,17 @@ function mailService ($resource) {
 mailService.$inject = ['$resource'];;
 
 },{}],5:[function(require,module,exports){
-
 module.exports = userService;
 
 function userService ($resource) {
-
-
-  var userResource = $resource('/api/user',
-    { },
-    {
-      getMessages: {
-        method: 'GET'
-      }
-    });
+  var userResource = $resource('/api/users');
 
   this.getUser = function () {
-    return userResource;
+    return userResource.get();
   };
-
 
   return this;
 };
-
 
 userService.$inject = ['$resource'];
 },{}],6:[function(require,module,exports){

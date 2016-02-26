@@ -1,24 +1,13 @@
-
 module.exports = userService;
 
 function userService ($resource) {
-
-
-  var userResource = $resource('/api/user',
-    { },
-    {
-      getMessages: {
-        method: 'GET'
-      }
-    });
+  var userResource = $resource('/api/users');
 
   this.getUser = function () {
-    return userResource;
+    return userResource.get();
   };
-
 
   return this;
 };
-
 
 userService.$inject = ['$resource'];
