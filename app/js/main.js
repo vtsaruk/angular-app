@@ -1,4 +1,4 @@
-  $(document).ready(function(){
+/*  $(document).ready(function(){
       //search result items hover
       $('.search-right-side-girls-item').mouseenter(function(){
           $(this).find('.search-right-side-girls-item-list').fadeIn();
@@ -94,7 +94,7 @@
         });
         //owl
         var owl = $("#owl-demo");
- 
+
 		  owl.owlCarousel({
 		      items : 2, //10 items above 1000px browser width
 		      itemsDesktop : [1000,2], //5 items between 1000px and 901px
@@ -102,7 +102,7 @@
 		      itemsTablet: [600,2], //2 items between 600 and 0
 		      itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
 		  });
-		 
+
 		  // Custom Navigation Events
 		  $(".next").click(function(){
 		    owl.trigger('owl.next');
@@ -111,7 +111,7 @@
 		    owl.trigger('owl.prev');
 		  })
       var owl2 = $("#owl-demo2");
- 
+
       owl2.owlCarousel({
           items : 1, //10 items above 1000px browser width
           itemsDesktop : [1000,2], //5 items between 1000px and 901px
@@ -119,7 +119,7 @@
           itemsTablet: [600,2], //2 items between 600 and 0
           itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
       });
-     
+
       // Custom Navigation Events
       $(".next").click(function(){
         owl2.trigger('owl.next');
@@ -127,14 +127,14 @@
       $(".prev").click(function(){
         owl2.trigger('owl.prev');
       })
-		 
+
 
 
 
      //owl3
 
        var owl3 = $("#owl-demo3");
- 
+
       owl3.owlCarousel({
           items : 4, //10 items above 1000px browser width
           itemsDesktop : [1000,2], //5 items between 1000px and 901px
@@ -142,7 +142,7 @@
           itemsTablet: [600,2], //2 items between 600 and 0
           itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
       });
-     
+
       // Custom Navigation Events
       $(".next").click(function(){
         owl3.trigger('owl.next');
@@ -153,7 +153,7 @@
 
 
       var owl4 = $("#owl-demo4");
- 
+
       owl4.owlCarousel({
           items : 1, //10 items above 1000px browser width
           itemsDesktop : [1000,2], //5 items between 1000px and 901px
@@ -162,7 +162,7 @@
           pagination:true,
           itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
       });
-     
+
       // Custom Navigation Events
       $(".next").click(function(){
         owl4.trigger('owl.next');
@@ -172,7 +172,7 @@
       })
 
       var owl5 = $("#owl-demo5");
- 
+
       owl5.owlCarousel({
           items : 4, //10 items above 1000px browser width
           itemsDesktop : [1000,2], //5 items between 1000px and 901px
@@ -181,7 +181,7 @@
           pagination:true,
           itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
       });
-     
+
       // Custom Navigation Events
       $(".next").click(function(){
         owl5.trigger('owl.next');
@@ -190,4 +190,4 @@
         owl5.trigger('owl.prev');
       })
 
-    });
+    });*/

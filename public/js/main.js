@@ -49,29 +49,40 @@ module.exports = mailController;;
 
 function mailController (mailService, $cookies) {
 
-  $cookies.put('PHPSESSID', 'jar9vlgoddf0puj6fl6scuifh6');
-  this.getMessages = function () {
+
+  // $cookies.put('PHPSESSID', 'jar9vlgoddf0puj6fl6scuifh6');
+  this.getMessages = function (type) {
      var self = this;
-     mailService.getAllMessages().$promise.then(
+     mailService.getAllMessages(type).$promise.then(
       function(data) {
         self.messages = data;
+        angular.forEach(self.messages.letters, function(letter, index){
+          self.messages.letters[index]['deleted'] = false;
+        });
       }, function(error) {
         console.log(error);
+      });
+   };
+
+  this.change = function(type){
+    this.getMessages(type);
+  };
+  this.getMessages('inbox');
+
+  this.deleteMessages = function() {
+    var self = this;
+    angular.forEach(this.messages.letters, function(letter){
+      if(letter.deleted) {
+        mailService.deleteMessage(letter.id).$promise.then(
+          function(data) {
+            self.getMessages('inbox');
+          }, function(error) {
+            console.log(error);
+          });
       }
-  )};
-  this.getMessages();
-  console.log(this.messages);
+    })
+  }
 
-
- // this.messges = mailService.getAllMessages().$promise.then(
- //      function(data) {
- //        this.messges = data;
- //        console.log('hello')
- //      }, function(error) {
- //        console.log(error);
- //      }
- //    );
- // console.log(this.messges);
 }
 
 mailController.$inject = ['mailService', '$cookies'];
@@ -82,21 +93,25 @@ module.exports = mailService;;
 function mailService ($resource) {
 
   var mailResource = $resource('/api/mail/:mail_id',
-    { mail_id:'@id' },
+    { mail_id:'@mail_id' },
     {
       getMessages: {
         method: 'GET',
         params: {
           type: '@type',
-          relations: 'Sender,Recipient',
-
+          relations: 'Sender,Recipient'
         }
       }
     });
 
-  this.getAllMessages = function () {
-    return mailResource.get({type: 'inbox', relations: 'Sender,Recipient'});
+  this.getAllMessages = function (type) {
+    return mailResource.get({type: type, relations: 'Sender,Recipient'});
   };
+
+  this.deleteMessage = function (id) {
+    return mailResource.delete({mail_id: id});
+  };
+
 
   return this;
 };
