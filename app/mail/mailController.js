@@ -1,8 +1,18 @@
-module.exports = mailController;;
+module.exports = mailController;
 
 
-function mailController (mailService, $cookies) {
+function mailController (mailService, userService, $cookies) {
 
+  this.getUser = function () {
+     var self = this;
+     userService.getUser(type).$promise.then(
+      function(data) {
+        self.user = data;
+        console.log(self.user + "hello")
+      }, function(error) {
+        console.log(error);
+      });
+   };
 
   // $cookies.put('PHPSESSID', 'jar9vlgoddf0puj6fl6scuifh6');
   this.getMessages = function (type) {

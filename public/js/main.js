@@ -2,12 +2,13 @@
 require('angular');
 require('ui-router');
 require('angular-resource');
-require('angular-cookies');;
+require('angular-cookies');
 
 var conversationsController = require('./controllers/conversationsController');
 var mailController = require('./mail/mailController');
 
 var mailService = require('./mail/mail_service');
+var userService = require('./mail/user_service');
 
 var app = angular.module('app', ['ui.router', 'ngResource', 'ngCookies'])
 
@@ -30,9 +31,10 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'ngCookies'])
 
 .controller('conversationsController', conversationsController)
 .controller('mailController', ['mailService', '$cookies', mailController])
-.factory('mailService', ['$resource', mailService]);
+.factory('mailService', ['$resource', mailService])
+.factory('userService', ['$resource', userService]);
 
-},{"./controllers/conversationsController":2,"./mail/mailController":3,"./mail/mail_service":4,"angular":10,"angular-cookies":6,"angular-resource":8,"ui-router":11}],2:[function(require,module,exports){
+},{"./controllers/conversationsController":2,"./mail/mailController":3,"./mail/mail_service":4,"./mail/user_service":5,"angular":11,"angular-cookies":7,"angular-resource":9,"ui-router":12}],2:[function(require,module,exports){
 module.exports = function() {
   /*this.conversations = [
     {'id':13, 'name':'Aleksandra Almazova', 'amount': 35, 'Last_incoming_letter': '13:47   03/12/2014', 'Last_outgoing_letter': '18:34   03/11/2015'},
@@ -44,11 +46,21 @@ module.exports = function() {
   this.message = 'Two birds killed with one stone!';
 };
 },{}],3:[function(require,module,exports){
-module.exports = mailController;;
+module.exports = mailController;
 
 
-function mailController (mailService, $cookies) {
+function mailController (mailService, userService, $cookies) {
 
+  this.getUser = function () {
+     var self = this;
+     userService.getUser(type).$promise.then(
+      function(data) {
+        self.user = data;
+        console.log(self.user + "hello")
+      }, function(error) {
+        console.log(error);
+      });
+   };
 
   // $cookies.put('PHPSESSID', 'jar9vlgoddf0puj6fl6scuifh6');
   this.getMessages = function (type) {
@@ -88,9 +100,10 @@ function mailController (mailService, $cookies) {
 mailController.$inject = ['mailService', '$cookies'];
 
 },{}],4:[function(require,module,exports){
-module.exports = mailService;;
+module.exports = mailService;
 
 function mailService ($resource) {
+
 
   var mailResource = $resource('/api/mail/:mail_id',
     { mail_id:'@mail_id' },
@@ -120,6 +133,31 @@ function mailService ($resource) {
 mailService.$inject = ['$resource'];;
 
 },{}],5:[function(require,module,exports){
+
+module.exports = userService;
+
+function userService ($resource) {
+
+
+  var userResource = $resource('/api/user',
+    { },
+    {
+      getMessages: {
+        method: 'GET'
+      }
+    });
+
+  this.getUser = function () {
+    return userResource;
+  };
+
+
+  return this;
+};
+
+
+userService.$inject = ['$resource'];
+},{}],6:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.0
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -443,11 +481,11 @@ angular.module('ngCookies').provider('$$cookieWriter', function $$CookieWriterPr
 
 })(window, window.angular);
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 require('./angular-cookies');
 module.exports = 'ngCookies';
 
-},{"./angular-cookies":5}],7:[function(require,module,exports){
+},{"./angular-cookies":6}],8:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.0
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -1217,11 +1255,11 @@ angular.module('ngResource', ['ng']).
 
 })(window, window.angular);
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 require('./angular-resource');
 module.exports = 'ngResource';
 
-},{"./angular-resource":7}],9:[function(require,module,exports){
+},{"./angular-resource":8}],10:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.0
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -31650,11 +31688,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":9}],11:[function(require,module,exports){
+},{"./angular":10}],12:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15

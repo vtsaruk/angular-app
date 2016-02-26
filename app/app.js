@@ -1,12 +1,13 @@
 require('angular');
 require('ui-router');
 require('angular-resource');
-require('angular-cookies');;
+require('angular-cookies');
 
 var conversationsController = require('./controllers/conversationsController');
 var mailController = require('./mail/mailController');
 
 var mailService = require('./mail/mail_service');
+var userService = require('./mail/user_service');
 
 var app = angular.module('app', ['ui.router', 'ngResource', 'ngCookies'])
 
@@ -29,4 +30,5 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'ngCookies'])
 
 .controller('conversationsController', conversationsController)
 .controller('mailController', ['mailService', '$cookies', mailController])
-.factory('mailService', ['$resource', mailService]);
+.factory('mailService', ['$resource', mailService])
+.factory('userService', ['$resource', userService]);

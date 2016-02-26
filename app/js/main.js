@@ -1,4 +1,4 @@
-/*  $(document).ready(function(){
+  $(document).ready(function(){
       //search result items hover
       $('.search-right-side-girls-item').mouseenter(function(){
           $(this).find('.search-right-side-girls-item-list').fadeIn();
@@ -190,4 +190,4 @@
         owl5.trigger('owl.prev');
       })
 
-    });*/
+    });
