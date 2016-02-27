@@ -1,8 +1,7 @@
 module.exports = mailController;
 
 
-function mailController (mailService, userService, $cookies) {
-
+function mailController (mailService, userService) {
   this.getUserData = function () {
     var self = this;
     console.log('hi');
@@ -55,4 +54,4 @@ function mailController (mailService, userService, $cookies) {
 
 }
 
-mailController.$inject = ['mailService', 'userService', '$cookies'];
+mailController.$inject = ['mailService', 'userService'];
