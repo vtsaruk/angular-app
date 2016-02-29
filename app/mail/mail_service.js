@@ -18,7 +18,12 @@ function mailService ($resource) {
   this.getAllMessages = function (type) {
     return mailResource.get({type: type, relations: 'Sender,Recipient'});
   };
-
+  this.getMessagesId = function (id) {
+    return mailResource.get();
+  }
+  this.correspondenceGet = function(id) {
+    return mailResource.get({partnerId:id})
+  }
   this.deleteMessage = function (id) {
     return mailResource.delete({id: id});
   };

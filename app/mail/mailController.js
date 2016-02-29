@@ -4,13 +4,10 @@ module.exports = mailController;
 function mailController (mailService, userService) {
   this.getUserData = function () {
     var self = this;
-    console.log('hi');
-    console.log(userService.getUser());
 
     userService.getUser().$promise.then(
       function(data) {
         self.user = data;
-        console.log(self.user + "hello");
       },
       function(error) {
         console.log(error);
@@ -32,6 +29,34 @@ function mailController (mailService, userService) {
         console.log(error);
       });
    };
+
+
+    this.readTheLetter = function(id){
+      var self = this;
+      mailService.getMessagesId(id).$promise.then(
+        function(data) {
+          self.messagesId = data;
+        },
+        function(error) {
+          console.log(error);
+        }
+      );
+
+    }
+    this.hello = "HEloo!!!!";
+   this.correspondence =function(id){
+      var self = this;
+      mailService.correspondenceGet(id).$promise.then(
+        function(data) {
+          self.letterCor =data;
+          console.log(self.letterCor);
+        },
+        function(error) {
+          console.log(error);
+        }
+      );
+   }
+
 
   this.change = function(type) {
     this.getMessages(type);

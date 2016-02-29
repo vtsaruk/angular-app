@@ -25,7 +25,13 @@ var app = angular.module('app', ['ui.router', 'ngResource'])
       templateUrl: 'assets/angular-app/public/e-mail.html',
       controller: mailController,
       controllerAs: 'ctrl'
-    });
+    })
+    .state('e-mail.read_the_letter', {
+      url: '/read_the_letter',
+      templateUrl: 'assets/angular-app/public/conversation-with-the-girl.html',
+      controller: mailController,
+      controllerAs: 'ctrl'
+    })
 })
 
 .controller('conversationsController', conversationsController)
@@ -49,16 +55,12 @@ module.exports = mailController;
 
 
 function mailController (mailService, userService) {
-  this.ttt = 'ttttttttttttttttttttttttttttttttttt';
   this.getUserData = function () {
     var self = this;
-    console.log('hi');
-    console.log(userService.getUser());
 
     userService.getUser().$promise.then(
       function(data) {
         self.user = data;
-        console.log(self.user + "hello");
       },
       function(error) {
         console.log(error);
@@ -80,6 +82,34 @@ function mailController (mailService, userService) {
         console.log(error);
       });
    };
+
+
+    this.readTheLetter = function(id){
+      var self = this;
+      mailService.getMessagesId(id).$promise.then(
+        function(data) {
+          self.messagesId = data;
+        },
+        function(error) {
+          console.log(error);
+        }
+      );
+
+    }
+    this.hello = "HEloo!!!!";
+   this.correspondence =function(id){
+      var self = this;
+      mailService.correspondenceGet(id).$promise.then(
+        function(data) {
+          self.letterCor =data;
+          console.log(self.letterCor);
+        },
+        function(error) {
+          console.log(error);
+        }
+      );
+   }
+
 
   this.change = function(type) {
     this.getMessages(type);
@@ -125,7 +155,12 @@ function mailService ($resource) {
   this.getAllMessages = function (type) {
     return mailResource.get({type: type, relations: 'Sender,Recipient'});
   };
-
+  this.getMessagesId = function (id) {
+    return mailResource.get();
+  }
+  this.correspondenceGet = function(id) {
+    return mailResource.get({partnerId:id})
+  }
   this.deleteMessage = function (id) {
     return mailResource.delete({id: id});
   };
