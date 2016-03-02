@@ -25,12 +25,12 @@ var app = angular.module('app', ['ui.router', 'ngResource'])
       controller: mailController,
       controllerAs: 'ctrl'
     })
-    .state('e-mail.read_the_letter', {
+    /*.state('e-mail.read_the_letter', {
       url: '/read_the_letter',
       templateUrl: 'assets/angular-app/public/conversation-with-the-girl.html',
       controller: mailController,
       controllerAs: 'ctrl'
-    })
+    })*/
 })
 
 .controller('conversationsController', conversationsController)

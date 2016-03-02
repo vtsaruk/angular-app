@@ -131,7 +131,9 @@
 							</div>
 							<div class="send-message">
 								<h4><img src="assets/angular-app/public/img/red-pensil.png" alt="">Send Message to Natasha</h4>
-								<textarea type="text" class="send-message-input"></textarea>
+
+								<textarea type="text" class="send-message-input" ng-model="ctrl.newMessage"></textarea>
+
 								<p class="area-info">Files in GIF, JPG and PNG maximum 4096 KB size. Attach TWO photos for free. 10 credits will be deducted from your account for each additional photo</p>
 								<div class="attach-button">Attach photo</div>
 								<ul class="choose-files-list">
@@ -141,7 +143,9 @@
 									<li class="not-choose"><a href="#"><img src="assets/angular-app/public/img/grey-heart-in.png" alt="">Choose files</a><span>Someone name</span></li>
 									<li class="not-choose"><a href="#"><img src="assets/angular-app/public/img/grey-heart-in.png" alt="">Choose files</a><span>Someone name</span></li>
 								</ul>
-								<button class="btn-send">Send</button>
+
+								<button class="btn-send" ng-click="ctrl.addMessage()">Send</button>
+
 							</div>
 							<div class="history clearfix">
 								<h4><img src="assets/angular-app/public/img/clock-icon.png" alt="">Correspondence history</h4>

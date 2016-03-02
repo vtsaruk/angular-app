@@ -17,7 +17,12 @@ function mailController (mailService, userService) {
 
   this.getUserData();
   // $cookies.put('PHPSESSID', 'jar9vlgoddf0puj6fl6scuifh6');
+  this.tumbler = true;
+
   this.getMessages = function (type) {
+    if(this.tumbler==false) {
+      this.tumbler=true
+    }
      var self = this;
      mailService.getAllMessages(type).$promise.then(
       function(data) {
@@ -31,32 +36,71 @@ function mailController (mailService, userService) {
    };
 
 
-    this.readTheLetter = function(id){
-      var self = this;
-      mailService.getMessagesId(id).$promise.then(
-        function(data) {
-          self.messagesId = data;
-        },
-        function(error) {
-          console.log(error);
-        }
-      );
-
+  this.readTheLetter = function(id){
+    if(this.tumbler) {
+      this.tumbler = false;
     }
-    this.hello = "HEloo!!!!";
-   this.correspondence =function(id){
-      var self = this;
-      mailService.correspondenceGet(id).$promise.then(
-        function(data) {
-          self.letterCor =data;
-          console.log(self.letterCor);
-        },
-        function(error) {
-          console.log(error);
-        }
-      );
-   }
+    var self = this;
+    mailService.getMessagesId(id).$promise.then(
+      function(data) {
+        self.messagesId = data;
+        console.log(self.messagesId)
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  }
 
+  this.addClass = function(arg1, arg2) {
+    console.log(arg1, arg2);
+    return arg1==arg2? 1:0;
+  }
+
+  this.payment =function(id) {
+    console.log('+id');
+    console.log(id);
+
+    var self = this;
+    mailService.paymentLetter(id).$promise.then(
+      function(data) {
+        self.messagesId = data;
+        console.log(self.messagesId)
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  }
+
+  this.correspondence =function(partnerid){
+    if(this.tumbler) {
+      this.tumbler = false;
+    };
+    var self = this;
+    self.currentPartnerid = partnerid;
+    console.log(this.currentPartnerid);
+    mailService.correspondenceGet(partnerid).$promise.then(
+      function(data) {
+        self.letterCor =data;
+        console.log(self.letterCor);
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  }
+
+  this.addMessage = function(id) {
+    var self = this;
+    var msg = {
+      text: this.newMessage,
+      recipientId: id,
+      type: 'box'
+    };
+    mailService.addMessage2(msg);
+    this.newMessage = '';
+  }
 
   this.change = function(type) {
     this.getMessages(type);
