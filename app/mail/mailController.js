@@ -53,14 +53,10 @@ function mailController (mailService, userService) {
   }
 
   this.addClass = function(arg1, arg2) {
-    console.log(arg1, arg2);
     return arg1==arg2? 1:0;
   }
 
   this.payment =function(id) {
-    console.log('+id');
-    console.log(id);
-
     var self = this;
     mailService.paymentLetter(id).$promise.then(
       function(data) {
@@ -79,7 +75,6 @@ function mailController (mailService, userService) {
     };
     var self = this;
     self.currentPartnerid = partnerid;
-    console.log(this.currentPartnerid);
     mailService.correspondenceGet(partnerid).$promise.then(
       function(data) {
         self.letterCor =data;

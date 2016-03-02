@@ -12,7 +12,7 @@ var userService = require('./mail/user_service');
 var app = angular.module('app', ['ui.router', 'ngResource'])
 
 .config(function($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise("/e-mail");
+  $urlRouterProvider.otherwise("/man");
   $stateProvider
     .state('main', {
       url: '/main',
@@ -20,18 +20,18 @@ var app = angular.module('app', ['ui.router', 'ngResource'])
       controller: conversationsController,
       controllerAs: 'ctrl'
     })
-    .state('e-mail', {
-      url: '/e-mail',
+    .state('man', {
+      url: '/man',
       templateUrl: 'assets/angular-app/public/e-mail.html',
       controller: mailController,
       controllerAs: 'ctrl'
     })
-    /*.state('e-mail.read_the_letter', {
-      url: '/read_the_letter',
-      templateUrl: 'assets/angular-app/public/conversation-with-the-girl.html',
+    .state('lady', {
+      url: '/lady',
+      templateUrl: 'assets/angular-app/public/lady.html',
       controller: mailController,
       controllerAs: 'ctrl'
-    })*/
+    })
 })
 
 .controller('conversationsController', conversationsController)
@@ -106,14 +106,10 @@ function mailController (mailService, userService) {
   }
 
   this.addClass = function(arg1, arg2) {
-    console.log(arg1, arg2);
     return arg1==arg2? 1:0;
   }
 
   this.payment =function(id) {
-    console.log('+id');
-    console.log(id);
-
     var self = this;
     mailService.paymentLetter(id).$promise.then(
       function(data) {
@@ -132,7 +128,6 @@ function mailController (mailService, userService) {
     };
     var self = this;
     self.currentPartnerid = partnerid;
-    console.log(this.currentPartnerid);
     mailService.correspondenceGet(partnerid).$promise.then(
       function(data) {
         self.letterCor =data;
@@ -225,7 +220,7 @@ function mailService ($resource) {
     return mailResource.get({mail_id: id, relations: 'Sender,Recipient'});
   }
   this.correspondenceGet = function(id) {
-    return mailResource.get({partnerId:id})
+    return mailResource.get({partnerId:id, relations: 'Sender'})
   }
   this.deleteMessage = function (id) {
     return mailResource.delete({id: id});

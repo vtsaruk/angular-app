@@ -44,7 +44,7 @@ function mailService ($resource) {
     return mailResource.get({mail_id: id, relations: 'Sender,Recipient'});
   }
   this.correspondenceGet = function(id) {
-    return mailResource.get({partnerId:id})
+    return mailResource.get({partnerId:id, relations: 'Sender'})
   }
   this.deleteMessage = function (id) {
     return mailResource.delete({id: id});

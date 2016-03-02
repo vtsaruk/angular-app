@@ -11,7 +11,7 @@ var userService = require('./mail/user_service');
 var app = angular.module('app', ['ui.router', 'ngResource'])
 
 .config(function($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise("/e-mail");
+  $urlRouterProvider.otherwise("/man");
   $stateProvider
     .state('main', {
       url: '/main',
@@ -19,18 +19,18 @@ var app = angular.module('app', ['ui.router', 'ngResource'])
       controller: conversationsController,
       controllerAs: 'ctrl'
     })
-    .state('e-mail', {
-      url: '/e-mail',
+    .state('man', {
+      url: '/man',
       templateUrl: 'assets/angular-app/public/e-mail.html',
       controller: mailController,
       controllerAs: 'ctrl'
     })
-    /*.state('e-mail.read_the_letter', {
-      url: '/read_the_letter',
-      templateUrl: 'assets/angular-app/public/conversation-with-the-girl.html',
+    .state('lady', {
+      url: '/lady',
+      templateUrl: 'assets/angular-app/public/lady.html',
       controller: mailController,
       controllerAs: 'ctrl'
-    })*/
+    })
 })
 
 .controller('conversationsController', conversationsController)
