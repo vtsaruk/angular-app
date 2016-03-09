@@ -56,7 +56,7 @@
               </p>
               <a href="#">My Profile</a>
               &nbsp;  |&nbsp;&nbsp;
-              <a href="#">
+              <a href="http://irinadating.loc/index/logout">
                 <span>Log out</span>
               </a>
             </div>
@@ -75,22 +75,21 @@
   <div class="container">
     <div class="row">
         <div class="col-md-12">
-          <div class="main-content clearfix">
+          <div class="main-content clearfix" id="main_box_tab">
             <div class="message-tabs">
-              <div class="message-tabs-item" ng-click="ctrl.change('introductions')">
-                <p>Introductions</p>
+              <div class="message-tabs-item" ng-click="ctrl.changeType('introductions'); ctrl.removeClassTab(0)">
+                <p>Introductions<span ng-show="ctrl.messagesIntroductions.letters.length">({{ctrl.messagesIntroductions.letters.length}})</span></p>
               </div>
-              <div class="message-tabs-item active" ng-click="ctrl.change('inbox')">
-                <p>Inbox <span>({{ctrl.messages.letters.length}})</span></p>
+              <div class="message-tabs-item active" ng-click="ctrl.changeType('inbox'); ctrl.removeClassTab(1)">
+                <p>Inbox <span ng-show="ctrl.messagesInbox.letters.length">({{ctrl.messagesInbox.totalCount}})</span></p>
               </div>
-              <div class="message-tabs-item" ng-click="ctrl.change('outbox')">
+              <div class="message-tabs-item" ng-click="ctrl.changeType('outbox'); ctrl.removeClassTab(2)">
                 <p>Main</p>
               </div>
-              <div class="message-tabs-item" ng-click="ctrl.change('deleted')">
+              <div class="message-tabs-item" ng-click="ctrl.changeType('deleted'); ctrl.removeClassTab(3)">
                 <p>Deleted</p>
               </div>
             </div>
-
             <div class="message-sort clearfix">
               <div class="message-sort-left">
                 <div class="message-sort-left-1">
@@ -100,13 +99,11 @@
                   </label>
                   <i class="fa fa-caret-right"></i>
                 </div>
-                <p class="p-sort"><img src="assets/angular-app/public/img/calendar.png" alt="">Sort by Date</p>
-
+                <p class="p-sort" ng-click="ctrl.showFilter(ctrl.filterDiv)"><img src="assets/angular-app/public/img/calendar.png" alt="">Sort by Date</p>
                 <p class="p-delete" ng-click="ctrl.deleteMessages()"><i class="fa fa-caret-down"></i><img src="assets/angular-app/public/img/delete.png" alt="">Delete</p>
-
               </div>
               <div class="message-sort-right">
-                <a href="#" class="prev"><i class="fa fa-chevron-left"></i>prev</a>
+                <a href="#" class="prev" ng-click="ctrl.getPrevMessages()"><i class="fa fa-chevron-left"></i>prev</a>
               <ul>
                 <li><a href="#"><b>1</b></a></li>
                 <li><a href="#">2</a></li>
@@ -117,12 +114,11 @@
                 <li><a href="#">7</a></li>
                 <li><a href="#">8</a></li>
               </ul>
-              <a href="#" class="next"><i class="fa fa-chevron-right"></i>next</a>
-              <p class="pages">1-20 of 134</p>
+              <a href="#" class="next" ng-click="ctrl.getNextMessages()"><i class="fa fa-chevron-right"></i>next</a>
+              <p class="pages">1-20 of {{ctrl.messages.totalCount}}</p>
               </div>
-
             </div>
-            <div class="message-filter clearfix">
+            <div class="message-filter clearfix" ng-show="ctrl.filterDiv">
               <a href="#" class="active">On this week</a>
               <a href="#" class="on-last-week">On last week</a>
               <div class="message-filter-select clearfix">
@@ -142,10 +138,10 @@
               </div>
               <p><a href="#" class="active">Sort</a><a href="#">Reset</a></p>
   <!-- <div ng-click="ctrl.readTheLetter(19)">{{ctrl.messages.letters}}</div> -->
-<!-- <div>{{ctrl.messages.letters}}</div> -->
+<!-- <div>{{ctrl.messages.totalCount}}</div> -->
             </div>
             <div class="girls-messages" ng-repeat="messag in ctrl.messages.letters">
-              <div class="girls-message-item active">
+              <div ng-class="{'girls-message-item active': messag.isPaid==true, 'girls-message-item red-bg': messag.isPaid==false}"class="girls-message-item active">
                 <div class="girls-messega-item-content">
                   <div class="girls-message-checkbox">
                   <label class="checkbox-1">
@@ -166,128 +162,20 @@
                 <img src="assets/angular-app/public/img/girl-message-1.jpg" alt="">
                 <div class="girls-message-item-info">
                   <div>
-                    <a href="#"><span>{{messag.Sender.firstname}}</span>, 27</a>
+                    <a href="/#/girls/{{messag.senderId}}"><span>{{messag.sender.firstname}}</span>, 27</a>
                     <p><span></span>online</p>
                   </div>
-                  <a href="#">{{messag.country}}</a>
+                  <a href="#">{{messag.sender.country.name}}, {{messag.sender.city}}</a>
                   <div class="clear"></div>
                   <span>{{messag.additionalData.text}}</span>
                 </div>
-                <p class="girl-message-date">{{messag.createdAt}}</p>
-                <a href="#" class="girl-message-photo"><img src="assets/angular-app/public/img/photo.png" alt=""><span>3</span></a>
-                <button class="btn-send" ng-click="ctrl.readTheLetter(messag.id);ctrl.correspondence(messag.senderId);">Read the letter</button>
+                <p class="girl-message-date" ng-show="messag.isPaid">{{messag.createdAt}}</p>
+                <a href="#" class="girl-message-photo" ng-show="messag.isPaid"><img src="assets/angular-app/public/img/photo.png" alt=""><span>3</span></a>
+                 <a href="#" class="new" ng-hide="messag.isPaid">NEW</a>
+                <button class="btn-send" ng-click="ctrl.readTheLetter(messag.id);ctrl.correspondence(messag.senderId); ctrl.payment(messag.id)">Read the letter</button>
                 </div>
               </div>
-
-
 <!-- ctrl.payment(messag.id) -->
-
-
-              <!--<div class="girls-message-item red-bg">
-
-                <div class="girls-messega-item-content">
-                <div class="girls-message-checkbox">
-                    <label class="checkbox-1">
-                      <input type="checkbox">
-                      <span></span>
-                    </label>
-                </div>
-                <ul>
-                  <li>
-                    <p class="tooltips add-f">Add to favorites</p>
-                    <a href="#" class="add-f-icon"></a></li>
-                  <li>
-                    <p class="tooltips add-gift">Send a gift</p><a href="#" class="add-f-gift"></a></li>
-                  <li>
-                    <p class="tooltips add-chat">Chat</p>
-                    <a href="#" class="add-f-chat"></a></li>
-                </ul>
-                <img src="img/girl-message-1.jpg" alt="">
-                <div class="girls-message-item-info">
-                  <div>
-                    <a href="#"><span>Natasha</span>, 27</a>
-                    <p><span></span>online</p>
-                  </div>
-                  <a href="#">Ukraine, Kiev</a>
-                  <div class="clear"></div>
-                  <!-- <span>Hello my dear)) today morning was fun, went with a friend to walk the dog. He breaks out of the ...</span>
-                  <p class="girl-message-date">14.09.2015 10:58</p>
-                </div>
-
-                <a href="#" class="new">NEW</a>
-                <button class="btn-send">Read the letter</button>
-                </div>
-              </div>
-
-
-              <div class="girls-message-item">
-
-                <div class="girls-messega-item-content">
-                  <div class="girls-message-checkbox">
-                    <label class="checkbox-1">
-                      <input type="checkbox">
-                      <span></span>
-                    </label>
-                </div>
-                <ul>
-                  <li>
-                    <p class="tooltips add-f">Add to favorites</p>
-                    <a href="#" class="add-f-icon"></a></li>
-                  <li>
-                    <p class="tooltips add-gift">Send a gift</p><a href="#" class="add-f-gift"></a></li>
-                  <li>
-                    <p class="tooltips add-chat">Chat</p>
-                    <a href="#" class="add-f-chat"></a></li>
-                </ul>
-                <img src="img/girl-message-1.jpg" alt="">
-                <div class="girls-message-item-info">
-                  <div>
-                    <a href="#"><span>Natasha</span>, 27</a>
-                    <p class="span-offline"><span></span>offline</p>
-                  </div>
-                  <a href="#">Ukraine, Kiev</a>
-                  <div class="clear"></div>
-                  <span>Hello my dear)) today morning was fun, went with a friend to walk the dog. He breaks out of the ...</span>
-                </div>
-                <p class="girl-message-date">14.09.2015 10:58</p>
-                <a href="#" class="girl-message-photo"><img src="img/photo.png" alt=""><span>3</span></a>
-                <button class="btn-send">Read the letter</button>
-                </div>
-              </div>
-              <div class="girls-message-item">
-
-                <div class="girls-messega-item-content">
-                  <div class="girls-message-checkbox">
-                <label class="checkbox-1">
-                  <input type="checkbox">
-                  <span></span>
-                </label>
-                </div>
-                <ul>
-                  <li>
-                    <p class="tooltips add-f">Add to favorites</p>
-                    <a href="#" class="add-f-icon"></a></li>
-                  <li>
-                    <p class="tooltips add-gift">Send a gift</p><a href="#" class="add-f-gift"></a></li>
-                  <li>
-                    <p class="tooltips add-chat">Chat</p>
-                    <a href="#" class="add-f-chat"></a></li>
-                </ul>
-                <img src="img/girl-message-1.jpg" alt="">
-                <div class="girls-message-item-info">
-                  <div>
-                    <a href="#"><span>Natasha</span>, 27</a>
-                    <p><span></span>online</p>
-                  </div>
-                  <a href="#">Ukraine, Kiev</a>
-                  <div class="clear"></div>
-                  <span>Hello my dear)) today morning was fun, went with a friend to walk the dog. He breaks out of the ...</span>
-                </div>
-                <p class="girl-message-date">14.09.2015 10:58</p>
-                <a href="#" class="girl-message-photo"><img src="img/photo.png" alt=""><span>3</span></a>
-                <button class="btn-send">Read the letter</button>
-                </div>
-              </div>-->
             </div>
           </div>
         </div>
@@ -297,28 +185,24 @@
 <!-- end page-message -->
 
 
-
-
-
-
-
-
 <main class="page-message conversation chat-with-girl" ng-hide="ctrl.tumbler">
   <div class="container">
     <div class="row">
         <div class="col-md-12">
           <div class="main-content clearfix">
             <div class="message-tabs">
-              <div class="message-tabs-item" ng-click="ctrl.change('introductions')">
-                <p>Introductions</p>
+              <div class="message-tabs-item" ng-click="ctrl.changeType('introductions');
+              ctrl.removeClassTab(0)">
+                <p>Introductions<span ng-show="ctrl.messagesIntroductions.letters.length">({{ctrl.messagesIntroductions.letters.length}})</span></p>
               </div>
-              <div class="message-tabs-item" ng-click="ctrl.change('inbox')">
-                <p>Inbox <span>(5)</span></p>
+              <div class="message-tabs-item" ng-click="ctrl.changeType('inbox'); ctrl.removeClassTab(1)">
+                <p>Inbox <span ng-show="ctrl.messagesInbox.letters.length">({{ctrl.messagesInbox.totalCount}})</span></p>
               </div>
-              <div class="message-tabs-item" ng-click="ctrl.change('outbox')">
+              <div class="message-tabs-item" ng-click="ctrl.changeType('outbox');
+              ctrl.removeClassTab(2)">
                 <p>Mail</p>
               </div>
-              <div class="message-tabs-item" ng-click="ctrl.change('deleted')">
+              <div class="message-tabs-item" ng-click="ctrl.changeType('deleted'); ctrl.removeClassTab(3)">
                 <p>Deleted</p>
               </div>
             </div>
@@ -349,28 +233,28 @@
 
                 <div class="girls-message-item-info">
                   <div>
-                    <a href="#"><span>{{ctrl.messagesId.message.Sender.firstname}}</span>, 27</a>
+                    <a href="/#/girls/{{ctrl.messagesId.letter.senderId}}"><span>{{ctrl.messagesId.letter.sender.firstname}}</span>, 27</a>
                     <p><span></span>online</p>
                   </div>
-                  <a href="#">Ukraine, Kiev</a>
+                  <a href="#">{{ctrl.messagesId.letter.sender.country.name}}, {{ctrl.messagesId.letter.sender.city}}</a>
                   <div class="clear"></div>
                   <span>
-                    {{ctrl.messagesId.message.senderId}}
+                    {{ctrl.messagesId.letter.additionalData}}
                   </span>
                 </div>
-                <p class="girl-message-date">{{ctrl.messagesId.message.createdAt}}</p>
+                <p class="girl-message-date">{{ctrl.messagesId.letter.createdAt}}</p>
                 <!-- <button class="btn-send">Read the letter</button> -->
                 </div>
               </div>
-              <!-- <div>{{ctrl.messagesId.message.Sender.id}}</div> -->
+<!-- <div>{{ctrl.messagesId}}</div> -->
               <div class="send-message">
-                <h4><img src="assets/angular-app/public/img/red-pensil.png" alt="">Send Message to {{ctrl.messagesId.message.Sender.firstname}}</h4>
+                <h4><img src="assets/angular-app/public/img/red-pensil.png" alt="">Send Message to {{ctrl.messagesId.letter.sender.firstname}}</h4>
 
                 <textarea type="text" class="send-message-input" ng-model="ctrl.newMessage"></textarea>
 
                 <p class="area-info">Files in GIF, JPG and PNG maximum 4096 KB size. Attach TWO photos for free. 10 credits will be deducted from your account for each additional photo</p>
-                <div class="attach-button">Attach photo</div>
-                <ul class="choose-files-list">
+                <div class="attach-button" ng-click="ctrl.showList()">Attach photo</div>
+                <ul class="choose-files-list" ng-show="ctrl.listDiv">
                   <li><img src="assets/angular-app/public/img/check-mark.png" alt="" class="choose-arrow"><a href="#"><img src="img/photo-icon.png" alt="">Choose files</a><span>Someone name.jpg <img src="img/delete.png" alt=""></span></li>
                   <li><img src="assets/angular-app/public/img/check-mark.png" alt="" class="choose-arrow"><a href="#"><img src="assets/angular-app/public/img/photo-icon.png" alt="">Choose files</a><span>Someone name.jpg <img src="assets/angular-app/public/img/delete.png" alt=""></span></li>
                   <li class="not-choose"><a href="#"><img src="assets/angular-app/public/img/grey-heart-in.png" alt="">Choose files</a><span>Someone name</span></li>
@@ -378,14 +262,14 @@
                   <li class="not-choose"><a href="#"><img src="assets/angular-app/public/img/grey-heart-in.png" alt="">Choose files</a><span>Someone name</span></li>
                 </ul>
 
-                <button class="btn-send" ng-click="ctrl.addMessage(ctrl.messagesId.message.senderId)">Send</button>
+                <button class="btn-send" ng-click="ctrl.addMessage(ctrl.messagesId.letter.senderId)">Send</button>
 
               </div>
               <div class="history clearfix">
                 <h4><img src="assets/angular-app/public/img/clock-icon.png" alt="">Correspondence history</h4>
-                <p class="p-sort"><img src="assets/angular-app/public/img/calendar.png" alt="">Sort by Date<i class="fa fa-caret-down"></i></p>
+                <p class="p-sort" ng-click="ctrl.showFilter(ctrl.filterDiv)"><img src="assets/angular-app/public/img/calendar.png" alt="">Sort by Date<i class="fa fa-caret-down"></i></p>
               </div>
-              <div class="message-filter clearfix">
+              <div class="message-filter clearfix" ng-show="ctrl.filterDiv">
                 <a href="#" class="active">On this week</a>
                 <a href="#">On last week</a>
                 <div class="message-filter-select clearfix">
@@ -405,17 +289,17 @@
                 </div>
                 <p class="message-filter-sort-end"><a href="#" class="active">Sort</a><a href="#">Reset</a></p>
               </div>
-              <!-- <div>{{ctrl.letterCor.letters[0]}}</div> -->
+<div>{{ctrl.letterCor.letters}}</div>
               <div class="dialog-container" ng-repeat="letter in ctrl.letterCor.letters" >
                 <!-- <div class=" clearfix" ng-class="{'dialog-item' : ctrl.addClass(ctrl.messagesId.message.Sender.id, letter.senderId)}"> -->
-                <div ng-class="{1:'dialog-item dialog-item-out clearfix', 0:'dialog-item dialog-item-in clearfix'}[ctrl.addClass(ctrl.messagesId.message.Sender.id, letter.senderId)]">
+                <div ng-class="{1:'dialog-item dialog-item-out clearfix', 0:'dialog-item dialog-item-in clearfix'}[ctrl.addClass(ctrl.messagesId.letter.senderId, letter.senderId)]">
                 <!-- <div class="clearfix" ng-class="{ctrl.add ? 'dialog-item' : 'dialog-item-out'}"> -->
 
                 <!-- <div class="clearfix" ng-class="ctrl.add && 'dialog-item' || !ctrl.add &&'dialog-item-out'}"> -->
                   <img src="assets/angular-app/public/img/girl-message-1.jpg" alt="" class="img-dialog">
                   <div class="girls-message-item-info clearfix">
                     <div>
-                      <a href="#"><span>{{letter.Sender.firstname}}</span></a>
+                      <a href="/#/girls/{{letter.sender.id}}" ng-click="ctrl.girlsIdGet(letter.senderId)"><span>{{letter.sender.firstname}}</span></a>
                     </div>
                     <div class="clear"></div>
                     <p class="girls-message-item-descr">{{letter.additionalData.text}}<a href="#">more<i class="fa fa-chevron-right"></i></a></p>

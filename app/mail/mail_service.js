@@ -10,6 +10,8 @@ function mailService ($resource) {
         method: 'GET',
         params: {
           type: '@type',
+          limit: '@limit',
+          offset: '@offset',
           relations: 'Sender,Recipient'
         },
       },
@@ -34,21 +36,33 @@ function mailService ($resource) {
   };
 
   this.paymentLetter = function(id) {
-    return mailResource.update({id: id, isPaid: true});
+    return mailResource.update({mail_id: id, isPaid: true});
   }
 
-  this.getAllMessages = function (type) {
-    return mailResource.get({type: type, relations: 'Sender,Recipient'});
+  this.getAllMessages = function (options) {
+    return mailResource.get({
+      type: options.type,
+      limit: options.limit,
+      offset: options.offset,
+      relations: '{ "sender":{ "country": {} } }'});
   };
+
+  this.getMessagesLength = function(type) {
+    return mailResource.get({type: type});
+  }
+
   this.getMessagesId = function (id) {
-    return mailResource.get({mail_id: id, relations: 'Sender,Recipient'});
+    return mailResource.get({mail_id: id, relations: '{ "sender":{ "country": {} } }'});
   }
+
   this.correspondenceGet = function(id) {
-    return mailResource.get({partnerId:id, relations: 'Sender'})
+    return mailResource.get({partnerId:id, relations: '{ "sender":{ "country": {} } }'})
   }
+
   this.deleteMessage = function (id) {
-    return mailResource.delete({id: id});
+    return mailResource.delete({mail_id: id});
   };
+
   this.addMessage = function(message) {
     return mailResource.save(message);
   }

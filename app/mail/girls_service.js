@@ -11,4 +11,4 @@ function girlsService ($resource) {
   return this;
 };
 
-girlsService.$inject = ['$resource'];;
+girlsService.$inject = ['$resource'];

@@ -1,0 +1,419 @@
+<header>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- small-menu -->
+          <a href="#" class="small-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </a>
+          <!-- end small-menu -->
+          <!-- logo -->
+          <a ui-sref="main" class="header--logo">
+            <img src="assets/angular-app/public/img/logo.png"  alt=""></a>
+          <!-- end logo -->
+          <!-- navigation -->
+          <nav class="header--nav">
+            <ul class="clearfix">
+              <li>
+                <a href="#">Ladies</a>
+              </li>
+              <li>
+                <a href="#">Search</a>
+              </li>
+              <li>
+                <a ui-sref="e-mail">Mail</a>
+              </li>
+              <li>
+                <a href="#">Chat</a>
+              </li>
+              <li>
+                <a href="#">Gifts Delivery</a>
+              </li>
+              <li>
+                <a href="#">Offers</a>
+              </li>
+            </ul>
+          </nav>
+          <!-- end navigation -->
+          <!-- header-profile info -->
+          <div class="header--profile">
+            <div class="header--profile-img-likes">
+              <a href="#">
+                <img src="assets/angular-app/public/img/profile.jpg" width="40" height="40" alt=""></a>
+              <div class="header--heart">
+                <p>
+                  <img src="assets/angular-app/public/img/header-heart.png" alt=""></p>
+                <p>2000</p>
+              </div>
+
+            </div>
+            <div class="header--profile-info">
+              <p>
+                Welcome,
+                <span>{{ctrl.user.user.firstname}} {{ctrl.user.user.lastname}}</span>
+              </p>
+              <a href="http://irinadating.loc/index/logout">My Profile</a>
+              &nbsp;  |&nbsp;&nbsp;
+              <a href="#">
+                <span>Log out</span>
+              </a>
+            </div>
+          </div>
+          <!-- end header-profile info -->
+        </div>
+      </div>
+    </div>
+  </header><!--
+  <!-- end header -->
+  <!-- page-message -->
+
+
+
+
+
+
+
+
+
+<div class="chat-with-girl">
+
+	<!-- end header -->
+	<!-- page-message -->
+<main class="profile">
+	<div class="container">
+<!-- <div>{{ctrl.girlsId.girl}}</div> -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="main-content clearfix">
+					<div class="col-sm-4 col-md-4">
+						<div class="profile-left-side">
+							<div class="profile-left-side-ava">
+								<img src="assets/angular-app/public/img/profile-img.jpg" alt="" ng-click="ctlr.girlsIdGet(2)">
+								<img src="assets/angular-app/public/img/check-icon.png" alt="" class="check-icon">
+							</div>
+							<div class="profile-left-side-carousel">
+								<div id="owl-demo4" class="owl-carousel owl-theme">
+									<div class="item">
+										<div class="profile-left-side-carousel-frame">
+										<iframe width="100%" height="200" src="https://www.youtube.com/embed/_lIrgC63WjI" frameborder="0" allowfullscreen>
+										</iframe>
+										<p>Lorem ipsum dolor sit amet</p>
+										</div>
+									</div>
+									<div class="item">
+										<div class="profile-left-side-carousel-frame">
+										<iframe width="100%" height="200" src="https://www.youtube.com/embed/_lIrgC63WjI" frameborder="0" allowfullscreen>
+										</iframe>
+										<p>Lorem ipsum dolor sit amet</p>
+										</div>
+									</div>
+									<div class="item">
+										<div class="profile-left-side-carousel-frame">
+										<iframe width="100%" height="200" src="https://www.youtube.com/embed/_lIrgC63WjI" frameborder="0" allowfullscreen>
+										</iframe>
+										<p>Lorem ipsum dolor sit amet</p>
+										</div>
+									</div>
+									<div class="item">
+										<div class="profile-left-side-carousel-frame">
+										<iframe width="100%" height="200" src="https://www.youtube.com/embed/_lIrgC63WjI" frameborder="0" allowfullscreen>
+										</iframe>
+										<p>Lorem ipsum dolor sit amet</p>
+										</div>
+									</div>
+								</div>
+
+							    <div class="customNavigation">
+									<a class="btn next"><img src="assets/angular-app/public/img/profile-arrow-right.png" alt=""></a>
+									<a class="btn prev"><img src="assets/angular-app/public/img/profile-arrow-right.png" alt=""></a>
+								</div>
+
+
+							</div>
+							<ul class="profile-left-side-list">
+								<li><a href="#">Add to favorites</a></li>
+								<li><a href="#" class="chatting">Invite for a chat</a></li>
+								<li><a href="#" class="snd-message">Send a message</a></li>
+								<li><a href="#" class="snd-gift">Send a gift</a></li>
+								<li><a href="#" class="purchase">Purchase contact info</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-8 col-md-7 col-md-offset-1">
+						<div class="profile-right-side">
+							<div class="profile-right-side-topinfo clearfix">
+								<div class="profile-right-side-topinfo-left">
+									<p>Olga<span>, 23</span><span class="status"><img src="assets/angular-app/public/img/radio-button.png" alt="">online</span></p>
+									<p class="location">Ukraine, Kiev</p>
+									<a href="#"><img src="assets/angular-app/public/img/pisces.png" alt="">Pisces</a>
+								</div>
+								<div class="profile-right-side-topinfo-right">
+									<p class="profile-right-side-topinfo-right-id">
+										ID 234345
+									</p>
+								</div>
+							</div>
+
+
+								<div class="row">
+									<div class="col-sm-12 col-md-10">
+										<div class="profile-right-side-about">
+											<p>Give me your hand! I will show you the right choice! Give me your hand! I will show you the right choice! Give me your hand! I will show you the right choice! </p>
+										</div>
+										<div class="profile-right-side-about-item-container">
+											<div class="row">
+												<div class="col-sm-4 col-md-4 mn-b-25">
+													<div class="profile-right-side-about-item">
+														<h6 class="red-14-Lt-w600 mn-b-5">Date of birth</h6>
+														<p class="grey-14-Lt">07.23.1984 (fish)</p>
+													</div>
+												</div>
+												<div class="col-sm-3 col-md-3 mn-b-25">
+													<div class="profile-right-side-about-item">
+														<h6 class="red-14-Lt-w600 mn-b-5">Eye Color</h6>
+														<p class="grey-14-Lt">{{ctrl.girlsId.girl.eyeColor}}</p>
+													</div>
+												</div>
+												<div class="col-sm-4 col-md-4 mn-b-25">
+													<div class="profile-right-side-about-item">
+														<h6 class="red-14-Lt-w600 mn-b-5">Weight</h6>
+														<p class="grey-14-Lt">{{ctrl.girlsId.girl.weight}}</p>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-4 col-md-4">
+													<div class="profile-right-side-about-item">
+														<h6 class="red-14-Lt-w600 mn-b-5">Religion</h6>
+														<p class="grey-14-Lt">{{ctrl.girlsId.girl.religion}}</p>
+													</div>
+												</div>
+												<div class="col-sm-3 col-md-3">
+													<div class="profile-right-side-about-item">
+														<h6 class="red-14-Lt-w600 mn-b-5">Hair Color</h6>
+														<p class="grey-14-Lt">{{ctrl.girlsId.girl.hairColor}}</p>
+													</div>
+												</div>
+												<div class="col-sm-4 col-md-4">
+													<div class="profile-right-side-about-item">
+														<h6 class="red-14-Lt-w600 mn-b-5">Height</h6>
+														<p class="grey-14-Lt">{{ctrl.girlsId.girl.height}}</p>
+													</div>
+												</div>
+										</div>
+										</div>
+
+
+								</div>
+
+							</div>
+							<div class="line"></div>
+							<div class="row">
+									<div class="col-sm-12 col-md-10">
+										<div class="profile-right-side-about-item-container">
+											<div class="row">
+												<div class="col-sm-4 col-md-4 mn-b-25">
+													<div class="profile-right-side-about-item">
+														<h6 class="red-14-Lt-w600 mn-b-5">Education</h6>
+														<p class="grey-14-Lt">{{ctrl.girlsId.girl.education}}</p>
+													</div>
+												</div>
+												<div class="col-sm-3 col-md-3 mn-b-25">
+													<div class="profile-right-side-about-item">
+														<h6 class="red-14-Lt-w600 mn-b-5">Drinking</h6>
+														<p class="grey-14-Lt">{{ctrl.girlsId.girl.drinking}}</p>
+													</div>
+												</div>
+												<div class="col-sm-4 col-md-4 mn-b-25">
+													<div class="profile-right-side-about-item">
+														<h6 class="red-14-Lt-w600 mn-b-5">English Rating</h6>
+														<p class="grey-14-Lt">{{ctrl.girlsId.girl.englishRating}}</p>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-4 col-md-4">
+													<div class="profile-right-side-about-item">
+														<h6 class="red-14-Lt-w600 mn-b-5">Profession</h6>
+														<p class="grey-14-Lt">{{ctrl.girlsId.girl.profession}}</p>
+													</div>
+												</div>
+												<div class="col-sm-3 col-md-3">
+													<div class="profile-right-side-about-item">
+														<h6 class="red-14-Lt-w600 mn-b-5">Smoking</h6>
+														<p class="grey-14-Lt">{{ctrl.girlsId.girl.smoking}}</p>
+													</div>
+												</div>
+												<div class="col-sm-4 col-md-4">
+													<div class="profile-right-side-about-item">
+														<h6 class="red-14-Lt-w600 mn-b-5">Other languages</h6>
+														<p class="grey-14-Lt">
+															<ul class="list-style-circle">
+																<li class="grey-14-Lt">Italian, Intermidiate</li>
+																<li class="grey-14-Lt">Spanish, Beginner</li>
+															</ul>
+														</p>
+													</div>
+												</div>
+										</div>
+										</div>
+
+
+								</div>
+
+							</div>
+														<div class="line"></div>
+							<div class="row">
+									<div class="col-sm-12 col-md-10">
+
+										<div class="profile-right-side-about-item-container">
+
+											<div class="row">
+												<div class="col-sm-4 col-md-4">
+													<div class="profile-right-side-about-item">
+														<h6 class="red-14-Lt-w600 mn-b-5">Marital Status</h6>
+														<p class="grey-14-Lt">{{ctrl.girlsId.girl.maritalStatus}}</p>
+													</div>
+												</div>
+												<div class="col-sm-4 col-md-4">
+													<div class="profile-right-side-about-item">
+														<h6 class="red-14-Lt-w600 mn-b-5">Children </h6>
+														<p class="grey-14-Lt">
+															<ul class="list-style-circle">
+																<li class="grey-14-Lt">Boy, 6</li>
+																<li class="grey-14-Lt">Sanish, Beginner</li>
+															</ul>
+														</p>
+													</div>
+												</div>
+										</div>
+										</div>
+
+
+								</div>
+
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="profile-right-side-photo">
+										<h3>Photo</h3>
+										<div class="profile-right-side-photos-container">
+										<div id="owl-demo5" class="owl-carousel owl-theme">
+											<div class="item">
+												<img src="assets/angular-app/public/img/girls-222.jpg" alt="">
+											</div>
+											<div class="item">
+												<img src="assets/angular-app/public/img/girls-333.jpg" alt="">
+											</div>
+											<div class="item">
+												<img src="assets/angular-app/public/img/girls-111.jpg" alt="">
+											</div>
+											<div class="item">
+												<img src="assets/angular-app/public/img/girls-333.jpg" alt="">
+											</div>
+											<div class="item">
+												<img src="assets/angular-app/public/img/girls-222.jpg" alt="">
+											</div>
+											<div class="item">
+												<img src="assets/angular-app/public/img/girls-333.jpg" alt="">
+											</div>
+											<div class="item">
+												<img src="img/girls-111.jpg" alt="">
+											</div>
+											<div class="item">
+												<img src="img/girls-333.jpg" alt="">
+											</div>
+										</div>
+										<div class="customNavigation">
+											<a class="btn next"><img src="assets/angular-app/public/img/profile-arrow-right.png" alt=""></a>
+											<a class="btn prev"><img src="assets/angular-app/public/img/profile-arrow-left.png" alt=""></a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="profile-right-side-about-me">
+									<h5 class="red-18-Lt-w600 mn-b-5">About me</h5>
+									<p class="grey-18-Lt mn-b-20">{{ctrl.girlsId.girl.aboutMe}}<a href="#" class="red-14-Lt-w600"> more...</a></p>
+									<h5 class="red-18-Lt-w600 mn-b-5">My interests and hobbies</h5>
+									<p class="grey-18-Lt mn-b-20">{{ctrl.girlsId.girl.interests}}</p>
+									<h5 class="red-18-Lt-w600 mn-b-15">I'm looking for</h5>
+									<ul class="profile-right-side-about-me-tags mn-b-30">
+										<li><a href="#" class="grey-18-Lt">sex</a></li>
+										<li><a href="#" class="grey-18-Lt">love
+</a></li>
+										<li><a href="#" class="grey-18-Lt">friendship</a></li>
+										<li><a href="#" class="grey-18-Lt">marriage</a></li>
+									</ul>
+									<h5 class="red-18-Lt-w600 mn-b-5">My ideal partner is</h5>
+									<p class="grey-18-Lt">{{ctrl.girlsId.girl.idealPartner}}<a href="#" class="red-14-Lt-w600"> more...</a></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+
+
+
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-2 col-sm-offset-1 col-md-2 col-md-offset-1 f-key-1">
+        <ul class="footer-list">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">F.A.Q.</a></li>
+          <li><a href="#">Anti-Scam Policy</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-2 col-md-2 f-key-2">
+        <ul class="footer-list">
+          <li><a href="#" class="transp">Privacy Policy</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-2 col-md-3 col-lg-2 f-key-3">
+        <a href="#"><img src="assets/angular-app/public/img/footer-logo.png" alt=""></a>
+      </div>
+      <div class="col-sm-3 col-md-3 f-key-4">
+        <div class="footer-right-side">
+          <button>Live Support 24/7
+
+          </button>
+          <div class="clear"></div>
+          <p>Follow Irinadating on
+
+          </p>
+          <ul>
+            <li><a href="#" class="fb"><img src="assets/angular-app/public/img/fb.png" alt=""></a></li>
+            <li><a href="#" class="tt"><img src="assets/angular-app/public/img/tb.png" alt=""></a></li>
+            <li><a href="#" class="g-plus"><img src="assets/angular-app/public/img/g-plus.png" alt=""></a></li>
+            <li><a href="#" class="yb"><img src="assets/angular-app/public/img/yb.png" alt=""></a></li>
+            <li><a href="#" class="pp"><img src="assets/angular-app/public/img/p.png" alt=""></a></li>
+            <li><a href="#" class="insta"><img src="assets/angular-app/public/img/insta.png" alt=""></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- end footer -->
+<!-- copyright -->
+<div class="copyright">
+  <p>IrinaDating &copy; 2009-2015</p>
+</div>
+
+
+</div>
