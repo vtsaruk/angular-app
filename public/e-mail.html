@@ -92,29 +92,36 @@
             </div>
             <div class="message-sort clearfix">
               <div class="message-sort-left">
+              <ul ng-show="showSortUl" class="message-sort-dropdown">
+                  <li><a href="#">Select all</a></li>
+                  <li><a href="#">Read</a></li>
+                  <li><a href="#">Unread</a></li>
+                  <li><a href="#">Unselect</a></li>
+                </ul>
                 <div class="message-sort-left-1">
                   <label class="checkbox-1">
-                      <input type="checkbox">
+                      <input type="checkbox" ng-model="showSortUl">
                       <span></span>
                   </label>
                   <i class="fa fa-caret-right"></i>
                 </div>
                 <p class="p-sort" ng-click="ctrl.showFilter(ctrl.filterDiv)"><img src="assets/angular-app/public/img/calendar.png" alt="">Sort by Date</p>
-                <p class="p-delete" ng-click="ctrl.deleteMessages()"><i class="fa fa-caret-down"></i><img src="assets/angular-app/public/img/delete.png" alt="">Delete</p>
+                <p ng-class="{1:'p-delete text_color_black', 0:'p-delete'}[ctrl.classMessagesDeleted()]" ng-click="ctrl.deleteMessages()"><i class=" fa fa-caret-down" ></i><img src="assets/angular-app/public/img/delete.png" alt="">Delete</p>
               </div>
               <div class="message-sort-right">
-                <a href="#" class="prev" ng-click="ctrl.getPrevMessages()"><i class="fa fa-chevron-left"></i>prev</a>
-              <ul>
-                <li><a href="#"><b>1</b></a></li>
+                <a href="" class="prev" ng-click="ctrl.getPrevMessages()"><i class="fa fa-chevron-left"></i>prev</a>
+              <ul ng-repeat="page in ctrl.arrIndex">
+                <li ng-click="ctrl.getIndexPage(page)"><a href="">{{page}}</a></li>
+                <!-- <li><a href="#"><b>1</b></a></li>
                 <li><a href="#">2</a></li>
                 <li><a href="#">3</a></li>
                 <li><a href="#">4</a></li>
                 <li><a href="#">5</a></li>
                 <li><a href="#">6</a></li>
                 <li><a href="#">7</a></li>
-                <li><a href="#">8</a></li>
+                <li><a href="#">8</a></li> -->
               </ul>
-              <a href="#" class="next" ng-click="ctrl.getNextMessages()"><i class="fa fa-chevron-right"></i>next</a>
+              <a href="" class="next" ng-click="ctrl.getNextMessages()"><i class="fa fa-chevron-right"></i>next</a>
               <p class="pages">1-20 of {{ctrl.messages.totalCount}}</p>
               </div>
             </div>
@@ -138,7 +145,7 @@
               </div>
               <p><a href="#" class="active">Sort</a><a href="#">Reset</a></p>
   <!-- <div ng-click="ctrl.readTheLetter(19)">{{ctrl.messages.letters}}</div> -->
-<!-- <div>{{ctrl.messages.totalCount}}</div> -->
+<!-- <div>{{ctrl.messages}}</div> -->
             </div>
             <div class="girls-messages" ng-repeat="messag in ctrl.messages.letters">
               <div ng-class="{'girls-message-item active': messag.isPaid==true, 'girls-message-item red-bg': messag.isPaid==false}"class="girls-message-item active">
@@ -239,7 +246,7 @@
                   <a href="#">{{ctrl.messagesId.letter.sender.country.name}}, {{ctrl.messagesId.letter.sender.city}}</a>
                   <div class="clear"></div>
                   <span>
-                    {{ctrl.messagesId.letter.additionalData}}
+                    {{ctrl.messagesId.letter.additionalData.text}}
                   </span>
                 </div>
                 <p class="girl-message-date">{{ctrl.messagesId.letter.createdAt}}</p>
@@ -289,7 +296,7 @@
                 </div>
                 <p class="message-filter-sort-end"><a href="#" class="active">Sort</a><a href="#">Reset</a></p>
               </div>
-<div>{{ctrl.letterCor.letters}}</div>
+<!-- <div>{{ctrl.letterCor.letters}}</div> -->
               <div class="dialog-container" ng-repeat="letter in ctrl.letterCor.letters" >
                 <!-- <div class=" clearfix" ng-class="{'dialog-item' : ctrl.addClass(ctrl.messagesId.message.Sender.id, letter.senderId)}"> -->
                 <div ng-class="{1:'dialog-item dialog-item-out clearfix', 0:'dialog-item dialog-item-in clearfix'}[ctrl.addClass(ctrl.messagesId.letter.senderId, letter.senderId)]">

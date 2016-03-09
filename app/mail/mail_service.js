@@ -36,8 +36,8 @@ function mailService ($resource) {
   };
 
   this.paymentLetter = function(id) {
-    return mailResource.update({mail_id: id, isPaid: true});
-  }
+    return mailResource.update({id: id, isPaid: true});
+  };
 
   this.getAllMessages = function (options) {
     return mailResource.get({
@@ -47,17 +47,21 @@ function mailService ($resource) {
       relations: '{ "sender":{ "country": {} } }'});
   };
 
-  this.getMessagesLength = function(type) {
-    return mailResource.get({type: type});
-  }
+  this.getMessagesLengthInbox = function() {
+    return mailResource.get({ type: 'inbox' });
+  };
+
+  this.getMessagesLengthIntroductions = function() {
+    return mailResource.get({ type: 'introductions' });
+  };
 
   this.getMessagesId = function (id) {
     return mailResource.get({mail_id: id, relations: '{ "sender":{ "country": {} } }'});
-  }
+  };
 
   this.correspondenceGet = function(id) {
     return mailResource.get({partnerId:id, relations: '{ "sender":{ "country": {} } }'})
-  }
+  };
 
   this.deleteMessage = function (id) {
     return mailResource.delete({mail_id: id});
@@ -65,11 +69,11 @@ function mailService ($resource) {
 
   this.addMessage = function(message) {
     return mailResource.save(message);
-  }
+  };
 
 
   return this;
 };
 
 
-mailService.$inject = ['$resource'];;
+mailService.$inject = ['$resource'];

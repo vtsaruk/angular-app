@@ -150,7 +150,6 @@ function mailController ($document, $location, mailService, userService , girlsS
 
   this.getUserData = function () {
     var self = this;
-
     userService.getUser().$promise.then(
       function(data) {
         self.user = data;
@@ -162,6 +161,7 @@ function mailController ($document, $location, mailService, userService , girlsS
   };
 
   this.getUserData();
+  console.log('controller');
 
 
   this.changeType = function (type) {
@@ -185,6 +185,13 @@ function mailController ($document, $location, mailService, userService , girlsS
     mailService.getAllMessages(options).$promise.then(
       function(data) {
         self.messages = data;
+        self.arrLength = self.messages.totalCount/20;
+        self.arrLengthCeil = Math.ceil(self.arrLength);
+        self.arrIndex = [];
+        for(var i=1; i<self.arrLengthCeil+1; i++) {
+          self.arrIndex.push(i);
+        }
+        console.log(self.arrIndex);
         angular.forEach(self.messages.letters, function(letter, index) {
           self.messages.letters[index]['deleted'] = false;
         });
@@ -192,23 +199,29 @@ function mailController ($document, $location, mailService, userService , girlsS
         console.log(error);
       });
     };
-  this.getPage = function (page) {
-    this.page = page-1;
-    this.getMessages();
-  };
-  this.getNextMessages = function () {
-    this.page += 1;
-    this.getMessages();
+
+  this.getNextMessages = function() {
+    if (this.page < this.arrLengthCeil-1) {
+      this.page += 1;
+      this.getMessages();
+    }
   };
 
-  this.getPrevMessages = function () {
+  this.getPrevMessages = function() {
+    if(this.page>0) {
     this.page -= 1;
     this.getMessages();
+  }
   };
+  this.getIndexPage = function(index) {
+    this.page = index-1;
+    this.getMessages();
+
+  }
 
   this.getMessagesIntroductions = function() {/*introductions*/
     var self = this;
-    mailService.getAllMessages('introductions').$promise.then(
+    mailService.getMessagesLengthIntroductions().$promise.then(
       function(data) {
         self.messagesIntroductions = data;
         console.log(self.messagesIntroductions);
@@ -236,9 +249,9 @@ function mailController ($document, $location, mailService, userService , girlsS
     );
   }
 
-  this.getMessagesLength = function(type) {
+  this.getMessagesInboxLength = function() {
     var self = this;
-    mailService.getMessagesLength(type).$promise.then(
+    mailService.getMessagesLengthInbox().$promise.then(
       function(data) {
         self.messagesInbox = data;
         console.log('self.messagesInbox');
@@ -249,7 +262,7 @@ function mailController ($document, $location, mailService, userService , girlsS
     );
   };
 
-  this.getMessagesLength('inbox');
+  this.getMessagesInboxLength();
 
   this.addClass = function(arg1, arg2) {
     return arg1==arg2? 1:0;
@@ -309,13 +322,29 @@ function mailController ($document, $location, mailService, userService , girlsS
       if(letter.deleted) {
         mailService.deleteMessage(letter.id).$promise.then(
           function(data) {
-            self.changeType(self.type);
+            self.getMessages();
           }, function(error) {
             console.log(error);
           });
       }
     })
   };
+
+  this.classMessagesDeleted = function() {
+    var self = this;
+    var res = 0;
+    if(this.messages){
+      console.log('this.messages.letters');
+      console.log(this.messages.letters);
+      angular.forEach(this.messages.letters, function(letter) {
+        if(letter.deleted){
+          res = 1;
+        }
+      })
+    }
+    return res;
+  };
+//this.classDeletMessages();
 
 this.girlsIdGet = function(id) {
     console.log(id, id);
@@ -376,8 +405,8 @@ function mailService ($resource) {
   };
 
   this.paymentLetter = function(id) {
-    return mailResource.update({mail_id: id, isPaid: true});
-  }
+    return mailResource.update({id: id, isPaid: true});
+  };
 
   this.getAllMessages = function (options) {
     return mailResource.get({
@@ -387,17 +416,21 @@ function mailService ($resource) {
       relations: '{ "sender":{ "country": {} } }'});
   };
 
-  this.getMessagesLength = function(type) {
-    return mailResource.get({type: type});
-  }
+  this.getMessagesLengthInbox = function() {
+    return mailResource.get({ type: 'inbox' });
+  };
+
+  this.getMessagesLengthIntroductions = function() {
+    return mailResource.get({ type: 'introductions' });
+  };
 
   this.getMessagesId = function (id) {
     return mailResource.get({mail_id: id, relations: '{ "sender":{ "country": {} } }'});
-  }
+  };
 
   this.correspondenceGet = function(id) {
     return mailResource.get({partnerId:id, relations: '{ "sender":{ "country": {} } }'})
-  }
+  };
 
   this.deleteMessage = function (id) {
     return mailResource.delete({mail_id: id});
@@ -405,14 +438,14 @@ function mailService ($resource) {
 
   this.addMessage = function(message) {
     return mailResource.save(message);
-  }
+  };
 
 
   return this;
 };
 
 
-mailService.$inject = ['$resource'];;
+mailService.$inject = ['$resource'];
 
 },{}],7:[function(require,module,exports){
 module.exports = userService;

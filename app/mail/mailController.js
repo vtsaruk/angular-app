@@ -20,7 +20,6 @@ function mailController ($document, $location, mailService, userService , girlsS
 
   this.getUserData = function () {
     var self = this;
-
     userService.getUser().$promise.then(
       function(data) {
         self.user = data;
@@ -32,6 +31,7 @@ function mailController ($document, $location, mailService, userService , girlsS
   };
 
   this.getUserData();
+  console.log('controller');
 
 
   this.changeType = function (type) {
@@ -55,6 +55,13 @@ function mailController ($document, $location, mailService, userService , girlsS
     mailService.getAllMessages(options).$promise.then(
       function(data) {
         self.messages = data;
+        self.arrLength = self.messages.totalCount/20;
+        self.arrLengthCeil = Math.ceil(self.arrLength);
+        self.arrIndex = [];
+        for(var i=1; i<self.arrLengthCeil+1; i++) {
+          self.arrIndex.push(i);
+        }
+        console.log(self.arrIndex);
         angular.forEach(self.messages.letters, function(letter, index) {
           self.messages.letters[index]['deleted'] = false;
         });
@@ -62,23 +69,29 @@ function mailController ($document, $location, mailService, userService , girlsS
         console.log(error);
       });
     };
-  this.getPage = function (page) {
-    this.page = page-1;
-    this.getMessages();
-  };
-  this.getNextMessages = function () {
-    this.page += 1;
-    this.getMessages();
+
+  this.getNextMessages = function() {
+    if (this.page < this.arrLengthCeil-1) {
+      this.page += 1;
+      this.getMessages();
+    }
   };
 
-  this.getPrevMessages = function () {
+  this.getPrevMessages = function() {
+    if(this.page>0) {
     this.page -= 1;
     this.getMessages();
+  }
   };
+  this.getIndexPage = function(index) {
+    this.page = index-1;
+    this.getMessages();
+
+  }
 
   this.getMessagesIntroductions = function() {/*introductions*/
     var self = this;
-    mailService.getAllMessages('introductions').$promise.then(
+    mailService.getMessagesLengthIntroductions().$promise.then(
       function(data) {
         self.messagesIntroductions = data;
         console.log(self.messagesIntroductions);
@@ -106,9 +119,9 @@ function mailController ($document, $location, mailService, userService , girlsS
     );
   }
 
-  this.getMessagesLength = function(type) {
+  this.getMessagesInboxLength = function() {
     var self = this;
-    mailService.getMessagesLength(type).$promise.then(
+    mailService.getMessagesLengthInbox().$promise.then(
       function(data) {
         self.messagesInbox = data;
         console.log('self.messagesInbox');
@@ -119,7 +132,7 @@ function mailController ($document, $location, mailService, userService , girlsS
     );
   };
 
-  this.getMessagesLength('inbox');
+  this.getMessagesInboxLength();
 
   this.addClass = function(arg1, arg2) {
     return arg1==arg2? 1:0;
@@ -179,13 +192,29 @@ function mailController ($document, $location, mailService, userService , girlsS
       if(letter.deleted) {
         mailService.deleteMessage(letter.id).$promise.then(
           function(data) {
-            self.changeType(self.type);
+            self.getMessages();
           }, function(error) {
             console.log(error);
           });
       }
     })
   };
+
+  this.classMessagesDeleted = function() {
+    var self = this;
+    var res = 0;
+    if(this.messages){
+      console.log('this.messages.letters');
+      console.log(this.messages.letters);
+      angular.forEach(this.messages.letters, function(letter) {
+        if(letter.deleted){
+          res = 1;
+        }
+      })
+    }
+    return res;
+  };
+//this.classDeletMessages();
 
 this.girlsIdGet = function(id) {
     console.log(id, id);
