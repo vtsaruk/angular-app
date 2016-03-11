@@ -44,7 +44,7 @@ function mailService ($resource) {
       type: options.type,
       limit: options.limit,
       offset: options.offset,
-      relations: '{ "sender":{ "country": {} } }'});
+      relations: '{ "sender":{ "country": {}, "girl": {} } }'});
   };
 
   this.getMessagesLengthInbox = function() {
@@ -56,11 +56,11 @@ function mailService ($resource) {
   };
 
   this.getMessagesId = function (id) {
-    return mailResource.get({mail_id: id, relations: '{ "sender":{ "country": {} } }'});
+    return mailResource.get({mail_id: id, relations: '{ "sender":{ "country": {}, "girl": {} } }'});
   };
 
   this.correspondenceGet = function(id) {
-    return mailResource.get({partnerId:id, relations: '{ "sender":{ "country": {} } }'})
+    return mailResource.get({partnerId:id, relations: '{ "sender":{ "country": {}, "girl": {} } }'})
   };
 
   this.deleteMessage = function (id) {

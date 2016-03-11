@@ -7,10 +7,12 @@ var conversationsController = require('./controllers/conversationsController');
 var mailController = require('./mail/mailController');
 var girlsController = require('./mail/girlsController');
 var usersController = require('./mail/usersController');
+var girlsAllController = require('./mail/girlsAllController');
 
 var mailService = require('./mail/mail_service');
 var userService = require('./mail/user_service');
 var girlsService = require('./mail/girls_service');
+var girlsAllService = require('./mail/girlsAll_service');
 
 var app = angular.module('app', ['ui.router', 'ngResource'])
 
@@ -41,10 +43,22 @@ var app = angular.module('app', ['ui.router', 'ngResource'])
       controller: mailController,
       controllerAs: 'ctrl'
     })
-    .state('girls', {
+    .state('girl', {
       url: '/girls/:id',
       templateUrl: 'assets/angular-app/public/profile.html',
       controller: girlsController,
+      controllerAs: 'ctrl'
+    })
+    .state('girls', {
+      url: '/girls',
+      templateUrl: 'assets/angular-app/public/home-logedin.html',
+      controller: girlsAllController,
+      controllerAs: 'ctrl'
+    })
+    .state('home', {
+      url: '/home',
+      templateUrl: 'assets/angular-app/public/home.html',
+      controller: girlsAllController,
       controllerAs: 'ctrl'
     });
 })
@@ -53,11 +67,13 @@ var app = angular.module('app', ['ui.router', 'ngResource'])
 .controller('usersController', ['userService', usersController])
 .controller('mailController', ['mailService','userService', 'girlsService', mailController])
 .controller('girlsController', ['mailService','userService', 'girlsService', girlsController])
+.controller('girlsAllController', ['userService', 'girlsAllService', girlsAllController])
 .factory('userService', ['$resource', userService])
 .factory('mailService', ['$resource', mailService])
-.factory('girlsService', ['$resource', girlsService]);
+.factory('girlsService', ['$resource', girlsService])
+.factory('girlsAllService', ['$resource', girlsAllService]);
 
-},{"./controllers/conversationsController":2,"./mail/girlsController":3,"./mail/girls_service":4,"./mail/mailController":5,"./mail/mail_service":6,"./mail/user_service":7,"./mail/usersController":8,"angular":13,"angular-resource":10,"angular-ui-router":11}],2:[function(require,module,exports){
+},{"./controllers/conversationsController":2,"./mail/girlsAllController":3,"./mail/girlsAll_service":4,"./mail/girlsController":5,"./mail/girls_service":6,"./mail/mailController":7,"./mail/mail_service":8,"./mail/user_service":9,"./mail/usersController":10,"angular":15,"angular-resource":12,"angular-ui-router":13}],2:[function(require,module,exports){
 module.exports = function() {
   /*this.conversations = [
     {'id':13, 'name':'Aleksandra Almazova', 'amount': 35, 'Last_incoming_letter': '13:47   03/12/2014', 'Last_outgoing_letter': '18:34   03/11/2015'},
@@ -69,10 +85,73 @@ module.exports = function() {
   this.message = 'Two birds killed with one stone!';
 };
 },{}],3:[function(require,module,exports){
+module.exports = girlsAllController;
+
+function girlsAllController ($document, $location, userService, girlsAllService) {
+  this.agePerson = function(birthdate) {
+    return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
+  }
+
+  this.getUserData = function () {
+    var self = this;
+
+    userService.getUser().$promise.then(
+      function(data) {
+        self.user = data;
+        console.log(self.user);
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+
+this.getUserData();
+
+  this.girlsAllGet = function(id) {
+    //console.log(id, id);
+    var self = this;
+    girlsAllService.getGirlsAll(id).$promise.then(
+      function(data) {
+        self.girlsAll = data;
+        console.log('self.girlsAll');
+        console.log(self.girlsAll);
+
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+  this.girlsAllGet(2);
+
+};
+
+girlsAllController.$inject = ['$document', '$location', 'userService', 'girlsAllService'];
+},{}],4:[function(require,module,exports){
+module.exports = girlsAllService;
+
+function girlsAllService ($resource) {
+  var girlsResource = $resource('/api/girls',
+    {  });
+
+  this.getGirlsAll = function (id) {
+    return girlsResource.get({ countryId: id, relations: '{"user":{"country":{} } }' });
+  };
+
+  return this;
+};
+
+girlsAllService.$inject = ['$resource'];
+},{}],5:[function(require,module,exports){
 module.exports = girlsController;
 
 
 function girlsController ($document, $stateParams, $location, mailService, userService, girlsService) {
+
+  this.agePerson = function(birthdate) {
+    return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
+  }
 
   this.getUserData = function () {
     var self = this;
@@ -112,7 +191,7 @@ this.getUserData();
 
 
 girlsController.$inject = ['$document', '$stateParams', '$location', 'mailService', 'userService', 'girlsService'];
-},{}],4:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 module.exports = girlsService;
 
 function girlsService ($resource) {
@@ -120,19 +199,24 @@ function girlsService ($resource) {
     { girls_id: '@id' });
 
   this.getGirlsId = function (id) {
-    return girlsResource.get({ girls_id: id });
+    return girlsResource.get({ girls_id: id, relations: '{"user":{"country":{} } }' });
   };
 
   return this;
 };
 
 girlsService.$inject = ['$resource'];
-},{}],5:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 module.exports = mailController;
 
-function mailController ($document, $location, mailService, userService , girlsService) {
+function mailController ($document, $location, $timeout, $anchorScroll, mailService, userService , girlsService) {
+
+  this.agePerson = function(birthdate) {
+    return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
+  }
+
   this.removeClassTab = function(arg) {
-    var list=  angular.element(document.getElementsByClassName('message-tabs-item'));
+    var list =  angular.element(document.getElementsByClassName('message-tabs-item'));
     for(var i=0; i<list.length; i++){
       list[i].className = 'message-tabs-item';
       // list[i].on('click', 'activeAddClass')
@@ -161,8 +245,6 @@ function mailController ($document, $location, mailService, userService , girlsS
   };
 
   this.getUserData();
-  console.log('controller');
-
 
   this.changeType = function (type) {
     this.tumbler = true;
@@ -191,19 +273,36 @@ function mailController ($document, $location, mailService, userService , girlsS
         for(var i=1; i<self.arrLengthCeil+1; i++) {
           self.arrIndex.push(i);
         }
-        console.log(self.arrIndex);
         angular.forEach(self.messages.letters, function(letter, index) {
           self.messages.letters[index]['deleted'] = false;
+
         });
-      }, function(error) {
+        //self.paginaAddClass(0);
+      },
+      function(error) {
         console.log(error);
       });
     };
+
+  this.paginaAddClass = function(index) {
+
+      var arrPaginaClass = angular.element(document.getElementsByClassName('pagina'));
+      console.log(arrPaginaClass.length);
+      for(var i=0; i<arrPaginaClass.length; i++) {
+        arrPaginaClass[i].childNodes[0].className = '';
+      }
+      arrPaginaClass[index].childNodes[0].className = 'text_color_black';
+  }
+  //$timeout( function() { this.paginaAddClass(0);}, 3000 );
+//this.paginaAddClass();
+// nextSibling.nextSibling
 
   this.getNextMessages = function() {
     if (this.page < this.arrLengthCeil-1) {
       this.page += 1;
       this.getMessages();
+      this.paginaAddClass(0);
+      this.paginaAddClass(this.page);
     }
   };
 
@@ -211,11 +310,13 @@ function mailController ($document, $location, mailService, userService , girlsS
     if(this.page>0) {
     this.page -= 1;
     this.getMessages();
+    this.paginaAddClass(this.page);
   }
   };
   this.getIndexPage = function(index) {
     this.page = index-1;
     this.getMessages();
+    this.paginaAddClass(this.page);
 
   }
 
@@ -224,8 +325,7 @@ function mailController ($document, $location, mailService, userService , girlsS
     mailService.getMessagesLengthIntroductions().$promise.then(
       function(data) {
         self.messagesIntroductions = data;
-        console.log(self.messagesIntroductions);
-        }, function(error) {
+      }, function(error) {
         console.log(error);
       }
     );
@@ -234,19 +334,17 @@ function mailController ($document, $location, mailService, userService , girlsS
    // this.getMessagesIntroductions();
 
   this.readTheLetter = function(id){
-    if(this.tumbler) {
-      this.tumbler = false;
-    }
+
     var self = this;
     mailService.getMessagesId(id).$promise.then(
       function(data) {
         self.messagesId = data;
-        console.log(self.messagesId)
       },
       function(error) {
         console.log(error);
       }
     );
+
   }
 
   this.getMessagesInboxLength = function() {
@@ -254,8 +352,6 @@ function mailController ($document, $location, mailService, userService , girlsS
     mailService.getMessagesLengthInbox().$promise.then(
       function(data) {
         self.messagesInbox = data;
-        console.log('self.messagesInbox');
-        console.log(self.messagesInbox);
       }, function(error) {
         console.log(error);
       }
@@ -272,34 +368,36 @@ function mailController ($document, $location, mailService, userService , girlsS
     var self = this;
     mailService.paymentLetter(id).$promise.then(
       function(data) {
-        self.messagesId = data;
-        console.log(self.messagesId)
+        self.messagIdPay = data;
       },
       function(error) {
         console.log(error);
       }
     );
+    //self.readTheLetter(id);
+    //$timeout( function(id) {self.readTheLetter(id); }, 1000);
   }
 
-  this.correspondence =function(partnerid){
+  this.correspondence = function(partnerid) {
     if(this.tumbler) {
-      this.tumbler = false;
-    };
+        this.tumbler = false;
+      };
     var self = this;
     self.currentPartnerid = partnerid;
     mailService.correspondenceGet(partnerid).$promise.then(
       function(data) {
         self.letterCor =data;
-        console.log(self.letterCor);
       },
       function(error) {
         console.log(error);
       }
     );
+    //$location.hash('top');
+    $anchorScroll.yOffset = 200;
+    $anchorScroll();
   }
 
   this.addMessage = function(id) {
-    console.log(id);
     var self = this;
     var msg = {
       text: this.newMessage,
@@ -333,9 +431,7 @@ function mailController ($document, $location, mailService, userService , girlsS
   this.classMessagesDeleted = function() {
     var self = this;
     var res = 0;
-    if(this.messages){
-      console.log('this.messages.letters');
-      console.log(this.messages.letters);
+    if(this.messages) {
       angular.forEach(this.messages.letters, function(letter) {
         if(letter.deleted){
           res = 1;
@@ -364,9 +460,9 @@ this.girlsIdGet = function(id) {
 };
 
 
-mailController.$inject = ['$document', '$location', 'mailService', 'userService', 'girlsService'];
+mailController.$inject = ['$document', '$location', '$timeout', '$anchorScroll', 'mailService', 'userService', 'girlsService'];
 
-},{}],6:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 module.exports = mailService;
 
 function mailService ($resource) {
@@ -413,7 +509,7 @@ function mailService ($resource) {
       type: options.type,
       limit: options.limit,
       offset: options.offset,
-      relations: '{ "sender":{ "country": {} } }'});
+      relations: '{ "sender":{ "country": {}, "girl": {} } }'});
   };
 
   this.getMessagesLengthInbox = function() {
@@ -425,11 +521,11 @@ function mailService ($resource) {
   };
 
   this.getMessagesId = function (id) {
-    return mailResource.get({mail_id: id, relations: '{ "sender":{ "country": {} } }'});
+    return mailResource.get({mail_id: id, relations: '{ "sender":{ "country": {}, "girl": {} } }'});
   };
 
   this.correspondenceGet = function(id) {
-    return mailResource.get({partnerId:id, relations: '{ "sender":{ "country": {} } }'})
+    return mailResource.get({partnerId:id, relations: '{ "sender":{ "country": {}, "girl": {} } }'})
   };
 
   this.deleteMessage = function (id) {
@@ -447,7 +543,7 @@ function mailService ($resource) {
 
 mailService.$inject = ['$resource'];
 
-},{}],7:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 module.exports = userService;
 
 function userService ($resource) {
@@ -461,7 +557,7 @@ function userService ($resource) {
 };
 
 userService.$inject = ['$resource'];
-},{}],8:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 module.exports = usersController;
 
 function usersController ($document, $location, userService ) {
@@ -487,7 +583,7 @@ function usersController ($document, $location, userService ) {
 }
 
 usersController.$inject = ['$document', '$location', 'userService'];
-},{}],9:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.0
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -1257,11 +1353,11 @@ angular.module('ngResource', ['ng']).
 
 })(window, window.angular);
 
-},{}],10:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 require('./angular-resource');
 module.exports = 'ngResource';
 
-},{"./angular-resource":9}],11:[function(require,module,exports){
+},{"./angular-resource":11}],13:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -5632,7 +5728,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],12:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.0
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -36061,8 +36157,8 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],13:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":12}]},{},[1]);
+},{"./angular":14}]},{},[1]);

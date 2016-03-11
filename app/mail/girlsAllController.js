@@ -1,8 +1,6 @@
-module.exports = girlsController;
+module.exports = girlsAllController;
 
-
-function girlsController ($document, $stateParams, $location, mailService, userService, girlsService) {
-
+function girlsAllController ($document, $location, userService, girlsAllService) {
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
   }
@@ -23,15 +21,14 @@ function girlsController ($document, $stateParams, $location, mailService, userS
 
 this.getUserData();
 
-  var id = $stateParams.id;
-
-  this.girlsIdGet = function(id) {
-    console.log(id, id);
+  this.girlsAllGet = function(id) {
+    //console.log(id, id);
     var self = this;
-    girlsService.getGirlsId(id).$promise.then(
+    girlsAllService.getGirlsAll(id).$promise.then(
       function(data) {
-        self.girlsId = data;
-        console.log(self.girlsId);
+        self.girlsAll = data;
+        console.log('self.girlsAll');
+        console.log(self.girlsAll);
 
       },
       function(error) {
@@ -39,9 +36,8 @@ this.getUserData();
       }
     );
   };
-  this.girlsIdGet(id);
+  this.girlsAllGet(2);
 
 };
 
-
-girlsController.$inject = ['$document', '$stateParams', '$location', 'mailService', 'userService', 'girlsService'];
+girlsAllController.$inject = ['$document', '$location', 'userService', 'girlsAllService'];

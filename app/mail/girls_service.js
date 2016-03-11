@@ -5,7 +5,7 @@ function girlsService ($resource) {
     { girls_id: '@id' });
 
   this.getGirlsId = function (id) {
-    return girlsResource.get({ girls_id: id });
+    return girlsResource.get({ girls_id: id, relations: '{"user":{"country":{} } }' });
   };
 
   return this;

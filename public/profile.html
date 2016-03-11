@@ -145,8 +145,8 @@
 						<div class="profile-right-side">
 							<div class="profile-right-side-topinfo clearfix">
 								<div class="profile-right-side-topinfo-left">
-									<p>Olga<span>, 23</span><span class="status"><img src="assets/angular-app/public/img/radio-button.png" alt="">online</span></p>
-									<p class="location">Ukraine, Kiev</p>
+									<p>{{ctrl.girlsId.girl.user.firstname}}<span>, {{ctrl.agePerson(ctrl.girlsId.girl.user.birthdate)}}</span><span class="status"><img src="assets/angular-app/public/img/radio-button.png" alt="">online</span></p>
+									<p class="location">{{ctrl.girlsId.girl.user.country.name}}, {{ctrl.girlsId.girl.user.city}}</p>
 									<a href="#"><img src="assets/angular-app/public/img/pisces.png" alt="">Pisces</a>
 								</div>
 								<div class="profile-right-side-topinfo-right">
@@ -250,9 +250,9 @@
 													<div class="profile-right-side-about-item">
 														<h6 class="red-14-Lt-w600 mn-b-5">Other languages</h6>
 														<p class="grey-14-Lt">
-															<ul class="list-style-circle">
-																<li class="grey-14-Lt">Italian, Intermidiate</li>
-																<li class="grey-14-Lt">Spanish, Beginner</li>
+															<ul class="list-style-circle" >
+																<li ng-repeat="languag in ctrl.girlsId.girl.languages" class="grey-14-Lt">{{languag}}</li>
+																<!-- <li class="grey-14-Lt">Spanish, Beginner</li> -->
 															</ul>
 														</p>
 													</div>
@@ -281,9 +281,9 @@
 													<div class="profile-right-side-about-item">
 														<h6 class="red-14-Lt-w600 mn-b-5">Children </h6>
 														<p class="grey-14-Lt">
-															<ul class="list-style-circle">
-																<li class="grey-14-Lt">Boy, 6</li>
-																<li class="grey-14-Lt">Sanish, Beginner</li>
+															<ul class="list-style-circle" >
+																<li ng-repeat="child in ctrl.girlsId.girl.children"class="grey-14-Lt">{{child}}</li>
+																<!-- <li class="grey-14-Lt">Sanish, Beginner</li> -->
 															</ul>
 														</p>
 													</div>
@@ -320,10 +320,10 @@
 												<img src="assets/angular-app/public/img/girls-333.jpg" alt="">
 											</div>
 											<div class="item">
-												<img src="img/girls-111.jpg" alt="">
+												<img src="assets/angular-app/public/img/girls-111.jpg" alt="">
 											</div>
 											<div class="item">
-												<img src="img/girls-333.jpg" alt="">
+												<img src="assets/angular-app/public/img/girls-333.jpg" alt="">
 											</div>
 										</div>
 										<div class="customNavigation">

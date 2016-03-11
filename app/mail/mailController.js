@@ -1,8 +1,13 @@
 module.exports = mailController;
 
-function mailController ($document, $location, mailService, userService , girlsService) {
+function mailController ($document, $location, $timeout, $anchorScroll, mailService, userService , girlsService) {
+
+  this.agePerson = function(birthdate) {
+    return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
+  }
+
   this.removeClassTab = function(arg) {
-    var list=  angular.element(document.getElementsByClassName('message-tabs-item'));
+    var list =  angular.element(document.getElementsByClassName('message-tabs-item'));
     for(var i=0; i<list.length; i++){
       list[i].className = 'message-tabs-item';
       // list[i].on('click', 'activeAddClass')
@@ -31,8 +36,6 @@ function mailController ($document, $location, mailService, userService , girlsS
   };
 
   this.getUserData();
-  console.log('controller');
-
 
   this.changeType = function (type) {
     this.tumbler = true;
@@ -61,19 +64,36 @@ function mailController ($document, $location, mailService, userService , girlsS
         for(var i=1; i<self.arrLengthCeil+1; i++) {
           self.arrIndex.push(i);
         }
-        console.log(self.arrIndex);
         angular.forEach(self.messages.letters, function(letter, index) {
           self.messages.letters[index]['deleted'] = false;
+
         });
-      }, function(error) {
+        //self.paginaAddClass(0);
+      },
+      function(error) {
         console.log(error);
       });
     };
+
+  this.paginaAddClass = function(index) {
+
+      var arrPaginaClass = angular.element(document.getElementsByClassName('pagina'));
+      console.log(arrPaginaClass.length);
+      for(var i=0; i<arrPaginaClass.length; i++) {
+        arrPaginaClass[i].childNodes[0].className = '';
+      }
+      arrPaginaClass[index].childNodes[0].className = 'text_color_black';
+  }
+  //$timeout( function() { this.paginaAddClass(0);}, 3000 );
+//this.paginaAddClass();
+// nextSibling.nextSibling
 
   this.getNextMessages = function() {
     if (this.page < this.arrLengthCeil-1) {
       this.page += 1;
       this.getMessages();
+      this.paginaAddClass(0);
+      this.paginaAddClass(this.page);
     }
   };
 
@@ -81,11 +101,13 @@ function mailController ($document, $location, mailService, userService , girlsS
     if(this.page>0) {
     this.page -= 1;
     this.getMessages();
+    this.paginaAddClass(this.page);
   }
   };
   this.getIndexPage = function(index) {
     this.page = index-1;
     this.getMessages();
+    this.paginaAddClass(this.page);
 
   }
 
@@ -94,8 +116,7 @@ function mailController ($document, $location, mailService, userService , girlsS
     mailService.getMessagesLengthIntroductions().$promise.then(
       function(data) {
         self.messagesIntroductions = data;
-        console.log(self.messagesIntroductions);
-        }, function(error) {
+      }, function(error) {
         console.log(error);
       }
     );
@@ -104,19 +125,17 @@ function mailController ($document, $location, mailService, userService , girlsS
    // this.getMessagesIntroductions();
 
   this.readTheLetter = function(id){
-    if(this.tumbler) {
-      this.tumbler = false;
-    }
+
     var self = this;
     mailService.getMessagesId(id).$promise.then(
       function(data) {
         self.messagesId = data;
-        console.log(self.messagesId)
       },
       function(error) {
         console.log(error);
       }
     );
+
   }
 
   this.getMessagesInboxLength = function() {
@@ -124,8 +143,6 @@ function mailController ($document, $location, mailService, userService , girlsS
     mailService.getMessagesLengthInbox().$promise.then(
       function(data) {
         self.messagesInbox = data;
-        console.log('self.messagesInbox');
-        console.log(self.messagesInbox);
       }, function(error) {
         console.log(error);
       }
@@ -142,34 +159,36 @@ function mailController ($document, $location, mailService, userService , girlsS
     var self = this;
     mailService.paymentLetter(id).$promise.then(
       function(data) {
-        self.messagesId = data;
-        console.log(self.messagesId)
+        self.messagIdPay = data;
       },
       function(error) {
         console.log(error);
       }
     );
+    //self.readTheLetter(id);
+    //$timeout( function(id) {self.readTheLetter(id); }, 1000);
   }
 
-  this.correspondence =function(partnerid){
+  this.correspondence = function(partnerid) {
     if(this.tumbler) {
-      this.tumbler = false;
-    };
+        this.tumbler = false;
+      };
     var self = this;
     self.currentPartnerid = partnerid;
     mailService.correspondenceGet(partnerid).$promise.then(
       function(data) {
         self.letterCor =data;
-        console.log(self.letterCor);
       },
       function(error) {
         console.log(error);
       }
     );
+    //$location.hash('top');
+    $anchorScroll.yOffset = 200;
+    $anchorScroll();
   }
 
   this.addMessage = function(id) {
-    console.log(id);
     var self = this;
     var msg = {
       text: this.newMessage,
@@ -203,9 +222,7 @@ function mailController ($document, $location, mailService, userService , girlsS
   this.classMessagesDeleted = function() {
     var self = this;
     var res = 0;
-    if(this.messages){
-      console.log('this.messages.letters');
-      console.log(this.messages.letters);
+    if(this.messages) {
       angular.forEach(this.messages.letters, function(letter) {
         if(letter.deleted){
           res = 1;
@@ -234,4 +251,4 @@ this.girlsIdGet = function(id) {
 };
 
 
-mailController.$inject = ['$document', '$location', 'mailService', 'userService', 'girlsService'];
+mailController.$inject = ['$document', '$location', '$timeout', '$anchorScroll', 'mailService', 'userService', 'girlsService'];
