@@ -8,11 +8,13 @@ var mailController = require('./mail/mailController');
 var girlsController = require('./mail/girlsController');
 var usersController = require('./mail/usersController');
 var girlsAllController = require('./mail/girlsAllController');
+var mailIdController = require('./mail/mailIdController');
 
 var mailService = require('./mail/mail_service');
 var userService = require('./mail/user_service');
 var girlsService = require('./mail/girls_service');
 var girlsAllService = require('./mail/girlsAll_service');
+var mailIdService = require('./mail/mailId_service');
 
 var app = angular.module('app', ['ui.router', 'ngResource'])
 
@@ -60,6 +62,12 @@ var app = angular.module('app', ['ui.router', 'ngResource'])
       templateUrl: 'assets/angular-app/public/home.html',
       controller: girlsAllController,
       controllerAs: 'ctrl'
+    })
+    .state('mail', {
+      url: '/mail/:id',
+      templateUrl: 'assets/angular-app/public/conversation-with-the-girl.html',
+      controller: mailIdController,
+      controllerAs: 'ctrl'
     });
 })
 
@@ -68,12 +76,14 @@ var app = angular.module('app', ['ui.router', 'ngResource'])
 .controller('mailController', ['mailService','userService', 'girlsService', mailController])
 .controller('girlsController', ['mailService','userService', 'girlsService', girlsController])
 .controller('girlsAllController', ['userService', 'girlsAllService', girlsAllController])
+.controller('mailIdController', ['userService', 'mailService', 'girlsAllService', 'mailIdService', mailIdController])
 .factory('userService', ['$resource', userService])
 .factory('mailService', ['$resource', mailService])
 .factory('girlsService', ['$resource', girlsService])
-.factory('girlsAllService', ['$resource', girlsAllService]);
+.factory('girlsAllService', ['$resource', girlsAllService])
+.factory('mailIdService', ['$resource', mailIdService]);
 
-},{"./controllers/conversationsController":2,"./mail/girlsAllController":3,"./mail/girlsAll_service":4,"./mail/girlsController":5,"./mail/girls_service":6,"./mail/mailController":7,"./mail/mail_service":8,"./mail/user_service":9,"./mail/usersController":10,"angular":15,"angular-resource":12,"angular-ui-router":13}],2:[function(require,module,exports){
+},{"./controllers/conversationsController":2,"./mail/girlsAllController":3,"./mail/girlsAll_service":4,"./mail/girlsController":5,"./mail/girls_service":6,"./mail/mailController":7,"./mail/mailIdController":8,"./mail/mailId_service":9,"./mail/mail_service":10,"./mail/user_service":11,"./mail/usersController":12,"angular":17,"angular-resource":14,"angular-ui-router":15}],2:[function(require,module,exports){
 module.exports = function() {
   /*this.conversations = [
     {'id':13, 'name':'Aleksandra Almazova', 'amount': 35, 'Last_incoming_letter': '13:47   03/12/2014', 'Last_outgoing_letter': '18:34   03/11/2015'},
@@ -98,7 +108,6 @@ function girlsAllController ($document, $location, userService, girlsAllService)
     userService.getUser().$promise.then(
       function(data) {
         self.user = data;
-        console.log(self.user);
       },
       function(error) {
         console.log(error);
@@ -106,25 +115,52 @@ function girlsAllController ($document, $location, userService, girlsAllService)
     );
   };
 
-this.getUserData();
+  this.getUserData();
+
+
 
   this.girlsAllGet = function(id) {
-    //console.log(id, id);
     var self = this;
-    girlsAllService.getGirlsAll(id).$promise.then(
+    var options = {
+      limit: self.limit,
+      offset: self.limit * self.page
+    };
+    girlsAllService.getGirlsAll(id, options).$promise.then(
       function(data) {
         self.girlsAll = data;
+        self.gillsLength = self.girlsAll.totalCount;
+        self.countPage = self.gillsLength / self.limit;
+        self.totalPage = Math.ceil(self.countPage);
         console.log('self.girlsAll');
-        console.log(self.girlsAll);
-
+        console.log('self.totalPage1');
+        console.log(self.totalPage);
       },
       function(error) {
         console.log(error);
       }
     );
   };
-  this.girlsAllGet(2);
+  //this.girlsAllGet(2);
+  this.page = 0;
+  this.limit = 3;
 
+  this.paginaGirl = function() {
+    console.log(this.page);
+    if (this.totalPage){
+      if(this.totalPage > this.page) {
+        this.girlsAllGet(2);
+        this.page += 1;
+      }
+    } else {
+      this.girlsAllGet(2);
+      this.page += 1;
+    }
+    //console.log('self.totalPage2');
+    //console.log(this.totalPage);
+    //console.log(this.user);
+  };
+
+  this.paginaGirl();
 };
 
 girlsAllController.$inject = ['$document', '$location', 'userService', 'girlsAllService'];
@@ -135,8 +171,14 @@ function girlsAllService ($resource) {
   var girlsResource = $resource('/api/girls',
     {  });
 
-  this.getGirlsAll = function (id) {
-    return girlsResource.get({ countryId: id, relations: '{"user":{"country":{} } }' });
+  this.getGirlsAll = function (id, options) {
+    return girlsResource.get({
+      type: options.type,
+      limit: options.limit,
+      offset: options.offset,
+      countryId: id,
+       relations: '{"user":{"country":{} } }'
+    });
   };
 
   return this;
@@ -287,7 +329,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
   this.paginaAddClass = function(index) {
 
       var arrPaginaClass = angular.element(document.getElementsByClassName('pagina'));
-      console.log(arrPaginaClass.length);
+      // console.log(arrPaginaClass.length);
       for(var i=0; i<arrPaginaClass.length; i++) {
         arrPaginaClass[i].childNodes[0].className = '';
       }
@@ -320,30 +362,36 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
 
   }
 
-  this.getMessagesIntroductions = function() {/*introductions*/
+  this.getMessagesIntroductions = function() {
     var self = this;
     mailService.getMessagesLengthIntroductions().$promise.then(
       function(data) {
         self.messagesIntroductions = data;
-      }, function(error) {
-        console.log(error);
-      }
-    );
-  }
-
-   // this.getMessagesIntroductions();
-
-  this.readTheLetter = function(id){
-
-    var self = this;
-    mailService.getMessagesId(id).$promise.then(
-      function(data) {
-        self.messagesId = data;
       },
       function(error) {
         console.log(error);
       }
     );
+  }
+
+  this.getMessagesIntroductions();
+
+  this.readTheLetter = function(id, partnerid){
+    if(this.tumbler) {
+        this.tumbler = false;
+      };
+    var self = this;
+    mailService.getMessagesId(id).$promise.then(
+      function(data) {
+        self.messagesId = data;
+        self.correspondence(partnerid);
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+    $anchorScroll.yOffset = 200;
+    $anchorScroll();
 
   }
 
@@ -364,17 +412,21 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     return arg1==arg2? 1:0;
   }
 
-  this.payment =function(id) {
+  this.payment =function(id, partnerid) {
     var self = this;
     mailService.paymentLetter(id).$promise.then(
       function(data) {
         self.messagIdPay = data;
+        self.readTheLetter(id);
+        self.correspondence(partnerid);
       },
       function(error) {
         console.log(error);
       }
     );
-    //self.readTheLetter(id);
+    // do {
+
+    // } while(self.messagesId.letter.isPaid==true);
     //$timeout( function(id) {self.readTheLetter(id); }, 1000);
   }
 
@@ -387,14 +439,16 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     mailService.correspondenceGet(partnerid).$promise.then(
       function(data) {
         self.letterCor =data;
+        console.log("correspondence");
       },
       function(error) {
         console.log(error);
       }
     );
     //$location.hash('top');
-    $anchorScroll.yOffset = 200;
-    $anchorScroll();
+
+    //console.log('!!!!!!!!!!!!');
+    //self.readTheLetter(id);
   }
 
   this.addMessage = function(id) {
@@ -404,8 +458,18 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       recipientId: id,
       type: 'box'
     };
-    mailService.addMessage2(msg);
-    this.newMessage = '';
+    mailService.addMessage2(msg).$promise.then(
+      function(data) {
+        self.newMessage = '';
+        self.correspondence(id);
+
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+    // this.newMessage = '';
+    // self.correspondence(id);
   };
 
   //this.change = function(type) {
@@ -463,6 +527,118 @@ this.girlsIdGet = function(id) {
 mailController.$inject = ['$document', '$location', '$timeout', '$anchorScroll', 'mailService', 'userService', 'girlsService'];
 
 },{}],8:[function(require,module,exports){
+module.exports = mailIdController;
+
+function mailIdController ($document, $stateParams, $location, $timeout, mailService, userService , girlsService, mailIdService) {
+
+  var id = $stateParams.id;
+  console.log('GOOD!!!');
+  console.log(id);
+
+  this.agePerson = function(birthdate) {
+    return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
+  }
+
+  this.getUserData = function () {
+    var self = this;
+
+    userService.getUser().$promise.then(
+      function(data) {
+        self.user = data;
+        //console.log(self.user);
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+
+this.getUserData();
+this.correspondence = function(partnerid) {
+    if(this.tumbler) {
+        this.tumbler = false;
+      };
+    var self = this;
+    self.currentPartnerid = partnerid;
+    mailService.correspondenceGet(partnerid).$promise.then(
+      function(data) {
+        self.letterCor =data;
+
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+    //$location.hash('top');
+    // $anchorScroll.yOffset = 200;
+    // $anchorScroll();
+    //console.log('!!!!!!!!!!!!');
+    //self.readTheLetter(id);
+  }
+
+this.girlsIdGet = function(id) {
+    console.log(id, id);
+    var self = this;
+    mailIdService.conversationGirlsId(id).$promise.then(
+      function(data) {
+        self.girlsId = data;
+        self.correspondence(self.girlsId.girl.userId);
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+
+
+  };
+  this.girlsIdGet(id);
+
+  this.addMessage = function(id) {
+    var self = this;
+    var msg = {
+      text: this.newMessage,
+      recipientId: id,
+      type: 'box'
+    };
+    mailService.addMessage2(msg).$promise.then(
+      function(data) {
+        self.newMessage = '';
+        self.correspondence(id);
+
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+
+  this.addClass = function(arg1, arg2) {
+
+    return arg1==arg2? 1:0;
+  }
+
+
+  //this.correspondence(id);
+
+};
+
+mailIdController.$inject = ['$document', '$stateParams', '$location', '$timeout', 'mailService', 'userService', 'girlsService', 'mailIdService'];
+},{}],9:[function(require,module,exports){
+module.exports = mailIdService;
+
+function mailIdService ($resource) {
+  var girlsResource = $resource('/api/girls/:girls_id',
+    { girls_id: '@id' });
+
+  this.conversationGirlsId = function (id) {
+    return girlsResource.get({ girls_id: id, relations: '{"user":{"country":{} } }' });
+  };
+
+  return this;
+};
+
+mailIdService.$inject = ['$resource'];
+},{}],10:[function(require,module,exports){
 module.exports = mailService;
 
 function mailService ($resource) {
@@ -509,7 +685,8 @@ function mailService ($resource) {
       type: options.type,
       limit: options.limit,
       offset: options.offset,
-      relations: '{ "sender":{ "country": {}, "girl": {} } }'});
+      relations: '{ "sender":{ "country": {}, "girl": {} } }'
+    });
   };
 
   this.getMessagesLengthInbox = function() {
@@ -543,7 +720,7 @@ function mailService ($resource) {
 
 mailService.$inject = ['$resource'];
 
-},{}],9:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 module.exports = userService;
 
 function userService ($resource) {
@@ -557,7 +734,7 @@ function userService ($resource) {
 };
 
 userService.$inject = ['$resource'];
-},{}],10:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 module.exports = usersController;
 
 function usersController ($document, $location, userService ) {
@@ -583,7 +760,7 @@ function usersController ($document, $location, userService ) {
 }
 
 usersController.$inject = ['$document', '$location', 'userService'];
-},{}],11:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.0
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -1353,11 +1530,11 @@ angular.module('ngResource', ['ng']).
 
 })(window, window.angular);
 
-},{}],12:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 require('./angular-resource');
 module.exports = 'ngResource';
 
-},{"./angular-resource":11}],13:[function(require,module,exports){
+},{"./angular-resource":13}],15:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -5728,7 +5905,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],14:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.0
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -36157,8 +36334,8 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],15:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":14}]},{},[1]);
+},{"./angular":16}]},{},[1]);

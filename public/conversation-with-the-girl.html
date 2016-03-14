@@ -1,4 +1,4 @@
-
+<div class="chat-with-girl">
 	<!-- header -->
 	<header>
 		<div class="container">
@@ -19,13 +19,13 @@
 					<nav class="header--nav">
 						<ul class="clearfix">
 							<li>
-								<a href="#">Ladies</a>
+								<a href="/#/girls">Ladies</a>
 							</li>
 							<li>
 								<a href="#">Search</a>
 							</li>
 							<li>
-								<a href="#">Mail</a>
+								<a href="/#/man">Mail</a>
 							</li>
 							<li>
 								<a href="#">Chat</a>
@@ -75,7 +75,7 @@
 		<div class="row">
 				<div class="col-md-12">
 					<div class="main-content clearfix">
-						<div class="message-tabs">
+						<!-- <div class="message-tabs">
 							<div class="message-tabs-item">
 								<p>Introductions</p>
 							</div>
@@ -88,16 +88,21 @@
 							<div class="message-tabs-item">
 								<p>Deleted</p>
 							</div>
-						</div>
+						</div> -->
 						<div class="line"></div>
 						<div class="girls-messages">
-							<div class="girls-message-item">
-								<!-- <div class="girls-message-checkbox">
+            <!-- <div>{{ctrl.girlsId.girl.userId}}</div> -->
+            <!-- <div>{{ctrl.letterCor}}</div> -->
+
+
+
+							<!-- <div class="girls-message-item">
+								<div class="girls-message-checkbox">
 									<label class="checkbox-1">
 											<input type="checkbox">
 											<span></span>
 									</label>
-								</div> -->
+								</div>
 								<div class="girls-messega-item-content">
 								<ul>
 									<li><a href="#"><img src="assets/angular-app/public/img/grey-like-message.png" alt=""></a></li>
@@ -126,11 +131,15 @@
 								</div>
 								<p class="girl-message-date">14.09.2015 10:58</p>
 
-								<!-- <button class="btn-send">Read the letter</button> -->
+								<button class="btn-send">Read the letter</button>
 								</div>
-							</div>
+							</div> -->
+
+
+
+
 							<div class="send-message">
-								<h4><img src="assets/angular-app/public/img/red-pensil.png" alt="">Send Message to Natasha</h4>
+								<h4><img src="assets/angular-app/public/img/red-pensil.png" alt="">Send Message to {{ctrl.girlsId.girl.user.firstname}}</h4>
 
 								<textarea type="text" class="send-message-input" ng-model="ctrl.newMessage"></textarea>
 
@@ -144,9 +153,10 @@
 									<li class="not-choose"><a href="#"><img src="assets/angular-app/public/img/grey-heart-in.png" alt="">Choose files</a><span>Someone name</span></li>
 								</ul>
 
-								<button class="btn-send" ng-click="ctrl.addMessage()">Send</button>
+								<button class="btn-send" ng-click="ctrl.addMessage(ctrl.girlsId.girl.userId)">Send</button>
 
 							</div>
+<div ng-show="ctrl.letterCor.totalCount">
 							<div class="history clearfix">
 								<h4><img src="assets/angular-app/public/img/clock-icon.png" alt="">Correspondence history</h4>
 								<p class="p-sort"><img src="assets/angular-app/public/img/calendar.png" alt="">Sort by Date<i class="fa fa-caret-down"></i></p>
@@ -172,16 +182,16 @@
 								<p class="message-filter-sort-end"><a href="#" class="active">Sort</a><a href="#">Reset</a></p>
 
 							</div>
-              <div>{{ctrl.letterCor}}</div>
+<!-- <div>{{ctrl.letterCor.totalCount}}</div> -->
 							<div class="dialog-container " >
-								<div class="dialog-item dialog-item-in clearfix">
+								<div ng-repeat="letter in ctrl.letterCor.letters" ng-class="{1:'dialog-item dialog-item-out clearfix', 0:'dialog-item dialog-item-in clearfix'}[ctrl.addClass(ctrl.girlsId.girl.userId, letter.senderId)]">
 									<img src="assets/angular-app/public/img/girl-message-1.jpg" alt="" class="img-dialog">
 									<div class="girls-message-item-info clearfix">
 										<div>
-											<a href="#"><span>Natasha</span></a>
+											<a href="/#/girls/{{letter.sender.girl.id}}"><span>{{letter.sender.firstname}}</span></a>
 										</div>
 										<div class="clear"></div>
-										<p class="girls-message-item-descr">Hello my dear)) today morning was fun, went with a friend to walk the dog. He breaks out of the ... <a href="#">more<i class="fa fa-chevron-right"></i></a></p>
+										<p class="girls-message-item-descr">{{letter.additionalData.text}}<a href="#">more<i class="fa fa-chevron-right"></i></a></p>
 										<p class="girl-message-date">14.09.2015 10:58</p>
 										<a href="#" class="girl-message-photo"><img src="assets/angular-app/public/img/photo.png" alt="" class="mn-t-10"><span>3</span></a>
 									</div>
@@ -273,6 +283,7 @@
 
 
 							</div>
+</div>
 						</div>
 					</div>
 				</div>
@@ -319,7 +330,7 @@
 				</div>
 				<div class="col-sm-2 col-md-3 col-lg-2 f-key-3">
 					<a href="#">
-						<img src="img/footer-logo.png" alt=""></a>
+						<img src="assets/angular-app/public/img/footer-logo.png" alt=""></a>
 				</div>
 				<div class="col-sm-3 col-md-3 f-key-4">
 					<div class="footer-right-side">
@@ -329,28 +340,28 @@
 						<ul>
 							<li>
 								<a href="#" class="fb">
-									<img src="img/fb.png" alt=""></a>
+									<img src="assets/angular-app/public/img/fb.png" alt=""></a>
 							</li>
 							<li>
 								<a href="#" class="tt">
-									<img src="img/tb.png" alt=""></a>
+									<img src="assets/angular-app/public/img/tb.png" alt=""></a>
 							</li>
 							<li>
 								<a href="#" class="g-plus">
-									<img src="img/g-plus.png" alt=""></a>
+									<img src="assets/angular-app/public/img/g-plus.png" alt=""></a>
 							</li>
 							<li>
 								<a href="#" class="yb">
-									<img src="img/yb.png" alt=""></a>
+									<img src="assets/angular-app/public/img/yb.png" alt=""></a>
 							</li>
 							<li>
 								<a href="#" class="pp">
-									<img src="img/p.png" alt="">
+									<img src="assets/angular-app/public/img/p.png" alt="">
 								</a>
 							</li>
 							<li>
 								<a href="#" class="insta">
-									<img src="img/insta.png" alt="">
+									<img src="assets/angular-app/public/img/insta.png" alt="">
 								</a>
 							</li>
 						</ul>
@@ -381,3 +392,4 @@
 
 	</script>
 	<script src="js/main.js"></script>
+</div>

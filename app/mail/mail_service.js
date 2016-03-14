@@ -44,7 +44,8 @@ function mailService ($resource) {
       type: options.type,
       limit: options.limit,
       offset: options.offset,
-      relations: '{ "sender":{ "country": {}, "girl": {} } }'});
+      relations: '{ "sender":{ "country": {}, "girl": {} } }'
+    });
   };
 
   this.getMessagesLengthInbox = function() {

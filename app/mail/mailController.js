@@ -78,7 +78,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
   this.paginaAddClass = function(index) {
 
       var arrPaginaClass = angular.element(document.getElementsByClassName('pagina'));
-      console.log(arrPaginaClass.length);
+      // console.log(arrPaginaClass.length);
       for(var i=0; i<arrPaginaClass.length; i++) {
         arrPaginaClass[i].childNodes[0].className = '';
       }
@@ -111,30 +111,36 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
 
   }
 
-  this.getMessagesIntroductions = function() {/*introductions*/
+  this.getMessagesIntroductions = function() {
     var self = this;
     mailService.getMessagesLengthIntroductions().$promise.then(
       function(data) {
         self.messagesIntroductions = data;
-      }, function(error) {
-        console.log(error);
-      }
-    );
-  }
-
-   // this.getMessagesIntroductions();
-
-  this.readTheLetter = function(id){
-
-    var self = this;
-    mailService.getMessagesId(id).$promise.then(
-      function(data) {
-        self.messagesId = data;
       },
       function(error) {
         console.log(error);
       }
     );
+  }
+
+  this.getMessagesIntroductions();
+
+  this.readTheLetter = function(id, partnerid){
+    if(this.tumbler) {
+        this.tumbler = false;
+      };
+    var self = this;
+    mailService.getMessagesId(id).$promise.then(
+      function(data) {
+        self.messagesId = data;
+        self.correspondence(partnerid);
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+    $anchorScroll.yOffset = 200;
+    $anchorScroll();
 
   }
 
@@ -155,17 +161,21 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     return arg1==arg2? 1:0;
   }
 
-  this.payment =function(id) {
+  this.payment =function(id, partnerid) {
     var self = this;
     mailService.paymentLetter(id).$promise.then(
       function(data) {
         self.messagIdPay = data;
+        self.readTheLetter(id);
+        self.correspondence(partnerid);
       },
       function(error) {
         console.log(error);
       }
     );
-    //self.readTheLetter(id);
+    // do {
+
+    // } while(self.messagesId.letter.isPaid==true);
     //$timeout( function(id) {self.readTheLetter(id); }, 1000);
   }
 
@@ -178,14 +188,16 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     mailService.correspondenceGet(partnerid).$promise.then(
       function(data) {
         self.letterCor =data;
+        console.log("correspondence");
       },
       function(error) {
         console.log(error);
       }
     );
     //$location.hash('top');
-    $anchorScroll.yOffset = 200;
-    $anchorScroll();
+
+    //console.log('!!!!!!!!!!!!');
+    //self.readTheLetter(id);
   }
 
   this.addMessage = function(id) {
@@ -195,8 +207,18 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       recipientId: id,
       type: 'box'
     };
-    mailService.addMessage2(msg);
-    this.newMessage = '';
+    mailService.addMessage2(msg).$promise.then(
+      function(data) {
+        self.newMessage = '';
+        self.correspondence(id);
+
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+    // this.newMessage = '';
+    // self.correspondence(id);
   };
 
   //this.change = function(type) {

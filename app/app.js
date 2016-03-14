@@ -7,11 +7,13 @@ var mailController = require('./mail/mailController');
 var girlsController = require('./mail/girlsController');
 var usersController = require('./mail/usersController');
 var girlsAllController = require('./mail/girlsAllController');
+var mailIdController = require('./mail/mailIdController');
 
 var mailService = require('./mail/mail_service');
 var userService = require('./mail/user_service');
 var girlsService = require('./mail/girls_service');
 var girlsAllService = require('./mail/girlsAll_service');
+var mailIdService = require('./mail/mailId_service');
 
 var app = angular.module('app', ['ui.router', 'ngResource'])
 
@@ -59,6 +61,12 @@ var app = angular.module('app', ['ui.router', 'ngResource'])
       templateUrl: 'assets/angular-app/public/home.html',
       controller: girlsAllController,
       controllerAs: 'ctrl'
+    })
+    .state('mail', {
+      url: '/mail/:id',
+      templateUrl: 'assets/angular-app/public/conversation-with-the-girl.html',
+      controller: mailIdController,
+      controllerAs: 'ctrl'
     });
 })
 
@@ -67,7 +75,9 @@ var app = angular.module('app', ['ui.router', 'ngResource'])
 .controller('mailController', ['mailService','userService', 'girlsService', mailController])
 .controller('girlsController', ['mailService','userService', 'girlsService', girlsController])
 .controller('girlsAllController', ['userService', 'girlsAllService', girlsAllController])
+.controller('mailIdController', ['userService', 'mailService', 'girlsAllService', 'mailIdService', mailIdController])
 .factory('userService', ['$resource', userService])
 .factory('mailService', ['$resource', mailService])
 .factory('girlsService', ['$resource', girlsService])
-.factory('girlsAllService', ['$resource', girlsAllService]);
+.factory('girlsAllService', ['$resource', girlsAllService])
+.factory('mailIdService', ['$resource', mailIdService]);

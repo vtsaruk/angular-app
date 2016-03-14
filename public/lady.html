@@ -111,7 +111,8 @@
                 </div>
                 <p class="p-sort" ng-click="ctrl.showFilter(ctrl.filterDiv)"><img src="assets/angular-app/public/img/calendar.png" alt="">Sort by Date</p>
 
-                <p ng-class="{1:'p-delete text_color_black', 0:'p-delete'}[ctrl.classMessagesDeleted()]" ng-click="ctrl.deleteMessages()"><i class=" fa fa-caret-down" ></i><img src="assets/angular-app/public/img/delete.png" alt="">Delete</p>
+                <p ng-show="ctrl.classMessagesDeleted()" class="p-delete text_color_black" ng-click="ctrl.deleteMessages()"><i class=" fa fa-caret-down" ></i><img src="assets/angular-app/public/img/imgpsh_fullsize.png" alt="">Delete</p>
+                <p ng-hide="ctrl.classMessagesDeleted()" class="p-delete" ng-click="ctrl.classMessagesDeleted()" ng-hide="ctrl.deleteMessages()"><i class=" fa fa-caret-down" ></i><img src="assets/angular-app/public/img/delete.png" alt="">Delete</p>
 
               </div>
               <div class="message-sort-right">
@@ -149,7 +150,8 @@
 <!-- <div>{{ctrl.messages.letters}}</div> -->
             </div>
             <div class="girls-messages">
-              <div class="girls-message-item active" ng-repeat="messag in ctrl.messages.letters">
+              <!-- <div class="girls-message-item" ng-repeat="messag in ctrl.messages.letters" ng-class="{'girls-message-item':false, 'girls-message-item active': messag.deleted}"> -->
+              <div class="girls-message-item" ng-repeat="messag in ctrl.messages.letters" ng-class="messag.deleted? 'girls-message-item active': 'girls-message-item'">
                 <div class="girls-messega-item-content">
                   <div class="girls-message-checkbox">
                   <label class="checkbox-1">
@@ -157,7 +159,7 @@
                       <span></span>
                   </label>
                 </div>
-                <ul>
+                <ul class="tooltips-list">
                   <li>
                     <p class="tooltips add-f">Add to favorites</p>
                     <a href="#" class="add-f-icon"></a></li>
@@ -179,7 +181,7 @@
                 </div>
                 <p class="girl-message-date">{{messag.createdAt}}</p>
                 <a href="#" class="girl-message-photo"><img src="assets/angular-app/public/img/photo.png" alt=""><span>3</span></a>
-                <button class="btn-send" ng-click="ctrl.readTheLetter(messag.id);ctrl.correspondence(messag.senderId)">Read the letter</button>
+                <button class="btn-send" ng-click="ctrl.readTheLetter(messag.id, messag.senderId)">Read the letter</button>
                 </div>
               </div>
 <!-- ctrl.payment(messag.id) -->
@@ -273,7 +275,7 @@
                   <li class="not-choose"><a href="#"><img src="assets/angular-app/public/img/grey-heart-in.png" alt="">Choose files</a><span>Someone name</span></li>
                 </ul>
 
-                <button class="btn-send" ng-click="ctrl.addMessage(ctrl.messagesId.letter.senderId); ctrl.correspondence(ctrl.messagesId.letter.senderId)">Send</button>
+                <button class="btn-send" ng-click="ctrl.addMessage(ctrl.messagesId.letter.senderId)">Send</button>
 
               </div>
               <div class="history clearfix">

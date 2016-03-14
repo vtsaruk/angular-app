@@ -26,7 +26,7 @@
 								<a href="#">Search</a>
 							</li>
 							<li>
-								<a href="#">Mail</a>
+								<a href="/#/man">Mail</a>
 							</li>
 							<li>
 								<a href="#">Chat</a>
@@ -167,23 +167,18 @@
 								<img src="assets/angular-app/public/img/girls-1.jpg" alt="">
 								<div class="girls-info clearfix">
 									<div class="girls-fix-info">
-										<ul class="clearfix">
+										<ul class="tooltips-list">
 											<li>
-												<a href="#">
-													<img src="assets/angular-app/public/img/grey-comments.png" width="20" heigth="20" alt=""></a>
-											</li>
-											<li>
-												<a href="#">
-													<img src="assets/angular-app/public/img/grey-email.png" width="22" height="16" alt=""></a>
-											</li>
-											<li>
-												<a href="#">
-													<img src="assets/angular-app/public/img/grey-box.png" width="21" height="22" alt=""></a>
-											</li>
-											<li>
-												<a href="#">
-													<img src="assets/angular-app/public/img/grey-like.png" width="20" height="18" alt=""></a>
-											</li>
+                        <p class="tooltips add-f">Add to favorites</p>
+                        <a href="#" class="add-f-icon"></a></li>
+                      <li>
+                        <p class="tooltips add-gift">Send a gift</p><a href="#" class="add-f-gift"></a></li>
+                      <li>
+                        <p class="tooltips add-chat">Chat</p>
+                        <a href="#" class="add-f-chat"></a></li>
+                      <li>
+                        <p class="tooltips add-message">Send message</p>
+                        <a href="/#/mail/{{girl.id}}" class="add-f-message"></a></li>
 										</ul>
 									</div>
 									<span class="status online"></span>
@@ -191,6 +186,8 @@
 										<p>{{girl.user.firstname}}, {{ctrl.agePerson(girl.user.birthdate)}}</p>
 										<p class="girl-location">{{girl.user.country.name}}, {{girl.user.city}}</p>
 									</div>
+                  <a href="#" class="like">
+                    <img src="assets/angular-app/public/img/like.png" alt=""></a>
 								</div>
 							</div>
 						</div>
@@ -215,7 +212,7 @@
 
 
 <!-- end girls -->
-<div class="girls-arrow">
+<div class="girls-arrow" ng-click="ctrl.paginaGirl()">
 <img src="assets/angular-app/public/img/girls-arrow.png" alt=""></div>
 </div>
 </div>
