@@ -57,7 +57,7 @@
               </p>
               <a href="#">My Profile</a>
               &nbsp;  |&nbsp;&nbsp;
-              <a href="http://irinadating.loc/index/logout">
+              <a href="/index/logout">
                 <span>Log out</span>
               </a>
             </div>
@@ -85,7 +85,7 @@
                 <p>Inbox <span ng-show="ctrl.messagesInbox.letters.length">({{ctrl.messagesInbox.totalCount}})</span></p>
               </div>
               <div class="message-tabs-item" ng-click="ctrl.changeType('outbox'); ctrl.removeClassTab(2)">
-                <p>Main</p>
+                <p>Sent</p>
               </div>
               <div class="message-tabs-item" ng-click="ctrl.changeType('deleted'); ctrl.removeClassTab(3)">
                 <p>Deleted</p>
@@ -140,13 +140,12 @@
               </div>
               <p><a href="#" class="active">Sort</a><a href="#">Reset</a></p>
   <!-- <div ng-click="ctrl.readTheLetter(19)">{{ctrl.messages.letters}}</div> -->
-<!-- <div>{{ctrl.messages.letters[0]}}</div> -->
+<!-- <div>{{ctrl.messages.letters[1]}}</div> -->
 
             </div>
             <div class="girls-messages">
               <div ng-repeat="messag in ctrl.messages.letters"
-                   ng-class="{'girls-message-item': messag.isPaid==true, 'girls-message-item red-bg': messag.isPaid==false, 'girls-message-item active': messag.deleted}"
-                   ng-class="{}">
+                   ng-class="{'girls-message-item': messag.isPaid==true, 'girls-message-item red-bg': messag.isPaid==false, 'girls-message-item active': messag.deleted}">
                 <div class="girls-messega-item-content">
                   <div class="girls-message-checkbox">
                   <label class="checkbox-1">
@@ -167,14 +166,15 @@
                 <img src="assets/angular-app/public/img/girl-message-1.jpg" alt="">
                 <div class="girls-message-item-info">
                   <div>
-                    <a href="/#/girls/{{messag.sender.girl.id}}"><span>{{messag.sender.firstname}}</span>, {{ctrl.agePerson(messag.sender.birthdate)}}</a>
+                    <a href="/#/girls/{{messag.sender.girl.id}}" ng-hide="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id )"><span ng-hide="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id )">{{messag.sender.firstname}}</span>, {{ctrl.agePerson(messag.sender.birthdate)}}</a>
+                    <a href="" ng-show="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id)"><span>{{ctrl.user.user.firstname}}</span></a>
                     <p><span></span>online</p>
                   </div>
                   <a href="#">{{messag.sender.country.name}}, {{messag.sender.city}}</a>
-                  <div class="clear"></div>
-                  <span>{{messag.additionalData.text}}</span>
+                  <div class="clear" ng-show="messag.isPaid"></div>
+                  <span ng-show="messag.isPaid">{{ctrl.letterTextSlice(messag.additionalData.text)}}</span>
                 </div>
-                <p class="girl-message-date" ng-show="messag.isPaid">{{messag.createdAt}}</p>
+                <p class="girl-message-date" ng-show="messag.isPaid">{{messag.createdAt| date:'yyyy-MM-dd HH:mm:ss'}}</p>
                 <a href="#" class="girl-message-photo" ng-show="messag.isPaid"><img src="assets/angular-app/public/img/photo.png" alt=""><span>3</span></a>
                  <a href="#" class="new" ng-hide="messag.isPaid">NEW</a>
                 <button class="btn-send"ng-hide="messag.isPaid" ng-click="ctrl.payment(messag.id, messag.senderId); ">Read the letter</button>
@@ -207,7 +207,7 @@
               </div>
               <div class="message-tabs-item" ng-click="ctrl.changeType('outbox');
               ctrl.removeClassTab(2)">
-                <p>Mail</p>
+                <p>Sent</p>
               </div>
               <div class="message-tabs-item" ng-click="ctrl.changeType('deleted'); ctrl.removeClassTab(3)">
                 <p>Deleted</p>
@@ -249,7 +249,7 @@
                     {{ctrl.messagesId.letter.additionalData.text}}
                   </span>
                 </div>
-                <p class="girl-message-date">{{ctrl.messagesId.letter.createdAt}}</p>
+                <p class="girl-message-date">{{ctrl.messagesId.letter.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</p>
                 <!-- <button class="btn-send">Read the letter</button> -->
                 </div>
               </div>
@@ -257,8 +257,7 @@
               <div class="send-message">
                 <h4><img src="assets/angular-app/public/img/red-pensil.png" alt="">Send Message to {{ctrl.messagesId.letter.sender.firstname}}</h4>
 
-                <textarea type="text" class="send-message-input" ng-model="ctrl.newMessage"></textarea>
-
+                <textarea type="text" class="send-message-input" ng-class="{'textarea_pink': ctrl.textArea}" ng-model="ctrl.newMessage" ng-minlength="1"></textarea>
                 <p class="area-info">Files in GIF, JPG and PNG maximum 4096 KB size. Attach TWO photos for free. 10 credits will be deducted from your account for each additional photo</p>
                 <div class="attach-button" ng-click="ctrl.showList()">Attach photo</div>
                 <ul class="choose-files-list" ng-show="ctrl.listDiv">
@@ -296,25 +295,25 @@
                 </div>
                 <p class="message-filter-sort-end"><a href="#" class="active">Sort</a><a href="#">Reset</a></p>
               </div>
-<!-- <div>{{ctrl.letterCor.letters}}</div> -->
+<!-- <div>{{ctrl.letterCor.letters[0]}}</div> -->
               <div class="dialog-container">
                 <!-- <div class=" clearfix" ng-class="{'dialog-item' : ctrl.addClass(ctrl.messagesId.message.Sender.id, letter.senderId)}"> -->
-                <div ng-repeat="letter in ctrl.letterCor.letters" ng-class="{1:'dialog-item dialog-item-out clearfix', 0:'dialog-item dialog-item-in clearfix'}[ctrl.addClass(ctrl.messagesId.letter.senderId, letter.senderId)]">
-                <!-- <div class="clearfix" ng-class="{ctrl.add ? 'dialog-item' : 'dialog-item-out'}"> -->
-
-                <!-- <div class="clearfix" ng-class="ctrl.add && 'dialog-item' || !ctrl.add &&'dialog-item-out'}"> -->
+                <div ng-repeat="letter in ctrl.letterCor.letters" ng-class="{0:'dialog-item dialog-item-out clearfix', 1:'dialog-item dialog-item-in clearfix', 2:'dialog-item dialog-item-in dialog-red-fl clearfix'}[ctrl.addClass(ctrl.user.user.id, letter.senderId, letter.isPaid)]">
                   <img src="assets/angular-app/public/img/girl-message-1.jpg" alt="" class="img-dialog">
                   <div class="girls-message-item-info clearfix">
                     <div>
                       <a href="/#/girls/{{letter.sender.girl.id}}" ng-click="ctrl.girlsIdGet(letter.senderId)"><span>{{letter.sender.firstname}}</span></a>
                     </div>
-                    <div class="clear"></div>
-                    <p class="girls-message-item-descr">{{letter.additionalData.text}}</p>
-                    <a href="#" class="message-toggle">more<i class="fa fa-chevron-right"></i></a>
-                    <p class="girl-message-date">{{letter.createdAt}}</p>
-                    <a href="#" class="girl-message-photo"><img src="assets/angular-app/public/img/photo.png" alt="" class="mn-t-10"><span>3</span></a>
-                  </div>
 
+                    <div class="clear"></div>
+                    <p class="girls-message-item-descr" ng-show="letter.isPaid">{{ctrl.letterTextSlice(letter.additionalData.text)}}</p>
+
+                    <a href="#" class="message-toggle">more<i class="fa fa-chevron-right"></i></a>
+                    <p class="girl-message-date" ng-show="letter.isPaid">{{letter.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                    <a href="#" ng-show="letter.isPaid" class="girl-message-photo"><img src="assets/angular-app/public/img/photo.png" alt="" class="mn-t-10"><span>3</span></a>
+                    <a href="#" ng-hide="letter.isPaid" class="new">NEW</a>
+                    <button class="btn-send"ng-hide="letter.isPaid" ng-click="ctrl.payment(letter.id, sender.senderId)">Read the letter</button>
+                  </div>
                 </div>
 
               </div>

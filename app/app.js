@@ -2,6 +2,7 @@ require('angular');
 require('angular-ui-router');
 require('angular-resource');
 
+
 var conversationsController = require('./controllers/conversationsController');
 var mailController = require('./mail/mailController');
 var girlsController = require('./mail/girlsController');
@@ -15,7 +16,7 @@ var girlsService = require('./mail/girls_service');
 var girlsAllService = require('./mail/girlsAll_service');
 var mailIdService = require('./mail/mailId_service');
 
-var app = angular.module('app', ['ui.router', 'ngResource'])
+var app = angular.module('app', ['ui.router', 'ngResource', 'ngAnimate'])
 
 .config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise("/index");

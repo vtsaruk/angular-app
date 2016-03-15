@@ -7,7 +7,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
   }
 
   this.removeClassTab = function(arg) {
-    var list =  angular.element(document.getElementsByClassName('message-tabs-item'));
+    var list = angular.element(document.getElementsByClassName('message-tabs-item'));
     for(var i=0; i<list.length; i++){
       list[i].className = 'message-tabs-item';
       // list[i].on('click', 'activeAddClass')
@@ -68,7 +68,6 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
           self.messages.letters[index]['deleted'] = false;
 
         });
-        //self.paginaAddClass(0);
       },
       function(error) {
         console.log(error);
@@ -84,9 +83,6 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       }
       arrPaginaClass[index].childNodes[0].className = 'text_color_black';
   }
-  //$timeout( function() { this.paginaAddClass(0);}, 3000 );
-//this.paginaAddClass();
-// nextSibling.nextSibling
 
   this.getNextMessages = function() {
     if (this.page < this.arrLengthCeil-1) {
@@ -121,7 +117,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
         console.log(error);
       }
     );
-  }
+  };
 
   this.getMessagesIntroductions();
 
@@ -142,7 +138,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     $anchorScroll.yOffset = 200;
     $anchorScroll();
 
-  }
+  };
 
   this.getMessagesInboxLength = function() {
     var self = this;
@@ -157,9 +153,11 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
 
   this.getMessagesInboxLength();
 
-  this.addClass = function(arg1, arg2) {
-    return arg1==arg2? 1:0;
-  }
+  this.addClass = function(arg1, arg2, arg3) {
+    if(arg3==false) {
+      return 2;
+    }else return arg1==arg2? 0:1;
+  };
 
   this.payment =function(id, partnerid) {
     var self = this;
@@ -173,11 +171,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
         console.log(error);
       }
     );
-    // do {
-
-    // } while(self.messagesId.letter.isPaid==true);
-    //$timeout( function(id) {self.readTheLetter(id); }, 1000);
-  }
+  };
 
   this.correspondence = function(partnerid) {
     if(this.tumbler) {
@@ -188,16 +182,32 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     mailService.correspondenceGet(partnerid).$promise.then(
       function(data) {
         self.letterCor =data;
-        console.log("correspondence");
       },
       function(error) {
         console.log(error);
       }
     );
-    //$location.hash('top');
+  }
 
-    //console.log('!!!!!!!!!!!!');
-    //self.readTheLetter(id);
+  this.letterTextSlice = function(letterText) {
+    if (letterText==null){
+      return 0;
+    }
+    else if(letterText.length>100) {
+      var text = letterText.slice(0, 100);
+      return text;
+    }
+    else return letterText;
+  };
+
+  this.textArea = false;
+
+  this.textAreaTime = function() {
+    var self = this;
+    self.textArea = true;
+    $timeout(function(){
+      self.textArea = false;
+    },100)
   }
 
   this.addMessage = function(id) {
@@ -209,9 +219,9 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     };
     mailService.addMessage2(msg).$promise.then(
       function(data) {
+        self.textAreaTime();
         self.newMessage = '';
         self.correspondence(id);
-
       },
       function(error) {
         console.log(error);
@@ -234,6 +244,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
         mailService.deleteMessage(letter.id).$promise.then(
           function(data) {
             self.getMessages();
+            self.getMessagesInboxLength();
           }, function(error) {
             console.log(error);
           });
@@ -253,16 +264,15 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     }
     return res;
   };
-//this.classDeletMessages();
+  this.addRecipient = function(arg1, arg2) {
+    return arg1==arg2? 1:0;
+  };
 
 this.girlsIdGet = function(id) {
-    console.log(id, id);
     var self = this;
     girlsService.getGirlsId(id).$promise.then(
       function(data) {
         self.girlsId = data;
-        console.log(self.girlsId);
-
       },
       function(error) {
         console.log(error);

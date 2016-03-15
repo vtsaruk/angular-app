@@ -17,23 +17,16 @@
           <nav class="header--nav">
             <ul class="clearfix">
               <li>
-                <a href="#">Ladies</a>
+                <a href="#">Men</a>
               </li>
+
               <li>
-                <a href="#">Search</a>
-              </li>
-              <li>
-                <a ui-sref="e-mail">Mail</a>
+                <a href="/lady">Mail</a>
               </li>
               <li>
                 <a href="#">Chat</a>
               </li>
-              <li>
-                <a href="#">Gifts Delivery</a>
-              </li>
-              <li>
-                <a href="#">Offers</a>
-              </li>
+
             </ul>
           </nav>
           <!-- end navigation -->
@@ -56,7 +49,7 @@
               </p>
               <a href="#">My Profile</a>
               &nbsp;  |&nbsp;&nbsp;
-              <a href="http://irinadating.loc/index/logout">
+              <a href="/index/logout">
                 <span>Log out</span>
               </a>
             </div>
@@ -86,7 +79,7 @@
               </div>
               <div class="message-tabs-item" ng-click="ctrl.changeType('outbox');
               ctrl.removeClassTab(2)">
-                <p>Main</p>
+                <p>Sent</p>
               </div>
               <div class="message-tabs-item" ng-click="ctrl.changeType('deleted');
               ctrl.removeClassTab(3)">
@@ -172,14 +165,16 @@
                 <img src="assets/angular-app/public/img/man-message.jpg" alt="">
                 <div class="girls-message-item-info">
                   <div>
-                    <a href="#"><span>{{messag.sender.firstname}}</span>, {{ctrl.agePerson(messag.sender.birthdate)}}</a>
+                   <a href="/#/girls/{{messag.sender.girl.id}}" ng-hide="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id )"><span ng-hide="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id )">{{messag.sender.firstname}}</span>, {{ctrl.agePerson(messag.sender.birthdate)}}</a>
+                    <a href="" ng-show="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id)"><span>{{ctrl.user.user.firstname}}</span></a>
+
                     <p><span></span>online</p>
                   </div>
                   <a href="#">{{messag.sender.country.name}}</a>
                   <div class="clear"></div>
-                  <span>{{messag.additionalData.text}}</span>
+                  <span>{{ctrl.letterTextSlice(messag.additionalData.text)}}</span>
                 </div>
-                <p class="girl-message-date">{{messag.createdAt}}</p>
+                <p class="girl-message-date">{{messag.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</p>
                 <a href="#" class="girl-message-photo"><img src="assets/angular-app/public/img/photo.png" alt=""><span>3</span></a>
                 <button class="btn-send" ng-click="ctrl.readTheLetter(messag.id, messag.senderId)">Read the letter</button>
                 </div>
@@ -213,7 +208,7 @@
               </div>
               <div class="message-tabs-item" ng-click="ctrl.changeType('outbox');
               ctrl.removeClassTab(2)">
-                <p>Mail</p>
+                <p>Sent</p>
               </div>
               <div class="message-tabs-item" ng-click="ctrl.changeType('deleted'); ctrl.removeClassTab(3)">
                 <p>Deleted</p>
@@ -255,7 +250,7 @@
                     {{ctrl.messagesId.letter.additionalData.text}}
                   </span>
                 </div>
-                <p class="girl-message-date">{{ctrl.messagesId.letter.createdAt}}</p>
+                <p class="girl-message-date">{{ctrl.messagesId.letter.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</p>
                 <!-- <button class="btn-send">Read the letter</button> -->
                 </div>
               </div>
@@ -263,7 +258,7 @@
               <div class="send-message">
                 <h4><img src="assets/angular-app/public/img/red-pensil.png" alt="">Send Message to {{ctrl.messagesId.letter.sender.firstname}}</h4>
 
-                <textarea type="text" class="send-message-input" ng-model="ctrl.newMessage"></textarea>
+                <textarea type="text" class="send-message-input" ng-model="ctrl.newMessage" ng-minlength="1"></textarea>
 
                 <p class="area-info">Files in GIF, JPG and PNG maximum 4096 KB size. Attach TWO photos for free. 10 credits will be deducted from your account for each additional photo</p>
                 <div class="attach-button" ng-click="ctrl.showList()">Attach photo</div>
@@ -312,14 +307,14 @@
                   <img src="assets/angular-app/public/img/man-message.jpg" alt="" class="img-dialog">
                   <div class="girls-message-item-info clearfix">
                     <div>
-                      <a href="/girls/2"><span>{{letter.sender.firstname}}</span></a>
+                      <a href=""><span>{{letter.sender.firstname}}</span></a>
                     </div>
                     <div class="clear"></div>
-                    <p class="girls-message-item-descr">{{letter.additionalData.text}}<a href="#">more<i class="fa fa-chevron-right"></i></a></p>
-                    <p class="girl-message-date">{{letter.createdAt}}</p>
+                    <p class="girls-message-item-descr">{{ctrl.letterTextSlice(letter.additionalData.text)}}<a href="#">more<i class="fa fa-chevron-right"></i></a></p>
+                    <p class="girl-message-date">{{letter.createdAt| date:'yyyy-MM-dd HH:mm:ss'}}</p>
                     <a href="#" class="girl-message-photo"><img src="assets/angular-app/public/img/photo.png" alt="" class="mn-t-10"><span>3</span></a>
+                    <!-- <button class="btn-send" ng-click="ctrl.readTheLetter(letter.id, sender.senderId)">Read the letter</button> -->
                   </div>
-
                 </div>
 
               </div>

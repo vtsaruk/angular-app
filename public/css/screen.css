@@ -7438,9 +7438,13 @@ footer .footer-right-side p {
 
 
 
-.text_color_black{
+.text_color_black {
   color: #9e0039 ;
 }
-.col-md-3 :hover .girls-fix-info{
+.col-md-3 :hover .girls-fix-info {
   display: block;
+}
+.textarea_pink {
+  /*background: #9e0039;*/
+  border: 1px solid #9e0039 !important;
 }

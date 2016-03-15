@@ -1,10 +1,17 @@
 module.exports = mailIdController;
 
-function mailIdController ($document, $stateParams, $location, $timeout, mailService, userService , girlsService, mailIdService) {
+function mailIdController ($document, $stateParams, $location, $anchorScroll, mailService, userService , girlsService, mailIdService) {
+
+  this.anchorScrollPage = function() {
+     //$location.hash('top_anchorScroll');
+     $anchorScroll.yOffset = 200;
+     $anchorScroll();
+    console.log("anchorScrollPage")
+  };
+
+  this.anchorScrollPage();
 
   var id = $stateParams.id;
-  console.log('GOOD!!!');
-  console.log(id);
 
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
@@ -16,7 +23,6 @@ function mailIdController ($document, $stateParams, $location, $timeout, mailSer
     userService.getUser().$promise.then(
       function(data) {
         self.user = data;
-        //console.log(self.user);
       },
       function(error) {
         console.log(error);
@@ -83,14 +89,65 @@ this.girlsIdGet = function(id) {
     );
   };
 
-  this.addClass = function(arg1, arg2) {
+  this.addClass = function(arg1, arg2, arg3) {
+    if(arg3==false) {
+      return 2;
+    }else return arg1==arg2? 0:1;
 
-    return arg1==arg2? 1:0;
-  }
+  };
+
+  this.showFilter = function() {
+    this.filterDiv  = this.filterDiv ? false : true;
+  };
+
+  this.showList = function(){
+    this.listDiv = this.listDiv ? false : true;
+  };
+
+  this.letterTextSlice = function(letterText) {
+    if (letterText==null){
+      return 0;
+    }
+    else if(letterText.length>200) {
+      var text = letterText.slice(0, 200);
+      return text;
+    }
+    else return letterText;
+  };
+
+  this.payment =function(id, partnerid) {
+    var self = this;
+    mailService.paymentLetter(id).$promise.then(
+      function(data) {
+        self.messagIdPay = data;
+        self.readTheLetter(id);
+        self.correspondence(partnerid);
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+
+  };
+
+  this.readTheLetter = function(id, partnerid){
+    var self = this;
+    mailService.getMessagesId(id).$promise.then(
+      function(data) {
+        self.messagesId = data;
+        self.correspondence(partnerid);
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+    $anchorScroll.yOffset = 200;
+    $anchorScroll();
+  };
 
 
   //this.correspondence(id);
 
 };
 
-mailIdController.$inject = ['$document', '$stateParams', '$location', '$timeout', 'mailService', 'userService', 'girlsService', 'mailIdService'];
+mailIdController.$inject = ['$document', '$stateParams', '$location', '$anchorScroll', 'mailService', 'userService', 'girlsService', 'mailIdService'];
