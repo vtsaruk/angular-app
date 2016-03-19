@@ -1,6 +1,6 @@
 module.exports = mailIdController;
 
-function mailIdController ($document, $stateParams, $location, $anchorScroll, mailService, userService , girlsService, mailIdService) {
+function mailIdController ($document, $stateParams, $location, $anchorScroll, $timeout, mailService, userService , girlsService, mailIdService) {
 
   this.anchorScrollPage = function() {
      //$location.hash('top_anchorScroll');
@@ -30,6 +30,16 @@ function mailIdController ($document, $stateParams, $location, $anchorScroll, ma
     );
   };
 
+  this.textArea = false;
+
+  this.textAreaTime = function() {
+    var self = this;
+    self.textArea = true;
+    $timeout(function(){
+      self.textArea = false;
+    },100)
+  }
+
 this.getUserData();
 this.correspondence = function(partnerid) {
     if(this.tumbler) {
@@ -46,11 +56,6 @@ this.correspondence = function(partnerid) {
         console.log(error);
       }
     );
-    //$location.hash('top');
-    // $anchorScroll.yOffset = 200;
-    // $anchorScroll();
-    //console.log('!!!!!!!!!!!!');
-    //self.readTheLetter(id);
   }
 
 this.girlsIdGet = function(id) {
@@ -79,6 +84,7 @@ this.girlsIdGet = function(id) {
     };
     mailService.addMessage2(msg).$promise.then(
       function(data) {
+        self.textAreaTime();
         self.newMessage = '';
         self.correspondence(id);
 
@@ -150,4 +156,4 @@ this.girlsIdGet = function(id) {
 
 };
 
-mailIdController.$inject = ['$document', '$stateParams', '$location', '$anchorScroll', 'mailService', 'userService', 'girlsService', 'mailIdService'];
+mailIdController.$inject = ['$document', '$stateParams', '$location', '$anchorScroll', '$timeout', 'mailService', 'userService', 'girlsService', 'mailIdService'];

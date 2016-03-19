@@ -1,7 +1,9 @@
 require('angular');
 require('angular-ui-router');
 require('angular-resource');
-
+require('ng-file-upload');
+require('angular-img-cropper');
+require('angular-base64-upload');
 
 var conversationsController = require('./controllers/conversationsController');
 var mailController = require('./mail/mailController');
@@ -9,16 +11,20 @@ var girlsController = require('./mail/girlsController');
 var usersController = require('./mail/usersController');
 var girlsAllController = require('./mail/girlsAllController');
 var mailIdController = require('./mail/mailIdController');
+var formController = require('./mail/formController');
+var cropDirective = require('./directives/crop');
+var fileDirective = require('./directives/angular-file-model');
 
 var mailService = require('./mail/mail_service');
 var userService = require('./mail/user_service');
 var girlsService = require('./mail/girls_service');
 var girlsAllService = require('./mail/girlsAll_service');
 var mailIdService = require('./mail/mailId_service');
+var formService = require('./mail/form_service');
 
-var app = angular.module('app', ['ui.router', 'ngResource', 'ngAnimate'])
+var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper', 'naif.base64'])
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider.otherwise("/index");
   $stateProvider
     .state('index', {
@@ -68,6 +74,12 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'ngAnimate'])
       templateUrl: 'assets/angular-app/public/conversation-with-the-girl.html',
       controller: mailIdController,
       controllerAs: 'ctrl'
+    })
+    .state('form', {
+      url: '/form',
+      templateUrl: 'assets/angular-app/public/form.html',
+      controller: formController,
+      controllerAs: 'ctrl'
     });
 })
 
@@ -77,8 +89,10 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'ngAnimate'])
 .controller('girlsController', ['mailService','userService', 'girlsService', girlsController])
 .controller('girlsAllController', ['userService', 'girlsAllService', girlsAllController])
 .controller('mailIdController', ['userService', 'mailService', 'girlsAllService', 'mailIdService', mailIdController])
+.controller('formController', ['formService',  formController])
 .factory('userService', ['$resource', userService])
 .factory('mailService', ['$resource', mailService])
 .factory('girlsService', ['$resource', girlsService])
 .factory('girlsAllService', ['$resource', girlsAllService])
-.factory('mailIdService', ['$resource', mailIdService]);
+.factory('mailIdService', ['$resource', mailIdService])
+.factory('formService', ['$resource', formService]);

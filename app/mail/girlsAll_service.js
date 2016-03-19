@@ -6,7 +6,6 @@ function girlsAllService ($resource) {
 
   this.getGirlsAll = function (id, options) {
     return girlsResource.get({
-      type: options.type,
       limit: options.limit,
       offset: options.offset,
       countryId: id,

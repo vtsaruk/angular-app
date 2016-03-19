@@ -4,8 +4,9 @@ function userService ($resource) {
   var userResource = $resource('/api/users');
 
   this.getUser = function () {
-    return userResource.get();
+    return userResource.get({ relations: '{ "mainphoto": {} }' });
   };
+
 
   return this;
 };

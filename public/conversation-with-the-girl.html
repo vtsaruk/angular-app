@@ -140,7 +140,7 @@
 							<div class="send-message">
 								<h4><img src="assets/angular-app/public/img/red-pensil.png" alt="">Send Message to {{ctrl.girlsId.girl.user.firstname}}</h4>
 
-								<textarea type="text" class="send-message-input" ng-model="ctrl.newMessage" ng-minlength="1"></textarea>
+								<textarea type="text" class="send-message-input" ng-class="{'textarea_pink': ctrl.textArea}" ng-model="ctrl.newMessage" ng-minlength="1"></textarea>
 
 								<p class="area-info">Files in GIF, JPG and PNG maximum 4096 KB size. Attach TWO photos for free. 10 credits will be deducted from your account for each additional photo</p>
 								<div class="attach-button" ng-click="ctrl.showList()">Attach photo</div>

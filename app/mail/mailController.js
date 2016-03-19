@@ -227,13 +227,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
         console.log(error);
       }
     );
-    // this.newMessage = '';
-    // self.correspondence(id);
   };
-
-  //this.change = function(type) {
-  //  this.getMessages(type);
-  //};
 
   this.changeType('inbox');
 
