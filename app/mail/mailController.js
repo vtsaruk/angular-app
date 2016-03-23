@@ -51,6 +51,8 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     }
     var self = this;
     var options = {
+      dateTimeFrom: self.resultFromDate,
+      dateTimeTo: self.resultToDate,
       type: self.type,
       limit: self.limit,
       offset: self.limit * self.page
@@ -189,16 +191,34 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     );
   }
 
-  this.letterTextSlice = function(letterText) {
-    if (letterText==null){
-      return 0;
-    }
-    else if(letterText.length>100) {
-      var text = letterText.slice(0, 100);
-      return text;
-    }
-    else return letterText;
+  this.switchMore = function(letterText) {
+    if (letterText==null) {
+      return false;}
+      else if(letterText.length>90) {
+      return false;
+    } else return true;
   };
+
+
+  this.letterTextSlice = function(letterText, switchComment) {
+    if (switchComment) {
+       return letterText;
+    } else {
+      if (letterText==null) {
+        return 0;
+      } else if(letterText.length>90) {
+
+        var text = letterText.slice(0, 90);
+        return text;
+      }
+      return letterText;
+    }
+  }
+
+  this.showSendMessage =function(senderId, userId) {
+    return senderId==userId? true: false;
+  }
+
 
   this.textArea = false;
 
@@ -268,12 +288,78 @@ this.girlsIdGet = function(id) {
       function(data) {
         self.girlsId = data;
       },
-      function(error) {
-        console.log(error);
+      function(error) {        console.log(error);
       }
     );
   };
 
+  this.onThisWeekDate = function() {
+    this.onLastWeek = false;
+    this.onThisWeek = true;
+    var toDate = new Date();
+
+    var numberToDay = new Date().getDay();
+    var firstDaySec = toDate.setDate(toDate.getDate() - (numberToDay-1));
+    var firstDayWeek = new Date(firstDaySec);
+    var month = firstDayWeek.getMonth() + 1;
+    var arrNum = new String(firstDayWeek).split(' ');
+    this.resultFromDate = arrNum[3] + "-" + month + "-" + arrNum[2] + " " + "00:00:00";
+
+    var arrNum2 = new String(new Date()).split(' ');
+    var month2 = toDate.getMonth() + 1;
+    this.resultToDate = arrNum2[3] + "-" + month2 + "-" +arrNum2[2] + " " + arrNum2[4];
+    this.getMessages();
+  }
+
+  //this.onThisWeekDate();
+
+  this.onLastWeekDate = function() {
+    this.onLastWeek = true;
+    this.onThisWeek = false;
+    var toDate = new Date();
+    var numberToDay = new Date().getDay();
+    var lastDayWeekSec = toDate.setDate(toDate.getDate() - numberToDay);
+    var lastDayWeek = new Date(lastDayWeekSec);
+    var month = lastDayWeek.getMonth() + 1;
+    var arrNum = new String(lastDayWeek).split(' ');
+    this.resultToDate = arrNum[3] + "-" + month + "-" + arrNum[2] + " " + "23:59:59";
+
+    var firstDayWeekSec = new Date().setDate(new Date().getDate() - (numberToDay + 6));
+    var firstDayWeek = new Date(firstDayWeekSec);
+    var month2 = firstDayWeek.getMonth() + 1;
+    var arrNum2 = new String(firstDayWeek).split(' ');
+    this.resultFromDate = arrNum2[3] + "-" + month2 + "-" + arrNum2[2] + " " + "00:00:00";
+    this.getMessages();
+  };
+
+  //this.onLastWeekDate();
+  this.showDate = function() {
+
+    var arrDate2 = new String(this.fromDate).split(' ');
+    var month2 = this.fromDate.getMonth() +1;
+    this.resultFromDate = arrDate2[3] + '-' + month2 + '-' + arrDate2[2] + ' ' + '00:00:00';
+
+    var arrDate = new String(this.toDate).split(' ');
+    var month = this.toDate.getMonth() + 1;
+    this.resultToDate = arrDate[3] + '-' + month +'-' + arrDate[2] + ' ' + '23:59:59';
+    if(this.fromDate.getTime()<this.toDate.getTime())
+      this.getMessages();
+
+  };
+
+  this.watchInputDate = function(fromDate, toDate) {
+    if(fromDate && toDate)
+
+    // console.log(fromDate.getTime(), toDate.getTime());
+    return fromDate.getTime()<toDate.getTime()? true : false;
+  };
+  this.resetSortDate = function() {
+    this.toDate = undefined;
+    this.fromDate = undefined;
+    this.resultFromDate = undefined;
+    this.resultToDate = undefined;
+    this.getMessages();
+  }
 };
 
 

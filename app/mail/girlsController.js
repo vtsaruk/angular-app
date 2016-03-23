@@ -13,7 +13,6 @@ function girlsController ($document, $stateParams, $location, mailService, userS
     userService.getUser().$promise.then(
       function(data) {
         self.user = data;
-        console.log(self.user);
       },
       function(error) {
         console.log(error);
@@ -23,16 +22,13 @@ function girlsController ($document, $stateParams, $location, mailService, userS
 
 this.getUserData();
 
-  var id = $stateParams.id;
+  var id = $stateParams.id.split('-')[4];
 
   this.girlsIdGet = function(id) {
-    console.log(id, id);
     var self = this;
     girlsService.getGirlsId(id).$promise.then(
       function(data) {
         self.girlsId = data;
-        console.log(self.girlsId);
-
       },
       function(error) {
         console.log(error);

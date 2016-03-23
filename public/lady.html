@@ -10,7 +10,7 @@
           </a>
           <!-- end small-menu -->
           <!-- logo -->
-          <a ui-sref="main" class="header--logo">
+          <a href="/#/home" class="header--logo">
             <img src="assets/angular-app/public/img/logo.png"  alt=""></a>
           <!-- end logo -->
           <!-- navigation -->
@@ -34,7 +34,7 @@
           <div class="header--profile">
             <div class="header--profile-img-likes">
               <a href="#">
-                <img src="assets/angular-app/public/img/girl-message-1.jpg" width="40" height="40" alt=""></a>
+                <img src="{{ctrl.user.user.mainphoto.path}}" width="40" height="40" alt=""></a>
               <div class="header--heart">
                 <p>
                   <img src="assets/angular-app/public/img/header-heart.png" alt=""></p>
@@ -61,7 +61,7 @@
   </header><!--
   <!-- end header -->
   <!-- page-message -->
-
+<!-- <div>{{ctrl.user}}</div> -->
 
 
 <main class="page-message" ng-show="ctrl.tumbler">
@@ -75,7 +75,7 @@
               </div>
               <div class="message-tabs-item active" ng-click="ctrl.changeType('inbox');
               ctrl.removeClassTab(1)">
-                <p>Inbox <span ng-show="ctrl.messagesInbox.letters.length">({{ctrl.messagesInbox.letters.length}})</span></p>
+                <p>Inbox <span ng-show="ctrl.messagesInbox.letters.length">({{ctrl.messagesInbox.totalNewCount}})</span></p>
               </div>
               <div class="message-tabs-item" ng-click="ctrl.changeType('outbox');
               ctrl.removeClassTab(2)">
@@ -121,24 +121,26 @@
 
             </div>
             <div class="message-filter clearfix" ng-show="ctrl.filterDiv">
-              <a href="#" class="active">On this week</a>
-              <a href="#" class="on-last-week">On last week</a>
+              <a href="" class="active" ng-class="{true:'activ_message-filter'}[ctrl.onThisWeek]" ng-model="ctrl.onThisWeek" ng-click="ctrl.onThisWeekDate()">On this week</a>
+              <a href="" class="on-last-week" ng-class="{true:'activ_message-filter'}[ctrl.onLastWeek]" ng-model="ctrl.onLastWeek" ng-click="ctrl.onLastWeekDate()">On last week</a>
               <div class="message-filter-select clearfix">
-                <select name="" id="" class="selectpicker">
+                <input type="date" ng-model="ctrl.fromDate">
+                <!-- <select name="" id="" class="selectpicker">
                   <option value="">From date</option>
                   <option value="">19</option>
                   <option value="">20</option>
                   <option value="">21</option>
-                </select>
-                <span class="message-filter-select-line"> - </span>
-                <select name="" id="" class="selectpicker">
+                </select> -->
+                <span class="message-filter-select-line"></span>
+                <input type="date" ng-model="ctrl.toDate">
+                <!-- <select name="" id="" class="selectpicker">
                   <option value="">To Date</option>
                   <option value="">31</option>
                   <option value="">32</option>
                   <option value="">33</option>
-                </select>
+                </select> -->
               </div>
-              <p><a href="#" class="active">Sort</a><a href="#">Reset</a></p>
+              <p><a href="" class="active" ng-class="{true:'activ_sort_button'}[ctrl.watchInputDate(ctrl.fromDate, ctrl.toDate)]" ng-click="ctrl.showDate()">Sort</a><a href="" ng-click="ctrl.resetSortDate()">Reset</a></p>
   <!-- <div ng-click="ctrl.readTheLetter(19)">{{ctrl.messages.letters}}</div> -->
 <!-- <div>{{ctrl.messages.letters}}</div> -->
             </div>
@@ -162,7 +164,7 @@
                     <p class="tooltips add-chat">Chat</p>
                     <a href="#" class="add-f-chat"></a></li>
                 </ul>
-                <img src="assets/angular-app/public/img/man-message.jpg" alt="">
+                <img src="{{messag.sender.mainphoto.path}}" alt="">
                 <div class="girls-message-item-info">
                   <div>
                    <a href="/#/girls/{{messag.sender.girl.id}}" ng-hide="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id )"><span ng-hide="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id )">{{messag.sender.firstname}}</span>, {{ctrl.agePerson(messag.sender.birthdate)}}</a>
@@ -170,7 +172,7 @@
 
                     <p><span></span>online</p>
                   </div>
-                  <a href="#">{{messag.sender.country.name}}</a>
+                  <a href="#">{{messag.sender.country.name}}, {{messag.sender.city}}</a>
                   <div class="clear"></div>
                   <span>{{ctrl.letterTextSlice(messag.additionalData.text)}}</span>
                 </div>
@@ -233,7 +235,7 @@
 
                 <div class="girl-message-img">
 
-                  <img src="assets/angular-app/public/img/man-message.jpg" alt="">
+                  <img src="{{ctrl.messagesId.letter.sender.mainphoto.path}}" alt="">
                   <a href="#" class="girl-message-photo">
                     <p>Attached files</p>
                     <img src="assets/angular-app/public/img/photo.png" alt="" class="mn-t-10"><span>3</span></a>
@@ -304,13 +306,18 @@
                 <!-- <div class="clearfix" ng-class="{ctrl.add ? 'dialog-item' : 'dialog-item-out'}"> -->
 
                 <!-- <div class="clearfix" ng-class="ctrl.add && 'dialog-item' || !ctrl.add &&'dialog-item-out'}"> -->
-                  <img src="assets/angular-app/public/img/man-message.jpg" alt="" class="img-dialog">
-                  <div class="girls-message-item-info clearfix">
+                  <img src="{{letter.sender.mainphoto.path}}" alt="" class="img-dialog">
+                  <div class="girls-message-item-info open clearfix">
                     <div>
                       <a href=""><span>{{letter.sender.firstname}}</span></a>
                     </div>
                     <div class="clear"></div>
-                    <p class="girls-message-item-descr">{{ctrl.letterTextSlice(letter.additionalData.text)}}<a href="#">more<i class="fa fa-chevron-right"></i></a></p>
+                    <p class="girls-message-item-descr" ng-show="letter.isPaid" ng-model="ctrl.switchComment[$index]">{{ctrl.letterTextSlice(letter.additionalData.text, ctrl.switchComment[$index])}}
+                      <a ng-hide="ctrl.switchComment[$index] || ctrl.switchMore(letter.additionalData.text)" href="" ng-click="ctrl.switchComment[$index]=true" class="message-toggle">&nbsp;more<i class="fa fa-chevron-right"></i>
+                      </a>
+                      <a ng-show="ctrl.switchComment[$index] " href="" ng-click="ctrl.switchComment[$index]=false" class="message-toggle">&nbsp;hide<i class="fa fa-chevron-up"></i>
+                      </a>
+                    </p>
                     <p class="girl-message-date">{{letter.createdAt| date:'yyyy-MM-dd HH:mm:ss'}}</p>
                     <a href="#" class="girl-message-photo"><img src="assets/angular-app/public/img/photo.png" alt="" class="mn-t-10"><span>3</span></a>
                     <!-- <button class="btn-send" ng-click="ctrl.readTheLetter(letter.id, sender.senderId)">Read the letter</button> -->

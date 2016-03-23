@@ -110,16 +110,29 @@ this.girlsIdGet = function(id) {
     this.listDiv = this.listDiv ? false : true;
   };
 
-  this.letterTextSlice = function(letterText) {
-    if (letterText==null){
-      return 0;
-    }
-    else if(letterText.length>200) {
-      var text = letterText.slice(0, 200);
-      return text;
-    }
-    else return letterText;
+  this.switchMore = function(letterText) {
+    if (letterText==null) {
+      return false;}
+      else if(letterText.length>90) {
+      return false;
+    } else return true;
   };
+
+
+  this.letterTextSlice = function(letterText, switchComment) {
+    if (switchComment) {
+       return letterText;
+    } else {
+      if (letterText==null) {
+        return 0;
+      } else if(letterText.length>90) {
+
+        var text = letterText.slice(0, 90);
+        return text;
+      }
+      return letterText;
+    }
+  }
 
   this.payment =function(id, partnerid) {
     var self = this;

@@ -2751,10 +2751,6 @@ a:hover, a:focus, a:active {
   height: 69px !important;
   padding-left: 6.33333333%;
 }
-/* line 766, ../sass/screen.scss */
-.conversation .message-filter a {
-  padding: 20px 20px 19px;
-}
 
 /* line 772, ../sass/screen.scss */
 .conversation .message-filter .message-filter-select {
@@ -4671,18 +4667,22 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
 .page-message .girls-message-item {
   padding: 10px 10px 10px 60px;
 }
-/* line 2408, ../sass/screen.scss */
+/* line 2407, ../sass/screen.scss */
 .page-message .girls-message-item .girls-messega-item-content {
   width: 100%;
   background: #fff;
   height: 180px;
   display: table;
   border-radius: 5px;
-  padding: 20px 20px 20px 15px;
+  padding: 8px 20px 0px 15px;
   position: relative;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.23);
 }
-/* line 2417, ../sass/screen.scss */
+/* line 2408, ../sass/screen.scss */
+.page-message .girls-message-item .girls-messega-item-content .tooltips-list {
+  margin-top: 23px;
+}
+/* line 2419, ../sass/screen.scss */
 .page-message .girls-message-item .girls-messega-item-content .girl-message-date {
   position: absolute;
   right: 20px;
@@ -4691,29 +4691,30 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   top: 10px;
   font-family: HelveticaTh;
 }
-/* line 2426, ../sass/screen.scss */
+/* line 2428, ../sass/screen.scss */
 .page-message .girls-message-item .girls-messega-item-content > img {
   border-radius: 5px;
   width: 130px;
   height: 140px;
+  margin-top: 12px;
   margin-left: 15px;
   float: left;
   display: block;
   margin-right: 13px;
 }
-/* line 2435, ../sass/screen.scss */
+/* line 2438, ../sass/screen.scss */
 .page-message .girls-message-item .girls-messega-item-content .girls-message-item-info {
   float: left;
   width: 425px;
   padding: 25px 15px;
   padding-top: 10px;
 }
-/* line 2440, ../sass/screen.scss */
+/* line 2443, ../sass/screen.scss */
 .page-message .girls-message-item .girls-messega-item-content .girls-message-item-info div {
   position: relative;
   width: 140px;
 }
-/* line 2443, ../sass/screen.scss */
+/* line 2446, ../sass/screen.scss */
 .page-message .girls-message-item .girls-messega-item-content .girls-message-item-info div a {
   font-size: 24px;
   color: #9e0039;
@@ -4722,11 +4723,11 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   margin-bottom: 10px;
   display: block;
 }
-/* line 2450, ../sass/screen.scss */
+/* line 2453, ../sass/screen.scss */
 .page-message .girls-message-item .girls-messega-item-content .girls-message-item-info div a span {
   border-bottom: 1px solid #9e0039;
 }
-/* line 2454, ../sass/screen.scss */
+/* line 2457, ../sass/screen.scss */
 .page-message .girls-message-item .girls-messega-item-content .girls-message-item-info div p {
   color: #fff;
   font-size: 14px;
@@ -4736,7 +4737,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   width: 76px;
   left: 100%;
 }
-/* line 2463, ../sass/screen.scss */
+/* line 2466, ../sass/screen.scss */
 .page-message .girls-message-item .girls-messega-item-content .girls-message-item-info div p span {
   display: block;
   float: left;
@@ -4747,15 +4748,15 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   height: 10px;
   background: #4ccc37;
 }
-/* line 2475, ../sass/screen.scss */
+/* line 2478, ../sass/screen.scss */
 .page-message .girls-message-item .girls-messega-item-content .girls-message-item-info div .span-offline {
   color: #e41c3c;
 }
-/* line 2477, ../sass/screen.scss */
+/* line 2480, ../sass/screen.scss */
 .page-message .girls-message-item .girls-messega-item-content .girls-message-item-info div .span-offline span {
   background: #e41c3c;
 }
-/* line 2483, ../sass/screen.scss */
+/* line 2486, ../sass/screen.scss */
 .page-message .girls-message-item .girls-messega-item-content .girls-message-item-info a {
   font-size: 18px;
   display: block;
@@ -4764,21 +4765,21 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   margin-bottom: 20px;
   font-weight: bold;
 }
-/* line 2491, ../sass/screen.scss */
+/* line 2494, ../sass/screen.scss */
 .page-message .girls-message-item .girls-messega-item-content .girls-message-item-info > span {
   color: #555555;
   font-size: 18px;
   font-family: HelveticaTh;
 }
-/* line 2498, ../sass/screen.scss */
+/* line 2501, ../sass/screen.scss */
 .page-message .girls-message-item .girls-messega-item-content .girl-message-photo {
   display: block;
   float: right;
-  margin-top: 20px;
+  margin-top: 26px;
   margin-right: 0;
   position: relative;
 }
-/* line 2504, ../sass/screen.scss */
+/* line 2507, ../sass/screen.scss */
 .page-message .girls-message-item .girls-messega-item-content .girl-message-photo span {
   width: 20px;
   height: 20px;
@@ -4793,35 +4794,35 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   color: #fff;
   border-radius: 50%;
 }
-/* line 2520, ../sass/screen.scss */
+/* line 2523, ../sass/screen.scss */
 .page-message .girls-message-item .girls-messega-item-content .btn-send {
   background: url(../img/btn-read-grey.png) no-repeat;
   color: #9e0039;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
   position: absolute;
   right: -10px;
-  bottom: 12px;
+  bottom: 25px;
   width: 160px;
   height: 40px;
   line-height: 23px;
 }
-/* line 2531, ../sass/screen.scss */
+/* line 2534, ../sass/screen.scss */
 .page-message .girls-message-item .girls-messega-item-content .btn-send:before {
   display: none;
 }
-/* line 2534, ../sass/screen.scss */
+/* line 2537, ../sass/screen.scss */
 .page-message .girls-message-item .girls-messega-item-content .btn-send:after {
   display: none;
 }
-/* line 2540, ../sass/screen.scss */
+/* line 2543, ../sass/screen.scss */
 .page-message .girls-message-item.active {
   background: #f5f3d7;
 }
-/* line 2543, ../sass/screen.scss */
+/* line 2546, ../sass/screen.scss */
 .page-message .girls-message-item {
   position: relative;
 }
-/* line 2545, ../sass/screen.scss */
+/* line 2548, ../sass/screen.scss */
 .page-message .girls-message-item .girls-message-checkbox {
   position: absolute;
   left: -42px;
@@ -4831,27 +4832,28 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   width: 24px;
   margin-top: -12px;
 }
-/* line 2556, ../sass/screen.scss */
+/* line 2559, ../sass/screen.scss */
 .page-message .girls-message-item.red-bg .girls-message-item-info {
   float: left;
   padding: 25px 15px;
   position: relative;
+  margin-top: 12px;
   padding-top: 55px;
   width: 425px;
   background: rgba(255, 255, 255, 0.68);
   height: 140px;
   border-radius: 5px;
 }
-/* line 2566, ../sass/screen.scss */
+/* line 2570, ../sass/screen.scss */
 .page-message .girls-message-item.red-bg .girls-messega-item-content {
   background: url(../img/red-bg.jpg);
 }
-/* line 2568, ../sass/screen.scss */
+/* line 2572, ../sass/screen.scss */
 .page-message .girls-message-item.red-bg .girls-messega-item-content ul {
   background: rgba(255, 255, 255, 0.68);
   border-radius: 5px;
 }
-/* line 2572, ../sass/screen.scss */
+/* line 2576, ../sass/screen.scss */
 .page-message .girls-message-item.red-bg .girls-messega-item-content .girl-message-date {
   position: absolute;
   left: 14px;
@@ -4860,31 +4862,35 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   top: 20px;
   font-family: HelveticaTh;
 }
-/* line 2580, ../sass/screen.scss */
+/* line 2584, ../sass/screen.scss */
+.page-message .girls-message-item.red-bg .girls-messega-item-content img {
+  margin-top: 12px;
+}
+/* line 2587, ../sass/screen.scss */
 .page-message .girls-message-item.red-bg .girls-messega-item-content .btn-send {
   background: url(../img/btn-read.png) no-repeat;
   color: #a82d54;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
   position: absolute;
   right: -10px;
-  bottom: 12px;
+  bottom: 20px;
   width: 160px;
   height: 40px;
   line-height: 23px;
   color: white;
 }
-/* line 2591, ../sass/screen.scss */
+/* line 2598, ../sass/screen.scss */
 .page-message .girls-message-item.red-bg .girls-messega-item-content .btn-send:before {
   display: none;
 }
-/* line 2594, ../sass/screen.scss */
+/* line 2601, ../sass/screen.scss */
 .page-message .girls-message-item.red-bg .girls-messega-item-content .btn-send:after {
   display: none;
 }
 
 /*end page message*/
 /*chat with girl*/
-/* line 2607, ../sass/screen.scss */
+/* line 2614, ../sass/screen.scss */
 .chat-with-girl h4 {
   font-size: 21px;
   color: #9e0039;
@@ -4892,19 +4898,19 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   margin: 0;
   margin-bottom: 10px;
 }
-/* line 2613, ../sass/screen.scss */
+/* line 2620, ../sass/screen.scss */
 .chat-with-girl h4 img {
   margin-right: 10px;
 }
-/* line 2617, ../sass/screen.scss */
+/* line 2624, ../sass/screen.scss */
 .chat-with-girl .message-filter {
   position: relative;
 }
-/* line 2620, ../sass/screen.scss */
+/* line 2627, ../sass/screen.scss */
 .chat-with-girl .message-filter .message-filter-select {
   margin-top: 14px;
 }
-/* line 2625, ../sass/screen.scss */
+/* line 2632, ../sass/screen.scss */
 .chat-with-girl .send-message {
   background: #d6d6d6;
   padding: 15px 80px;
@@ -4913,7 +4919,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   position: relative;
   margin-bottom: 40px;
 }
-/* line 2632, ../sass/screen.scss */
+/* line 2639, ../sass/screen.scss */
 .chat-with-girl .send-message .btn-send {
   right: -10px;
   background: url(../img/btn-read.png) no-repeat;
@@ -4922,15 +4928,15 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   line-height: 0;
   height: 40px;
 }
-/* line 2639, ../sass/screen.scss */
+/* line 2646, ../sass/screen.scss */
 .chat-with-girl .send-message .btn-send:after {
   display: none;
 }
-/* line 2642, ../sass/screen.scss */
+/* line 2649, ../sass/screen.scss */
 .chat-with-girl .send-message .btn-send:before {
   display: none;
 }
-/* line 2648, ../sass/screen.scss */
+/* line 2655, ../sass/screen.scss */
 .chat-with-girl .send-message .send-message-input {
   background-color: #fff;
   padding: 10px 20px;
@@ -4945,7 +4951,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   border: none;
   margin-bottom: 10px;
 }
-/* line 2662, ../sass/screen.scss */
+/* line 2669, ../sass/screen.scss */
 .chat-with-girl .send-message .area-info {
   font-size: 14px;
   color: #999999;
@@ -4953,7 +4959,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   font-style: italic;
   margin-bottom: 10px;
 }
-/* line 2669, ../sass/screen.scss */
+/* line 2676, ../sass/screen.scss */
 .chat-with-girl .send-message .attach-button {
   width: 160px;
   text-align: center;
@@ -4965,65 +4971,65 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   border-radius: 5px;
   padding-left: 15px;
 }
-/* line 2680, ../sass/screen.scss */
+/* line 2687, ../sass/screen.scss */
 .chat-with-girl .send-message .choose-files-list {
   margin-left: 45px;
   margin-top: 15px;
   color: #555555;
   font-size: 14px;
 }
-/* line 2685, ../sass/screen.scss */
+/* line 2692, ../sass/screen.scss */
 .chat-with-girl .send-message .choose-files-list li {
   margin-bottom: 15px;
   position: relative;
 }
-/* line 2688, ../sass/screen.scss */
+/* line 2695, ../sass/screen.scss */
 .chat-with-girl .send-message .choose-files-list li .choose-arrow {
   position: absolute;
   left: -35px;
   top: 3px;
 }
-/* line 2694, ../sass/screen.scss */
+/* line 2701, ../sass/screen.scss */
 .chat-with-girl .send-message .choose-files-list .not-choose {
   color: #afafaf;
 }
-/* line 2696, ../sass/screen.scss */
+/* line 2703, ../sass/screen.scss */
 .chat-with-girl .send-message .choose-files-list .not-choose a {
   color: inherit;
 }
-/* line 2700, ../sass/screen.scss */
+/* line 2707, ../sass/screen.scss */
 .chat-with-girl .send-message .choose-files-list a {
   color: #555555;
   text-decoration: underline;
   margin-right: 25px;
 }
-/* line 2704, ../sass/screen.scss */
+/* line 2711, ../sass/screen.scss */
 .chat-with-girl .send-message .choose-files-list a img {
   margin-right: 10px;
   margin-top: 2px;
   display: block;
   float: left;
 }
-/* line 2712, ../sass/screen.scss */
+/* line 2719, ../sass/screen.scss */
 .chat-with-girl .send-message .choose-files-list span img {
   margin-left: 5px;
 }
-/* line 2719, ../sass/screen.scss */
+/* line 2726, ../sass/screen.scss */
 .chat-with-girl .history {
   margin-bottom: 30px;
   padding-left: 8.33333333%;
 }
-/* line 2722, ../sass/screen.scss */
+/* line 2729, ../sass/screen.scss */
 .chat-with-girl .history h4 {
   float: left;
 }
-/* line 2724, ../sass/screen.scss */
+/* line 2731, ../sass/screen.scss */
 .chat-with-girl .history h4 img {
   display: block;
   float: left;
   margin-top: 2px;
 }
-/* line 2730, ../sass/screen.scss */
+/* line 2737, ../sass/screen.scss */
 .chat-with-girl .history p.p-sort {
   float: right;
   margin-right: 80px;
@@ -5032,24 +5038,24 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   font-family: HelveticaLt;
   font-weight: bold;
 }
-/* line 2733, ../sass/screen.scss */
+/* line 2740, ../sass/screen.scss */
 .chat-with-girl .history p.p-sort img {
   margin-right: 10px;
   margin-top: 2px;
   display: block;
   float: left;
 }
-/* line 2739, ../sass/screen.scss */
+/* line 2746, ../sass/screen.scss */
 .chat-with-girl .history p.p-sort i {
   margin-left: 10px;
   color: #222222;
 }
-/* line 2749, ../sass/screen.scss */
+/* line 2756, ../sass/screen.scss */
 .chat-with-girl .message-filter {
   position: relative;
   height: 65px;
 }
-/* line 2752, ../sass/screen.scss */
+/* line 2759, ../sass/screen.scss */
 .chat-with-girl .message-filter:after {
   content: "";
   width: 0;
@@ -5061,7 +5067,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   border-bottom: 10px solid #E5E5E5;
   border-left: 10px solid transparent;
 }
-/* line 2763, ../sass/screen.scss */
+/* line 2770, ../sass/screen.scss */
 .chat-with-girl .message-filter:before {
   content: "";
   width: 0;
@@ -5073,149 +5079,16 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   border-bottom: 10px solid #CCCCCC;
   border-left: 10px solid transparent;
 }
-/* line 2775, ../sass/screen.scss */
-.chat-with-girl .dialog-item {
-  position: relative;
-  margin-bottom: 10px;
-}
-/* line 2778, ../sass/screen.scss */
-.chat-with-girl .dialog-item .img-dialog {
-  width: 120px;
-  height: 130px;
-}
-/* line 2782, ../sass/screen.scss */
-.chat-with-girl .dialog-item img {
-  float: left;
-  border-radius: 5px;
-}
-/* line 2786, ../sass/screen.scss */
-.chat-with-girl .dialog-item .girls-message-item-info {
-  background: #fff;
-  position: relative;
-  float: right;
-  height: 130px;
-  padding: 20px 25px;
-  width: 83%;
-  border-radius: 5px;
-}
-/* line 2787, ../sass/screen.scss */
-.chat-with-girl .dialog-item .girls-message-item-info:after {
-  content: "";
-  width: 0;
-  left: -10px;
-  margin-top: -10px;
-  top: 70px;
-  position: absolute;
-  height: 0;
-  border-right: 10px solid #fff;
-  border-bottom: 10px solid transparent;
-  border-top: 10px solid transparent;
-}
-/* line 2808, ../sass/screen.scss */
-.chat-with-girl .dialog-item .girls-message-item-info div a span {
-  font-size: 24px;
-  font-family: HelveticaTh;
-  color: #9e0039;
-  display: block;
-  margin-bottom: 0px;
-}
-/* line 2815, ../sass/screen.scss */
-.chat-with-girl .dialog-item .girls-message-item-info div a:hover, .chat-with-girl .dialog-item .girls-message-item-info div a:focus, .chat-with-girl .dialog-item .girls-message-item-info div a:active {
-  text-decoration: none;
-}
-/* line 2820, ../sass/screen.scss */
-.chat-with-girl .dialog-item .girls-message-item-info > .girls-message-item-descr {
-  color: #555555;
-  font-size: 18px;
-  font-family: HelveticaTh;
-  float: left;
-  position: relative;
-  display: block;
-  width: 75%;
-}
-/* line 2830, ../sass/screen.scss */
-.chat-with-girl .dialog-item .girls-message-item-info > .girls-message-item-descr a {
-  color: #9e0039;
-  position: absolute;
-  right: 0px;
-  display: none;
-  z-index: 9999999999;
-  bottom: 25px;
-  /* overflow-x: visible; */
-}
-/* line 2838, ../sass/screen.scss */
-.chat-with-girl .dialog-item .girls-message-item-info > .girls-message-item-descr a i {
-  margin-left: 7px;
-}
-/* line 2843, ../sass/screen.scss */
-.chat-with-girl .dialog-item .girls-message-item-info .message-toggle {
-  display: none;
-  bottom: 26px;
-  position: absolute;
-  right: 166px;
-  transform: translateY(0px);
-  font-size: 18px;
-  transition: all 0.5s;
-  color: #9E0039;
-  font-family: HelveticaTh;
-  font-size: 18px;
-}
-/* line 2854, ../sass/screen.scss */
-.chat-with-girl .dialog-item .girls-message-item-info .message-toggle i {
-  margin-left: 4px;
-  margin-top: 0px;
-  display: inline-block;
-}
-/* line 2860, ../sass/screen.scss */
-.chat-with-girl .dialog-item .girls-message-item-info .girl-message-photo {
-  display: block;
-  float: right;
-  position: relative;
-  margin-top: -25px;
-}
-/* line 2865, ../sass/screen.scss */
-.chat-with-girl .dialog-item .girls-message-item-info .girl-message-photo span {
-  width: 20px;
-  height: 20px;
-  right: 0px;
-  bottom: -2px;
-  display: block;
-  line-height: 20px;
-  position: absolute;
-  background: #9e0039;
-  text-align: center;
-  font-size: 14px;
-  color: #fff;
-  border-radius: 50%;
-}
-/* line 2881, ../sass/screen.scss */
-.chat-with-girl .dialog-item .girls-message-item-info.open {
-  height: auto;
-}
-/* line 2883, ../sass/screen.scss */
-.chat-with-girl .dialog-item .girls-message-item-info.open .girls-message-item-descr {
-  height: auto;
-  overflow: auto;
-}
-/* line 2888, ../sass/screen.scss */
-.chat-with-girl .dialog-item .girl-message-date {
-  position: absolute;
-  right: 20px;
-  color: #999999;
-  font-size: 14px;
-  top: 10px;
-  font-family: HelveticaTh;
-}
-/* line 2898, ../sass/screen.scss */
+/* line 2784, ../sass/screen.scss */
 .chat-with-girl .dialog-item-out img {
   float: right;
 }
-/* line 2901, ../sass/screen.scss */
+/* line 2787, ../sass/screen.scss */
 .chat-with-girl .dialog-item-out .girls-message-item-info {
   float: left;
   background: #d6d6d6;
 }
-/* line 2904, ../sass/screen.scss */
+/* line 2790, ../sass/screen.scss */
 .chat-with-girl .dialog-item-out .girls-message-item-info:after {
   left: 100%;
   border-left: 10px solid #d6d6d6;
@@ -5223,31 +5096,31 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   border-right: 10px solid transparent;
   border-top: 10px solid transparent;
 }
-/* line 2914, ../sass/screen.scss */
+/* line 2800, ../sass/screen.scss */
 .chat-with-girl .dialog-red-fl .girls-message-item-info {
   background: url(../img/red-bg.jpg);
 }
-/* line 2918, ../sass/screen.scss */
+/* line 2804, ../sass/screen.scss */
 .chat-with-girl .dialog-red-fl .girls-message-item-info div a span {
   margin-top: 31px;
   font-weight: bold;
 }
-/* line 2925, ../sass/screen.scss */
+/* line 2811, ../sass/screen.scss */
 .chat-with-girl .dialog-red-fl .girl-message-date {
   left: 20px;
   color: #9e0039;
 }
-/* line 2930, ../sass/screen.scss */
+/* line 2816, ../sass/screen.scss */
 .chat-with-girl .dialog-red-fl .new {
   background-color: transparent;
   top: 0;
   right: 5px;
 }
-/* line 2934, ../sass/screen.scss */
+/* line 2820, ../sass/screen.scss */
 .chat-with-girl .dialog-red-fl .new:hover {
   color: #9e0039;
 }
-/* line 2938, ../sass/screen.scss */
+/* line 2824, ../sass/screen.scss */
 .chat-with-girl .dialog-red-fl .btn-send {
   right: -10px;
   width: 160px;
@@ -5256,15 +5129,15 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   background: url(../img/btn-read.png) no-repeat;
   bottom: 10px;
 }
-/* line 2945, ../sass/screen.scss */
+/* line 2831, ../sass/screen.scss */
 .chat-with-girl .dialog-red-fl .btn-send:after {
   display: none;
 }
-/* line 2948, ../sass/screen.scss */
+/* line 2834, ../sass/screen.scss */
 .chat-with-girl .dialog-red-fl .btn-send:before {
   display: none;
 }
-/* line 2956, ../sass/screen.scss */
+/* line 2842, ../sass/screen.scss */
 .chat-with-girl .girls-message-item .girls-messega-item-content ul {
   padding: 0 15px;
   float: left;
@@ -5273,19 +5146,19 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   vertical-align: middle;
   margin-right: 10px;
 }
-/* line 2963, ../sass/screen.scss */
+/* line 2849, ../sass/screen.scss */
 .chat-with-girl .girls-message-item .girls-messega-item-content ul li {
   margin-bottom: 15px;
 }
-/* line 2967, ../sass/screen.scss */
+/* line 2853, ../sass/screen.scss */
 .chat-with-girl .girls-message-item .girls-messega-item-content .girl-message-img {
   float: left;
 }
-/* line 2970, ../sass/screen.scss */
+/* line 2856, ../sass/screen.scss */
 .chat-with-girl .girls-message-item .girls-messega-item-content .girls-message-item-info {
   width: 75%;
 }
-/* line 2973, ../sass/screen.scss */
+/* line 2859, ../sass/screen.scss */
 .chat-with-girl .girls-message-item .girls-messega-item-content .girl-message-photo {
   float: none;
   width: 101px;
@@ -5295,17 +5168,17 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   font-size: 14px;
   font-family: HelveticaTh;
 }
-/* line 2981, ../sass/screen.scss */
+/* line 2867, ../sass/screen.scss */
 .chat-with-girl .girls-message-item .girls-messega-item-content .girl-message-photo span {
   right: 25px;
 }
-/* line 2984, ../sass/screen.scss */
+/* line 2870, ../sass/screen.scss */
 .chat-with-girl .girls-message-item .girls-messega-item-content .girl-message-photo p {
   margin: 20px 0;
 }
 
 /*end chat with girl*/
-/* line 2995, ../sass/screen.scss */
+/* line 2881, ../sass/screen.scss */
 .page-men-account .men-photo {
   background-color: #ccc;
   width: 100%;
@@ -5316,11 +5189,11 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   height: 220px;
   border: 2px solid #e5e5e5;
 }
-/* line 3004, ../sass/screen.scss */
+/* line 2890, ../sass/screen.scss */
 .page-men-account .men-photo:hover {
   border: 2px solid #9e0039;
 }
-/* line 3007, ../sass/screen.scss */
+/* line 2893, ../sass/screen.scss */
 .page-men-account .men-photo ul {
   position: absolute;
   padding: 7px 18px;
@@ -5335,11 +5208,11 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   border-bottom-left-radius: 5px;
   background-color: rgba(255, 255, 255, 0.66);
 }
-/* line 3020, ../sass/screen.scss */
+/* line 2906, ../sass/screen.scss */
 .page-men-account .men-photo ul li {
   display: inline-block;
 }
-/* line 3022, ../sass/screen.scss */
+/* line 2908, ../sass/screen.scss */
 .page-men-account .men-photo ul li a {
   display: inline-block;
   background: url(../img/pic-icon.png) no-repeat;
@@ -5347,7 +5220,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   height: 18px;
   position: relative;
 }
-/* line 3028, ../sass/screen.scss */
+/* line 2914, ../sass/screen.scss */
 .page-men-account .men-photo ul li a .tooltipp {
   position: absolute;
   color: white;
@@ -5361,7 +5234,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   background: #555555;
   font-size: 12px;
 }
-/* line 3040, ../sass/screen.scss */
+/* line 2926, ../sass/screen.scss */
 .page-men-account .men-photo ul li a .tooltipp:after {
   content: '';
   width: 0;
@@ -5372,46 +5245,46 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   border-top: 10px solid #555555;
   position: absolute;
 }
-/* line 3051, ../sass/screen.scss */
+/* line 2937, ../sass/screen.scss */
 .page-men-account .men-photo ul li a:hover {
   background: url(../img/pic-icon-hover.png) no-repeat;
 }
-/* line 3054, ../sass/screen.scss */
+/* line 2940, ../sass/screen.scss */
 .page-men-account .men-photo ul li a:hover .tooltipp {
   display: block;
 }
-/* line 3058, ../sass/screen.scss */
+/* line 2944, ../sass/screen.scss */
 .page-men-account .men-photo ul li .pen-ic {
   background: url(../img/pen-icon.png) no-repeat;
   width: 19px;
   height: 19px;
 }
-/* line 3062, ../sass/screen.scss */
+/* line 2948, ../sass/screen.scss */
 .page-men-account .men-photo ul li .pen-ic:hover {
   background: url(../img/pen-icon-hover.png) no-repeat;
 }
-/* line 3066, ../sass/screen.scss */
+/* line 2952, ../sass/screen.scss */
 .page-men-account .men-photo ul li .bug-ic {
   background: url(../img/bug-icon.png) no-repeat;
   width: 19px;
   height: 19px;
 }
-/* line 3070, ../sass/screen.scss */
+/* line 2956, ../sass/screen.scss */
 .page-men-account .men-photo ul li .bug-ic:hover {
   background: url(../img/bug-icon-hover.png) no-repeat;
 }
-/* line 3076, ../sass/screen.scss */
+/* line 2962, ../sass/screen.scss */
 .page-men-account .men-photo ul.active {
   opacity: 1;
   z-index: 1;
 }
-/* line 3080, ../sass/screen.scss */
+/* line 2966, ../sass/screen.scss */
 .page-men-account .men-photo img {
   width: 100%;
   border-radius: 5px;
   overflow: hidden;
 }
-/* line 3088, ../sass/screen.scss */
+/* line 2974, ../sass/screen.scss */
 .page-men-account .men-photo-container .btn-send {
   position: relative;
   clear: both;
@@ -5426,18 +5299,18 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   height: 50px;
   font-size: 24px;
 }
-/* line 3104, ../sass/screen.scss */
+/* line 2990, ../sass/screen.scss */
 .page-men-account .men-stock-foto {
   padding: 15px;
 }
-/* line 3106, ../sass/screen.scss */
+/* line 2992, ../sass/screen.scss */
 .page-men-account .men-stock-foto .men-stock-foto-content {
   border: 3px solid #fff;
   border-radius: 5px;
   height: 100%;
   background: url(../img/men-stock-foto.png) no-repeat 50% 24%;
 }
-/* line 3111, ../sass/screen.scss */
+/* line 2997, ../sass/screen.scss */
 .page-men-account .men-stock-foto .men-stock-foto-content .add-foto {
   font-size: 27px;
   line-height: 305px;
@@ -5446,20 +5319,20 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   color: white;
   font-family: HelveticaLt;
 }
-/* line 3122, ../sass/screen.scss */
+/* line 3008, ../sass/screen.scss */
 .page-men-account .message-tabs:after {
   display: none;
 }
-/* line 3126, ../sass/screen.scss */
+/* line 3012, ../sass/screen.scss */
 .page-men-account .man-head {
   background: url(../img/man-bg.jpg) no-repeat;
   padding: 50px 0 30px;
 }
-/* line 3129, ../sass/screen.scss */
+/* line 3015, ../sass/screen.scss */
 .page-men-account .man-head .man-head-container {
   padding: 0 90px;
 }
-/* line 3132, ../sass/screen.scss */
+/* line 3018, ../sass/screen.scss */
 .page-men-account .man-head .man-head__man-img-1 {
   width: 160px;
   height: 160px;
@@ -5468,20 +5341,20 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   float: left;
   margin-right: 80px;
 }
-/* line 3140, ../sass/screen.scss */
+/* line 3026, ../sass/screen.scss */
 .page-men-account .man-head .man-head__man-head-status {
   position: relative;
   width: 70%;
   float: left;
 }
-/* line 3144, ../sass/screen.scss */
+/* line 3030, ../sass/screen.scss */
 .page-men-account .man-head .man-head__man-head-status p {
   font-size: 24px;
   color: #fff;
   font-family: HelveticaLt;
   margin-bottom: 20px;
 }
-/* line 3150, ../sass/screen.scss */
+/* line 3036, ../sass/screen.scss */
 .page-men-account .man-head .man-head__man-head-status .man-head__man-head-status__descr {
   font-size: 21px;
   color: #fff;
@@ -5489,7 +5362,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   display: block;
   font-family: HelveticaTh;
 }
-/* line 3157, ../sass/screen.scss */
+/* line 3043, ../sass/screen.scss */
 .page-men-account .man-head .man-head__man-head-status .man-head__man-head-status__quates {
   width: 16px;
   height: 14px;
@@ -5498,24 +5371,24 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   left: -38px;
   top: 3px;
 }
-/* line 3166, ../sass/screen.scss */
+/* line 3052, ../sass/screen.scss */
 .page-men-account .man-head .message-tabs {
   clear: both;
   background: none;
   position: relative;
   top: 55px;
 }
-/* line 3181, ../sass/screen.scss */
+/* line 3067, ../sass/screen.scss */
 .page-men-account main .row {
   margin-left: -30px;
   margin-right: -30px;
 }
-/* line 3185, ../sass/screen.scss */
+/* line 3071, ../sass/screen.scss */
 .page-men-account main .main-content {
   margin-top: 20px;
   padding: 10px 90px 50px;
 }
-/* line 3186, ../sass/screen.scss */
+/* line 3072, ../sass/screen.scss */
 .page-men-account main .main-content .send-men-form {
   left: 0;
   right: auto;
@@ -5526,21 +5399,21 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   position: relative;
   bottom: auto;
 }
-/* line 3196, ../sass/screen.scss */
+/* line 3082, ../sass/screen.scss */
 .page-men-account main .main-content .send-men-form:after {
   display: none;
 }
-/* line 3199, ../sass/screen.scss */
+/* line 3085, ../sass/screen.scss */
 .page-men-account main .main-content .send-men-form:before {
   display: none;
 }
-/* line 3203, ../sass/screen.scss */
+/* line 3089, ../sass/screen.scss */
 .page-men-account main .main-content .line {
   width: 100%;
   height: 1px;
   background-color: #cccccc;
 }
-/* line 3211, ../sass/screen.scss */
+/* line 3097, ../sass/screen.scss */
 .page-men-account main .main-content h5 {
   font-size: 21px;
   color: #9e0039;
@@ -5548,7 +5421,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   margin: 0;
   margin-bottom: 10px;
 }
-/* line 3220, ../sass/screen.scss */
+/* line 3106, ../sass/screen.scss */
 .page-men-account main .main-content .online-status-right .online-status-right-descr {
   background: #fff;
   padding: 20px;
@@ -5559,7 +5432,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   border-radius: 5px;
   margin-bottom: 5px;
 }
-/* line 3230, ../sass/screen.scss */
+/* line 3116, ../sass/screen.scss */
 .page-men-account main .main-content .online-status-right .online-status-p {
   color: #999999;
   font-size: 14px;
@@ -5568,49 +5441,49 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   margin-bottom: 35px;
   font-family: HelveticaTh;
 }
-/* line 3237, ../sass/screen.scss */
+/* line 3123, ../sass/screen.scss */
 .page-men-account main .main-content .online-status-right .online-status-p + p {
   float: right;
 }
-/* line 3245, ../sass/screen.scss */
+/* line 3131, ../sass/screen.scss */
 .page-men-account main .main-content .contact-info .contact-info-left {
   width: 50%;
   float: left;
 }
-/* line 3248, ../sass/screen.scss */
+/* line 3134, ../sass/screen.scss */
 .page-men-account main .main-content .contact-info .contact-info-left p {
   color: #555555;
   font-size: 14px;
   font-family: HelveticaTh;
   line-height: 25px;
 }
-/* line 3255, ../sass/screen.scss */
+/* line 3141, ../sass/screen.scss */
 .page-men-account main .main-content .contact-info .contact-info-right {
   float: right;
   margin-right: 150px;
 }
-/* line 3258, ../sass/screen.scss */
+/* line 3144, ../sass/screen.scss */
 .page-men-account main .main-content .contact-info .contact-info-right img {
   margin-right: 10px;
 }
-/* line 3261, ../sass/screen.scss */
+/* line 3147, ../sass/screen.scss */
 .page-men-account main .main-content .contact-info .contact-info-right .contact-info-right-e-mail {
   color: #999999;
   font-size: 18px;
   font-family: HelveticaTh;
   margin-bottom: 15px;
 }
-/* line 3266, ../sass/screen.scss */
+/* line 3152, ../sass/screen.scss */
 .page-men-account main .main-content .contact-info .contact-info-right .contact-info-right-e-mail img {
   margin-top: 4px;
   float: left;
 }
-/* line 3272, ../sass/screen.scss */
+/* line 3158, ../sass/screen.scss */
 .page-men-account main .main-content .contact-info .contact-info-right .contact-info-right-pass p {
   float: left;
   height: 45px;
 }
-/* line 3278, ../sass/screen.scss */
+/* line 3164, ../sass/screen.scss */
 .page-men-account main .main-content .contact-info .contact-info-right .contact-info-right-pass-choose a {
   color: #9e0039;
   font-size: 14px;
@@ -5619,13 +5492,13 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   text-decoration: underline;
   margin-bottom: 10px;
 }
-/* line 3289, ../sass/screen.scss */
+/* line 3175, ../sass/screen.scss */
 .page-men-account main .main-content .men-account-form {
   border: 1px solid #dddddd;
   border-radius: 5px;
   padding: 25px 0;
 }
-/* line 3290, ../sass/screen.scss */
+/* line 3176, ../sass/screen.scss */
 .page-men-account main .main-content .men-account-form .remove {
   font-size: 18px;
   color: #9e0039;
@@ -5633,12 +5506,12 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   display: block;
   font-family: HelveticaTh;
 }
-/* line 3296, ../sass/screen.scss */
+/* line 3182, ../sass/screen.scss */
 .page-men-account main .main-content .men-account-form .remove img {
   margin-right: 10px;
   margin-top: -3px;
 }
-/* line 3304, ../sass/screen.scss */
+/* line 3190, ../sass/screen.scss */
 .page-men-account main .main-content .men-account-form label {
   color: #555555;
   font-size: 18px;
@@ -5647,21 +5520,21 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   margin-bottom: 5px;
   font-weight: 500;
 }
-/* line 3311, ../sass/screen.scss */
+/* line 3197, ../sass/screen.scss */
 .page-men-account main .main-content .men-account-form label sup {
   color: #9e0039;
 }
-/* line 3315, ../sass/screen.scss */
+/* line 3201, ../sass/screen.scss */
 .page-men-account main .main-content .men-account-form select {
   width: 100%;
 }
-/* line 3319, ../sass/screen.scss */
+/* line 3205, ../sass/screen.scss */
 .page-men-account main .main-content .men-account-form .btn-group button {
   padding: 5px 10px;
   height: 30px;
   line-height: 17px;
 }
-/* line 3325, ../sass/screen.scss */
+/* line 3211, ../sass/screen.scss */
 .page-men-account main .main-content .men-account-form #men-account-form-input {
   padding: 5px 10px;
   height: 30px;
@@ -5675,20 +5548,20 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   background: #fff;
   border-radius: 5px;
 }
-/* line 3340, ../sass/screen.scss */
+/* line 3226, ../sass/screen.scss */
 .page-men-account main .main-content .look-for {
   padding: 15px 0 10px;
 }
-/* line 3344, ../sass/screen.scss */
+/* line 3230, ../sass/screen.scss */
 .page-men-account main .main-content {
   display: none;
 }
-/* line 3345, ../sass/screen.scss */
+/* line 3231, ../sass/screen.scss */
 .page-men-account main .main-content.active {
   display: block;
 }
 
-/* line 3352, ../sass/screen.scss */
+/* line 3238, ../sass/screen.scss */
 .modal-change-email {
   position: absolute;
   left: 0;
@@ -5700,7 +5573,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   display: none;
 }
 
-/* line 3363, ../sass/screen.scss */
+/* line 3249, ../sass/screen.scss */
 .modal-change-email-form {
   display: none;
   position: absolute;
@@ -5717,7 +5590,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   height: auto;
   padding: 20px 40px;
 }
-/* line 3379, ../sass/screen.scss */
+/* line 3265, ../sass/screen.scss */
 .modal-change-email-form .btn-send {
   position: relative;
   right: auto;
@@ -5725,15 +5598,15 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   bottom: auto;
   margin: auto;
 }
-/* line 3385, ../sass/screen.scss */
+/* line 3271, ../sass/screen.scss */
 .modal-change-email-form .btn-send:after {
   display: none;
 }
-/* line 3388, ../sass/screen.scss */
+/* line 3274, ../sass/screen.scss */
 .modal-change-email-form .btn-send:before {
   display: none;
 }
-/* line 3392, ../sass/screen.scss */
+/* line 3278, ../sass/screen.scss */
 .modal-change-email-form h5 {
   color: #9e0039;
   text-align: center;
@@ -5741,7 +5614,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   font-family: HelveticaLt;
   margin-bottom: 25px;
 }
-/* line 3399, ../sass/screen.scss */
+/* line 3285, ../sass/screen.scss */
 .modal-change-email-form input {
   padding: 5px 10px;
   height: 30px;
@@ -5755,7 +5628,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   background: #fff;
   border-radius: 5px;
 }
-/* line 3412, ../sass/screen.scss */
+/* line 3298, ../sass/screen.scss */
 .modal-change-email-form label {
   color: #555555;
   font-size: 18px;
@@ -5763,13 +5636,13 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   font-family: HelveticaTh;
   margin-bottom: 5px;
 }
-/* line 3419, ../sass/screen.scss */
+/* line 3305, ../sass/screen.scss */
 .modal-change-email-form sup {
   color: #9e0039;
 }
 
 /*gifts*/
-/* line 3424, ../sass/screen.scss */
+/* line 3310, ../sass/screen.scss */
 .gifts-popup {
   background-color: rgba(0, 0, 0, 0.31);
   position: absolute;
@@ -5780,7 +5653,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   display: none;
 }
 
-/* line 3433, ../sass/screen.scss */
+/* line 3319, ../sass/screen.scss */
 .gifts-popup-container {
   width: 780px;
   display: none;
@@ -5795,7 +5668,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   font-family: HelveticaLt;
   border-radius: 5px;
 }
-/* line 3446, ../sass/screen.scss */
+/* line 3332, ../sass/screen.scss */
 .gifts-popup-container .btn-send {
   background: #9e0039 url(../img/decline.png) no-repeat 10% 50%;
   position: relative;
@@ -5805,7 +5678,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   height: 50px;
   padding-left: 32px;
 }
-/* line 3455, ../sass/screen.scss */
+/* line 3341, ../sass/screen.scss */
 .gifts-popup-container .confirm {
   float: right;
   width: 260px;
@@ -5813,7 +5686,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   text-transform: uppercase;
   padding: 0;
 }
-/* line 3462, ../sass/screen.scss */
+/* line 3348, ../sass/screen.scss */
 .gifts-popup-container h4 {
   font-size: 21px;
   color: #9e0039;
@@ -5821,7 +5694,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   font-weight: bold;
   margin-bottom: 15px;
 }
-/* line 3469, ../sass/screen.scss */
+/* line 3355, ../sass/screen.scss */
 .gifts-popup-container textarea {
   width: 100%;
   resize: none;
@@ -5836,7 +5709,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   outline: none;
   margin-bottom: 20px;
 }
-/* line 3483, ../sass/screen.scss */
+/* line 3369, ../sass/screen.scss */
 .gifts-popup-container .gifts-popup-bouquet-container,
 .gifts-popup-container .gifts-popup-card-container {
   font-family: HelveticaLt;
@@ -5848,37 +5721,37 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   padding-right: 0;
   margin-bottom: 20px;
 }
-/* line 3493, ../sass/screen.scss */
+/* line 3379, ../sass/screen.scss */
 .gifts-popup-container .gifts-popup-bouquet-container .gifts-bouquet-item,
 .gifts-popup-container .gifts-popup-card-container .gifts-bouquet-item {
   background: transparent;
   border: none;
 }
-/* line 3496, ../sass/screen.scss */
+/* line 3382, ../sass/screen.scss */
 .gifts-popup-container .gifts-popup-bouquet-container .gifts-bouquet-item .gifts-right-side-p,
 .gifts-popup-container .gifts-popup-card-container .gifts-bouquet-item .gifts-right-side-p {
   color: #555555;
   font-size: 18px;
   font-family: HelveticaTh;
 }
-/* line 3501, ../sass/screen.scss */
+/* line 3387, ../sass/screen.scss */
 .gifts-popup-container .gifts-popup-bouquet-container .gifts-bouquet-item .gifts-bouquet-item-number,
 .gifts-popup-container .gifts-popup-card-container .gifts-bouquet-item .gifts-bouquet-item-number {
   top: 135px;
 }
-/* line 3506, ../sass/screen.scss */
+/* line 3392, ../sass/screen.scss */
 .gifts-popup-container .gifts-popup-card-container {
   padding: 20px;
   padding-bottom: 15px;
   margin-bottom: 30px;
 }
-/* line 3510, ../sass/screen.scss */
+/* line 3396, ../sass/screen.scss */
 .gifts-popup-container .gifts-popup-card-container .gifts-popup-card-right-side {
   position: relative;
   float: right;
   width: 440px;
 }
-/* line 3514, ../sass/screen.scss */
+/* line 3400, ../sass/screen.scss */
 .gifts-popup-container .gifts-popup-card-container .gifts-popup-card-right-side p {
   color: #999999;
   font-size: 14px;
@@ -5887,15 +5760,15 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   font-style: italic;
   bottom: 3px;
 }
-/* line 3522, ../sass/screen.scss */
+/* line 3408, ../sass/screen.scss */
 .gifts-popup-container .gifts-popup-card-container .gifts-popup-card-right-side .p-left {
   left: 0;
 }
-/* line 3525, ../sass/screen.scss */
+/* line 3411, ../sass/screen.scss */
 .gifts-popup-container .gifts-popup-card-container .gifts-popup-card-right-side .p-right {
   right: 2px;
 }
-/* line 3528, ../sass/screen.scss */
+/* line 3414, ../sass/screen.scss */
 .gifts-popup-container .gifts-popup-card-container .gifts-popup-card-right-side textarea {
   background-color: #fff;
   padding: 15px;
@@ -5906,26 +5779,26 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   font-family: HelveticaTh;
   height: 170px;
 }
-/* line 3540, ../sass/screen.scss */
+/* line 3426, ../sass/screen.scss */
 .gifts-popup-container .gifts-popup-card-container .gifts-popup-card-left-side {
   float: left;
 }
-/* line 3542, ../sass/screen.scss */
+/* line 3428, ../sass/screen.scss */
 .gifts-popup-container .gifts-popup-card-container .gifts-popup-card-left-side .gifts-popup-card-small {
   width: 73px;
   height: 43px;
 }
-/* line 3546, ../sass/screen.scss */
+/* line 3432, ../sass/screen.scss */
 .gifts-popup-container .gifts-popup-card-container .gifts-popup-card-left-side .gifts-popup-card-middle {
   width: 87px;
   height: 50px;
 }
-/* line 3550, ../sass/screen.scss */
+/* line 3436, ../sass/screen.scss */
 .gifts-popup-container .gifts-popup-card-container .gifts-popup-card-left-side .gifts-popup-card-large {
   width: 106px;
   height: 60px;
 }
-/* line 3554, ../sass/screen.scss */
+/* line 3440, ../sass/screen.scss */
 .gifts-popup-container .gifts-popup-card-container .gifts-popup-card-left-side .card {
   background: #fff;
   border: 1px solid #cccccc;
@@ -5938,17 +5811,17 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   position: relative;
   margin-bottom: 20px;
 }
-/* line 3565, ../sass/screen.scss */
+/* line 3451, ../sass/screen.scss */
 .gifts-popup-container .gifts-popup-card-container .gifts-popup-card-left-side .card:last-child {
   margin-bottom: 0;
 }
-/* line 3568, ../sass/screen.scss */
+/* line 3454, ../sass/screen.scss */
 .gifts-popup-container .gifts-popup-card-container .gifts-popup-card-left-side .card p {
   position: absolute;
   right: 3px;
   bottom: 3px;
 }
-/* line 3573, ../sass/screen.scss */
+/* line 3459, ../sass/screen.scss */
 .gifts-popup-container .gifts-popup-card-container .gifts-popup-card-left-side .card .card-flower {
   position: absolute;
   width: 60px;
@@ -5958,25 +5831,25 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   z-index: 111;
   background: url(../img/card-flower.png) no-repeat 0% 0%;
 }
-/* line 3583, ../sass/screen.scss */
+/* line 3469, ../sass/screen.scss */
 .gifts-popup-container .gifts-popup-card-container .gifts-popup-card-left-side .card.active {
   border: 1px solid #9e0039;
 }
 
-/* line 3591, ../sass/screen.scss */
+/* line 3477, ../sass/screen.scss */
 .gifts-bouquet-item {
   position: relative;
   background-color: #f3f3f3;
   padding: 8px;
   border-bottom: 2px solid #cccccc;
 }
-/* line 3597, ../sass/screen.scss */
+/* line 3483, ../sass/screen.scss */
 .gifts-bouquet-item .gifts-bouquet-item-images {
   width: 100%;
   margin-top: 25px;
   clear: both;
 }
-/* line 3601, ../sass/screen.scss */
+/* line 3487, ../sass/screen.scss */
 .gifts-bouquet-item .gifts-bouquet-item-images img {
   display: block;
   width: 140px;
@@ -5985,11 +5858,11 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   border-radius: 5px;
   margin-right: 10px;
 }
-/* line 3608, ../sass/screen.scss */
+/* line 3494, ../sass/screen.scss */
 .gifts-bouquet-item .gifts-bouquet-item-images img:last-child {
   margin-right: 0;
 }
-/* line 3614, ../sass/screen.scss */
+/* line 3500, ../sass/screen.scss */
 .gifts-bouquet-item .gifts-bouquet-item-number {
   color: #555555;
   position: absolute;
@@ -6003,7 +5876,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   font-size: 18px;
   height: 28px;
 }
-/* line 3627, ../sass/screen.scss */
+/* line 3513, ../sass/screen.scss */
 .gifts-bouquet-item .btn-send {
   width: 135px;
   text-transform: uppercase;
@@ -6011,7 +5884,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   right: -10px;
   box-shadow: 2px 2px 2px rgba(150, 150, 150, 0.57);
 }
-/* line 3634, ../sass/screen.scss */
+/* line 3520, ../sass/screen.scss */
 .gifts-bouquet-item .gifts-bouquet-item-img {
   float: left;
   margin-right: 30px;
@@ -6020,30 +5893,30 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   border: 2px solid #cccccc;
   border-radius: 5px;
 }
-/* line 3637, ../sass/screen.scss */
+/* line 3523, ../sass/screen.scss */
 .gifts-bouquet-item .gifts-bouquet-item-img img {
   width: 100%;
   height: 100%;
 }
-/* line 3646, ../sass/screen.scss */
+/* line 3532, ../sass/screen.scss */
 .gifts-bouquet-item .gifts-bouquet-item-likes {
   position: absolute;
   right: 20px;
   top: 15px;
   color: #9e0039;
 }
-/* line 3651, ../sass/screen.scss */
+/* line 3537, ../sass/screen.scss */
 .gifts-bouquet-item .gifts-bouquet-item-likes p {
   float: left;
   margin-right: 10px;
   font-weight: bold;
 }
-/* line 3660, ../sass/screen.scss */
+/* line 3546, ../sass/screen.scss */
 .gifts-bouquet-item .gifts-bouquet-item-img-info {
   float: left;
   width: 64%;
 }
-/* line 3664, ../sass/screen.scss */
+/* line 3550, ../sass/screen.scss */
 .gifts-bouquet-item .gifts-bouquet-item-img-info h3 {
   margin-top: 10px;
   font-size: 24px;
@@ -6051,38 +5924,38 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   font-weight: bold;
   margin-bottom: 10px;
 }
-/* line 3671, ../sass/screen.scss */
+/* line 3557, ../sass/screen.scss */
 .gifts-bouquet-item .gifts-bouquet-item-img-info .gifts-right-side-p {
   width: 79%;
 }
 
-/* line 3676, ../sass/screen.scss */
+/* line 3562, ../sass/screen.scss */
 .gifts {
   font-family: HelveticaLt;
   font-size: 21px;
   color: white;
 }
-/* line 3677, ../sass/screen.scss */
+/* line 3563, ../sass/screen.scss */
 .gifts .owl-wrapper-outer {
   padding: 0;
 }
-/* line 3681, ../sass/screen.scss */
+/* line 3567, ../sass/screen.scss */
 .gifts .customNavigation .btn.next {
   background: none;
   top: auto;
   bottom: 61px;
   right: -12px;
 }
-/* line 3686, ../sass/screen.scss */
+/* line 3572, ../sass/screen.scss */
 .gifts .customNavigation .btn.next:active {
   box-shadow: 1px 1px 1px transparent;
 }
-/* line 3690, ../sass/screen.scss */
+/* line 3576, ../sass/screen.scss */
 .gifts .customNavigation img {
   width: 8px;
   height: 13px;
 }
-/* line 3695, ../sass/screen.scss */
+/* line 3581, ../sass/screen.scss */
 .gifts .line {
   width: 100%;
   height: 1px;
@@ -6090,20 +5963,20 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   margin-bottom: 20px;
   background-color: #cccccc;
 }
-/* line 3704, ../sass/screen.scss */
+/* line 3590, ../sass/screen.scss */
 .gifts .gifts-left-side {
   background-color: #fff;
   padding-bottom: 255px;
 }
-/* line 3709, ../sass/screen.scss */
+/* line 3595, ../sass/screen.scss */
 .gifts .gifts-right-side .gifts-tabs-item {
   display: none;
 }
-/* line 3712, ../sass/screen.scss */
+/* line 3598, ../sass/screen.scss */
 .gifts .gifts-right-side .gifts-tabs-item.active {
   display: block;
 }
-/* line 3718, ../sass/screen.scss */
+/* line 3604, ../sass/screen.scss */
 .gifts .gifts-right-side .waiting-info .for-girls {
   position: absolute;
   background-color: #cccccc;
@@ -6119,7 +5992,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   font-size: 18px;
   top: -35px;
 }
-/* line 3733, ../sass/screen.scss */
+/* line 3619, ../sass/screen.scss */
 .gifts .gifts-right-side .waiting-info .gifts-bouquet-item-order {
   position: absolute;
   bottom: -40px;
@@ -6128,7 +6001,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   font-family: HelveticaTh;
   left: 183px;
 }
-/* line 3741, ../sass/screen.scss */
+/* line 3627, ../sass/screen.scss */
 .gifts .gifts-right-side .waiting-info .btn-send {
   background: #9e0039;
   width: 100px;
@@ -6137,25 +6010,25 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   bottom: -50px;
   font-size: 18px;
 }
-/* line 3749, ../sass/screen.scss */
+/* line 3635, ../sass/screen.scss */
 .gifts .gifts-right-side .waiting-info > .gifts-right-side-p {
   margin-bottom: 50px;
 }
-/* line 3752, ../sass/screen.scss */
+/* line 3638, ../sass/screen.scss */
 .gifts .gifts-right-side .waiting-info .gifts-bouquet-item {
   margin-bottom: 120px;
   border-bottom: none;
 }
-/* line 3758, ../sass/screen.scss */
+/* line 3644, ../sass/screen.scss */
 .gifts .gifts-right-side .delivered .gifts-bouquet-item-order {
   left: 0;
 }
-/* line 3762, ../sass/screen.scss */
+/* line 3648, ../sass/screen.scss */
 .gifts .gifts-right-side .waiting-active {
   border: 1px solid #9e0039 !important;
   background-color: #f5f3d7;
 }
-/* line 3765, ../sass/screen.scss */
+/* line 3651, ../sass/screen.scss */
 .gifts .gifts-right-side .waiting-active .for-girls {
   background-color: #9e0039;
   color: white;
@@ -6163,7 +6036,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   right: -1px;
   font-family: HelveticaLt;
 }
-/* line 3774, ../sass/screen.scss */
+/* line 3660, ../sass/screen.scss */
 .gifts .gifts-right-side .gifts-tabs li {
   height: 50px;
   float: left;
@@ -6174,16 +6047,16 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   border-top-right-radius: 5px;
   text-align: center;
 }
-/* line 3783, ../sass/screen.scss */
+/* line 3669, ../sass/screen.scss */
 .gifts .gifts-right-side .gifts-tabs li:hover {
   background-color: #cccccc;
 }
-/* line 3786, ../sass/screen.scss */
+/* line 3672, ../sass/screen.scss */
 .gifts .gifts-right-side .gifts-tabs li:last-child {
   margin: 0;
   width: 25%;
 }
-/* line 3790, ../sass/screen.scss */
+/* line 3676, ../sass/screen.scss */
 .gifts .gifts-right-side .gifts-tabs li a {
   display: flex;
   justify-content: center;
@@ -6194,11 +6067,11 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   color: white;
   font-size: 18px;
 }
-/* line 3802, ../sass/screen.scss */
+/* line 3688, ../sass/screen.scss */
 .gifts .gifts-right-side .gifts-tabs li.active {
   background-color: #cccccc;
 }
-/* line 3806, ../sass/screen.scss */
+/* line 3692, ../sass/screen.scss */
 .gifts .gifts-right-side .gifts-right-side-p {
   font-family: HelveticaTh;
   color: #555555;
@@ -6206,12 +6079,12 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   font-size: 18px;
   margin-bottom: 20px;
 }
-/* line 3818, ../sass/screen.scss */
+/* line 3704, ../sass/screen.scss */
 .gifts .main-content {
   padding-top: 30px;
   padding-bottom: 65px;
 }
-/* line 3822, ../sass/screen.scss */
+/* line 3708, ../sass/screen.scss */
 .gifts .gifts-profile-header {
   height: 50px;
   width: 100%;
@@ -6221,23 +6094,23 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
 }
-/* line 3831, ../sass/screen.scss */
+/* line 3717, ../sass/screen.scss */
 .gifts .gifts-profile-ava {
   background: #fff;
   padding: 20px 60px;
 }
-/* line 3834, ../sass/screen.scss */
+/* line 3720, ../sass/screen.scss */
 .gifts .gifts-profile-ava .foto {
   position: relative;
   margin-bottom: 20px;
 }
-/* line 3837, ../sass/screen.scss */
+/* line 3723, ../sass/screen.scss */
 .gifts .gifts-profile-ava .foto img {
   width: 100%;
   border-radius: 3px;
   height: 100%;
 }
-/* line 3842, ../sass/screen.scss */
+/* line 3728, ../sass/screen.scss */
 .gifts .gifts-profile-ava .foto .foto-popup {
   position: absolute;
   height: 40px;
@@ -6250,7 +6123,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
 }
-/* line 3855, ../sass/screen.scss */
+/* line 3741, ../sass/screen.scss */
 .gifts .gifts-profile-ava .gifts-clear {
   height: 35px;
   width: 100%;
@@ -6259,7 +6132,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   line-height: 35px;
   border-radius: 5px;
 }
-/* line 3865, ../sass/screen.scss */
+/* line 3751, ../sass/screen.scss */
 .gifts .list-cat {
   background: #999999;
   height: 35px;
@@ -6267,22 +6140,22 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   line-height: 35px;
   text-align: center;
 }
-/* line 3873, ../sass/screen.scss */
+/* line 3759, ../sass/screen.scss */
 .gifts .list-cat-ul > li {
   position: relative;
   border-bottom: 1px solid #cccccc;
 }
-/* line 3876, ../sass/screen.scss */
+/* line 3762, ../sass/screen.scss */
 .gifts .list-cat-ul > li:last-child {
   border: none;
 }
-/* line 3879, ../sass/screen.scss */
+/* line 3765, ../sass/screen.scss */
 .gifts .list-cat-ul > li img {
   position: absolute;
   right: 25px;
   top: 30px;
 }
-/* line 3884, ../sass/screen.scss */
+/* line 3770, ../sass/screen.scss */
 .gifts .list-cat-ul > li > a {
   display: block;
   height: 70px;
@@ -6292,25 +6165,25 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   padding-left: 80px;
   color: #9e0039;
 }
-/* line 3893, ../sass/screen.scss */
+/* line 3779, ../sass/screen.scss */
 .gifts .list-cat-ul > li .list-cat-flowers {
   background: #f3f3f3 url(../img/flower.png) no-repeat 11% 50%;
 }
-/* line 3896, ../sass/screen.scss */
+/* line 3782, ../sass/screen.scss */
 .gifts .list-cat-ul > li .list-cat-sweets {
   background: #f3f3f3 url(../img/ice-cream.png) no-repeat 11% 50%;
 }
-/* line 3899, ../sass/screen.scss */
+/* line 3785, ../sass/screen.scss */
 .gifts .list-cat-ul > li .list-cat-baskets {
   background: #f3f3f3 url(../img/baskets.png) no-repeat 11% 50%;
 }
-/* line 3903, ../sass/screen.scss */
+/* line 3789, ../sass/screen.scss */
 .gifts .list-cat-ul ul {
   background-color: #fff;
   padding-left: 80px;
   display: none;
 }
-/* line 3908, ../sass/screen.scss */
+/* line 3794, ../sass/screen.scss */
 .gifts .list-cat-ul ul li a {
   display: block;
   color: #999999;
@@ -6318,7 +6191,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   padding: 15px 0;
   border-bottom: 1px solid transparent;
 }
-/* line 3914, ../sass/screen.scss */
+/* line 3800, ../sass/screen.scss */
 .gifts .list-cat-ul ul li a:hover {
   border-bottom: 1px solid #9e0039;
   color: #555555;
@@ -6326,7 +6199,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
 
 /*end gifts*/
 /*profile unsigned*/
-/* line 3927, ../sass/screen.scss */
+/* line 3813, ../sass/screen.scss */
 .profile-unsigned .profile-left-side-carousel-popup {
   content: '';
   display: flex;
@@ -6340,7 +6213,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   background-color: rgba(134, 129, 129, 0.82);
   position: absolute;
 }
-/* line 3939, ../sass/screen.scss */
+/* line 3825, ../sass/screen.scss */
 .profile-unsigned .profile-left-side-carousel-popup p {
   color: white;
   text-align: center;
@@ -6348,15 +6221,15 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   padding: 0 10px;
   font-family: HelveticaLt;
 }
-/* line 3951, ../sass/screen.scss */
+/* line 3837, ../sass/screen.scss */
 .profile-unsigned #owl-demo5 {
   padding-left: 1px;
 }
-/* line 3953, ../sass/screen.scss */
+/* line 3839, ../sass/screen.scss */
 .profile-unsigned #owl-demo5 .item {
   position: relative;
 }
-/* line 3955, ../sass/screen.scss */
+/* line 3841, ../sass/screen.scss */
 .profile-unsigned #owl-demo5 .item .profile-left-side-carousel-popup {
   top: 0;
   background: rgba(134, 129, 129, 0.87) url(../img/close-foto.png) no-repeat 50% 22%;
@@ -6364,7 +6237,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
 
 /*end profile unsigned*/
 /*search*/
-/* line 3966, ../sass/screen.scss */
+/* line 3852, ../sass/screen.scss */
 .search .tooltipps {
   position: absolute;
   background: #fff;
@@ -6378,12 +6251,12 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   border-radius: 5px;
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.36);
 }
-/* line 3980, ../sass/screen.scss */
+/* line 3866, ../sass/screen.scss */
 .search .girls-arrow {
   cursor: pointer;
   margin-bottom: 130px;
 }
-/* line 3984, ../sass/screen.scss */
+/* line 3870, ../sass/screen.scss */
 .search .line {
   width: 100%;
   height: 1px;
@@ -6391,19 +6264,19 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   margin-bottom: 20px;
   background-color: #cccccc;
 }
-/* line 3991, ../sass/screen.scss */
+/* line 3877, ../sass/screen.scss */
 .search .main-content {
   padding-top: 30px;
 }
-/* line 3993, ../sass/screen.scss */
+/* line 3879, ../sass/screen.scss */
 .search .main-content .search-right-side {
   padding-top: 10px;
 }
-/* line 3994, ../sass/screen.scss */
+/* line 3880, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-girls-item {
   margin-bottom: 20px;
 }
-/* line 3995, ../sass/screen.scss */
+/* line 3881, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-list {
   position: absolute;
   background-color: rgba(255, 255, 255, 0.81);
@@ -6416,18 +6289,18 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   text-align: center;
 }
 @media only screen and (min-width: 768px) and (max-width: 992px) {
-  /* line 3995, ../sass/screen.scss */
+  /* line 3881, ../sass/screen.scss */
   .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-list {
     padding-top: 15px;
   }
 }
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
-  /* line 3995, ../sass/screen.scss */
+  /* line 3881, ../sass/screen.scss */
   .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-list {
     padding-top: 20px;
   }
 }
-/* line 4012, ../sass/screen.scss */
+/* line 3898, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-list li a {
   background: url(../img/grey-comments.png) no-repeat;
   width: 20px;
@@ -6436,55 +6309,55 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   margin-bottom: 12px;
   position: relative;
 }
-/* line 4019, ../sass/screen.scss */
+/* line 3905, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-list li a:hover {
   background: url(../img/grey-comments-message-red.png) no-repeat;
 }
-/* line 4022, ../sass/screen.scss */
+/* line 3908, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-list li a:hover .tooltipps {
   display: block;
 }
-/* line 4027, ../sass/screen.scss */
+/* line 3913, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-list li .e-mail {
   width: 22px;
   height: 16px;
   background: url(../img/grey-email.png) no-repeat;
 }
-/* line 4031, ../sass/screen.scss */
+/* line 3917, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-list li .e-mail .tooltipps {
   width: 124px;
 }
-/* line 4034, ../sass/screen.scss */
+/* line 3920, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-list li .e-mail:hover {
   background: url(../img/red-email.png) no-repeat;
 }
-/* line 4038, ../sass/screen.scss */
+/* line 3924, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-list li .gift {
   width: 21px;
   height: 22px;
   background: url(../img/grey-box.png) no-repeat;
 }
-/* line 4042, ../sass/screen.scss */
+/* line 3928, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-list li .gift .tooltipps {
   width: 90px;
 }
-/* line 4045, ../sass/screen.scss */
+/* line 3931, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-list li .gift:hover {
   background: url(../img/grey-box-message-red.png) no-repeat;
 }
-/* line 4049, ../sass/screen.scss */
+/* line 3935, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-list li .heart {
   background: url(../img/grey-like.png) no-repeat;
 }
-/* line 4051, ../sass/screen.scss */
+/* line 3937, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-list li .heart .tooltipps {
   width: 120px;
 }
-/* line 4054, ../sass/screen.scss */
+/* line 3940, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-list li .heart:hover {
   background: url(../img/grey-like-message-grey.png) no-repeat;
 }
-/* line 4061, ../sass/screen.scss */
+/* line 3947, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-girls-item img {
   max-height: 165px;
   float: left;
@@ -6493,12 +6366,12 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   border-radius: 5px 0px 0px 5px;
 }
 @media only screen and (min-width: 768px) and (max-width: 992px) {
-  /* line 4061, ../sass/screen.scss */
+  /* line 3947, ../sass/screen.scss */
   .search .main-content .search-right-side .search-right-side-girls-item img {
     width: 27%;
   }
 }
-/* line 4075, ../sass/screen.scss */
+/* line 3961, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-info {
   background-color: #818181;
   float: left;
@@ -6509,18 +6382,18 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   padding: 5px 25px;
 }
 @media only screen and (min-width: 768px) and (max-width: 992px) {
-  /* line 4075, ../sass/screen.scss */
+  /* line 3961, ../sass/screen.scss */
   .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-info {
     width: 73%;
   }
 }
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
-  /* line 4075, ../sass/screen.scss */
+  /* line 3961, ../sass/screen.scss */
   .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-info {
     width: 160px;
   }
 }
-/* line 4089, ../sass/screen.scss */
+/* line 3975, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-info .circle {
   width: 10px;
   height: 10px;
@@ -6531,22 +6404,22 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   left: 7px;
   top: 13px;
 }
-/* line 4099, ../sass/screen.scss */
+/* line 3985, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-info a {
   margin-bottom: -2px;
   display: block;
 }
-/* line 4102, ../sass/screen.scss */
+/* line 3988, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-info a:hover {
   color: white;
 }
-/* line 4106, ../sass/screen.scss */
+/* line 3992, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-info .info-id {
   color: #cccccc;
   font-size: 14px;
   font-family: HelveticaLt;
 }
-/* line 4111, ../sass/screen.scss */
+/* line 3997, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-info .girl-status-message {
   border: 1px solid #ccc;
   position: relative;
@@ -6562,12 +6435,12 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   font-size: 12px;
 }
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
-  /* line 4111, ../sass/screen.scss */
+  /* line 3997, ../sass/screen.scss */
   .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-info .girl-status-message {
     left: 11px;
   }
 }
-/* line 4127, ../sass/screen.scss */
+/* line 4013, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-info .girl-status-message:after {
   content: '';
   border: 8px solid transparent;
@@ -6578,7 +6451,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   left: -16px;
   top: 20px;
 }
-/* line 4137, ../sass/screen.scss */
+/* line 4023, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-info .girl-status-message:before {
   content: '';
   border: 8px solid transparent;
@@ -6590,7 +6463,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   z-index: 11;
   top: 20px;
 }
-/* line 4151, ../sass/screen.scss */
+/* line 4037, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-results-container {
   position: relative;
   background-color: #9e0039;
@@ -6601,20 +6474,20 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   border-radius: 5px 5px 0 0;
   margin-bottom: 10px;
 }
-/* line 4160, ../sass/screen.scss */
+/* line 4046, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-results-container h3 {
   margin: 0;
   margin-top: 13px;
 }
-/* line 4164, ../sass/screen.scss */
+/* line 4050, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-results-container .search-right-side-results-checkbox {
   width: 0;
 }
-/* line 4166, ../sass/screen.scss */
+/* line 4052, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-results-container .search-right-side-results-checkbox label {
   display: -webkit-inline-box;
 }
-/* line 4168, ../sass/screen.scss */
+/* line 4054, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-results-container .search-right-side-results-checkbox label p {
   position: absolute;
   color: white;
@@ -6625,14 +6498,14 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   width: 100px;
   z-index: 111111;
 }
-/* line 4179, ../sass/screen.scss */
+/* line 4065, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-results-container .search-right-side-results-checkbox span {
   position: absolute;
   right: 89px;
   z-index: 11111;
   top: 13px;
 }
-/* line 4187, ../sass/screen.scss */
+/* line 4073, ../sass/screen.scss */
 .search .main-content .search-right-side .btn-send {
   width: 190px;
   height: 40px;
@@ -6647,7 +6520,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   text-align: center;
   position: relative;
 }
-/* line 4201, ../sass/screen.scss */
+/* line 4087, ../sass/screen.scss */
 .search .main-content .search-right-side #lady-id {
   width: 190px;
   float: right;
@@ -6662,15 +6535,15 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   font-size: 18px;
   font-style: italic;
 }
-/* line 4215, ../sass/screen.scss */
+/* line 4101, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-header {
   margin-bottom: 5px;
 }
-/* line 4219, ../sass/screen.scss */
+/* line 4105, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-list li {
   display: inline-block;
 }
-/* line 4221, ../sass/screen.scss */
+/* line 4107, ../sass/screen.scss */
 .search .main-content .search-right-side .search-right-side-list li a {
   display: inline-block;
   background: #cccccc url(../img/close-icon.png) no-repeat 85% 50%;
@@ -6680,18 +6553,18 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   margin-right: 6px;
   margin-bottom: 10px;
 }
-/* line 4233, ../sass/screen.scss */
+/* line 4119, ../sass/screen.scss */
 .search .main-content .search-right-side .a-clear {
   font-size: 14px;
   color: #9e0039;
   text-decoration: underline;
   font-family: HelveticaLt;
 }
-/* line 4238, ../sass/screen.scss */
+/* line 4124, ../sass/screen.scss */
 .search .main-content .search-right-side .a-clear:hover {
   text-decoration: none;
 }
-/* line 4243, ../sass/screen.scss */
+/* line 4129, ../sass/screen.scss */
 .search .main-content .search-left-side-header {
   height: 50px;
   width: 100%;
@@ -6700,14 +6573,14 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   line-height: 50px;
   border-radius: 7px 7px 0 0;
 }
-/* line 4251, ../sass/screen.scss */
+/* line 4137, ../sass/screen.scss */
 .search .main-content .search-left-side-select-items {
   background-color: #fff;
   padding: 15px 10px;
   border-radius: 0 0 7px 7px;
   padding-bottom: 20px;
 }
-/* line 4256, ../sass/screen.scss */
+/* line 4142, ../sass/screen.scss */
 .search .main-content .search-left-side-select-items .btn-send {
   width: 185px;
   height: 50px;
@@ -6722,22 +6595,22 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   text-align: center;
   position: relative;
 }
-/* line 4270, ../sass/screen.scss */
+/* line 4156, ../sass/screen.scss */
 .search .main-content .search-left-side-select-items .adv-search {
   text-align: center;
   text-decoration: underline;
   display: block;
 }
-/* line 4274, ../sass/screen.scss */
+/* line 4160, ../sass/screen.scss */
 .search .main-content .search-left-side-select-items .adv-search:hover {
   color: #9e0039;
   text-decoration: none;
 }
-/* line 4279, ../sass/screen.scss */
+/* line 4165, ../sass/screen.scss */
 .search .main-content .search-left-side-select-items .search-left-side-select-item {
   margin-bottom: 10px;
 }
-/* line 4281, ../sass/screen.scss */
+/* line 4167, ../sass/screen.scss */
 .search .main-content .search-left-side-select-items .search-left-side-select-item label {
   font-size: 18px;
   color: #555555;
@@ -6745,33 +6618,33 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   font-weight: 500;
   width: 100%;
 }
-/* line 4288, ../sass/screen.scss */
+/* line 4174, ../sass/screen.scss */
 .search .main-content .search-left-side-select-items .search-left-side-select-item .bootstrap-select {
   border: 1px solid #ccc;
   border-radius: 5px;
 }
-/* line 4291, ../sass/screen.scss */
+/* line 4177, ../sass/screen.scss */
 .search .main-content .search-left-side-select-items .search-left-side-select-item .bootstrap-select .btn-info {
   padding: 1px 10px;
 }
-/* line 4293, ../sass/screen.scss */
+/* line 4179, ../sass/screen.scss */
 .search .main-content .search-left-side-select-items .search-left-side-select-item .bootstrap-select .btn-info .filter-option {
   font-size: 14px;
   line-height: 26px;
   font-style: italic;
 }
-/* line 4302, ../sass/screen.scss */
+/* line 4188, ../sass/screen.scss */
 .search .main-content .search-left-side-select-items .search-left-side-select-item.double .bootstrap-select {
   width: 47%;
   display: inline-block;
 }
 @media only screen and (min-width: 768px) and (max-width: 992px) {
-  /* line 4302, ../sass/screen.scss */
+  /* line 4188, ../sass/screen.scss */
   .search .main-content .search-left-side-select-items .search-left-side-select-item.double .bootstrap-select {
     width: 46%;
   }
 }
-/* line 4312, ../sass/screen.scss */
+/* line 4198, ../sass/screen.scss */
 .search .main-content .search-left-side-select-items .search-left-side-select-item.double .search-left-side-select-item-line {
   display: inline-block;
   width: 3%;
@@ -6781,12 +6654,12 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
 /*end search*/
 /*profile*/
 @media only screen and (min-width: 768px) and (max-width: 992px) {
-  /* line 4324, ../sass/screen.scss */
+  /* line 4210, ../sass/screen.scss */
   .profile {
     padding: 10px 0 45px;
   }
 }
-/* line 4332, ../sass/screen.scss */
+/* line 4218, ../sass/screen.scss */
 .profile .profile-right-side-photos-container .btn.next, .profile .profile-right-side-photos-container .btn.prev {
   background: none;
   width: 40px;
@@ -6799,16 +6672,16 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   display: block;
   cursor: pointer;
 }
-/* line 4344, ../sass/screen.scss */
+/* line 4230, ../sass/screen.scss */
 .profile .profile-right-side-photos-container .btn.prev {
   transform: rotate(0deg);
   left: 14px;
 }
-/* line 4351, ../sass/screen.scss */
+/* line 4237, ../sass/screen.scss */
 .profile .profile-right-side-about-me-tags li {
   display: inline-block;
 }
-/* line 4353, ../sass/screen.scss */
+/* line 4239, ../sass/screen.scss */
 .profile .profile-right-side-about-me-tags li a {
   display: inline-block;
   background-color: #e5e5e5;
@@ -6816,17 +6689,17 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   margin-right: 6px;
   border-radius: 5px;
 }
-/* line 4359, ../sass/screen.scss */
+/* line 4245, ../sass/screen.scss */
 .profile .profile-right-side-about-me-tags li a:hover {
   color: #555555;
 }
-/* line 4365, ../sass/screen.scss */
+/* line 4251, ../sass/screen.scss */
 .profile .profile-right-side-about-me {
   padding: 15px 10px 15px 10px;
   background-color: #ededed;
   border-radius: 10px;
 }
-/* line 4369, ../sass/screen.scss */
+/* line 4255, ../sass/screen.scss */
 .profile .profile-right-side-about-me .profile-right-side-about-me-popup {
   background: #818181 url(../img/close-content-icon.png) no-repeat 50% 26%;
   top: 0;
@@ -6842,20 +6715,20 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   width: 100%;
   height: 100%;
 }
-/* line 4384, ../sass/screen.scss */
+/* line 4270, ../sass/screen.scss */
 .profile .profile-right-side-about-me h5 {
   margin: 0;
 }
-/* line 4387, ../sass/screen.scss */
+/* line 4273, ../sass/screen.scss */
 .profile .profile-right-side-about-me .profile-right-side-about-me-p {
   margin-bottom: 30px;
   position: relative;
 }
-/* line 4391, ../sass/screen.scss */
+/* line 4277, ../sass/screen.scss */
 .profile .profile-right-side-about-me .profile-right-side-about-me-p a:hover {
   color: #9e0039;
 }
-/* line 4397, ../sass/screen.scss */
+/* line 4283, ../sass/screen.scss */
 .profile .profile-right-side-photo {
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -6864,17 +6737,17 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   padding-bottom: 0;
   margin-bottom: 30px;
 }
-/* line 4405, ../sass/screen.scss */
+/* line 4291, ../sass/screen.scss */
 .profile .profile-right-side-photo .profile-right-side-photos-container img {
   width: 100%;
   display: block;
   margin-right: 5px;
 }
-/* line 4411, ../sass/screen.scss */
+/* line 4297, ../sass/screen.scss */
 .profile .profile-right-side-photo .profile-right-side-photos-container #owl-demo5 .owl-wrapper-outer {
   padding-left: 0;
 }
-/* line 4416, ../sass/screen.scss */
+/* line 4302, ../sass/screen.scss */
 .profile .profile-right-side-photo h3 {
   margin-top: 0;
   font-size: 18px;
@@ -6883,7 +6756,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   text-transform: uppercase;
   font-weight: bold;
 }
-/* line 4425, ../sass/screen.scss */
+/* line 4311, ../sass/screen.scss */
 .profile .line {
   width: 100%;
   height: 1px;
@@ -6891,21 +6764,21 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   margin-bottom: 20px;
   background-color: #cccccc;
 }
-/* line 4432, ../sass/screen.scss */
+/* line 4318, ../sass/screen.scss */
 .profile .profile-right-side-about-item-container {
   padding-bottom: 20px;
 }
-/* line 4435, ../sass/screen.scss */
+/* line 4321, ../sass/screen.scss */
 .profile .main-content {
   padding-top: 75px;
 }
 @media only screen and (min-width: 768px) and (max-width: 992px) {
-  /* line 4435, ../sass/screen.scss */
+  /* line 4321, ../sass/screen.scss */
   .profile .main-content {
     padding-top: 20px;
   }
 }
-/* line 4445, ../sass/screen.scss */
+/* line 4331, ../sass/screen.scss */
 .profile .profile-right-side .profile-right-side-about {
   border-radius: 5px;
   position: relative;
@@ -6917,7 +6790,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   height: 80px;
   margin-bottom: 25px;
 }
-/* line 4456, ../sass/screen.scss */
+/* line 4342, ../sass/screen.scss */
 .profile .profile-right-side .profile-right-side-about:after {
   content: '';
   position: absolute;
@@ -6928,30 +6801,30 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   border: 15px solid transparent;
   border-right: 15px solid white;
 }
-/* line 4467, ../sass/screen.scss */
+/* line 4353, ../sass/screen.scss */
 .profile .profile-right-side .profile-right-side-topinfo-right {
   float: right;
   margin-top: 4px;
 }
-/* line 4470, ../sass/screen.scss */
+/* line 4356, ../sass/screen.scss */
 .profile .profile-right-side .profile-right-side-topinfo-right .profile-right-side-topinfo-right-id {
   color: #999999;
   font-family: HelveticaTh;
   font-size: 18px;
   margin-bottom: 40px;
 }
-/* line 4477, ../sass/screen.scss */
+/* line 4363, ../sass/screen.scss */
 .profile .profile-right-side .profile-right-side-topinfo-left {
   color: #555555;
   font-size: 24px;
   float: left;
   font-family: HelveticaMd;
 }
-/* line 4482, ../sass/screen.scss */
+/* line 4368, ../sass/screen.scss */
 .profile .profile-right-side .profile-right-side-topinfo-left span {
   font-family: HelveticaLt;
 }
-/* line 4485, ../sass/screen.scss */
+/* line 4371, ../sass/screen.scss */
 .profile .profile-right-side .profile-right-side-topinfo-left .status {
   margin-left: 13px;
   color: #0cac3d;
@@ -6962,17 +6835,17 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   top: -2px;
   position: relative;
 }
-/* line 4486, ../sass/screen.scss */
+/* line 4372, ../sass/screen.scss */
 .profile .profile-right-side .profile-right-side-topinfo-left .status img {
   margin-right: 5px;
 }
-/* line 4498, ../sass/screen.scss */
+/* line 4384, ../sass/screen.scss */
 .profile .profile-right-side .profile-right-side-topinfo-left .location {
   font-size: 21px;
   font-family: HelveticaLt;
   margin-bottom: 5px;
 }
-/* line 4503, ../sass/screen.scss */
+/* line 4389, ../sass/screen.scss */
 .profile .profile-right-side .profile-right-side-topinfo-left a {
   display: inline-block;
   font-size: 18px;
@@ -6980,24 +6853,24 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   font-family: HelveticaTh;
   margin-bottom: 40px;
 }
-/* line 4509, ../sass/screen.scss */
+/* line 4395, ../sass/screen.scss */
 .profile .profile-right-side .profile-right-side-topinfo-left a img {
   margin-right: 10px;
 }
-/* line 4515, ../sass/screen.scss */
+/* line 4401, ../sass/screen.scss */
 .profile .profile-left-side {
   margin-bottom: 150px;
 }
-/* line 4518, ../sass/screen.scss */
+/* line 4404, ../sass/screen.scss */
 .profile .profile-left-side-ava {
   position: relative;
 }
-/* line 4521, ../sass/screen.scss */
+/* line 4407, ../sass/screen.scss */
 .profile .profile-left-side-ava img {
   width: 100%;
   border-radius: 5px 5px 0px 0px;
 }
-/* line 4525, ../sass/screen.scss */
+/* line 4411, ../sass/screen.scss */
 .profile .profile-left-side-ava .check-icon {
   position: absolute;
   bottom: 15px;
@@ -7005,22 +6878,22 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   width: 23px;
   height: 28px;
 }
-/* line 4533, ../sass/screen.scss */
+/* line 4419, ../sass/screen.scss */
 .profile .profile-left-side-list {
   padding: 20px;
   background-color: #cccccc;
   border-radius: 0px 0px 5px 5px;
 }
-/* line 4537, ../sass/screen.scss */
+/* line 4423, ../sass/screen.scss */
 .profile .profile-left-side-list li {
   margin-bottom: 15px;
   display: block;
 }
-/* line 4540, ../sass/screen.scss */
+/* line 4426, ../sass/screen.scss */
 .profile .profile-left-side-list li:last-child {
   margin-bottom: 0;
 }
-/* line 4543, ../sass/screen.scss */
+/* line 4429, ../sass/screen.scss */
 .profile .profile-left-side-list li a {
   display: block;
   color: #555555;
@@ -7030,100 +6903,100 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   font-weight: bold;
   background: url(../img/grey-like.png) no-repeat 0% 50%;
 }
-/* line 4551, ../sass/screen.scss */
+/* line 4437, ../sass/screen.scss */
 .profile .profile-left-side-list li a:hover {
   color: #9e0039;
   background: url(../img/grey-like-message-grey.png) no-repeat 0% 50%;
 }
 @media only screen and (min-width: 768px) and (max-width: 992px) {
-  /* line 4543, ../sass/screen.scss */
+  /* line 4429, ../sass/screen.scss */
   .profile .profile-left-side-list li a {
     padding-left: 43px;
     font-size: 16px;
   }
 }
-/* line 4560, ../sass/screen.scss */
+/* line 4446, ../sass/screen.scss */
 .profile .profile-left-side-list li .chatting {
   background: url(../img/grey-comments.png) no-repeat 0% 50%;
 }
-/* line 4562, ../sass/screen.scss */
+/* line 4448, ../sass/screen.scss */
 .profile .profile-left-side-list li .chatting:hover {
   background: url(../img/grey-comments-message-red.png) no-repeat 0% 50%;
 }
-/* line 4566, ../sass/screen.scss */
+/* line 4452, ../sass/screen.scss */
 .profile .profile-left-side-list li .snd-message {
   background: url(../img/grey-email.png) no-repeat 0% 50%;
 }
-/* line 4568, ../sass/screen.scss */
+/* line 4454, ../sass/screen.scss */
 .profile .profile-left-side-list li .snd-message:hover {
   background: url(../img/red-email.png) no-repeat 0% 50%;
 }
-/* line 4572, ../sass/screen.scss */
+/* line 4458, ../sass/screen.scss */
 .profile .profile-left-side-list li .snd-gift {
   background: url(../img/grey-box.png) no-repeat 0% 50%;
 }
-/* line 4574, ../sass/screen.scss */
+/* line 4460, ../sass/screen.scss */
 .profile .profile-left-side-list li .snd-gift:hover {
   background: url(../img/grey-box-message-red.png) no-repeat 0% 50%;
 }
-/* line 4578, ../sass/screen.scss */
+/* line 4464, ../sass/screen.scss */
 .profile .profile-left-side-list li .purchase {
   background: url(../img/grey-purchase.png) no-repeat 0% 50%;
 }
-/* line 4580, ../sass/screen.scss */
+/* line 4466, ../sass/screen.scss */
 .profile .profile-left-side-list li .purchase:hover {
   background: url(../img/red-purchase.png) no-repeat 0% 50%;
 }
-/* line 4587, ../sass/screen.scss */
+/* line 4473, ../sass/screen.scss */
 .profile .profile-left-side-carousel {
   padding-top: 20px;
   position: relative;
   background-color: #ccc;
 }
-/* line 4591, ../sass/screen.scss */
+/* line 4477, ../sass/screen.scss */
 .profile .profile-left-side-carousel #owl-demo4 .owl-wrapper-outer {
   padding: 0;
 }
-/* line 4594, ../sass/screen.scss */
+/* line 4480, ../sass/screen.scss */
 .profile .profile-left-side-carousel .owl-pagination {
   height: 50px;
   padding-top: 14px;
   display: block;
   background-color: #9E0039;
 }
-/* line 4600, ../sass/screen.scss */
+/* line 4486, ../sass/screen.scss */
 .profile .profile-left-side-carousel .owl-controls {
   margin: 0;
 }
-/* line 4603, ../sass/screen.scss */
+/* line 4489, ../sass/screen.scss */
 .profile .profile-left-side-carousel .owl-controls .owl-page span {
   background-color: #fff;
 }
-/* line 4606, ../sass/screen.scss */
+/* line 4492, ../sass/screen.scss */
 .profile .profile-left-side-carousel .customNavigation .btn {
   background: none;
 }
-/* line 4608, ../sass/screen.scss */
+/* line 4494, ../sass/screen.scss */
 .profile .profile-left-side-carousel .customNavigation .btn:active {
   -webkit-box-shadow: inset 0 3px 5px transparent;
   box-shadow: inset 0 3px 5px transparent;
 }
-/* line 4613, ../sass/screen.scss */
+/* line 4499, ../sass/screen.scss */
 .profile .profile-left-side-carousel .customNavigation .btn.prev {
   margin-top: 7px;
 }
-/* line 4616, ../sass/screen.scss */
+/* line 4502, ../sass/screen.scss */
 .profile .profile-left-side-carousel .customNavigation {
   position: relative;
   bottom: 49px;
 }
-/* line 4620, ../sass/screen.scss */
+/* line 4506, ../sass/screen.scss */
 .profile .profile-left-side-carousel .profile-left-side-carousel-frame {
   width: 100%;
   height: 200px;
   position: relative;
 }
-/* line 4624, ../sass/screen.scss */
+/* line 4510, ../sass/screen.scss */
 .profile .profile-left-side-carousel .profile-left-side-carousel-frame p {
   color: white;
   font-size: 16px;
@@ -7140,20 +7013,20 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
 
 /*end profile*/
 /*footer*/
-/* line 4646, ../sass/screen.scss */
+/* line 4532, ../sass/screen.scss */
 footer {
   background-color: #555555;
   padding-bottom: 50px;
 }
 @media only screen and (min-width: 768px) and (max-width: 992px) {
-  /* line 4646, ../sass/screen.scss */
+  /* line 4532, ../sass/screen.scss */
   footer {
     position: relative;
     padding-bottom: 110px;
   }
 }
 @media only screen and (min-width: 768px) and (max-width: 992px) {
-  /* line 4660, ../sass/screen.scss */
+  /* line 4546, ../sass/screen.scss */
   footer .f-key-2 {
     position: absolute;
     right: 45px;
@@ -7162,7 +7035,7 @@ footer {
   }
 }
 @media only screen and (min-width: 768px) and (max-width: 992px) {
-  /* line 4674, ../sass/screen.scss */
+  /* line 4560, ../sass/screen.scss */
   footer .f-key-3 {
     position: absolute;
     left: 50%;
@@ -7172,7 +7045,7 @@ footer {
   }
 }
 @media only screen and (min-width: 768px) and (max-width: 992px) {
-  /* line 4690, ../sass/screen.scss */
+  /* line 4576, ../sass/screen.scss */
   footer .f-key-4 button {
     position: absolute;
     right: 53px;
@@ -7180,46 +7053,46 @@ footer {
   }
 }
 @media only screen and (min-width: 768px) and (max-width: 992px) {
-  /* line 4689, ../sass/screen.scss */
+  /* line 4575, ../sass/screen.scss */
   footer .f-key-4 {
     position: static;
   }
 }
-/* line 4709, ../sass/screen.scss */
+/* line 4595, ../sass/screen.scss */
 footer .footer-list {
   margin-top: 27px;
 }
-/* line 4711, ../sass/screen.scss */
+/* line 4597, ../sass/screen.scss */
 footer .footer-list li {
   margin-bottom: 13px;
 }
-/* line 4713, ../sass/screen.scss */
+/* line 4599, ../sass/screen.scss */
 footer .footer-list li:last-child {
   margin-bottom: 0px;
 }
-/* line 4716, ../sass/screen.scss */
+/* line 4602, ../sass/screen.scss */
 footer .footer-list li a {
   display: block;
   font-size: 14px;
   font-family: HelveticaLt;
   color: #fff;
 }
-/* line 4723, ../sass/screen.scss */
+/* line 4609, ../sass/screen.scss */
 footer .footer-list li .transp {
   color: transparent;
   position: relative;
   z-index: 1;
 }
-/* line 4730, ../sass/screen.scss */
+/* line 4616, ../sass/screen.scss */
 footer .footer-right-side {
   margin-top: 15px;
 }
-/* line 4732, ../sass/screen.scss */
+/* line 4618, ../sass/screen.scss */
 footer .footer-right-side ul {
   float: right;
 }
 @media only screen and (min-width: 768px) and (max-width: 992px) {
-  /* line 4732, ../sass/screen.scss */
+  /* line 4618, ../sass/screen.scss */
   footer .footer-right-side ul {
     float: none;
     left: 50%;
@@ -7228,22 +7101,22 @@ footer .footer-right-side ul {
     position: absolute;
   }
 }
-/* line 4744, ../sass/screen.scss */
+/* line 4630, ../sass/screen.scss */
 footer .footer-right-side ul li {
   float: left;
   display: block;
   margin-right: 18px;
 }
-/* line 4748, ../sass/screen.scss */
+/* line 4634, ../sass/screen.scss */
 footer .footer-right-side ul li:last-child {
   margin-right: 0;
 }
-/* line 4751, ../sass/screen.scss */
+/* line 4637, ../sass/screen.scss */
 footer .footer-right-side ul li a {
   display: block;
   float: left;
 }
-/* line 4759, ../sass/screen.scss */
+/* line 4645, ../sass/screen.scss */
 footer .footer-right-side button {
   font-family: HelveticaLt;
   color: #fff;
@@ -7259,13 +7132,13 @@ footer .footer-right-side button {
   background: #999999 url(../img/footer-support.png) no-repeat 7% 50%;
 }
 @media only screen and (min-width: 768px) and (max-width: 992px) {
-  /* line 4759, ../sass/screen.scss */
+  /* line 4645, ../sass/screen.scss */
   footer .footer-right-side button {
     background: #999999;
     padding-left: 10px;
   }
 }
-/* line 4780, ../sass/screen.scss */
+/* line 4666, ../sass/screen.scss */
 footer .footer-right-side p {
   color: #fff;
   font-size: 14px;
@@ -7274,7 +7147,7 @@ footer .footer-right-side p {
   margin-bottom: 20px;
 }
 @media only screen and (min-width: 768px) and (max-width: 992px) {
-  /* line 4780, ../sass/screen.scss */
+  /* line 4666, ../sass/screen.scss */
   footer .footer-right-side p {
     position: absolute;
     left: 50%;
@@ -7285,13 +7158,13 @@ footer .footer-right-side p {
 
 /*end footer*/
 /*copyright*/
-/* line 4802, ../sass/screen.scss */
+/* line 4688, ../sass/screen.scss */
 .copyright {
   background-color: #999999;
   padding: 10px 0;
   text-align: center;
 }
-/* line 4806, ../sass/screen.scss */
+/* line 4692, ../sass/screen.scss */
 .copyright p {
   color: #fff;
   font-size: 14px;
@@ -7300,32 +7173,76 @@ footer .footer-right-side p {
 
 /*end copyright*/
 /*blog*/
-/* line 4816, ../sass/screen.scss */
+/* line 4702, ../sass/screen.scss */
 .page-blog .main-content {
   padding-top: 45px;
   padding-bottom: 45px;
 }
-/* line 4819, ../sass/screen.scss */
+/* line 4705, ../sass/screen.scss */
 .page-blog .main-content .single-post-item {
   background: #fff;
+  border-radius: 5px;
   padding: 20px 80px;
   margin-top: 15px;
+  margin-bottom: 20px;
 }
-/* line 4825, ../sass/screen.scss */
+/* line 4713, ../sass/screen.scss */
+.page-blog .main-content .single-post-comments textarea {
+  border: none;
+  font-style: italic;
+  outline: none;
+  color: #ccc;
+  resize: none;
+}
+/* line 4720, ../sass/screen.scss */
+.page-blog .main-content .single-post-comments .dialog-item {
+  margin-bottom: 15px;
+}
+/* line 4722, ../sass/screen.scss */
+.page-blog .main-content .single-post-comments .dialog-item img {
+  width: 130px;
+}
+/* line 4728, ../sass/screen.scss */
+.page-blog .main-content .single-post-comments .line {
+  margin-top: 15px;
+}
+/* line 4731, ../sass/screen.scss */
+.page-blog .main-content .single-post-comments .red-21-Lt-w600 {
+  margin-left: 155px;
+  margin-bottom: 20px;
+}
+/* line 4735, ../sass/screen.scss */
+.page-blog .main-content .single-post-comments .live-the-comment {
+  display: flex;
+  align-items: center;
+  width: 265px;
+  float: right;
+  justify-content: center;
+}
+/* line 4741, ../sass/screen.scss */
+.page-blog .main-content .single-post-comments .live-the-comment .btn-send {
+  width: 220px;
+  position: relative;
+  background: #9e0039;
+  right: auto;
+  margin-left: 20px;
+  bottom: auto;
+}
+/* line 4752, ../sass/screen.scss */
 .page-blog .main-content .back-to-the-list:hover, .page-blog .main-content .back-to-the-list:active, .page-blog .main-content .back-to-the-list:focus {
   color: #9e0039;
 }
-/* line 4828, ../sass/screen.scss */
+/* line 4755, ../sass/screen.scss */
 .page-blog .main-content .back-to-the-list img {
   display: inline-block;
   margin-right: 14px;
   margin-top: -3px;
 }
-/* line 4834, ../sass/screen.scss */
+/* line 4761, ../sass/screen.scss */
 .page-blog .main-content .page-blog-head {
   text-align: center;
 }
-/* line 4837, ../sass/screen.scss */
+/* line 4764, ../sass/screen.scss */
 .page-blog .main-content h1 {
   font-family: LarryIt;
   margin-top: 0;
@@ -7334,7 +7251,7 @@ footer .footer-right-side p {
   font-size: 72px;
   color: #9e0039;
 }
-/* line 4844, ../sass/screen.scss */
+/* line 4771, ../sass/screen.scss */
 .page-blog .main-content h1:after, .page-blog .main-content h1:before {
   content: '';
   width: 32px;
@@ -7342,32 +7259,32 @@ footer .footer-right-side p {
   height: 37px;
   background: url(../img/h-flower.png) no-repeat;
 }
-/* line 4851, ../sass/screen.scss */
+/* line 4778, ../sass/screen.scss */
 .page-blog .main-content h1:after {
   left: -60px;
   top: 21px;
 }
-/* line 4855, ../sass/screen.scss */
+/* line 4782, ../sass/screen.scss */
 .page-blog .main-content h1:before {
   right: -60px;
   top: 21px;
   height: 40px;
   background: url(../img/h-flower-2.png) no-repeat;
 }
-/* line 4862, ../sass/screen.scss */
+/* line 4789, ../sass/screen.scss */
 .page-blog .main-content .page-blog-news-item {
   background: #fff;
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 20px;
 }
-/* line 4867, ../sass/screen.scss */
+/* line 4794, ../sass/screen.scss */
 .page-blog .main-content .page-blog-news-item .page-blog-news-item-date {
   color: #999;
   display: inline-block;
   margin-bottom: 20px;
 }
-/* line 4872, ../sass/screen.scss */
+/* line 4799, ../sass/screen.scss */
 .page-blog .main-content .page-blog-news-item h2 {
   margin-top: 0;
   font-size: 36px;
@@ -7376,18 +7293,18 @@ footer .footer-right-side p {
   font-weight: bold;
   margin-bottom: 15px;
 }
-/* line 4879, ../sass/screen.scss */
+/* line 4806, ../sass/screen.scss */
 .page-blog .main-content .page-blog-news-item h2 a {
   color: inherit;
 }
-/* line 4883, ../sass/screen.scss */
+/* line 4810, ../sass/screen.scss */
 .page-blog .main-content .page-blog-news-item img {
   width: 100%;
   display: inline-block;
   max-height: 167px;
   margin-bottom: 15px;
 }
-/* line 4889, ../sass/screen.scss */
+/* line 4816, ../sass/screen.scss */
 .page-blog .main-content .page-blog-news-item .btn-send {
   position: relative;
   width: 100px;
@@ -7396,12 +7313,12 @@ footer .footer-right-side p {
   bottom: auto;
   background: #9e0039;
 }
-/* line 4899, ../sass/screen.scss */
+/* line 4826, ../sass/screen.scss */
 .page-blog .main-content .girls-arrow {
   margin-top: 25px;
 }
 
-/* line 4906, ../sass/screen.scss */
+/* line 4833, ../sass/screen.scss */
 .single-post .main-content .share-block {
   width: 200px;
   display: flex;
@@ -7411,29 +7328,155 @@ footer .footer-right-side p {
   float: right;
   justify-content: space-between;
 }
-/* line 4914, ../sass/screen.scss */
+/* line 4841, ../sass/screen.scss */
 .single-post .main-content .share-block p {
   color: #999999;
 }
-/* line 4919, ../sass/screen.scss */
+/* line 4846, ../sass/screen.scss */
 .single-post .main-content .page-blog-news-item img {
   max-height: inherit;
 }
-/* line 4922, ../sass/screen.scss */
+/* line 4849, ../sass/screen.scss */
 .single-post .main-content .page-blog-news-item p {
   margin-bottom: 30px;
 }
 
 /*end blog*/
-/* line 4929, ../sass/screen.scss */
+/* line 4856, ../sass/screen.scss */
 .gl-ms-overflow {
   overflow: hidden !important;
   height: 50px !important;
 }
 
-/* line 4933, ../sass/screen.scss */
+/* line 4860, ../sass/screen.scss */
 .slide-bottom {
   transform: translateY(15px) !important;
+}
+
+/* line 4863, ../sass/screen.scss */
+.dialog-item {
+  position: relative;
+  margin-bottom: 10px;
+}
+/* line 4866, ../sass/screen.scss */
+.dialog-item .img-dialog {
+  width: 120px;
+  height: 130px;
+}
+/* line 4870, ../sass/screen.scss */
+.dialog-item img {
+  float: left;
+  border-radius: 5px;
+}
+/* line 4874, ../sass/screen.scss */
+.dialog-item .girls-message-item-info {
+  background: #fff;
+  position: relative;
+  float: right;
+  height: 130px;
+  padding: 20px 25px;
+  width: 83%;
+  border-radius: 5px;
+}
+/* line 4875, ../sass/screen.scss */
+.dialog-item .girls-message-item-info:after {
+  content: "";
+  width: 0;
+  left: -10px;
+  margin-top: -10px;
+  top: 70px;
+  position: absolute;
+  height: 0;
+  border-right: 10px solid #fff;
+  border-bottom: 10px solid transparent;
+  border-top: 10px solid transparent;
+}
+/* line 4896, ../sass/screen.scss */
+.dialog-item .girls-message-item-info div a span {
+  font-size: 24px;
+  font-family: HelveticaTh;
+  color: #9e0039;
+  display: block;
+  margin-bottom: 0px;
+}
+/* line 4903, ../sass/screen.scss */
+.dialog-item .girls-message-item-info div a:hover, .dialog-item .girls-message-item-info div a:focus, .dialog-item .girls-message-item-info div a:active {
+  text-decoration: none;
+}
+/* line 4908, ../sass/screen.scss */
+.dialog-item .girls-message-item-info > .girls-message-item-descr {
+  color: #555555;
+  font-size: 18px;
+  font-family: HelveticaTh;
+  float: left;
+  position: relative;
+  display: block;
+  width: 75%;
+}
+/* line 4918, ../sass/screen.scss */
+.dialog-item .girls-message-item-info > .girls-message-item-descr a {
+  color: #9e0039;
+  position: absolute;
+  z-index: 9999999999;
+  /* overflow-x: visible; */
+}
+/* line 4926, ../sass/screen.scss */
+.dialog-item .girls-message-item-info > .girls-message-item-descr a i {
+  margin-left: 7px;
+}
+/* line 4931, ../sass/screen.scss */
+.dialog-item .girls-message-item-info .message-toggle {
+  transform: translateY(0px);
+  font-size: 18px;
+  transition: all 0.5s;
+  color: #9E0039;
+  font-family: HelveticaTh;
+  font-size: 18px;
+}
+/* line 4942, ../sass/screen.scss */
+.dialog-item .girls-message-item-info .message-toggle i {
+  margin-left: 4px;
+  margin-top: 0px;
+  display: inline-block;
+}
+/* line 4948, ../sass/screen.scss */
+.dialog-item .girls-message-item-info .girl-message-photo {
+  display: block;
+  float: right;
+  position: relative;
+  margin-top: -25px;
+}
+/* line 4953, ../sass/screen.scss */
+.dialog-item .girls-message-item-info .girl-message-photo span {
+  width: 20px;
+  height: 20px;
+  right: 0px;
+  bottom: -2px;
+  display: block;
+  line-height: 20px;
+  position: absolute;
+  background: #9e0039;
+  text-align: center;
+  font-size: 14px;
+  color: #fff;
+  border-radius: 50%;
+}
+/* line 4969, ../sass/screen.scss */
+.dialog-item .girls-message-item-info.open {
+  height: auto;
+}
+/* line 4971, ../sass/screen.scss */
+.dialog-item .girls-message-item-info.open .girls-message-item-descr {
+  height: auto;
+}
+/* line 4976, ../sass/screen.scss */
+.dialog-item .girl-message-date {
+  position: absolute;
+  right: 20px;
+  color: #999999;
+  font-size: 14px;
+  top: 10px;
+  font-family: HelveticaTh;
 }
 
 
@@ -7447,4 +7490,13 @@ footer .footer-right-side p {
 .textarea_pink {
   /*background: #9e0039;*/
   border: 1px solid #9e0039 !important;
+}
+
+.activ_message-filter{
+  color: #9e0039 !important;
+  text-decoration: none !important;
+  border-bottom: 2px solid #9e0039 !important;
+}
+.activ_sort_button{
+  background-color: #9e0039 !important;
 }

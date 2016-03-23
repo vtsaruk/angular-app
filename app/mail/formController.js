@@ -22,24 +22,25 @@ function formController (formService, $scope) {
     //   //photo: $scope.cropper.croppedImage,
     //   //filename: "home-bg2.jpg",
     // };
-    //console.log(photo);
-    //formService.addPhotos($scope.cropper.sourceImage);
-    //var formData = new FormData(angular.element(document.forms.form1.file));
-    //console.log($scope.cropper.sourceImage);
+    // console.log($scope.cropper.croppedImage);
+    // formService.addPhotos($scope.cropper.sourceImage);
+    // var formData = new FormData(angular.element(document.forms.form1.file));
+    // console.log($scope.cropper.sourceImage);
     // console.log('----------------------');
     // console.log(htmlFiles[0]);
     // console.log(htmlFiles[0].files[0]);
-
-    var htmlFiles = angular.element(document.forms[0].photo);
+    var isMainPhoto = this.isMainPhoto;
+    var photo = $scope.cropper.croppedImage
+    //var htmlFiles = angular.element(document.forms[0].photo);
     var fd = new FormData();
-    fd.append('photo', htmlFiles[0].files[0]);
-    fd.append('isMainPhoto', this.isMainPhoto);
-console.log(fd);
-console.log(this.isMainPhoto);
+    fd.append('photo', photo);//htmlFiles[0].files[0]
+    fd.append('isMainPhoto', isMainPhoto);
+//console.log(htmlFiles[0].files[1]);
+// console.log(fd);
 
     formService.addPhotos(fd);
-
-    $event.preventDefault();
+    alert("Фотография загружена");
+//     $event.preventDefault();
   };
 
 };

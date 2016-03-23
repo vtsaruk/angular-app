@@ -1,13 +1,12 @@
-<form action="">
-  <!-- <input type="file" ng-model="ctrl.photo" oi-file="options">
+<form>
+<!-- action="api/photos" method="post" -->
 
-  <button ng-click="ctrl.postPhoto()">Отправить фото</button> -->
 
-  <input type="file" img-cropper-fileread image="cropper.sourceImage"  name="photo">
+  <input type="file" img-cropper-fileread image="cropper.sourceImage">
   <!-- <input type="file" ng-model="cropper.sourceImage"  name="photo" base-sixty-four-input> -->
   <!-- <input type="file" ng-model="cropper.sourceImage"  name="photo"> -->
   <div>
-     <canvas width="500" height="300" id="canvas" image-cropper="" image="cropper.sourceImage" cropped-image="cropper.croppedImage" crop-width="400" crop-height="200" min-width="100" min-height="50" keep-aspect="true" crop-area-bounds="bounds" class="ng-isolate-scope"></canvas>
+     <canvas width="500" height="300" id="canvas" image-cropper="" image="cropper.sourceImage" cropped-image="cropper.croppedImage" crop-width="420" crop-height="420" min-width="100" min-height="100" keep-aspect="true" crop-area-bounds="bounds" class="ng-isolate-scope"></canvas>
   </div>
   <div>Cropped Image (Left: {{bounds.left}} Right: {{bounds.right}} Top: {{bounds.top}} Bottom: {{bounds.bottom}})</div>
   <div ng-show="cropper.croppedImage!=null"><img ng-src="{{cropper.croppedImage}}" /></div>

@@ -13,6 +13,8 @@ var usersController = require('./mail/usersController');
 var girlsAllController = require('./mail/girlsAllController');
 var mailIdController = require('./mail/mailIdController');
 var formController = require('./mail/formController');
+var girlsViewController = require('./mail/girlsViewController');
+
 var cropDirective = require('./directives/crop');
 var fileDirective = require('./directives/angular-file-model');
 
@@ -81,9 +83,45 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
       templateUrl: 'assets/angular-app/public/form.html',
       controller: formController,
       controllerAs: 'ctrl'
+    })
+    .state('girlsView', {
+      url: '/girlsView/:id',
+      templateUrl: 'assets/angular-app/public/girls-view.html',
+      controller: girlsViewController,
+      controllerAs: 'ctrl'
     });
 })
+// .run(function ($rootScope, $location, User) {
+//     //.run(function ($rootScope, $location) {
+//     // Redirect to login if route requires auth and you're not logged in
+//         $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+//           // Auth.isLoggedInAsync(function(loggedIn) {
+//           //   if (toState.authenticate && !loggedIn) {
+//           //         $rootScope.returnToState = toState.url;
+//           //         $rootScope.returnToStateParams = toParams.Id;
+//           //         $location.path('/login');
+//           //     }
+//           // });
+//           if (toState.name == 'login'){
 
+//           } else {
+//             if(!$rootScope.current_user){
+//               $rootScope.current_user = User.login();
+//               $location.path('/main');
+//             }
+//              //Auth.isLoggedInAsync(function(loggedIn) {
+//              //  if (toState.authenticate && !loggedIn) {
+//               //       $rootScope.returnToState = toState.url;
+//                //      $rootScope.returnToStateParams = toParams.Id;
+//                //      $location.path('/login');
+//                //  }
+//              //});
+//           }
+
+//           console.log(toState);
+//           console.log(toParams);
+//         });
+//    })
 .controller('conversationsController', conversationsController)
 .controller('usersController', ['userService', usersController])
 .controller('mailController', ['mailService','userService', 'girlsService', mailController])
@@ -91,6 +129,7 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
 .controller('girlsAllController', ['userService', 'girlsAllService', girlsAllController])
 .controller('mailIdController', ['userService', 'mailService', 'girlsAllService', 'mailIdService', mailIdController])
 .controller('formController', ['formService',  formController])
+.controller('girlsViewController', ['girlsService', girlsViewController])
 .factory('userService', ['$resource', userService])
 .factory('mailService', ['$resource', mailService])
 .factory('girlsService', ['$resource', girlsService])
@@ -98,7 +137,7 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
 .factory('mailIdService', ['$resource', mailIdService])
 .factory('formService', ['$resource', formService]);
 
-},{"./controllers/conversationsController":2,"./directives/angular-file-model":3,"./directives/crop":4,"./mail/formController":5,"./mail/form_service":6,"./mail/girlsAllController":7,"./mail/girlsAll_service":8,"./mail/girlsController":9,"./mail/girls_service":10,"./mail/mailController":11,"./mail/mailIdController":12,"./mail/mailId_service":13,"./mail/mail_service":14,"./mail/user_service":15,"./mail/usersController":16,"angular":24,"angular-base64-upload":17,"angular-img-cropper":19,"angular-resource":21,"angular-ui-router":22,"ng-file-upload":26}],2:[function(require,module,exports){
+},{"./controllers/conversationsController":2,"./directives/angular-file-model":3,"./directives/crop":4,"./mail/formController":5,"./mail/form_service":6,"./mail/girlsAllController":7,"./mail/girlsAll_service":8,"./mail/girlsController":9,"./mail/girlsViewController":10,"./mail/girls_service":11,"./mail/mailController":12,"./mail/mailIdController":13,"./mail/mailId_service":14,"./mail/mail_service":15,"./mail/user_service":16,"./mail/usersController":17,"angular":25,"angular-base64-upload":18,"angular-img-cropper":20,"angular-resource":22,"angular-ui-router":23,"ng-file-upload":27}],2:[function(require,module,exports){
 module.exports = function() {
   /*this.conversations = [
     {'id':13, 'name':'Aleksandra Almazova', 'amount': 35, 'Last_incoming_letter': '13:47   03/12/2014', 'Last_outgoing_letter': '18:34   03/11/2015'},
@@ -1512,24 +1551,25 @@ function formController (formService, $scope) {
     //   //photo: $scope.cropper.croppedImage,
     //   //filename: "home-bg2.jpg",
     // };
-    //console.log(photo);
-    //formService.addPhotos($scope.cropper.sourceImage);
-    //var formData = new FormData(angular.element(document.forms.form1.file));
-    //console.log($scope.cropper.sourceImage);
+    // console.log($scope.cropper.croppedImage);
+    // formService.addPhotos($scope.cropper.sourceImage);
+    // var formData = new FormData(angular.element(document.forms.form1.file));
+    // console.log($scope.cropper.sourceImage);
     // console.log('----------------------');
     // console.log(htmlFiles[0]);
     // console.log(htmlFiles[0].files[0]);
-
-    var htmlFiles = angular.element(document.forms[0].photo);
+    var isMainPhoto = this.isMainPhoto;
+    var photo = $scope.cropper.croppedImage
+    //var htmlFiles = angular.element(document.forms[0].photo);
     var fd = new FormData();
-    fd.append('photo', htmlFiles[0].files[0]);
-    fd.append('isMainPhoto', this.isMainPhoto);
-console.log(fd);
-console.log(this.isMainPhoto);
+    fd.append('photo', photo);//htmlFiles[0].files[0]
+    fd.append('isMainPhoto', isMainPhoto);
+//console.log(htmlFiles[0].files[1]);
+// console.log(fd);
 
     formService.addPhotos(fd);
-
-    $event.preventDefault();
+    alert("Фотография загружена");
+//     $event.preventDefault();
   };
 
 };
@@ -1598,26 +1638,19 @@ function girlsAllController ($document, $location, userService, girlsAllService)
       function(data) {
         self.girlsAll = data;
         self.gillsLength = self.girlsAll.totalCount;
-        self.countPage = self.gillsLength / 3;//здесь мы увеличивае тоже получается) правильно? мы с тобой делали
+        self.countPage = self.gillsLength / 3;
         self.totalPage = Math.ceil(self.countPage);
-        console.log('self.girlsAll');
-        console.log('self.totalPage1');
-        console.log(self.totalPage);
       },
       function(error) {
         console.log(error);
       }
     );
   };
-  //this.girlsAllGet(2);
+
   this.page = 0;
-  this.limit = 3; //здесь мы установили 5
+  this.limit = 3;
 
   this.paginaGirl = function() {
-    console.log('this.page1');
-    console.log(this.page);
-    console.log('this.totalPage');
-    console.log(this.totalPage);
     if (this.totalPage){
       if(this.totalPage > this.page) {
         this.girlsAllGet(2);
@@ -1629,11 +1662,6 @@ function girlsAllController ($document, $location, userService, girlsAllService)
       this.page += 1;
       this.limit += 3;
     }
-    console.log('this.page2');
-    console.log(this.page);
-    //console.log('self.totalPage2');
-    //console.log(this.totalPage);
-    //console.log(this.user);
   };
 
   this.paginaGirl();
@@ -1676,7 +1704,6 @@ function girlsController ($document, $stateParams, $location, mailService, userS
     userService.getUser().$promise.then(
       function(data) {
         self.user = data;
-        console.log(self.user);
       },
       function(error) {
         console.log(error);
@@ -1686,16 +1713,13 @@ function girlsController ($document, $stateParams, $location, mailService, userS
 
 this.getUserData();
 
-  var id = $stateParams.id;
+  var id = $stateParams.id.split('-')[4];
 
   this.girlsIdGet = function(id) {
-    console.log(id, id);
     var self = this;
     girlsService.getGirlsId(id).$promise.then(
       function(data) {
         self.girlsId = data;
-        console.log(self.girlsId);
-
       },
       function(error) {
         console.log(error);
@@ -1709,6 +1733,32 @@ this.getUserData();
 
 girlsController.$inject = ['$document', '$stateParams', '$location', 'mailService', 'userService', 'girlsService'];
 },{}],10:[function(require,module,exports){
+module.exports = girlsViewController;
+
+
+function girlsViewController ($document, $stateParams, $location, girlsService) {
+
+var id = $stateParams.id;
+
+  this.girlsIdGet = function(id) {
+    var self = this;
+    girlsService.getGirlsId(id).$promise.then(
+      function(data) {
+        self.girlsId = data;
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+  this.girlsIdGet(id);
+
+};
+
+
+
+girlsViewController.$inject = ['$document', '$stateParams', '$location', 'girlsService'];
+},{}],11:[function(require,module,exports){
 module.exports = girlsService;
 
 function girlsService ($resource) {
@@ -1723,7 +1773,7 @@ function girlsService ($resource) {
 };
 
 girlsService.$inject = ['$resource'];
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 module.exports = mailController;
 
 function mailController ($document, $location, $timeout, $anchorScroll, mailService, userService , girlsService) {
@@ -1777,6 +1827,8 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     }
     var self = this;
     var options = {
+      dateTimeFrom: self.resultFromDate,
+      dateTimeTo: self.resultToDate,
       type: self.type,
       limit: self.limit,
       offset: self.limit * self.page
@@ -1915,16 +1967,34 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     );
   }
 
-  this.letterTextSlice = function(letterText) {
-    if (letterText==null){
-      return 0;
-    }
-    else if(letterText.length>100) {
-      var text = letterText.slice(0, 100);
-      return text;
-    }
-    else return letterText;
+  this.switchMore = function(letterText) {
+    if (letterText==null) {
+      return false;}
+      else if(letterText.length>90) {
+      return false;
+    } else return true;
   };
+
+
+  this.letterTextSlice = function(letterText, switchComment) {
+    if (switchComment) {
+       return letterText;
+    } else {
+      if (letterText==null) {
+        return 0;
+      } else if(letterText.length>90) {
+
+        var text = letterText.slice(0, 90);
+        return text;
+      }
+      return letterText;
+    }
+  }
+
+  this.showSendMessage =function(senderId, userId) {
+    return senderId==userId? true: false;
+  }
+
 
   this.textArea = false;
 
@@ -1994,18 +2064,84 @@ this.girlsIdGet = function(id) {
       function(data) {
         self.girlsId = data;
       },
-      function(error) {
-        console.log(error);
+      function(error) {        console.log(error);
       }
     );
   };
 
+  this.onThisWeekDate = function() {
+    this.onLastWeek = false;
+    this.onThisWeek = true;
+    var toDate = new Date();
+
+    var numberToDay = new Date().getDay();
+    var firstDaySec = toDate.setDate(toDate.getDate() - (numberToDay-1));
+    var firstDayWeek = new Date(firstDaySec);
+    var month = firstDayWeek.getMonth() + 1;
+    var arrNum = new String(firstDayWeek).split(' ');
+    this.resultFromDate = arrNum[3] + "-" + month + "-" + arrNum[2] + " " + "00:00:00";
+
+    var arrNum2 = new String(new Date()).split(' ');
+    var month2 = toDate.getMonth() + 1;
+    this.resultToDate = arrNum2[3] + "-" + month2 + "-" +arrNum2[2] + " " + arrNum2[4];
+    this.getMessages();
+  }
+
+  //this.onThisWeekDate();
+
+  this.onLastWeekDate = function() {
+    this.onLastWeek = true;
+    this.onThisWeek = false;
+    var toDate = new Date();
+    var numberToDay = new Date().getDay();
+    var lastDayWeekSec = toDate.setDate(toDate.getDate() - numberToDay);
+    var lastDayWeek = new Date(lastDayWeekSec);
+    var month = lastDayWeek.getMonth() + 1;
+    var arrNum = new String(lastDayWeek).split(' ');
+    this.resultToDate = arrNum[3] + "-" + month + "-" + arrNum[2] + " " + "23:59:59";
+
+    var firstDayWeekSec = new Date().setDate(new Date().getDate() - (numberToDay + 6));
+    var firstDayWeek = new Date(firstDayWeekSec);
+    var month2 = firstDayWeek.getMonth() + 1;
+    var arrNum2 = new String(firstDayWeek).split(' ');
+    this.resultFromDate = arrNum2[3] + "-" + month2 + "-" + arrNum2[2] + " " + "00:00:00";
+    this.getMessages();
+  };
+
+  //this.onLastWeekDate();
+  this.showDate = function() {
+
+    var arrDate2 = new String(this.fromDate).split(' ');
+    var month2 = this.fromDate.getMonth() +1;
+    this.resultFromDate = arrDate2[3] + '-' + month2 + '-' + arrDate2[2] + ' ' + '00:00:00';
+
+    var arrDate = new String(this.toDate).split(' ');
+    var month = this.toDate.getMonth() + 1;
+    this.resultToDate = arrDate[3] + '-' + month +'-' + arrDate[2] + ' ' + '23:59:59';
+    if(this.fromDate.getTime()<this.toDate.getTime())
+      this.getMessages();
+
+  };
+
+  this.watchInputDate = function(fromDate, toDate) {
+    if(fromDate && toDate)
+
+    // console.log(fromDate.getTime(), toDate.getTime());
+    return fromDate.getTime()<toDate.getTime()? true : false;
+  };
+  this.resetSortDate = function() {
+    this.toDate = undefined;
+    this.fromDate = undefined;
+    this.resultFromDate = undefined;
+    this.resultToDate = undefined;
+    this.getMessages();
+  }
 };
 
 
 mailController.$inject = ['$document', '$location', '$timeout', '$anchorScroll', 'mailService', 'userService', 'girlsService'];
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 module.exports = mailIdController;
 
 function mailIdController ($document, $stateParams, $location, $anchorScroll, $timeout, mailService, userService , girlsService, mailIdService) {
@@ -2118,16 +2254,29 @@ this.girlsIdGet = function(id) {
     this.listDiv = this.listDiv ? false : true;
   };
 
-  this.letterTextSlice = function(letterText) {
-    if (letterText==null){
-      return 0;
-    }
-    else if(letterText.length>200) {
-      var text = letterText.slice(0, 200);
-      return text;
-    }
-    else return letterText;
+  this.switchMore = function(letterText) {
+    if (letterText==null) {
+      return false;}
+      else if(letterText.length>90) {
+      return false;
+    } else return true;
   };
+
+
+  this.letterTextSlice = function(letterText, switchComment) {
+    if (switchComment) {
+       return letterText;
+    } else {
+      if (letterText==null) {
+        return 0;
+      } else if(letterText.length>90) {
+
+        var text = letterText.slice(0, 90);
+        return text;
+      }
+      return letterText;
+    }
+  }
 
   this.payment =function(id, partnerid) {
     var self = this;
@@ -2165,7 +2314,7 @@ this.girlsIdGet = function(id) {
 };
 
 mailIdController.$inject = ['$document', '$stateParams', '$location', '$anchorScroll', '$timeout', 'mailService', 'userService', 'girlsService', 'mailIdService'];
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 module.exports = mailIdService;
 
 function mailIdService ($resource) {
@@ -2180,7 +2329,7 @@ function mailIdService ($resource) {
 };
 
 mailIdService.$inject = ['$resource'];
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 module.exports = mailService;
 
 function mailService ($resource) {
@@ -2192,6 +2341,8 @@ function mailService ($resource) {
       getMessages: {
         method: 'GET',
         params: {
+          dateTimeFrom: '@dateTimeFrom',
+          dateTimeTo: '@dateTimeTo',
           type: '@type',
           limit: '@limit',
           offset: '@offset',
@@ -2223,11 +2374,15 @@ function mailService ($resource) {
   };
 
   this.getAllMessages = function (options) {
+    console.log('options');
+    console.log(options);
     return mailResource.get({
+      dateTimeFrom: options.dateTimeFrom,
+      dateTimeTo: options.dateTimeTo,
       type: options.type,
       limit: options.limit,
       offset: options.offset,
-      relations: '{ "sender":{ "country": {}, "girl": {} } }'
+      relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'
     });
   };
 
@@ -2240,11 +2395,11 @@ function mailService ($resource) {
   };
 
   this.getMessagesId = function (id) {
-    return mailResource.get({mail_id: id, relations: '{ "sender":{ "country": {}, "girl": {} } }'});
+    return mailResource.get({mail_id: id, relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'});
   };
 
   this.correspondenceGet = function(id) {
-    return mailResource.get({partnerId:id, relations: '{ "sender":{ "country": {}, "girl": {} } }'})
+    return mailResource.get({partnerId:id, relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'})
   };
 
   this.deleteMessage = function (id) {
@@ -2262,7 +2417,7 @@ function mailService ($resource) {
 
 mailService.$inject = ['$resource'];
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 module.exports = userService;
 
 function userService ($resource) {
@@ -2277,7 +2432,7 @@ function userService ($resource) {
 };
 
 userService.$inject = ['$resource'];
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 module.exports = usersController;
 
 function usersController ($document, $location, userService ) {
@@ -2303,11 +2458,11 @@ function usersController ($document, $location, userService ) {
 }
 
 usersController.$inject = ['$document', '$location', 'userService'];
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 require('./src/angular-base64-upload.js');
 module.exports = 'naif.base64';
 
-},{"./src/angular-base64-upload.js":18}],18:[function(require,module,exports){
+},{"./src/angular-base64-upload.js":19}],19:[function(require,module,exports){
 (function(window, undefined) {
 
   'use strict';
@@ -2593,7 +2748,7 @@ module.exports = 'naif.base64';
 
 })(window);
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 angular.module('angular-img-cropper', []).directive("imageCropper", ['$document', '$window', 'imageCropperDataShare', function ($document, $window, imageCropperDataShare) {
     return {
         scope: {
@@ -3995,7 +4150,7 @@ angular.module('angular-img-cropper').factory("imageCropperDataShare", function 
     return share;
 });
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.0
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -4765,11 +4920,11 @@ angular.module('ngResource', ['ng']).
 
 })(window, window.angular);
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 require('./angular-resource');
 module.exports = 'ngResource';
 
-},{"./angular-resource":20}],22:[function(require,module,exports){
+},{"./angular-resource":21}],23:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -9140,7 +9295,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.0
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -39569,11 +39724,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":23}],25:[function(require,module,exports){
+},{"./angular":24}],26:[function(require,module,exports){
 /**!
  * AngularJS file upload directives and services. Supoorts: file upload/drop/paste, resume, cancel/abort,
  * progress, resize, thumbnail, preview, validation and CORS
@@ -42376,7 +42531,7 @@ ngFileUpload.service('UploadExif', ['UploadResize', '$q', function (UploadResize
 }]);
 
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 require('./dist/ng-file-upload-all');
 module.exports = 'ngFileUpload';
-},{"./dist/ng-file-upload-all":25}]},{},[1]);
+},{"./dist/ng-file-upload-all":26}]},{},[1]);

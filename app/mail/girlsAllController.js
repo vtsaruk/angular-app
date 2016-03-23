@@ -32,26 +32,19 @@ function girlsAllController ($document, $location, userService, girlsAllService)
       function(data) {
         self.girlsAll = data;
         self.gillsLength = self.girlsAll.totalCount;
-        self.countPage = self.gillsLength / 3;//здесь мы увеличивае тоже получается) правильно? мы с тобой делали
+        self.countPage = self.gillsLength / 3;
         self.totalPage = Math.ceil(self.countPage);
-        console.log('self.girlsAll');
-        console.log('self.totalPage1');
-        console.log(self.totalPage);
       },
       function(error) {
         console.log(error);
       }
     );
   };
-  //this.girlsAllGet(2);
+
   this.page = 0;
-  this.limit = 3; //здесь мы установили 5
+  this.limit = 3;
 
   this.paginaGirl = function() {
-    console.log('this.page1');
-    console.log(this.page);
-    console.log('this.totalPage');
-    console.log(this.totalPage);
     if (this.totalPage){
       if(this.totalPage > this.page) {
         this.girlsAllGet(2);
@@ -63,11 +56,6 @@ function girlsAllController ($document, $location, userService, girlsAllService)
       this.page += 1;
       this.limit += 3;
     }
-    console.log('this.page2');
-    console.log(this.page);
-    //console.log('self.totalPage2');
-    //console.log(this.totalPage);
-    //console.log(this.user);
   };
 
   this.paginaGirl();

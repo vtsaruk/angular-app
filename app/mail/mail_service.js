@@ -9,6 +9,8 @@ function mailService ($resource) {
       getMessages: {
         method: 'GET',
         params: {
+          dateTimeFrom: '@dateTimeFrom',
+          dateTimeTo: '@dateTimeTo',
           type: '@type',
           limit: '@limit',
           offset: '@offset',
@@ -41,10 +43,12 @@ function mailService ($resource) {
 
   this.getAllMessages = function (options) {
     return mailResource.get({
+      dateTimeFrom: options.dateTimeFrom,
+      dateTimeTo: options.dateTimeTo,
       type: options.type,
       limit: options.limit,
       offset: options.offset,
-      relations: '{ "sender":{ "country": {}, "girl": {} } }'
+      relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'
     });
   };
 
@@ -57,11 +61,11 @@ function mailService ($resource) {
   };
 
   this.getMessagesId = function (id) {
-    return mailResource.get({mail_id: id, relations: '{ "sender":{ "country": {}, "girl": {} } }'});
+    return mailResource.get({mail_id: id, relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'});
   };
 
   this.correspondenceGet = function(id) {
-    return mailResource.get({partnerId:id, relations: '{ "sender":{ "country": {}, "girl": {} } }'})
+    return mailResource.get({partnerId:id, relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'})
   };
 
   this.deleteMessage = function (id) {

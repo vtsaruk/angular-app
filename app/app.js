@@ -12,6 +12,8 @@ var usersController = require('./mail/usersController');
 var girlsAllController = require('./mail/girlsAllController');
 var mailIdController = require('./mail/mailIdController');
 var formController = require('./mail/formController');
+var girlsViewController = require('./mail/girlsViewController');
+
 var cropDirective = require('./directives/crop');
 var fileDirective = require('./directives/angular-file-model');
 
@@ -80,9 +82,45 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
       templateUrl: 'assets/angular-app/public/form.html',
       controller: formController,
       controllerAs: 'ctrl'
+    })
+    .state('girlsView', {
+      url: '/girlsView/:id',
+      templateUrl: 'assets/angular-app/public/girls-view.html',
+      controller: girlsViewController,
+      controllerAs: 'ctrl'
     });
 })
+// .run(function ($rootScope, $location, User) {
+//     //.run(function ($rootScope, $location) {
+//     // Redirect to login if route requires auth and you're not logged in
+//         $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+//           // Auth.isLoggedInAsync(function(loggedIn) {
+//           //   if (toState.authenticate && !loggedIn) {
+//           //         $rootScope.returnToState = toState.url;
+//           //         $rootScope.returnToStateParams = toParams.Id;
+//           //         $location.path('/login');
+//           //     }
+//           // });
+//           if (toState.name == 'login'){
 
+//           } else {
+//             if(!$rootScope.current_user){
+//               $rootScope.current_user = User.login();
+//               $location.path('/main');
+//             }
+//              //Auth.isLoggedInAsync(function(loggedIn) {
+//              //  if (toState.authenticate && !loggedIn) {
+//               //       $rootScope.returnToState = toState.url;
+//                //      $rootScope.returnToStateParams = toParams.Id;
+//                //      $location.path('/login');
+//                //  }
+//              //});
+//           }
+
+//           console.log(toState);
+//           console.log(toParams);
+//         });
+//    })
 .controller('conversationsController', conversationsController)
 .controller('usersController', ['userService', usersController])
 .controller('mailController', ['mailService','userService', 'girlsService', mailController])
@@ -90,6 +128,7 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
 .controller('girlsAllController', ['userService', 'girlsAllService', girlsAllController])
 .controller('mailIdController', ['userService', 'mailService', 'girlsAllService', 'mailIdService', mailIdController])
 .controller('formController', ['formService',  formController])
+.controller('girlsViewController', ['girlsService', girlsViewController])
 .factory('userService', ['$resource', userService])
 .factory('mailService', ['$resource', mailService])
 .factory('girlsService', ['$resource', girlsService])
