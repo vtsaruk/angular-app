@@ -78,26 +78,34 @@
         <div class="col-md-12">
           <div class="main-content clearfix" id="main_box_tab">
             <div class="message-tabs">
-              <div class="message-tabs-item" ng-click="ctrl.changeType('introductions'); ctrl.removeClassTab(0)">
+              <div class="message-tabs-item" ng-click="ctrl.changeType('introductions'); ctrl.removeClassTab(0); ctrl.firstNamberPagin()">
                 <p>Introductions <span ng-show="ctrl.messagesIntroductions.totalCount">({{ctrl.messagesIntroductions.totalNewCount}})</span></p>
               </div>
-              <div class="message-tabs-item active" ng-click="ctrl.changeType('inbox'); ctrl.removeClassTab(1)">
+              <div class="message-tabs-item active" ng-click="ctrl.changeType('inbox'); ctrl.removeClassTab(1); ctrl.firstNamberPagin()">
                 <p>Inbox <span ng-show="ctrl.messagesInbox.letters.length">({{ctrl.messagesInbox.totalNewCount}})</span></p>
               </div>
-              <div class="message-tabs-item" ng-click="ctrl.changeType('outbox'); ctrl.removeClassTab(2)">
+              <div class="message-tabs-item" ng-click="ctrl.changeType('outbox'); ctrl.removeClassTab(2); ctrl.firstNamberPagin()">
                 <p>Sent</p>
               </div>
-              <div class="message-tabs-item" ng-click="ctrl.changeType('deleted'); ctrl.removeClassTab(3)">
+              <div class="message-tabs-item" ng-click="ctrl.changeType('deleted'); ctrl.removeClassTab(3); ctrl.firstNamberPagin()">
                 <p>Deleted</p>
               </div>
             </div>
             <div class="message-sort clearfix">
               <div class="message-sort-left">
-              <ul ng-show="showSortUl" class="message-sort-dropdown">
-                  <li><a href="#">Select all</a></li>
-                  <li><a href="#">Read</a></li>
-                  <li><a href="#">Unread</a></li>
-                  <li><a href="#">Unselect</a></li>
+                <ul ng-show="showSortUl" class="message-sort-dropdown">
+                  <li>
+                    <a href="" ng-click="ctrl.selectAllCheck()">Select all</a>
+                  </li>
+                  <li>
+                    <a href="" ng-click="ctrl.readSelectCheck()">Read</a>
+                  </li>
+                  <li>
+                    <a href="" ng-click="ctrl.unreadSelectCheck()">Unread</a>
+                  </li>
+                  <li>
+                    <a href="" ng-click="ctrl.unselectCheck()">Unselect</a>
+                  </li>
                 </ul>
                 <div class="message-sort-left-1">
                   <label class="checkbox-1">
@@ -142,7 +150,7 @@
               </div>
               <p><a href="" class="active" ng-class="{true:'activ_sort_button'}[ctrl.watchInputDate(ctrl.fromDate, ctrl.toDate)]" ng-click="ctrl.showDate()">Sort</a><a href="" ng-click="ctrl.resetSortDate()">Reset</a></p>
   <!-- <div ng-click="ctrl.readTheLetter(19)">{{ctrl.messages.letters}}</div> -->
-<!-- <div>{{ctrl.messages.letters[1]}}</div> -->
+<div>{{ctrl.messages.letters[1]}}</div>
 
             </div>
             <div class="girls-messages">
@@ -178,10 +186,10 @@
                   <div class="clear" ng-show="messag.isPaid"></div>
                   <span ng-show="messag.isPaid">{{ctrl.letterTextSlice(messag.additionalData.text)}}</span>
                 </div>
-                <p class="girl-message-date" ng-show="messag.isPaid">{{messag.createdAt| date:'yyyy-MM-dd HH:mm:ss'}}</p>
-                <a href="#" class="girl-message-photo" ng-show="messag.isPaid"><img src="assets/angular-app/public/img/photo.png" alt=""><span>3</span></a>
-                 <a href="#" class="new" ng-hide="messag.isPaid">NEW</a>
-                <button class="btn-send"ng-hide="messag.isPaid" ng-click="ctrl.payment(messag.id, messag.senderId); ">Read the letter</button>
+                <p class="girl-message-date" ng-show="messag.isPaid">{{messag.createdAt| date:'yyyy-MM-dd HH:mm'}}</p>
+                <a href="" class="girl-message-photo" ng-show="messag.isPaid"><img src="assets/angular-app/public/img/photo.png" alt=""><span>3</span></a>
+                 <a href="" class="new" ng-hide="messag.isPaid" ng-click="ctrl.payment(messag.id, messag.senderId)">NEW</a>
+                <button class="btn-send"ng-hide="messag.isPaid" ng-click="ctrl.payment(messag.id, messag.senderId)">Read the letter</button>
                 <button class="btn-send"ng-show="messag.isPaid" ng-click="ctrl.readTheLetter(messag.id, messag.senderId)">Read the letter</button>
 
                 </div>
@@ -207,7 +215,7 @@
                 <p>Introductions<span ng-show="ctrl.messagesIntroductions.letters.length">({{ctrl.messagesIntroductions.letters.length}})</span></p>
               </div>
               <div class="message-tabs-item" ng-click="ctrl.changeType('inbox'); ctrl.removeClassTab(1)">
-                <p>Inbox <span ng-show="ctrl.messagesInbox.letters.length">({{ctrl.messagesInbox.totalCount}})</span></p>
+                <p>Inbox <span ng-show="ctrl.messagesInbox.letters.length">({{ctrl.messagesInbox.totalNewCount}})</span></p>
               </div>
               <div class="message-tabs-item" ng-click="ctrl.changeType('outbox');
               ctrl.removeClassTab(2)">
@@ -253,7 +261,7 @@
                     {{ctrl.messagesId.letter.additionalData.text}}
                   </span>
                 </div>
-                <p class="girl-message-date">{{ctrl.messagesId.letter.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                <p class="girl-message-date">{{ctrl.messagesId.letter.createdAt | date:'yyyy-MM-dd HH:mm'}}</p>
                 <!-- <button class="btn-send">Read the letter</button> -->
                 </div>
               </div>
@@ -265,7 +273,7 @@
                 <p class="area-info">Files in GIF, JPG and PNG maximum 4096 KB size. Attach TWO photos for free. 10 credits will be deducted from your account for each additional photo</p>
                 <div class="attach-button" ng-click="ctrl.showList()">Attach photo</div>
                 <ul class="choose-files-list" ng-show="ctrl.listDiv">
-                  <li><img src="assets/angular-app/public/img/check-mark.png" alt="" class="choose-arrow"><a href="#"><img src="img/photo-icon.png" alt="">Choose files</a><span>Someone name.jpg <img src="img/delete.png" alt=""></span></li>
+                  <li><img src="assets/angular-app/public/img/check-mark.png" alt="" class="choose-arrow"><a href="#"><img src="img/photo-icon.png" alt="">Choose files</a><span>Someone name.jpg <img src="assets/angular-app/public/img/delete.png" alt=""></span></li>
                   <li><img src="assets/angular-app/public/img/check-mark.png" alt="" class="choose-arrow"><a href="#"><img src="assets/angular-app/public/img/photo-icon.png" alt="">Choose files</a><span>Someone name.jpg <img src="assets/angular-app/public/img/delete.png" alt=""></span></li>
                   <li class="not-choose"><a href="#"><img src="assets/angular-app/public/img/grey-heart-in.png" alt="">Choose files</a><span>Someone name</span></li>
                   <li class="not-choose"><a href="#"><img src="assets/angular-app/public/img/grey-heart-in.png" alt="">Choose files</a><span>Someone name</span></li>
@@ -280,24 +288,29 @@
                 <p class="p-sort" ng-click="ctrl.showFilter(ctrl.filterDiv)"><img src="assets/angular-app/public/img/calendar.png" alt="">Sort by Date<i class="fa fa-caret-down"></i></p>
               </div>
               <div class="message-filter clearfix" ng-show="ctrl.filterDiv">
-                <a href="#" class="active">On this week</a>
-                <a href="#">On last week</a>
+                <a href="" class="active" ng-class="{true:'activ_message-filter'}[ctrl.onThisWeek]" ng-model="ctrl.onThisWeek" ng-click="ctrl.onThisWeekDate()">On this week</a>
+                <a href="" class="on-last-week" ng-class="{true:'activ_message-filter'}[ctrl.onLastWeek]" ng-model="ctrl.onLastWeek" ng-click="ctrl.onLastWeekDate()">On last week</a>
                 <div class="message-filter-select clearfix">
-                  <select name="" id="" class="selectpicker">
+                  <input type="date" ng-model="ctrl.fromDate">
+                  <!-- <select name="" id="" class="selectpicker">
                     <option value="">From date</option>
                     <option value="">19</option>
                     <option value="">20</option>
                     <option value="">21</option>
-                  </select>
-                  <span class="message-filter-select-line"> - </span>
-                  <select name="" id="" class="selectpicker">
+                  </select> -->
+                  <span class="message-filter-select-line"></span>
+                  <input type="date" ng-model="ctrl.toDate">
+                  <!-- <select name="" id="" class="selectpicker">
                     <option value="">To Date</option>
                     <option value="">31</option>
                     <option value="">32</option>
                     <option value="">33</option>
-                  </select>
+                  </select> -->
                 </div>
-                <p class="message-filter-sort-end"><a href="#" class="active">Sort</a><a href="#">Reset</a></p>
+                <p class="message-filter-sort-end">
+                  <a href="" class="active" ng-class="{true:'activ_sort_button'}[ctrl.watchInputDate(ctrl.fromDate, ctrl.toDate)]" ng-click="ctrl.showDate()">Sort</a>
+                  <a href="" ng-click="ctrl.resetSortDate()">Reset</a>
+                </p>
               </div>
 <!-- <div>{{ctrl.letterCor.letters[0]}}</div> -->
               <div class="dialog-container">
@@ -322,6 +335,8 @@
                     <button class="btn-send"ng-hide="letter.isPaid" ng-click="ctrl.payment(letter.id, sender.senderId)">Read the letter</button>
                   </div>
                 </div>
+
+                <button ng-hide="ctrl.buttonAddLetter" class="button_add_letter" ng-click="ctrl.paginaLetterCor()" ng-model="ctrl.buttonAddLetter">Ещё</button>
 
               </div>
             </div>

@@ -5,6 +5,9 @@ require('angular-resource');
 require('ng-file-upload');
 require('angular-img-cropper');
 require('angular-base64-upload');
+require('./../node_modules/ng-repeat-owl-carousel/src/ngRepeatOwlCarousel');
+// require('jquery');
+// require('bootstrap-select');
 
 var conversationsController = require('./controllers/conversationsController');
 var mailController = require('./mail/mailController');
@@ -17,6 +20,7 @@ var girlsViewController = require('./mail/girlsViewController');
 
 var cropDirective = require('./directives/crop');
 var fileDirective = require('./directives/angular-file-model');
+var owlDirective = require('./directives/owl-slider');
 
 var mailService = require('./mail/mail_service');
 var userService = require('./mail/user_service');
@@ -25,7 +29,7 @@ var girlsAllService = require('./mail/girlsAll_service');
 var mailIdService = require('./mail/mailId_service');
 var formService = require('./mail/form_service');
 
-var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper', 'naif.base64'])
+var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper', 'naif.base64', 'ocNgRepeat'])
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider.otherwise("/index");
@@ -126,6 +130,83 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
 .controller('usersController', ['userService', usersController])
 .controller('mailController', ['mailService','userService', 'girlsService', mailController])
 .controller('girlsController', ['mailService','userService', 'girlsService', girlsController])
+.directive("owlCarousel", function() {
+  return {
+    restrict: 'E',
+    transclude: false,
+    link: function (scope) {
+      scope.initCarousel = function(element) {
+        console.log('initCarousel-11');
+
+        // provide any default options you want
+        var defaultOptions = {
+        };
+        var customOptions = scope.$eval($(element).attr('data-options'));
+        // combine the two options objects
+        for(var key in customOptions) {
+          defaultOptions[key] = customOptions[key];
+        }
+        console.log('defaultOptions');
+        console.log(defaultOptions);
+        // init carousel
+        $(element).owlCarousel(defaultOptions);
+      };
+    }
+  };
+})
+.directive('owlCarouselItem', [function() {
+  return {
+    restrict: 'A',
+    transclude: false,
+    link: function(scope, element) {
+      console.log('initCarousel-22');
+      // wait for the last item in the ng-repeat then call init
+      //if(scope.$last) {
+        //scope.initCarousel(element.parent());
+
+      var owl4 = $("#owl-demo4");
+
+      owl4.owlCarousel({
+          items : 1, //10 items above 1000px browser width
+          itemsDesktop : [1000,2], //5 items between 1000px and 901px
+          itemsDesktopSmall : [900,3], // betweem 900px and 601px
+          itemsTablet: [600,2], //2 items between 600 and 0
+          pagination:true,
+          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+      });
+
+      // Custom Navigation Events
+      $(".next").click(function(){
+        owl4.trigger('owl.next');
+      })
+      $(".prev").click(function(){
+        owl4.trigger('owl.prev');
+      })
+
+
+
+      var owl5 = $("#owl-demo5");
+
+      owl5.owlCarousel({
+          items : 4, //10 items above 1000px browser width
+          itemsDesktop : [1000,2], //5 items between 1000px and 901px
+          itemsDesktopSmall : [900,3], // betweem 900px and 601px
+          itemsTablet: [600,2], //2 items between 600 and 0
+          pagination:true,
+          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+      });
+
+      // Custom Navigation Events
+      $(".next").click(function(){
+        owl5.trigger('owl.next');
+      })
+      $(".prev").click(function(){
+        owl5.trigger('owl.prev');
+      })
+      //}
+    }
+  };
+}])
 .controller('girlsAllController', ['userService', 'girlsAllService', girlsAllController])
 .controller('mailIdController', ['userService', 'mailService', 'girlsAllService', 'mailIdService', mailIdController])
 .controller('formController', ['formService',  formController])
@@ -137,7 +218,7 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
 .factory('mailIdService', ['$resource', mailIdService])
 .factory('formService', ['$resource', formService]);
 
-},{"./controllers/conversationsController":2,"./directives/angular-file-model":3,"./directives/crop":4,"./mail/formController":5,"./mail/form_service":6,"./mail/girlsAllController":7,"./mail/girlsAll_service":8,"./mail/girlsController":9,"./mail/girlsViewController":10,"./mail/girls_service":11,"./mail/mailController":12,"./mail/mailIdController":13,"./mail/mailId_service":14,"./mail/mail_service":15,"./mail/user_service":16,"./mail/usersController":17,"angular":25,"angular-base64-upload":18,"angular-img-cropper":20,"angular-resource":22,"angular-ui-router":23,"ng-file-upload":27}],2:[function(require,module,exports){
+},{"./../node_modules/ng-repeat-owl-carousel/src/ngRepeatOwlCarousel":29,"./controllers/conversationsController":2,"./directives/angular-file-model":3,"./directives/crop":4,"./directives/owl-slider":5,"./mail/formController":6,"./mail/form_service":7,"./mail/girlsAllController":8,"./mail/girlsAll_service":9,"./mail/girlsController":10,"./mail/girlsViewController":11,"./mail/girls_service":12,"./mail/mailController":13,"./mail/mailIdController":14,"./mail/mailId_service":15,"./mail/mail_service":16,"./mail/user_service":17,"./mail/usersController":18,"angular":26,"angular-base64-upload":19,"angular-img-cropper":21,"angular-resource":23,"angular-ui-router":24,"ng-file-upload":28}],2:[function(require,module,exports){
 module.exports = function() {
   /*this.conversations = [
     {'id':13, 'name':'Aleksandra Almazova', 'amount': 35, 'Last_incoming_letter': '13:47   03/12/2014', 'Last_outgoing_letter': '18:34   03/11/2015'},
@@ -1527,6 +1608,48 @@ angular.module('angular-img-cropper').factory("imageCropperDataShare", function 
     return share;
 });
 },{}],5:[function(require,module,exports){
+(function () {
+  'use strict';
+
+  angular.module('owl-slider', [])
+
+  .directive("owlCarousel", function() {
+    return {
+      restrict: 'E',
+      transclude: false,
+      link: function (scope) {
+        scope.initCarousel = function(element) {
+          console.log('initCarousel-1');
+          // provide any default options you want
+          var defaultOptions = {
+          };
+          var customOptions = scope.$eval($(element).attr('data-options'));
+          // combine the two options objects
+          for(var key in customOptions) {
+            defaultOptions[key] = customOptions[key];
+          }
+          // init carousel
+          $(element).owlCarousel(defaultOptions);
+        };
+      }
+    };
+  })
+  .directive('owlCarouselItem', [function() {
+    return {
+      restrict: 'A',
+      transclude: false,
+      link: function(scope, element) {
+        console.log('initCarousel-2');
+        // wait for the last item in the ng-repeat then call init
+        if(scope.$last) {
+          scope.initCarousel(element.parent());
+        }
+      }
+    };
+  }]);
+
+})();
+},{}],6:[function(require,module,exports){
 module.exports = formController;
 
 function formController (formService, $scope) {
@@ -1575,7 +1698,7 @@ function formController (formService, $scope) {
 };
 
 formController.$inject = ['formService', '$scope'];
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 module.exports = formService;
 
 function formService ($resource) {
@@ -1603,7 +1726,7 @@ function formService ($resource) {
 };
 
 formService.$inject = ['$resource'];
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 module.exports = girlsAllController;
 
 function girlsAllController ($document, $location, userService, girlsAllService) {
@@ -1668,7 +1791,7 @@ function girlsAllController ($document, $location, userService, girlsAllService)
 };
 
 girlsAllController.$inject = ['$document', '$location', 'userService', 'girlsAllService'];
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 module.exports = girlsAllService;
 
 function girlsAllService ($resource) {
@@ -1688,11 +1811,218 @@ function girlsAllService ($resource) {
 };
 
 girlsAllService.$inject = ['$resource'];
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 module.exports = girlsController;
 
 
-function girlsController ($document, $stateParams, $location, mailService, userService, girlsService) {
+function girlsController ($document, $stateParams, $location, mailService, userService, girlsService, $scope) {
+  $scope.items1 = [1,2,3,4,5];
+  $scope.items2 = [1,2,3,4,5,6,7,8,9,10];
+
+  $scope.carouselInitializer = function() {
+    console.log('init');
+  $(document).ready(function(){
+
+      //search result items hover
+      $('.search-right-side-girls-item').mouseenter(function(){
+          $(this).find('.search-right-side-girls-item-list').fadeIn();
+      });
+      $('.search-right-side-girls-item').mouseleave(function(){
+          $(this).find('.search-right-side-girls-item-list').fadeOut();
+      });
+      //gifts left sub-menu open
+      $('.list-cat-ul li').click(function(e){
+        e.preventDefault();
+        $(this).children('ul').show();
+        $(this).find('img').attr('src','img/list-cat-right-bottom.png');
+        $(this).siblings().children('ul').hide();
+        $(this).siblings().find('img').attr('src','img/list-cat-right-arrow.png');
+      });
+      //gifts open popup
+      $('.gifts-bouquet-item .btn-send').click(function(){
+        $('.gifts-popup-container,.gifts-popup').show();
+      });
+      $('.gifts-popup, #gifts-popup-cancel').click(function(){
+        $('.gifts-popup-container,.gifts-popup').hide();
+      });
+      //card active
+      $('.gifts-popup-card-left-side .card').click(function(){
+        $(this).addClass('active');
+        $(this).siblings().removeClass('active');
+      });
+       //change-email popup
+      $('#change-email').click(function(e){
+        e.preventDefault();
+        $('.modal-change-email').fadeIn(300);
+        $('.modal-change-email-form').fadeIn(500);
+      });
+      $('.modal-change-email').click(function(e){
+        $('.modal-change-email').fadeOut(300);
+        $('.modal-change-email-form').fadeOut(500);
+      });
+      $('.vote-lady .girl-item').click(function(){
+        $(this).children('.girls-info').addClass('active');
+        $(this).parent().siblings().find('.girls-info').removeClass('active');
+      });
+      // main-members-item active items
+      $('.main-members-item').click(function(){
+        $(this).addClass('active');
+        $(this).siblings().removeClass('active');
+      });
+      $('.main-members-chat-status').click(function(){
+        alert('click status button!');
+      });
+      //gifts-tabs active items
+      $('.gifts-tabs li a').click(function(e){
+        e.preventDefault();
+        var item = $(this).closest('li'),
+            contentItem = $('.gifts-tabs-item'),
+            itemPos = item.index();
+            contentItem.eq(itemPos)
+                        .add(item)
+                        .addClass('active')
+                        .siblings().removeClass('active');
+      });
+      //main-members-nav active items
+      $('.main-members-nav li a').click(function(e){
+        e.preventDefault();
+        var item = $(this).closest('li'),
+            contentItem = $('.main-members-wrap'),
+            itemPos = item.index();
+            contentItem.eq(itemPos)
+                        .add(item)
+                        .addClass('active')
+                        .siblings().removeClass('active');
+      });
+      $('.message-tabs-item').click(function(e){
+          var messageItem = $(this),
+            contentItem_m = $('.main-content'),
+            itempos_M = messageItem.index();
+            contentItem_m.eq(itempos_M)
+                        .add(messageItem)
+                        .addClass('active')
+                        .siblings().removeClass('active');
+      });
+      //form tabs
+        $('.form-register-tabs button').click(function(){
+            $(this).addClass('active');
+            $(this).siblings().removeClass('active');
+            $('.form-register form').toggleClass('hidden');
+        });
+      //girls-info hover
+        $('.girls-info').mouseenter(function(){
+          $(this).children('.girls-fix-info').fadeIn(300);
+        });
+        $('.girls-info').mouseleave(function(){
+          $(this).children('.girls-fix-info').fadeOut(300);
+        });
+        //owl
+        var owl = $("#owl-demo");
+
+      owl.owlCarousel({
+          items : 2, //10 items above 1000px browser width
+          itemsDesktop : [1000,2], //5 items between 1000px and 901px
+          itemsDesktopSmall : [900,3], // betweem 900px and 601px
+          itemsTablet: [600,2], //2 items between 600 and 0
+          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+      });
+
+      // Custom Navigation Events
+      $(".next").click(function(){
+        owl.trigger('owl.next');
+      })
+      $(".prev").click(function(){
+        owl.trigger('owl.prev');
+      })
+      var owl2 = $("#owl-demo2");
+
+      owl2.owlCarousel({
+          items : 1, //10 items above 1000px browser width
+          itemsDesktop : [1000,2], //5 items between 1000px and 901px
+          itemsDesktopSmall : [900,3], // betweem 900px and 601px
+          itemsTablet: [600,2], //2 items between 600 and 0
+          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+      });
+
+      // Custom Navigation Events
+      $(".next").click(function(){
+        owl2.trigger('owl.next');
+      })
+      $(".prev").click(function(){
+        owl2.trigger('owl.prev');
+      })
+
+
+
+
+     //owl3
+
+       var owl3 = $("#owl-demo3");
+
+      owl3.owlCarousel({
+          items : 4, //10 items above 1000px browser width
+          itemsDesktop : [1000,2], //5 items between 1000px and 901px
+          itemsDesktopSmall : [900,3], // betweem 900px and 601px
+          itemsTablet: [600,2], //2 items between 600 and 0
+          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+      });
+
+      // Custom Navigation Events
+      $(".next").click(function(){
+        owl3.trigger('owl.next');
+      })
+      $(".prev").click(function(){
+        owl3.trigger('owl.prev');
+      })
+
+
+      var owl4 = $("#owl-demo4");
+
+      owl4.owlCarousel({
+          items : 1, //10 items above 1000px browser width
+          itemsDesktop : [1000,2], //5 items between 1000px and 901px
+          itemsDesktopSmall : [900,3], // betweem 900px and 601px
+          itemsTablet: [600,2], //2 items between 600 and 0
+          pagination:true,
+          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+      });
+
+      // Custom Navigation Events
+      $(".next").click(function(){
+        owl4.trigger('owl.next');
+      })
+      $(".prev").click(function(){
+        owl4.trigger('owl.prev');
+      })
+
+      var owl5 = $("#owl-demo5");
+
+      owl5.owlCarousel({
+          items : 4, //10 items above 1000px browser width
+          itemsDesktop : [1000,2], //5 items between 1000px and 901px
+          itemsDesktopSmall : [900,3], // betweem 900px and 601px
+          itemsTablet: [600,2], //2 items between 600 and 0
+          pagination:true,
+          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+      });
+
+      // Custom Navigation Events
+      $(".next").click(function(){
+        owl5.trigger('owl.next');
+      })
+      $(".prev").click(function(){
+        owl5.trigger('owl.prev');
+      })
+
+    });
+
+    // $(".about-carousel").owlCarousel({
+    //   items: 3,
+    //   navigation: true,
+    //   pagination: false,
+    //   navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"]
+    // });
+      };
 
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
@@ -1731,14 +2061,19 @@ this.getUserData();
 };
 
 
-girlsController.$inject = ['$document', '$stateParams', '$location', 'mailService', 'userService', 'girlsService'];
-},{}],10:[function(require,module,exports){
+girlsController.$inject = ['$document', '$stateParams', '$location', 'mailService', 'userService', 'girlsService', '$scope'];
+},{}],11:[function(require,module,exports){
 module.exports = girlsViewController;
 
 
 function girlsViewController ($document, $stateParams, $location, girlsService) {
 
-var id = $stateParams.id;
+
+
+  var id = $stateParams.id.split('-')[4];
+  this.agePerson = function(birthdate) {
+    return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
+  }
 
   this.girlsIdGet = function(id) {
     var self = this;
@@ -1758,7 +2093,7 @@ var id = $stateParams.id;
 
 
 girlsViewController.$inject = ['$document', '$stateParams', '$location', 'girlsService'];
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 module.exports = girlsService;
 
 function girlsService ($resource) {
@@ -1773,7 +2108,7 @@ function girlsService ($resource) {
 };
 
 girlsService.$inject = ['$resource'];
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 module.exports = mailController;
 
 function mailController ($document, $location, $timeout, $anchorScroll, mailService, userService , girlsService) {
@@ -1814,17 +2149,22 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
   this.getUserData();
 
   this.changeType = function (type) {
+    this.resultFromDate = undefined;
+    this.resultToDate = undefined;
     this.tumbler = true;
     this.limit = 20;
     this.page = 0;
     this.type = type || 'inbox';
     this.getMessages();
+    this.onThisWeek = false;
+    this.onLastWeek = false;
   };
 
   this.getMessages = function () {
     if(this.tumbler==false) {
       this.tumbler=true
     }
+    console.log(this.type);
     var self = this;
     var options = {
       dateTimeFrom: self.resultFromDate,
@@ -1841,10 +2181,10 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
         self.arrIndex = [];
         for(var i=1; i<self.arrLengthCeil+1; i++) {
           self.arrIndex.push(i);
-        }
+        };
+
         angular.forEach(self.messages.letters, function(letter, index) {
           self.messages.letters[index]['deleted'] = false;
-
         });
       },
       function(error) {
@@ -1860,7 +2200,19 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
         arrPaginaClass[i].childNodes[0].className = '';
       }
       arrPaginaClass[index].childNodes[0].className = 'text_color_black';
-  }
+  };
+  this.firstNamberPagin = function() {
+    var self = this;
+    $timeout(function(){
+      console.log(self.arrIndex.length);
+      if(self.arrIndex.length>0) {
+        self.paginaAddClass(0);
+      }
+      // var firstElement = angular.element(document.getElementsByClassName('pagina'));
+      // firstElement[0].childNodes[0].className = 'text_color_black'
+      // console.log(firstElement[0].childNodes[0]);
+    },100);
+  };
 
   this.getNextMessages = function() {
     if (this.page < this.arrLengthCeil-1) {
@@ -1897,7 +2249,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     );
   };
 
-  this.getMessagesIntroductions();
+  // this.getMessagesIntroductions();
 
   this.readTheLetter = function(id, partnerid){
     if(this.tumbler) {
@@ -1944,6 +2296,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
         self.messagIdPay = data;
         self.readTheLetter(id);
         self.correspondence(partnerid);
+        self.getMessagesInboxLength();
       },
       function(error) {
         console.log(error);
@@ -1951,21 +2304,76 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     );
   };
 
-  this.correspondence = function(partnerid) {
-    if(this.tumbler) {
-        this.tumbler = false;
-      };
+  this.readLadyLetter =function(id, partnerid) {
     var self = this;
-    self.currentPartnerid = partnerid;
-    mailService.correspondenceGet(partnerid).$promise.then(
+    mailService.readLetter(id).$promise.then(
       function(data) {
-        self.letterCor =data;
+        self.messagIdPay = data;
+        self.readTheLetter(id);
+        self.correspondence(partnerid);
+        self.getMessagesInboxLength();
       },
       function(error) {
         console.log(error);
       }
     );
-  }
+  };
+
+  this.correspondence = function(partnerId) {
+    var self = this;
+    self.partnerId = partnerId;
+  var options = {
+      partnerId: self.partnerId,
+      dateTimeFrom: self.resultFromDate,
+      dateTimeTo: self.resultToDate,
+      limit: self.limit2,
+      offset: 0
+    };
+    //self.currentPartnerid = partnerid;
+    mailService.correspondenceGet(options).$promise.then(
+      function(data) {
+        self.letterCor =data;
+        self.letterAllCorLength = self.letterCor.totalCount;
+        self.countPage2 = self.letterAllCorLength / 20;
+        self.totalPage2 = Math.ceil(self.countPage2);
+        if(self.totalPage2==1) {
+          self.buttonAddLetter = true;
+        }
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+
+  this.page2 = 0;
+  this.limit2 = 20;
+
+  this.paginaLetterCor = function() {
+     if (this.totalPage2){
+      this.page2 += 1;
+      this.limit2 += 20;
+      this.correspondence(this.partnerId);
+      if(this.page==this.totalPage2)
+        this.buttonAddLetter = true;
+    }
+  };
+
+  // this.correspondence = function(partnerid) {
+  //   if(this.tumbler) {
+  //       this.tumbler = false;
+  //     };
+  //   var self = this;
+  //   self.currentPartnerid = partnerid;
+  //   mailService.correspondenceGet(partnerid).$promise.then(
+  //     function(data) {
+  //       self.letterCor =data;
+  //     },
+  //     function(error) {
+  //       console.log(error);
+  //     }
+  //   );
+  // }
 
   this.switchMore = function(letterText) {
     if (letterText==null) {
@@ -2003,7 +2411,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     self.textArea = true;
     $timeout(function(){
       self.textArea = false;
-    },100)
+    },600);
   }
 
   this.addMessage = function(id) {
@@ -2064,7 +2472,8 @@ this.girlsIdGet = function(id) {
       function(data) {
         self.girlsId = data;
       },
-      function(error) {        console.log(error);
+      function(error) {
+        console.log(error);
       }
     );
   };
@@ -2084,7 +2493,13 @@ this.girlsIdGet = function(id) {
     var arrNum2 = new String(new Date()).split(' ');
     var month2 = toDate.getMonth() + 1;
     this.resultToDate = arrNum2[3] + "-" + month2 + "-" +arrNum2[2] + " " + arrNum2[4];
-    this.getMessages();
+    if(this.tumbler) {
+      this.getMessages();
+    } else this.correspondence(this.partnerId);
+    $timeout(function() {
+      this.resultFromDate = undefined;
+      this.resultToDate = undefined;
+    },500);
   }
 
   //this.onThisWeekDate();
@@ -2105,7 +2520,13 @@ this.girlsIdGet = function(id) {
     var month2 = firstDayWeek.getMonth() + 1;
     var arrNum2 = new String(firstDayWeek).split(' ');
     this.resultFromDate = arrNum2[3] + "-" + month2 + "-" + arrNum2[2] + " " + "00:00:00";
-    this.getMessages();
+    if(this.tumbler) {
+      this.getMessages();
+    } else this.correspondence(this.partnerId);
+    $timeout(function() {
+      this.resultFromDate = undefined;
+      this.resultToDate = undefined;
+    },500);
   };
 
   //this.onLastWeekDate();
@@ -2118,9 +2539,15 @@ this.girlsIdGet = function(id) {
     var arrDate = new String(this.toDate).split(' ');
     var month = this.toDate.getMonth() + 1;
     this.resultToDate = arrDate[3] + '-' + month +'-' + arrDate[2] + ' ' + '23:59:59';
-    if(this.fromDate.getTime()<this.toDate.getTime())
-      this.getMessages();
-
+    if(this.fromDate.getTime()<this.toDate.getTime()) {
+      if(this.tumbler){
+        this.getMessages();
+      } else this.correspondence(this.partnerId);
+      $timeout(function(){
+        this.resultFromDate = undefined;
+        this.resultToDate = undefined;
+      },500);
+    }
   };
 
   this.watchInputDate = function(fromDate, toDate) {
@@ -2130,18 +2557,73 @@ this.girlsIdGet = function(id) {
     return fromDate.getTime()<toDate.getTime()? true : false;
   };
   this.resetSortDate = function() {
+    this.onThisWeek = false;
+    this.onLastWeek = false;
     this.toDate = undefined;
     this.fromDate = undefined;
     this.resultFromDate = undefined;
     this.resultToDate = undefined;
-    this.getMessages();
+    // this.getMessages();
+    this.buttonAddLetter = false;
+    // this.correspondence(this.partnerId);
+     if(this.tumbler){
+      this.getMessages();
+    } else this.correspondence(this.partnerId);
+  };
+
+  this.selectAllCheck = function() {
+    var self = this;
+    this.unselectCheck();
+    this.addClassSelectCheck(1);
+    angular.forEach(this.messages.letters, function(letter, index) {
+      self.messages.letters[index]['deleted'] = true;
+    });
+
   }
+
+  this.readSelectCheck = function() {
+    var self = this;
+    this.unselectCheck();
+    this.addClassSelectCheck(3);
+    angular.forEach(this.messages.letters, function(letter, index) {
+      if(self.messages.letters[index].isRead==true)
+      self.messages.letters[index]['deleted'] = true;
+    });
+    // console.log("readSelectCheck");
+  };
+
+  this.unreadSelectCheck = function() {
+    var self = this;
+    this.unselectCheck();
+    this.addClassSelectCheck(5);
+    angular.forEach(this.messages.letters, function(letter, index) {
+      if(self.messages.letters[index].isRead==false)
+      self.messages.letters[index]['deleted'] = true;
+    });
+  };
+
+  this.unselectCheck = function() {
+    var self = this;
+    this.addClassSelectCheck(7);
+    angular.forEach(self.messages.letters, function(letter, index) {
+          self.messages.letters[index]['deleted'] = false;
+        });
+    };
+
+  this.addClassSelectCheck = function(index) {
+    var list = angular.element(document.getElementsByClassName('message-sort-dropdown'));
+    for(var i=1; i<8; i+=2){
+      list[0].childNodes[i].childNodes[1].className = '';
+    };
+    list[0].childNodes[index].childNodes[1].className = 'text_color_black';
+  };
+
 };
 
 
 mailController.$inject = ['$document', '$location', '$timeout', '$anchorScroll', 'mailService', 'userService', 'girlsService'];
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 module.exports = mailIdController;
 
 function mailIdController ($document, $stateParams, $location, $anchorScroll, $timeout, mailService, userService , girlsService, mailIdService) {
@@ -2150,12 +2632,13 @@ function mailIdController ($document, $stateParams, $location, $anchorScroll, $t
      //$location.hash('top_anchorScroll');
      $anchorScroll.yOffset = 200;
      $anchorScroll();
-    console.log("anchorScrollPage")
+
   };
 
   this.anchorScrollPage();
 
   var id = $stateParams.id;
+  // console.log(id);
 
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
@@ -2181,34 +2664,77 @@ function mailIdController ($document, $stateParams, $location, $anchorScroll, $t
     self.textArea = true;
     $timeout(function(){
       self.textArea = false;
-    },100)
+    },600)
   }
 
 this.getUserData();
-this.correspondence = function(partnerid) {
-    if(this.tumbler) {
-        this.tumbler = false;
-      };
+// this.correspondence = function(partnerid, timeFrom, timeTo) {
+//     var self = this;
+//     self.currentPartnerid = partnerid;
+//     mailService.correspondenceGet(partnerid, timeFrom, timeTo).$promise.then(
+//       function(data) {
+//         self.letterCor =data;
+
+//       },
+//       function(error) {
+//         console.log(error);
+//       }
+//     );
+//   };
+this.correspondence = function() {
     var self = this;
-    self.currentPartnerid = partnerid;
-    mailService.correspondenceGet(partnerid).$promise.then(
+
+  var options = {
+      partnerId: self.girlCorres,
+      dateTimeFrom: self.resultFromDate,
+      dateTimeTo: self.resultToDate,
+      limit: self.limit,
+      offset: 0
+    };
+    //self.currentPartnerid = partnerid;
+    mailService.correspondenceGet(options).$promise.then(
       function(data) {
         self.letterCor =data;
-
+        self.gillsLength = self.letterCor.totalCount;
+        self.countPage = self.gillsLength / 20;
+        self.totalPage = Math.ceil(self.countPage);
+        if(self.totalPage==1) {
+          self.buttonAddLetter = true;
+        }
       },
       function(error) {
         console.log(error);
       }
     );
-  }
+  };
 
-this.girlsIdGet = function(id) {
+  // if(self.totalPage==self.page) {
+  //   self.buttonAddLetter = true;
+  // } else self.buttonAddLetter = false;
+
+  this.page = 0;
+  this.limit = 20;
+
+  this.paginaLetterCor = function() {
+     if (this.totalPage){
+      this.page += 1;
+      this.limit += 20;
+      this.correspondence();
+      if(this.page==this.totalPage)
+        this.buttonAddLetter = true;
+    }
+  };
+
+  // this.paginaLetterCor();
+
+  this.girlsIdGet = function(id) {
     console.log(id, id);
     var self = this;
     mailIdService.conversationGirlsId(id).$promise.then(
       function(data) {
         self.girlsId = data;
-        self.correspondence(self.girlsId.girl.userId);
+        self.girlCorres = self.girlsId.girl.userId;
+        self.correspondence();
       },
       function(error) {
         console.log(error);
@@ -2284,7 +2810,7 @@ this.girlsIdGet = function(id) {
       function(data) {
         self.messagIdPay = data;
         self.readTheLetter(id);
-        self.correspondence(partnerid);
+        self.correspondence();
       },
       function(error) {
         console.log(error);
@@ -2309,12 +2835,97 @@ this.girlsIdGet = function(id) {
   };
 
 
-  //this.correspondence(id);
+this.onThisWeekDate = function() {
+    this.onLastWeek = false;
+    this.onThisWeek = true;
+    var toDate = new Date();
+
+    var numberToDay = new Date().getDay();
+    var firstDaySec = toDate.setDate(toDate.getDate() - (numberToDay-1));
+    var firstDayWeek = new Date(firstDaySec);
+    var month = firstDayWeek.getMonth() + 1;
+    var arrNum = new String(firstDayWeek).split(' ');
+    this.resultFromDate = arrNum[3] + "-" + month + "-" + arrNum[2] + " " + "00:00:00";
+
+    var arrNum2 = new String(new Date()).split(' ');
+    var month2 = toDate.getMonth() + 1;
+    this.resultToDate = arrNum2[3] + "-" + month2 + "-" +arrNum2[2] + " " + arrNum2[4];
+    this.correspondence();
+    $timeout(function(){
+      this.resultFromDate = undefined;
+      this.resultToDate = undefined;
+    },500);
+  }
+
+  //this.onThisWeekDate();
+
+  this.onLastWeekDate = function() {
+    this.onLastWeek = true;
+    this.onThisWeek = false;
+    var toDate = new Date();
+    var numberToDay = new Date().getDay();
+    var lastDayWeekSec = toDate.setDate(toDate.getDate() - numberToDay);
+    var lastDayWeek = new Date(lastDayWeekSec);
+    var month = lastDayWeek.getMonth() + 1;
+    var arrNum = new String(lastDayWeek).split(' ');
+    this.resultToDate = arrNum[3] + "-" + month + "-" + arrNum[2] + " " + "23:59:59";
+
+    var firstDayWeekSec = new Date().setDate(new Date().getDate() - (numberToDay + 6));
+    var firstDayWeek = new Date(firstDayWeekSec);
+    var month2 = firstDayWeek.getMonth() + 1;
+    var arrNum2 = new String(firstDayWeek).split(' ');
+    this.resultFromDate = arrNum2[3] + "-" + month2 + "-" + arrNum2[2] + " " + "00:00:00";
+    this.correspondence();
+
+    $timeout(function(){
+      this.resultFromDate = undefined;
+      this.resultToDate = undefined;
+    },500);
+  };
+
+  //this.onLastWeekDate();
+  this.showDate = function() {
+
+    var arrDate2 = new String(this.fromDate).split(' ');
+    var month2 = this.fromDate.getMonth() +1;
+    this.resultFromDate = arrDate2[3] + '-' + month2 + '-' + arrDate2[2] + ' ' + '00:00:00';
+
+    var arrDate = new String(this.toDate).split(' ');
+    var month = this.toDate.getMonth() + 1;
+    this.resultToDate = arrDate[3] + '-' + month +'-' + arrDate[2] + ' ' + '23:59:59';
+    if(this.fromDate.getTime()<this.toDate.getTime()) {
+      // this.getMessages();
+    };
+        // console.log(this.resultToDate, resultFromDate);
+    this.correspondence();
+    $timeout(function(){
+      this.resultFromDate = undefined;
+      this.resultToDate = undefined;
+    },500);
+  };
+
+  this.watchInputDate = function(fromDate, toDate) {
+    if(fromDate && toDate)
+
+    // console.log(fromDate.getTime(), toDate.getTime());
+    return fromDate.getTime()<toDate.getTime()? true : false;
+  };
+  this.resetSortDate = function() {
+    this.onThisWeek = false;
+    this.onLastWeek = false;
+    this.toDate = undefined;
+    this.fromDate = undefined;
+    this.resultFromDate = undefined;
+    this.resultToDate = undefined;
+    this.buttonAddLetter = false;
+    this.correspondence();
+
+  }
 
 };
 
 mailIdController.$inject = ['$document', '$stateParams', '$location', '$anchorScroll', '$timeout', 'mailService', 'userService', 'girlsService', 'mailIdService'];
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 module.exports = mailIdService;
 
 function mailIdService ($resource) {
@@ -2329,7 +2940,7 @@ function mailIdService ($resource) {
 };
 
 mailIdService.$inject = ['$resource'];
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 module.exports = mailService;
 
 function mailService ($resource) {
@@ -2360,8 +2971,15 @@ function mailService ($resource) {
       update: {
         method: 'PATCH',
           params: {
-            isPaid: '@isPaid'
+            isPaid: '@isPaid',
+            isRead: '@isRead'
           },
+      updateRead: {
+        method: 'PATCH',
+          params: {
+            isRead: '@isRead'
+          },
+      }
       }
     });
   //this.mService = mailResource;
@@ -2370,12 +2988,14 @@ function mailService ($resource) {
   };
 
   this.paymentLetter = function(id) {
-    return mailResource.update({id: id, isPaid: true});
+    return mailResource.update({ id: id, isPaid: true, isRead: true });
+  };
+
+  this.readLetter = function(id) {
+    return mailResource.update({ id:id, isRead: true });
   };
 
   this.getAllMessages = function (options) {
-    console.log('options');
-    console.log(options);
     return mailResource.get({
       dateTimeFrom: options.dateTimeFrom,
       dateTimeTo: options.dateTimeTo,
@@ -2398,8 +3018,19 @@ function mailService ($resource) {
     return mailResource.get({mail_id: id, relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'});
   };
 
-  this.correspondenceGet = function(id) {
-    return mailResource.get({partnerId:id, relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'})
+  // this.correspondenceGet = function(id, timeFrom, timeTo) {
+  //   return mailResource.get({partnerId:id, dateTimeFrom: timeFrom, dateTimeTo: timeTo, relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'})
+  // };
+
+  this.correspondenceGet = function(options) {
+    return mailResource.get({
+      dateTimeFrom: options.dateTimeFrom,
+      dateTimeTo: options.dateTimeTo,
+      limit: options.limit,
+      offset: options.offset,
+      partnerId: options.partnerId,
+      relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'
+    })
   };
 
   this.deleteMessage = function (id) {
@@ -2417,7 +3048,7 @@ function mailService ($resource) {
 
 mailService.$inject = ['$resource'];
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 module.exports = userService;
 
 function userService ($resource) {
@@ -2432,10 +3063,11 @@ function userService ($resource) {
 };
 
 userService.$inject = ['$resource'];
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 module.exports = usersController;
 
 function usersController ($document, $location, userService ) {
+
   this.getUserData = function () {
     var self = this;
 
@@ -2445,12 +3077,14 @@ function usersController ($document, $location, userService ) {
 
         if (self.user.user.additionalData.groupId == 1) {
           $location.path('/man');
+        } else if(self.user.user.additionalData.groupId == 2){
+          $location.path('/lady');
         }
-        else $location.path('/lady');
-
+        else $location.path('/home');
       },
       function(error) {
-        console.log(error);
+        $location.path('/home');
+        // console.log(error);
       }
     );
   };
@@ -2458,11 +3092,11 @@ function usersController ($document, $location, userService ) {
 }
 
 usersController.$inject = ['$document', '$location', 'userService'];
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 require('./src/angular-base64-upload.js');
 module.exports = 'naif.base64';
 
-},{"./src/angular-base64-upload.js":19}],19:[function(require,module,exports){
+},{"./src/angular-base64-upload.js":20}],20:[function(require,module,exports){
 (function(window, undefined) {
 
   'use strict';
@@ -2748,7 +3382,7 @@ module.exports = 'naif.base64';
 
 })(window);
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 angular.module('angular-img-cropper', []).directive("imageCropper", ['$document', '$window', 'imageCropperDataShare', function ($document, $window, imageCropperDataShare) {
     return {
         scope: {
@@ -4150,7 +4784,7 @@ angular.module('angular-img-cropper').factory("imageCropperDataShare", function 
     return share;
 });
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.0
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -4920,11 +5554,11 @@ angular.module('ngResource', ['ng']).
 
 })(window, window.angular);
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 require('./angular-resource');
 module.exports = 'ngResource';
 
-},{"./angular-resource":21}],23:[function(require,module,exports){
+},{"./angular-resource":22}],24:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -9295,7 +9929,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.0
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -39724,11 +40358,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":24}],26:[function(require,module,exports){
+},{"./angular":25}],27:[function(require,module,exports){
 /**!
  * AngularJS file upload directives and services. Supoorts: file upload/drop/paste, resume, cancel/abort,
  * progress, resize, thumbnail, preview, validation and CORS
@@ -42531,7 +43165,28 @@ ngFileUpload.service('UploadExif', ['UploadResize', '$q', function (UploadResize
 }]);
 
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 require('./dist/ng-file-upload-all');
 module.exports = 'ngFileUpload';
-},{"./dist/ng-file-upload-all":26}]},{},[1]);
+},{"./dist/ng-file-upload-all":27}],29:[function(require,module,exports){
+// Generated by CoffeeScript 1.9.0
+(function() {
+  angular.module("ocNgRepeat", []).directive('ngRepeatOwlCarousel', function() {
+    return {
+      restrict: 'A',
+      scope: {
+        carouselInit: '&'
+      },
+      link: function(scope, element, attrs) {
+        if ((scope.$parent != null) && scope.$parent.$last) {
+          return scope.carouselInit()();
+        }
+      }
+    };
+  });
+
+}).call(this);
+
+//# sourceMappingURL=ngRepeatOwlCarousel.js.map
+
+},{}]},{},[1]);

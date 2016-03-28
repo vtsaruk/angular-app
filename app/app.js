@@ -4,6 +4,9 @@ require('angular-resource');
 require('ng-file-upload');
 require('angular-img-cropper');
 require('angular-base64-upload');
+require('./../node_modules/ng-repeat-owl-carousel/src/ngRepeatOwlCarousel');
+// require('jquery');
+// require('bootstrap-select');
 
 var conversationsController = require('./controllers/conversationsController');
 var mailController = require('./mail/mailController');
@@ -16,6 +19,7 @@ var girlsViewController = require('./mail/girlsViewController');
 
 var cropDirective = require('./directives/crop');
 var fileDirective = require('./directives/angular-file-model');
+var owlDirective = require('./directives/owl-slider');
 
 var mailService = require('./mail/mail_service');
 var userService = require('./mail/user_service');
@@ -24,7 +28,7 @@ var girlsAllService = require('./mail/girlsAll_service');
 var mailIdService = require('./mail/mailId_service');
 var formService = require('./mail/form_service');
 
-var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper', 'naif.base64'])
+var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper', 'naif.base64', 'ocNgRepeat'])
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider.otherwise("/index");
@@ -125,6 +129,83 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
 .controller('usersController', ['userService', usersController])
 .controller('mailController', ['mailService','userService', 'girlsService', mailController])
 .controller('girlsController', ['mailService','userService', 'girlsService', girlsController])
+.directive("owlCarousel", function() {
+  return {
+    restrict: 'E',
+    transclude: false,
+    link: function (scope) {
+      scope.initCarousel = function(element) {
+        console.log('initCarousel-11');
+
+        // provide any default options you want
+        var defaultOptions = {
+        };
+        var customOptions = scope.$eval($(element).attr('data-options'));
+        // combine the two options objects
+        for(var key in customOptions) {
+          defaultOptions[key] = customOptions[key];
+        }
+        console.log('defaultOptions');
+        console.log(defaultOptions);
+        // init carousel
+        $(element).owlCarousel(defaultOptions);
+      };
+    }
+  };
+})
+.directive('owlCarouselItem', [function() {
+  return {
+    restrict: 'A',
+    transclude: false,
+    link: function(scope, element) {
+      console.log('initCarousel-22');
+      // wait for the last item in the ng-repeat then call init
+      //if(scope.$last) {
+        //scope.initCarousel(element.parent());
+
+      var owl4 = $("#owl-demo4");
+
+      owl4.owlCarousel({
+          items : 1, //10 items above 1000px browser width
+          itemsDesktop : [1000,2], //5 items between 1000px and 901px
+          itemsDesktopSmall : [900,3], // betweem 900px and 601px
+          itemsTablet: [600,2], //2 items between 600 and 0
+          pagination:true,
+          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+      });
+
+      // Custom Navigation Events
+      $(".next").click(function(){
+        owl4.trigger('owl.next');
+      })
+      $(".prev").click(function(){
+        owl4.trigger('owl.prev');
+      })
+
+
+
+      var owl5 = $("#owl-demo5");
+
+      owl5.owlCarousel({
+          items : 4, //10 items above 1000px browser width
+          itemsDesktop : [1000,2], //5 items between 1000px and 901px
+          itemsDesktopSmall : [900,3], // betweem 900px and 601px
+          itemsTablet: [600,2], //2 items between 600 and 0
+          pagination:true,
+          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+      });
+
+      // Custom Navigation Events
+      $(".next").click(function(){
+        owl5.trigger('owl.next');
+      })
+      $(".prev").click(function(){
+        owl5.trigger('owl.prev');
+      })
+      //}
+    }
+  };
+}])
 .controller('girlsAllController', ['userService', 'girlsAllService', girlsAllController])
 .controller('mailIdController', ['userService', 'mailService', 'girlsAllService', 'mailIdService', mailIdController])
 .controller('formController', ['formService',  formController])

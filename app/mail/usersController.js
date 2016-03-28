@@ -1,6 +1,7 @@
 module.exports = usersController;
 
 function usersController ($document, $location, userService ) {
+
   this.getUserData = function () {
     var self = this;
 
@@ -10,12 +11,14 @@ function usersController ($document, $location, userService ) {
 
         if (self.user.user.additionalData.groupId == 1) {
           $location.path('/man');
+        } else if(self.user.user.additionalData.groupId == 2){
+          $location.path('/lady');
         }
-        else $location.path('/lady');
-
+        else $location.path('/home');
       },
       function(error) {
-        console.log(error);
+        $location.path('/home');
+        // console.log(error);
       }
     );
   };

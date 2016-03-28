@@ -1,0 +1,75 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/nodejs',
+1 verbose cli   '/usr/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'angular-owl-carousel',
+1 verbose cli   '--save' ]
+2 info using npm@1.3.10
+3 info using node@v0.10.25
+4 warn package.json angular_browserify_gulp@1.0.0 No description
+5 warn package.json angular_browserify_gulp@1.0.0 No repository field.
+6 warn package.json angular_browserify_gulp@1.0.0 No README data
+7 warn package.json ng-repeat-owl-carousel@0.0.2 No repository field.
+8 warn package.json gulp-minify-css@1.2.3 No repository field.
+9 verbose readDependencies using package.json deps
+10 verbose cache add [ 'angular-owl-carousel', null ]
+11 verbose cache add name=undefined spec="angular-owl-carousel" args=["angular-owl-carousel",null]
+12 verbose parsed url { protocol: null,
+12 verbose parsed url   slashes: null,
+12 verbose parsed url   auth: null,
+12 verbose parsed url   host: null,
+12 verbose parsed url   port: null,
+12 verbose parsed url   hostname: null,
+12 verbose parsed url   hash: null,
+12 verbose parsed url   search: null,
+12 verbose parsed url   query: null,
+12 verbose parsed url   pathname: 'angular-owl-carousel',
+12 verbose parsed url   path: 'angular-owl-carousel',
+12 verbose parsed url   href: 'angular-owl-carousel' }
+13 silly lockFile ae5ba1cc-angular-owl-carousel angular-owl-carousel
+14 verbose lock angular-owl-carousel /home/vitaliy/.npm/ae5ba1cc-angular-owl-carousel.lock
+15 silly lockFile ae5ba1cc-angular-owl-carousel angular-owl-carousel
+16 silly lockFile ae5ba1cc-angular-owl-carousel angular-owl-carousel
+17 verbose addNamed [ 'angular-owl-carousel', '' ]
+18 verbose addNamed [ null, '*' ]
+19 silly lockFile 43dd23d8-angular-owl-carousel angular-owl-carousel@
+20 verbose lock angular-owl-carousel@ /home/vitaliy/.npm/43dd23d8-angular-owl-carousel.lock
+21 silly addNameRange { name: 'angular-owl-carousel', range: '*', hasData: false }
+22 verbose url raw angular-owl-carousel
+23 verbose url resolving [ 'https://registry.npmjs.org/', './angular-owl-carousel' ]
+24 verbose url resolved https://registry.npmjs.org/angular-owl-carousel
+25 info trying registry request attempt 1 at 20:25:07
+26 http GET https://registry.npmjs.org/angular-owl-carousel
+27 http 404 https://registry.npmjs.org/angular-owl-carousel
+28 silly registry.get cb [ 404,
+28 silly registry.get   { 'content-type': 'application/json',
+28 silly registry.get     'cache-control': 'max-age=0',
+28 silly registry.get     'content-length': '2',
+28 silly registry.get     'accept-ranges': 'bytes',
+28 silly registry.get     date: 'Sun, 27 Mar 2016 17:25:08 GMT',
+28 silly registry.get     via: '1.1 varnish',
+28 silly registry.get     age: '0',
+28 silly registry.get     connection: 'keep-alive',
+28 silly registry.get     'x-served-by': 'cache-fra1225-FRA',
+28 silly registry.get     'x-cache': 'MISS',
+28 silly registry.get     'x-cache-hits': '0',
+28 silly registry.get     'x-timer': 'S1459099507.964600,VS0,VE420' } ]
+29 silly addNameRange number 2 { name: 'angular-owl-carousel', range: '*', hasData: true }
+30 silly addNameRange versions [ undefined, [] ]
+31 error TypeError: Cannot read property 'latest' of undefined
+31 error     at next (/usr/share/npm/lib/cache.js:687:35)
+31 error     at /usr/share/npm/lib/cache.js:675:5
+31 error     at saved (/usr/share/npm/node_modules/npm-registry-client/lib/get.js:142:7)
+31 error     at /usr/lib/nodejs/graceful-fs/polyfills.js:133:7
+31 error     at Object.oncomplete (fs.js:107:15)
+32 error If you need help, you may report this log at:
+32 error     <http://github.com/isaacs/npm/issues>
+32 error or email it to:
+32 error     <npm-@googlegroups.com>
+33 error System Linux 3.16.0-62-generic
+34 error command "/usr/bin/nodejs" "/usr/bin/npm" "install" "angular-owl-carousel" "--save"
+35 error cwd /home/vitaliy/work/irinadating.com/public/assets/angular-app
+36 error node -v v0.10.25
+37 error npm -v 1.3.10
+38 error type non_object_property_load
+39 verbose exit [ 1, true ]

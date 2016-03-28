@@ -7482,7 +7482,7 @@ footer .footer-right-side p {
 
 
 .text_color_black {
-  color: #9e0039 ;
+  color: #9e0039 !important;
 }
 .col-md-3 :hover .girls-fix-info {
   display: block;
@@ -7499,4 +7499,18 @@ footer .footer-right-side p {
 }
 .activ_sort_button{
   background-color: #9e0039 !important;
+}
+
+.button_add_letter{
+  height: 40px;
+  width: 100px;
+  color: #fff;
+  background: #9e0039;
+  font-size: 20px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.message-sort-dropdown li a:hover{
+  color:#9e0039 !important;
 }

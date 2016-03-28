@@ -204,8 +204,8 @@
                   </div>
                   <span class="status online"></span>
                   <div class="girl-info-cont">
-                    <p>{{girl.user.firstname}}, {{ctrl.agePerson(girl.user.birthdate)}}</p>
-                    <p class="girl-location">{{girl.user.country.name}}, {{girl.user.city}}</p>
+                    <a href="/#/girlsView/{{girl.user.firstname}}-{{ctrl.agePerson(girl.user.birthdate)}}-{{girl.user.country.name}}-{{girl.user.city}}-{{girl.id}}"><p>{{girl.user.firstname}}, {{ctrl.agePerson(girl.user.birthdate)}}</p>
+                    <p class="girl-location">{{girl.user.country.name}}, {{girl.user.city}}</p></a>
                   </div>
                   <a href="#" class="like">
                     <img src="assets/angular-app/public/img/like.png" alt=""></a>

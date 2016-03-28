@@ -28,8 +28,15 @@ function mailService ($resource) {
       update: {
         method: 'PATCH',
           params: {
-            isPaid: '@isPaid'
+            isPaid: '@isPaid',
+            isRead: '@isRead'
           },
+      updateRead: {
+        method: 'PATCH',
+          params: {
+            isRead: '@isRead'
+          },
+      }
       }
     });
   //this.mService = mailResource;
@@ -38,7 +45,11 @@ function mailService ($resource) {
   };
 
   this.paymentLetter = function(id) {
-    return mailResource.update({id: id, isPaid: true});
+    return mailResource.update({ id: id, isPaid: true, isRead: true });
+  };
+
+  this.readLetter = function(id) {
+    return mailResource.update({ id:id, isRead: true });
   };
 
   this.getAllMessages = function (options) {
@@ -64,8 +75,19 @@ function mailService ($resource) {
     return mailResource.get({mail_id: id, relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'});
   };
 
-  this.correspondenceGet = function(id) {
-    return mailResource.get({partnerId:id, relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'})
+  // this.correspondenceGet = function(id, timeFrom, timeTo) {
+  //   return mailResource.get({partnerId:id, dateTimeFrom: timeFrom, dateTimeTo: timeTo, relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'})
+  // };
+
+  this.correspondenceGet = function(options) {
+    return mailResource.get({
+      dateTimeFrom: options.dateTimeFrom,
+      dateTimeTo: options.dateTimeTo,
+      limit: options.limit,
+      offset: options.offset,
+      partnerId: options.partnerId,
+      relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'
+    })
   };
 
   this.deleteMessage = function (id) {

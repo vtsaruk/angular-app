@@ -128,7 +128,7 @@
                     {{ctrl.messagesId.letter.additionalData.text}}
                   </span>
                 </div>
-                <p class="girl-message-date">{{ctrl.messagesId.letter.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                <p class="girl-message-date">{{ctrl.messagesId.letter.createdAt | date:'yyyy-MM-dd HH:mm'}}</p>
                 <!-- <button class="btn-send">Read the letter</button> -->
                 </div>
               </div>
@@ -145,7 +145,7 @@
 								<p class="area-info">Files in GIF, JPG and PNG maximum 4096 KB size. Attach TWO photos for free. 10 credits will be deducted from your account for each additional photo</p>
 								<div class="attach-button" ng-click="ctrl.showList()">Attach photo</div>
 								<ul class="choose-files-list" ng-show="ctrl.listDiv">
-									<li><img src="assets/angular-app/public/img/check-mark.png" alt="" class="choose-arrow"><a href="#"><img src="img/photo-icon.png" alt="">Choose files</a><span>Someone name.jpg <img src="img/delete.png" alt=""></span></li>
+									<li><img src="assets/angular-app/public/img/check-mark.png" alt="" class="choose-arrow"><a href="#"><img src="assets/angular-app/public/img/photo-icon.png" alt="">Choose files</a><span>Someone name.jpg <img src="assets/angular-app/public/img/delete.png" alt=""></span></li>
 									<li><img src="assets/angular-app/public/img/check-mark.png" alt="" class="choose-arrow"><a href="#"><img src="assets/angular-app/public/img/photo-icon.png" alt="">Choose files</a><span>Someone name.jpg <img src="assets/angular-app/public/img/delete.png" alt=""></span></li>
 									<li class="not-choose"><a href="#"><img src="assets/angular-app/public/img/grey-heart-in.png" alt="">Choose files</a><span>Someone name</span></li>
 									<li class="not-choose"><a href="#"><img src="assets/angular-app/public/img/grey-heart-in.png" alt="">Choose files</a><span>Someone name</span></li>
@@ -155,33 +155,38 @@
 								<button class="btn-send" ng-click="ctrl.addMessage(ctrl.girlsId.girl.userId)">Send</button>
 
 							</div>
-<div ng-show="ctrl.letterCor.totalCount">
+<div ><!-- ng-show="ctrl.letterCor.totalCount" -->
 							<div class="history clearfix">
 								<h4><img src="assets/angular-app/public/img/clock-icon.png" alt="">Correspondence history</h4>
 								<p class="p-sort" ng-click="ctrl.showFilter(ctrl.filterDiv)"><img src="assets/angular-app/public/img/calendar.png" alt="">Sort by Date<i class="fa fa-caret-down"></i></p>
 							</div>
 							<div class="message-filter clearfix" ng-show="ctrl.filterDiv">
-								<a href="#" class="active">On this week</a>
-								<a href="#">On last week</a>
+								<a href="" class="active" ng-class="{true:'activ_message-filter'}[ctrl.onThisWeek]" ng-model="ctrl.onThisWeek" ng-click="ctrl.onThisWeekDate()">On this week</a>
+                <a href="" class="on-last-week" ng-class="{true:'activ_message-filter'}[ctrl.onLastWeek]" ng-model="ctrl.onLastWeek" ng-click="ctrl.onLastWeekDate()">On last week</a>
 								<div class="message-filter-select clearfix">
-									<select name="" id="" class="selectpicker">
+                  <input type="date" ng-model="ctrl.fromDate">
+									<!-- <select name="" id="" class="selectpicker">
 										<option value="">From date</option>
 										<option value="">19</option>
 										<option value="">20</option>
 										<option value="">21</option>
-									</select>
+									</select> -->
 									<span class="message-filter-select-line"> - </span>
-									<select name="" id="" class="selectpicker">
+                  <input type="date" ng-model="ctrl.toDate">
+									<!-- <select name="" id="" class="selectpicker">
 										<option value="">To Date</option>
 										<option value="">31</option>
 										<option value="">32</option>
 										<option value="">33</option>
-									</select>
+									</select> -->
 								</div>
-								<p class="message-filter-sort-end"><a href="#" class="active">Sort</a><a href="#">Reset</a></p>
+								<p>
+                  <a href="" class="active" ng-class="{true:'activ_sort_button'}[ctrl.watchInputDate(ctrl.fromDate, ctrl.toDate)]" ng-click="ctrl.showDate()">Sort</a>
+                  <a href="" ng-click="ctrl.resetSortDate()">Reset</a>
+                </p>
 							</div>
               <!-- <div>{{ctrl.user}}</div> -->
-<!-- <div>{{ctrl.letterCor}}</div> -->
+<!-- <div>{{ctrl.letterCor.letters.length}}</div> -->
 							<div class="dialog-container " >
 								<div ng-repeat="letter in ctrl.letterCor.letters" ng-class="{0:'dialog-item dialog-item-out clearfix', 1:'dialog-item dialog-item-in clearfix', 2:'dialog-item dialog-item-in dialog-red-fl clearfix'}[ctrl.addClass(ctrl.user.user.id, letter.senderId, letter.isPaid)]">
 									<img src="assets/angular-app/public/img/girl-message-1.jpg" alt="" class="img-dialog">
@@ -202,89 +207,10 @@
                     <button class="btn-send"ng-hide="letter.isPaid" ng-click="ctrl.payment(letter.id, letter.senderId)">Read the letter</button>
                   </div>
 									</div>
-
-								</div>
-                <!--
-								<div class="dialog-item dialog-item-out clearfix">
-									<img src="assets/angular-app/public/img/man-message.jpg" alt="" class="img-dialog">
-									<div class="girls-message-item-info clearfix">
-										<div>
-											<a href="#"><span>Luka</span></a>
-										</div>
-										<div class="clear"></div>
-										<p class="girls-message-item-descr">Hello my dear)) today morning was fun, went with a friend to walk the dog. He breaks out of the ... <a href="#">more<i class="fa fa-chevron-right"></i></a></p>
-										<p class="girl-message-date">14.09.2015 10:58</p>
-
-									</div>
+                  <button ng-hide="ctrl.buttonAddLetter" class="button_add_letter" ng-click="ctrl.paginaLetterCor()" ng-model="ctrl.buttonAddLetter">Ещё</button>
 
 								</div>
 
-
-								<div class="dialog-item dialog-item-in clearfix">
-									<img src="img/girl-message-1.jpg" alt="" class="img-dialog">
-									<div class="girls-message-item-info open clearfix">
-										<div>
-											<a href="#"><span>Natasha</span></a>
-										</div>
-										<div class="clear"></div>
-										<p class="girls-message-item-descr">Hell o my dear)) today morning was fun, went with a friend to walk the dog. He breaks out of the Lorem ipsum dolor, elit, nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. pariatur.Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo <a href="#">hide<i class="fa fa-chevron-right"></i></a></p>
-										<p class="girl-message-date">14.09.2015 10:58</p>
-										<a href="#" class="girl-message-photo"><img src="assets/angular-app/public/img/photo.png" alt="" class="mn-t-10"><span>3</span></a>
-									</div>
-
-								</div>
-								<div class="dialog-item dialog-item-in clearfix">
-									<img src="assets/angular-app/public/img/girl-message-1.jpg" alt="" class="img-dialog">
-									<div class="girls-message-item-info clearfix">
-										<div>
-											<a href="#"><span>Natasha</span></a>
-										</div>
-										<div class="clear"></div>
-										<p class="girls-message-item-descr">Hello my dear)) today morning was fun, went with a friend to walk the dog. He breaks out of the ... <a href="#">more<i class="fa fa-chevron-right"></i></a></p>
-										<p class="girl-message-date">14.09.2015 10:58</p>
-										<a href="#" class="girl-message-photo"><img src="img/photo.png" alt="" class="mn-t-10"><span>3</span></a>
-									</div>
-
-								</div>
-								<div class="dialog-item dialog-item-out clearfix">
-									<img src="img/man-message.jpg" alt="" class="img-dialog">
-									<div class="girls-message-item-info clearfix">
-										<div>
-											<a href="#"><span>Luka</span></a>
-										</div>
-										<div class="clear"></div>
-										<p class="girls-message-item-descr">Hello my dear)) today morning was fun, went with a friend to walk the dog. He breaks out of the ... <a href="#">more<i class="fa fa-chevron-right"></i></a></p>
-										<p class="girl-message-date">14.09.2015 10:58</p>
-
-									</div>
-
-								</div>
-								<div class="dialog-item dialog-item-in dialog-red-fl clearfix">
-									<img src="img/girl-message-1.jpg" alt="" class="img-dialog">
-									<div class="girls-message-item-info clearfix">
-										<div>
-											<a href="#"><span>Natasha</span></a>
-										</div>
-										<div class="clear"></div>
-										<p class="girl-message-date">14.09.2015 10:58</p>
-										<a href="#" class="new">NEW</a>
-										<button class="btn-send">Read the letter</button>
-									</div>
-
-								</div>
-									<div class="dialog-item dialog-item-out clearfix">
-									<img src="img/man-message.jpg" alt="" class="img-dialog">
-									<div class="girls-message-item-info clearfix">
-										<div>
-											<a href="#"><span>Luka</span></a>
-										</div>
-										<div class="clear"></div>
-										<p class="girls-message-item-descr">Hello my dear)) today morning was fun, went with a friend to walk the dog. He breaks out of the ... <a href="#">more<i class="fa fa-chevron-right"></i></a></p>
-										<p class="girl-message-date">14.09.2015 10:58</p>
-
-									</div>
-
-								</div>-->
 
 
 

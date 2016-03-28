@@ -53,7 +53,6 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     if(this.tumbler==false) {
       this.tumbler=true
     }
-    console.log(this.type);
     var self = this;
     var options = {
       dateTimeFrom: self.resultFromDate,
@@ -70,10 +69,10 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
         self.arrIndex = [];
         for(var i=1; i<self.arrLengthCeil+1; i++) {
           self.arrIndex.push(i);
-        };
-
+        }
         angular.forEach(self.messages.letters, function(letter, index) {
           self.messages.letters[index]['deleted'] = false;
+
         });
       },
       function(error) {
@@ -84,21 +83,12 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
   this.paginaAddClass = function(index) {
 
       var arrPaginaClass = angular.element(document.getElementsByClassName('pagina'));
+      // console.log(arrPaginaClass.length);
       for(var i=0; i<arrPaginaClass.length; i++) {
         arrPaginaClass[i].childNodes[0].className = '';
       }
       arrPaginaClass[index].childNodes[0].className = 'text_color_black';
-  };
-
-  this.firstNamberPagin = function() {
-    var self = this;
-    $timeout(function(){
-      console.log(self.arrIndex.length);
-      if(self.arrIndex.length>0) {
-        self.paginaAddClass(0);
-      }
-    },100);
-  };
+  }
 
   this.getNextMessages = function() {
     if (this.page < this.arrLengthCeil-1) {
@@ -123,17 +113,6 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
 
   }
 
-  this.getMessagesIntroductions = function() {
-    var self = this;
-    mailService.getMessagesLengthIntroductions().$promise.then(
-      function(data) {
-        self.messagesIntroductions = data;
-      },
-      function(error) {
-        console.log(error);
-      }
-    );
-  };
 
   this.readTheLetter = function(id, partnerid){
     if(this.tumbler) {
@@ -180,7 +159,6 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
         self.messagIdPay = data;
         self.readTheLetter(id);
         self.correspondence(partnerid);
-        self.getMessagesInboxLength();
       },
       function(error) {
         console.log(error);
@@ -188,76 +166,21 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     );
   };
 
-  this.readLadyLetter =function(id, partnerid) {
+  this.correspondence = function(partnerid) {
+    if(this.tumbler) {
+        this.tumbler = false;
+      };
     var self = this;
-    mailService.readLetter(id).$promise.then(
-      function(data) {
-        self.messagIdPay = data;
-        self.readTheLetter(id);
-        self.correspondence(partnerid);
-        self.getMessagesInboxLength();
-      },
-      function(error) {
-        console.log(error);
-      }
-    );
-  };
-
-  this.correspondence = function(partnerId) {
-    var self = this;
-    self.partnerId = partnerId;
-  var options = {
-      partnerId: self.partnerId,
-      dateTimeFrom: self.resultFromDate,
-      dateTimeTo: self.resultToDate,
-      limit: self.limit2,
-      offset: 0
-    };
-    //self.currentPartnerid = partnerid;
-    mailService.correspondenceGet(options).$promise.then(
+    self.currentPartnerid = partnerid;
+    mailService.correspondenceGet(partnerid).$promise.then(
       function(data) {
         self.letterCor =data;
-        self.letterAllCorLength = self.letterCor.totalCount;
-        self.countPage2 = self.letterAllCorLength / 20;
-        self.totalPage2 = Math.ceil(self.countPage2);
-        if(self.totalPage2==1) {
-          self.buttonAddLetter = true;
-        }
       },
       function(error) {
         console.log(error);
       }
     );
-  };
-
-  this.page2 = 0;
-  this.limit2 = 20;
-
-  this.paginaLetterCor = function() {
-     if (this.totalPage2){
-      this.page2 += 1;
-      this.limit2 += 20;
-      this.correspondence(this.partnerId);
-      if(this.page==this.totalPage2)
-        this.buttonAddLetter = true;
-    }
-  };
-
-  // this.correspondence = function(partnerid) {
-  //   if(this.tumbler) {
-  //       this.tumbler = false;
-  //     };
-  //   var self = this;
-  //   self.currentPartnerid = partnerid;
-  //   mailService.correspondenceGet(partnerid).$promise.then(
-  //     function(data) {
-  //       self.letterCor =data;
-  //     },
-  //     function(error) {
-  //       console.log(error);
-  //     }
-  //   );
-  // }
+  }
 
   this.switchMore = function(letterText) {
     if (letterText==null) {
@@ -295,7 +218,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     self.textArea = true;
     $timeout(function(){
       self.textArea = false;
-    },600);
+    },100)
   }
 
   this.addMessage = function(id) {
@@ -377,10 +300,8 @@ this.girlsIdGet = function(id) {
     var arrNum2 = new String(new Date()).split(' ');
     var month2 = toDate.getMonth() + 1;
     this.resultToDate = arrNum2[3] + "-" + month2 + "-" +arrNum2[2] + " " + arrNum2[4];
-    if(this.tumbler) {
-      this.getMessages();
-    } else this.correspondence(this.partnerId);
-    $timeout(function() {
+    this.getMessages();
+    $timeout(function(){
       this.resultFromDate = undefined;
       this.resultToDate = undefined;
     },500);
@@ -404,10 +325,8 @@ this.girlsIdGet = function(id) {
     var month2 = firstDayWeek.getMonth() + 1;
     var arrNum2 = new String(firstDayWeek).split(' ');
     this.resultFromDate = arrNum2[3] + "-" + month2 + "-" + arrNum2[2] + " " + "00:00:00";
-    if(this.tumbler) {
-      this.getMessages();
-    } else this.correspondence(this.partnerId);
-    $timeout(function() {
+    this.getMessages();
+    $timeout(function(){
       this.resultFromDate = undefined;
       this.resultToDate = undefined;
     },500);
@@ -424,14 +343,12 @@ this.girlsIdGet = function(id) {
     var month = this.toDate.getMonth() + 1;
     this.resultToDate = arrDate[3] + '-' + month +'-' + arrDate[2] + ' ' + '23:59:59';
     if(this.fromDate.getTime()<this.toDate.getTime()) {
-      if(this.tumbler){
-        this.getMessages();
-      } else this.correspondence(this.partnerId);
-      $timeout(function(){
-        this.resultFromDate = undefined;
-        this.resultToDate = undefined;
-      },500);
-    }
+      this.getMessages();
+    };
+    $timeout(function(){
+      this.resultFromDate = undefined;
+      this.resultToDate = undefined;
+    },500);
   };
 
   this.watchInputDate = function(fromDate, toDate) {
@@ -447,61 +364,8 @@ this.girlsIdGet = function(id) {
     this.fromDate = undefined;
     this.resultFromDate = undefined;
     this.resultToDate = undefined;
-    // this.getMessages();
-    this.buttonAddLetter = false;
-    // this.correspondence(this.partnerId);
-     if(this.tumbler){
-      this.getMessages();
-    } else this.correspondence(this.partnerId);
+    this.getMessages();
   };
-
-  this.selectAllCheck = function() {
-    var self = this;
-    this.unselectCheck();
-    this.addClassSelectCheck(1);
-    angular.forEach(this.messages.letters, function(letter, index) {
-      self.messages.letters[index]['deleted'] = true;
-    });
-
-  }
-
-  this.readSelectCheck = function() {
-    var self = this;
-    this.unselectCheck();
-    this.addClassSelectCheck(3);
-    angular.forEach(this.messages.letters, function(letter, index) {
-      if(self.messages.letters[index].isRead==true)
-      self.messages.letters[index]['deleted'] = true;
-    });
-    // console.log("readSelectCheck");
-  };
-
-  this.unreadSelectCheck = function() {
-    var self = this;
-    this.unselectCheck();
-    this.addClassSelectCheck(5);
-    angular.forEach(this.messages.letters, function(letter, index) {
-      if(self.messages.letters[index].isRead==false)
-      self.messages.letters[index]['deleted'] = true;
-    });
-  };
-
-  this.unselectCheck = function() {
-    var self = this;
-    this.addClassSelectCheck(7);
-    angular.forEach(self.messages.letters, function(letter, index) {
-          self.messages.letters[index]['deleted'] = false;
-        });
-    };
-
-  this.addClassSelectCheck = function(index) {
-    var list = angular.element(document.getElementsByClassName('message-sort-dropdown'));
-    for(var i=1; i<8; i+=2){
-      list[0].childNodes[i].childNodes[1].className = '';
-    };
-    list[0].childNodes[index].childNodes[1].className = 'text_color_black';
-  };
-
 };
 
 
