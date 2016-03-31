@@ -141,34 +141,34 @@
 						<div class="col-md-3 age-container">
 							<div class="age clearfix">
 								<p>Age</p>
-								<select name="" id="" class="selectpicker">
-									<option value="">18</option>
-									<option value="">19</option>
-									<option value="">20</option>
-									<option value="">21</option>
-								</select>
+								<select name="" id="" class="selectpicker" ng-model="ctrl.fromDateModel">
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                </select>
 								<span class="age-line">-</span>
-								<select name="" id="" class="selectpicker">
-									<option value="">30</option>
-									<option value="">31</option>
-									<option value="">32</option>
-									<option value="">33</option>
-								</select>
+								<select name="" id="" class="selectpicker" ng-model="ctrl.toDateModel">
+                  <option value="30">30</option>
+                  <option value="31">31</option>
+                  <option value="32">32</option>
+                  <option value="33">33</option>
+                </select>
 							</div>
 						</div>
 						<div class="col-md-3 from-container">
 							<div class="from">
 								<p>From</p>
-								<select name="" id="" class="selectpicker">
-									<option value="">30</option>
-									<option value="">31</option>
-									<option value="">32</option>
-									<option value="">33</option>
-								</select>
+								<select name="" id="" class="selectpicker" ng-model="ctrl.countryModel">
+                  <option ng-repeat="country in ctrl.countries.countries" value="{{country.name}}">{{country.name}}</option>
+                  <!-- <option value="Ukraun">Ukraun</option>
+                  <option value="Russia">Russia</option>
+                  <option value="Belarus">Belarus</option> -->
+                </select>
 							</div>
 						</div>
 						<div class="col-md-3">
-							<button class="btn-search">Search</button>
+							<button class="btn-search" ng-click="ctrl.searchHomeGirls()">Search</button>
 						</div>
 						<div class="col-md-3">
 							<button class="btn-adv">Advanced Search</button>
@@ -481,7 +481,7 @@ Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.</span>
 </div>
 <div class="col-sm-2 col-md-3 col-lg-2 f-key-3">
 <a href="#">
-<img src="img/footer-logo.png" alt=""></a>
+<img src="assets/angular-app/public/img/footer-logo.png" alt=""></a>
 </div>
 <div class="col-sm-3 col-md-3 f-key-4">
 <div class="footer-right-side">
@@ -528,8 +528,8 @@ Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.</span>
 -->
 <!-- end copyright -->
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script src="js/bootstrap-select.min.js"></script>
 	<script src="js/owl.carousel.min.js"></script>
 	<script>
@@ -540,7 +540,7 @@ Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.</span>
       });
 
 	</script>
-	<script src="js/main.js"></script>
+	<script src="js/main.js"></script> -->
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 
 </biv>

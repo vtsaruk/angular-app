@@ -1,9 +1,16 @@
 module.exports = mailController;
 
-function mailController ($document, $location, $timeout, $anchorScroll, mailService, userService , girlsService) {
+function mailController ($document, $location, $timeout, $anchorScroll, mailService, userService , girlsService, $scope) {
+
+  // this.showTumblerCheck = false;
 
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
+  }
+
+  this.showSelectCheck = function() {
+    // console.log('showSelectCheck');
+    this.showTumblerCheck = true;
   }
 
   this.removeClassTab = function(arg) {
@@ -327,6 +334,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
           function(data) {
             self.getMessages();
             self.getMessagesInboxLength();
+            self.deletedSelect = false;
           }, function(error) {
             console.log(error);
           });
@@ -462,6 +470,8 @@ this.girlsIdGet = function(id) {
     angular.forEach(this.messages.letters, function(letter, index) {
       self.messages.letters[index]['deleted'] = true;
     });
+    this.showTumblerCheck = false;
+    this.deletedSelect = true;
 
   }
 
@@ -473,7 +483,9 @@ this.girlsIdGet = function(id) {
       if(self.messages.letters[index].isRead==true)
       self.messages.letters[index]['deleted'] = true;
     });
-    // console.log("readSelectCheck");
+    this.deletedSelect = true;
+// console.log("readSelectCheck");
+    this.showTumblerCheck = false;
   };
 
   this.unreadSelectCheck = function() {
@@ -484,6 +496,8 @@ this.girlsIdGet = function(id) {
       if(self.messages.letters[index].isRead==false)
       self.messages.letters[index]['deleted'] = true;
     });
+    this.showTumblerCheck = false;
+    this.deletedSelect = true;
   };
 
   this.unselectCheck = function() {
@@ -492,6 +506,10 @@ this.girlsIdGet = function(id) {
     angular.forEach(self.messages.letters, function(letter, index) {
           self.messages.letters[index]['deleted'] = false;
         });
+    this.showTumblerCheck = false;
+    this.deletedSelect = false;
+    // console.log('unselectCheck');
+
     };
 
   this.addClassSelectCheck = function(index) {
@@ -502,7 +520,28 @@ this.girlsIdGet = function(id) {
     list[0].childNodes[index].childNodes[1].className = 'text_color_black';
   };
 
+  //var self2 = this;
+  //$('body .girl-message-date').on('click', function() {
+  //  console.log('girls-messega-item-content');
+  //  console.log($scope.showTumblerCheck);
+  //});
+
+  this.removeSelectBox = function(){
+    // console.log(this.showTumblerCheck);
+    this.showTumblerCheck = false;
+  };
+
+  this.deletedSelectCheckBox = function() {
+    console.log('deletedSelectCheckBox');
+    if(this.deletedSelect){
+      this.selectAllCheck();
+    } else {
+      this.unselectCheck();
+    };
+
+  }
+
 };
 
 
-mailController.$inject = ['$document', '$location', '$timeout', '$anchorScroll', 'mailService', 'userService', 'girlsService'];
+mailController.$inject = ['$document', '$location', '$timeout', '$anchorScroll', 'mailService', 'userService', 'girlsService', '$scope'];

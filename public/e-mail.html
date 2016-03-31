@@ -18,7 +18,7 @@
           <nav class="header--nav">
             <ul class="clearfix">
               <li>
-                <a href="/#/girls">Ladies</a>
+                <a href="/#/girls/18-30-Ukraine">Ladies</a>
               </li>
               <li>
                 <a href="#">Search</a>
@@ -27,7 +27,7 @@
                 <a href="/#/man">Mail</a>
               </li>
               <li>
-                <a href="#">Chat</a>
+                <a href="/#/chat">Chat</a>
               </li>
               <li>
                 <a href="#">Gifts Delivery</a>
@@ -93,7 +93,7 @@
             </div>
             <div class="message-sort clearfix">
               <div class="message-sort-left">
-                <ul ng-show="showSortUl" class="message-sort-dropdown">
+                <ul ng-show="ctrl.showTumblerCheck" outsideClick class="message-sort-dropdown">
                   <li>
                     <a href="" ng-click="ctrl.selectAllCheck()">Select all</a>
                   </li>
@@ -109,10 +109,10 @@
                 </ul>
                 <div class="message-sort-left-1">
                   <label class="checkbox-1">
-                      <input type="checkbox" ng-model="showSortUl">
+                      <input type="checkbox" ng-model="ctrl.deletedSelect" ng-click="ctrl.deletedSelectCheckBox()">
                       <span></span>
                   </label>
-                  <i class="fa fa-caret-right"></i>
+                  <i class="fa fa-caret-right" ng-click="ctrl.showSelectCheck()"></i>
                 </div>
                 <p class="p-sort" ng-click="ctrl.showFilter(ctrl.filterDiv)"><img src="assets/angular-app/public/img/calendar.png" alt="">Sort by Date</p>
                 <!-- <p ng-class="{1:'p-delete text_color_black', 0:'p-delete'}[ctrl.classMessagesDeleted()]" ng-click="ctrl.deleteMessages()"><i class=" fa fa-caret-down" ></i><img src="assets/angular-app/public/img/delete.png" alt="">Delete</p> -->
@@ -150,7 +150,7 @@
               </div>
               <p><a href="" class="active" ng-class="{true:'activ_sort_button'}[ctrl.watchInputDate(ctrl.fromDate, ctrl.toDate)]" ng-click="ctrl.showDate()">Sort</a><a href="" ng-click="ctrl.resetSortDate()">Reset</a></p>
   <!-- <div ng-click="ctrl.readTheLetter(19)">{{ctrl.messages.letters}}</div> -->
-<div>{{ctrl.messages.letters[1]}}</div>
+<!-- <div>{{ctrl.messages.letters[1]}}</div> -->
 
             </div>
             <div class="girls-messages">
@@ -176,7 +176,7 @@
                 <img src="{{messag.sender.mainphoto.path}}" alt="">
                 <div class="girls-message-item-info">
                   <div>
-                    <a href="/#/girls/{{messag.sender.firstname}}-{{ctrl.agePerson(messag.sender.birthdate)}}-{{messag.sender.country.name}}-{{messag.sender.city}}-{{messag.sender.girl.id}}" ng-hide="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id )">
+                    <a href="/#/girl/{{messag.sender.firstname}}-{{ctrl.agePerson(messag.sender.birthdate)}}-{{messag.sender.country.name}}-{{messag.sender.city}}-{{messag.sender.girl.id}}" ng-hide="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id )">
                       <span ng-hide="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id )">{{messag.sender.firstname}}</span>, {{ctrl.agePerson(messag.sender.birthdate)}}
                     </a>
                     <a href="" ng-show="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id)"><span>{{ctrl.user.user.firstname}}</span></a>

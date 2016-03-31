@@ -41,7 +41,7 @@ function mailIdController ($document, $stateParams, $location, $anchorScroll, $t
     },600)
   }
 
-this.getUserData();
+// this.getUserData();
 // this.correspondence = function(partnerid, timeFrom, timeTo) {
 //     var self = this;
 //     self.currentPartnerid = partnerid;

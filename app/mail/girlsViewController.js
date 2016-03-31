@@ -1,9 +1,7 @@
 module.exports = girlsViewController;
 
 
-function girlsViewController ($document, $stateParams, $location, girlsService) {
-
-
+function girlsViewController ($document, $stateParams, $location, girlsService, $scope) {
 
   var id = $stateParams.id.split('-')[4];
   this.agePerson = function(birthdate) {
@@ -25,6 +23,4 @@ function girlsViewController ($document, $stateParams, $location, girlsService) 
 
 };
 
-
-
-girlsViewController.$inject = ['$document', '$stateParams', '$location', 'girlsService'];
+girlsViewController.$inject = ['$document', '$stateParams', '$location', 'girlsService', '$scope'];

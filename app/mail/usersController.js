@@ -14,10 +14,10 @@ function usersController ($document, $location, userService ) {
         } else if(self.user.user.additionalData.groupId == 2){
           $location.path('/lady');
         }
-        else $location.path('/home');
+        else $location.path('/home/18-30-Ukraine');
       },
       function(error) {
-        $location.path('/home');
+        $location.path('/home/18-30-Ukraine');
         // console.log(error);
       }
     );
