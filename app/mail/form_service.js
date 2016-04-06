@@ -3,7 +3,7 @@ module.exports = formService;
 function formService ($resource) {
 
   var formResource = $resource('/api/photos',
-    {  },
+{ },
     { savePhoto: {
       method: 'POST',
       // params: {

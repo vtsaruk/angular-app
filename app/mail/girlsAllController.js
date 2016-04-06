@@ -4,7 +4,7 @@ function girlsAllController ($document, $location, $stateParams, userService, gi
 
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
-  }
+  };
 
   this.getUserData = function () {
     var self = this;
@@ -19,6 +19,8 @@ function girlsAllController ($document, $location, $stateParams, userService, gi
     );
   };
 
+  this.getUserData();
+
   this.getCountries = function() {
     var self = this;
 
@@ -29,7 +31,7 @@ function girlsAllController ($document, $location, $stateParams, userService, gi
         for(var i=0; i<self.arrCountries.length; i++) {
           if(self.arrCountries[i].name==self.counryUrl) {
             self.countryIdURL = self.arrCountries[i].id
-            console.log(self.countryIdURL);
+            // console.log(self.countryIdURL);
             self.paginaGirl();
           }
         };

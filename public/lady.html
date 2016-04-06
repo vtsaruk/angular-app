@@ -24,7 +24,7 @@
                 <a href="/lady">Mail</a>
               </li>
               <li>
-                <a href="#">Chat</a>
+                <a href="/#/chat">Chat</a>
               </li>
 
             </ul>
@@ -34,7 +34,7 @@
           <div class="header--profile">
             <div class="header--profile-img-likes">
               <a href="#">
-                <img src="{{ctrl.user.user.mainphoto.path}}" width="40" height="40" alt=""></a>
+                <img src="{{ctrl.user.user.mainphoto.pathOfQuad}}" width="40" height="40" alt=""></a>
               <div class="header--heart">
                 <p>
                   <img src="assets/angular-app/public/img/header-heart.png" alt=""></p>
@@ -118,7 +118,7 @@
               <div class="message-sort-right">
                 <a href="" class="prev" ng-click="ctrl.getPrevMessages()"><i class="fa fa-chevron-left"></i>prev</a>
               <ul>
-               <li ng-repeat="page in ctrl.arrIndex" class="pagina" ng-click="ctrl.getIndexPage(page)"><a ng-class='{text_color_black: $first}'href="">{{page}}</a></li>
+               <li ng-repeat="page in ctrl.arrIndex" class="pagina" ng-click="ctrl.getIndexPage(page)"><a ng-class='{text_width: $first}'href="">{{page}}</a></li>
               </ul>
               <a href="" class="next" ng-click="ctrl.getNextMessages()"><i class="fa fa-chevron-right"></i>next</a>
               <p class="pages">1-20 of {{ctrl.messages.totalCount}}</p>
@@ -174,7 +174,7 @@
                     <p class="tooltips add-chat">Chat</p>
                     <a href="#" class="add-f-chat"></a></li>
                 </ul>
-                <img src="{{messag.sender.mainphoto.path}}" alt="">
+                <img src="{{messag.sender.mainphoto.pathOfQuad}}" alt="">
                 <div class="girls-message-item-info">
                   <div>
                     <a href="/#/girls/{{messag.sender.firstname}}-{{ctrl.agePerson(messag.sender.birthdate)}}-{{messag.sender.country.name}}-{{messag.sender.city}}-{{messag.sender.girl.id}}" ng-hide="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id)">
@@ -195,45 +195,7 @@
 
                 </div>
               </div>
-              <!-- <div class="girls-message-item" ng-repeat="messag in ctrl.messages.letters" ng-class="{'girls-message-item':false, 'girls-message-item active': messag.deleted}"> -->
-              <!-- <div class="girls-message-item" ng-repeat="messag in ctrl.messages.letters" ng-class="{'girls-message-item': messag.isRead==true, 'girls-message-item red-bg': messag.isRead==false, 'girls-message-item active': messag.deleted}">
-                <div class="girls-messega-item-content">
-                  <div class="girls-message-checkbox">
-                  <label class="checkbox-1">
-                      <input type="checkbox" ng-model="messag.deleted">
-                      <span></span>
-                  </label>
-                </div>
-                <ul class="tooltips-list">
-                  <li>
-                    <p class="tooltips add-f">Add to favorites</p>
-                    <a href="#" class="add-f-icon"></a></li>
-                  <li>
-                    <p class="tooltips add-gift">Send a gift</p><a href="#" class="add-f-gift"></a></li>
-                  <li>
-                    <p class="tooltips add-chat">Chat</p>
-                    <a href="#" class="add-f-chat"></a></li>
-                </ul>
-                <img src="{{messag.sender.mainphoto.path}}" alt="">
-                <div class="girls-message-item-info">
-                  <div>
-                   <a href="/#/girls/{{messag.sender.girl.id}}" ng-hide="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id )"><span ng-hide="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id )">{{messag.sender.firstname}}</span>, {{ctrl.agePerson(messag.sender.birthdate)}}</a>
-                    <a href="" ng-show="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id)"><span>{{ctrl.user.user.firstname}}</span></a>
 
-                    <p><span></span>online</p>
-                  </div>
-                  <a href="#">{{messag.sender.country.name}}, {{messag.sender.city}}</a>
-                  <div class="clear"></div>
-                  <span ng-show="messag.isRead">{{ctrl.letterTextSlice(messag.additionalData.text)}}</span>
-                </div>
-                <p class="girl-message-date">{{messag.createdAt | date:'yyyy-MM-dd HH:mm'}}</p>
-                <a href="#" class="girl-message-photo" ng-show="messag.isRead"><img src="assets/angular-app/public/img/photo.png" alt=""><span>3{{messag.isRead}}</span></a>
-                 <a href="#" class="new" ng-hide="messag.isRead">NEW</a>
-                <a href="#" class="girl-message-photo">
-                <button class="btn-send" ng-click="ctrl.readTheLetter(messag.id, messag.senderId)">Read the letter</button>
-                </div>
-              </div> -->
-<!-- ctrl.payment(messag.id) -->
             </div>
           </div>
         </div>
@@ -287,7 +249,7 @@
 
                 <div class="girl-message-img">
 
-                  <img src="{{ctrl.messagesId.letter.sender.mainphoto.path}}" alt="">
+                  <img src="{{ctrl.messagesId.letter.sender.mainphoto.pathOfQuad}}" alt="">
                   <a href="#" class="girl-message-photo">
                     <p>Attached files</p>
                     <img src="assets/angular-app/public/img/photo.png" alt="" class="mn-t-10"><span>3</span></a>
@@ -363,7 +325,7 @@
                 <!-- <div class="clearfix" ng-class="{ctrl.add ? 'dialog-item' : 'dialog-item-out'}"> -->
 
                 <!-- <div class="clearfix" ng-class="ctrl.add && 'dialog-item' || !ctrl.add &&'dialog-item-out'}"> -->
-                  <img src="{{letter.sender.mainphoto.path}}" alt="" class="img-dialog">
+                  <img src="{{letter.sender.mainphoto.pathOfQuad}}" alt="" class="img-dialog">
                   <div class="girls-message-item-info open clearfix">
                     <div>
                       <a href=""><span>{{letter.sender.firstname}}</span></a>
@@ -389,50 +351,7 @@
   </div>
 </main>
 
-<footer>
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-2 col-sm-offset-1 col-md-2 col-md-offset-1 f-key-1">
-        <ul class="footer-list">
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">F.A.Q.</a></li>
-          <li><a href="#">Anti-Scam Policy</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-        </ul>
-      </div>
-      <div class="col-sm-2 col-md-2 f-key-2">
-        <ul class="footer-list">
-          <li><a href="#" class="transp">Privacy Policy</a></li>
-          <li><a href="#">Terms & Conditions</a></li>
-          <li><a href="#">Blog</a></li>
-          <li><a href="#">Contact Us</a></li>
-        </ul>
-      </div>
-      <div class="col-sm-2 col-md-3 col-lg-2 f-key-3">
-        <a href="#"><img src="assets/angular-app/public/img/footer-logo.png" alt=""></a>
-      </div>
-      <div class="col-sm-3 col-md-3 f-key-4">
-        <div class="footer-right-side">
-          <button>Live Support 24/7
 
-          </button>
-          <div class="clear"></div>
-          <p>Follow Irinadating on
-
-          </p>
-          <ul>
-            <li><a href="#" class="fb"><img src="assets/angular-app/public/img/fb.png" alt=""></a></li>
-            <li><a href="#" class="tt"><img src="assets/angular-app/public/img/tb.png" alt=""></a></li>
-            <li><a href="#" class="g-plus"><img src="assets/angular-app/public/img/g-plus.png" alt=""></a></li>
-            <li><a href="#" class="yb"><img src="assets/angular-app/public/img/yb.png" alt=""></a></li>
-            <li><a href="#" class="pp"><img src="assets/angular-app/public/img/p.png" alt=""></a></li>
-            <li><a href="#" class="insta"><img src="assets/angular-app/public/img/insta.png" alt=""></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
 <!-- end footer -->
 <!-- copyright -->
 <div class="copyright">

@@ -6,6 +6,11 @@ require('angular-img-cropper');
 require('angular-base64-upload');
 require('./../node_modules/ng-repeat-owl-carousel/src/ngRepeatOwlCarousel');
 require('angular-ui-bootstrap');
+require('angular-cookies');
+// require('angular-websocket');
+ require('angular-socket-io');
+// require('socket.io');
+//require('angular-socket.io');
 // require('jquery');
 // require('bootstrap-select');
 
@@ -18,6 +23,7 @@ var mailIdController = require('./mail/mailIdController');
 var formController = require('./mail/formController');
 var girlsViewController = require('./mail/girlsViewController');
 var chatController = require('./mail/chatController');
+var searchController = require('./mail/searchController');
 
 var cropDirective = require('./directives/crop');
 var fileDirective = require('./directives/angular-file-model');
@@ -30,8 +36,9 @@ var girlsAllService = require('./mail/girlsAll_service');
 var mailIdService = require('./mail/mailId_service');
 var formService = require('./mail/form_service');
 var chatService = require('./mail/chat_service');
+var searchService = require('./mail/search_service');
 
-var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper', 'naif.base64', 'ocNgRepeat', 'ui.bootstrap'])
+var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper', 'naif.base64', 'ocNgRepeat', 'ui.bootstrap', 'ngCookies', 'btford.socket-io'])
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider.otherwise("/index");
@@ -101,7 +108,15 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
       templateUrl: 'assets/angular-app/public/chat.html',
       controller: chatController,
       controllerAs: 'ctrl'
+    })
+    .state('search', {
+      url: '/search',
+      templateUrl: 'assets/angular-app/public/search.html',
+      controller: searchController,
+      controllerAs: 'ctrl'
     });
+
+
 })
 // .run(function ($rootScope, $location, User) {
 //     //.run(function ($rootScope, $location) {
@@ -296,11 +311,13 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
     }
   };
 }])
-.controller('chatController', ['chatService',  chatController])
+.controller('chatController', ['chatService', chatController])
+.controller('searchController', ['searchService', 'userService', searchController])
 .factory('userService', ['$resource', userService])
 .factory('mailService', ['$resource', mailService])
 .factory('girlsService', ['$resource', girlsService])
 .factory('girlsAllService', ['$resource', girlsAllService])
 .factory('mailIdService', ['$resource', mailIdService])
 .factory('formService', ['$resource', formService])
-.factory('chatService', ['$resource', chatService]);
+.factory('chatService', ['socketFactory', chatService])
+.factory('searchService', ['$resource', searchService]);

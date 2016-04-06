@@ -17,7 +17,7 @@
           <nav class="header--nav">
             <ul class="clearfix">
               <li>
-                <a href="/#/girls">Ladies</a>
+                <a href="/#/girls/18-30-Ukraine">Ladies</a>
               </li>
               <li>
                 <a href="#">Search</a>
@@ -26,7 +26,7 @@
                 <a href="/#/man">Mail</a>
               </li>
               <li>
-                <a href="#">Chat</a>
+                <a href="/#/chat">Chat</a>
               </li>
               <li>
                 <a href="#">Gifts Delivery</a>
@@ -41,7 +41,7 @@
           <div class="header--profile">
             <div class="header--profile-img-likes">
               <a href="#">
-                <img src="assets/angular-app/public/img/profile.jpg" width="40" height="40" alt=""></a>
+                <img src="{{ctrl.user.user.mainphoto.pathOfQuad}}`" width="40" height="40" alt=""></a>
               <div class="header--heart">
                 <p>
                   <img src="assets/angular-app/public/img/header-heart.png" alt=""></p>
@@ -56,7 +56,7 @@
               </p>
               <a href="/index/logout">My Profile</a>
               &nbsp;  |&nbsp;&nbsp;
-              <a href="#">
+              <a href="/index/logout">
                 <span>Log out</span>
               </a>
             </div>
@@ -360,6 +360,8 @@
 											<a class="btn prev"><img src="assets/angular-app/public/img/profile-arrow-left.png" alt=""></a>
 										</div>
 									</div>
+
+
 								</div>
 							</div>
 						</div>
@@ -392,60 +394,9 @@
 	</div>
 </main>
 
-
-
-
-<footer>
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-2 col-sm-offset-1 col-md-2 col-md-offset-1 f-key-1">
-        <ul class="footer-list">
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">F.A.Q.</a></li>
-          <li><a href="#">Anti-Scam Policy</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-        </ul>
-      </div>
-      <div class="col-sm-2 col-md-2 f-key-2">
-        <ul class="footer-list">
-          <li><a href="#" class="transp">Privacy Policy</a></li>
-          <li><a href="#">Terms & Conditions</a></li>
-          <li><a href="#">Blog</a></li>
-          <li><a href="#">Contact Us</a></li>
-        </ul>
-      </div>
-      <div class="col-sm-2 col-md-3 col-lg-2 f-key-3">
-        <a href="#"><img src="assets/angular-app/public/img/footer-logo.png" alt=""></a>
-      </div>
-      <div class="col-sm-3 col-md-3 f-key-4">
-        <div class="footer-right-side">
-          <button>Live Support 24/7
-
-          </button>
-          <div class="clear"></div>
-          <p>Follow Irinadating on
-
-          </p>
-          <ul>
-            <li><a href="#" class="fb"><img src="assets/angular-app/public/img/fb.png" alt=""></a></li>
-            <li><a href="#" class="tt"><img src="assets/angular-app/public/img/tb.png" alt=""></a></li>
-            <li><a href="#" class="g-plus"><img src="assets/angular-app/public/img/g-plus.png" alt=""></a></li>
-            <li><a href="#" class="yb"><img src="assets/angular-app/public/img/yb.png" alt=""></a></li>
-            <li><a href="#" class="pp"><img src="assets/angular-app/public/img/p.png" alt=""></a></li>
-            <li><a href="#" class="insta"><img src="assets/angular-app/public/img/insta.png" alt=""></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
-
-
 <!-- end footer -->
 <!-- copyright -->
-<div class="copyright">
-  <p>IrinaDating &copy; 2009-2015</p>
-</div>
+
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
 
 

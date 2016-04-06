@@ -1,0 +1,413 @@
+
+
+<biv class="chat-with-girl">
+	<!-- header -->
+	<header>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<!-- small-menu -->
+					<a href="#" class="small-menu">
+						<span></span>
+						<span></span>
+						<span></span>
+					</a>
+					<!-- end small-menu -->
+					<!-- logo -->
+					<a href="#" class="header--logo">
+						<img src="assets/angular-app/public/img/logo.png"  alt=""></a>
+					<!-- end logo -->
+					<!-- navigation -->
+					<nav class="header--nav">
+						<ul class="clearfix">
+							<li>
+								<a href="/#/girls/18-30-Ukraine">Ladies</a>
+							</li>
+							<li>
+								<a href="/#/search">Search</a>
+							</li>
+							<li>
+								<a href="/#/man">Mail</a>
+							</li>
+							<li>
+								<a href="/#/chat">Chat</a>
+							</li>
+							<li>
+								<a href="">Gifts Delivery</a>
+							</li>
+							<li>
+								<a href="">Offers</a>
+							</li>
+						</ul>
+					</nav>
+					<!-- end navigation -->
+					<!-- header-profile info -->
+					<div class="header--profile">
+						<div class="header--profile-img-likes">
+							<a href="#">
+								<img src="{{ctrl.user.user.mainphoto.pathOfQuad}}" width="40" height="40" alt=""></a>
+							<div class="header--heart">
+								<p>
+									<img src="assets/angular-app/public/img/header-heart.png" alt=""></p>
+								<p>2000</p>
+							</div>
+
+						</div>
+						<div class="header--profile-info">
+							<p>
+								Welcome,
+								<span>{{ctrl.user.user.firstname}} {{ctrl.user.user.lastname}}</span>
+							</p>
+							<a href="/#/form">My Profile</a>
+							&nbsp;  |&nbsp;&nbsp;
+							<a href="/index/logout">
+								<span>Log out</span>
+							</a>
+						</div>
+					</div>
+					<!-- end header-profile info -->
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- end header -->
+	<!-- page-message -->
+<main class="search">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="main-content clearfix">
+					<div class="search-left-side">
+						<div class="col-sm-4 col-md-4">
+							<div class="search-left-side-header">
+								<p class="white-21-Lt">Quick Search</p>
+							</div>
+
+
+
+              <div class="search-left-side-select-items">
+                <div class="search-left-side-select-item">
+                  <label for="">Country</label>
+                  <select name="" id="" class="selectpicker" ng-model="ctrl.countryModel">
+                  <option>Doesn't matter</option>
+                  <option ng-repeat="country in ctrl.countries.countries" value="{{country.name}}">{{country.name}}</option>
+                    <!-- <option value="1">Doesn't matter</option>
+                    <option value="2">val_2</option>
+                    <option value="3">val_3</option>
+                    <option value="4">val_4</option> -->
+                  </select>
+                </div>
+                <div class="search-left-side-select-item">
+                  <label for="">City</label>
+                  <select name="" id="" class="selectpicker" ng-model="ctrl.cityModel">
+                    <option value="1">Doesn't matter</option>
+                    <option value="2">val_2</option>
+                    <option value="3">val_3</option>
+                    <option value="4">val_4</option>
+                  </select>
+                </div>
+                <div class="search-left-side-select-item">
+                  <label for="">First Name</label>
+                  <select name="" id="" class="selectpicker" ng-model="ctrl.firstNameModel">
+                    <option ng-repeat="girl in ctrl.arrNameGilrs.girls"value="{{girl.user.firstname}}">{{girl.user.firstname}}</option>
+                   <!--  <option value="2">val_2</option>
+                    <option value="3">val_3</option>
+                    <option value="4">val_4</option> -->
+                  </select>
+                </div>
+                <div class="search-left-side-select-item double">
+                  <label for="">Age</label>
+                  <select name="" id="" class="selectpicker" ng-model="ctrl.birthdateFromModel" >
+                  <!-- multiple -->
+                    <!-- <option value="1">Doesn't matter</option> -->
+                    <option ng-repeat="age in ctrl.listAge" value="{{age}}">{{age}}</option>
+                    <!-- <option value="19">19</option>
+                    <option value="20">20</option> -->
+                  </select>
+                  <span class="search-left-side-select-item-line">-</span>
+                  <select name="" id="" class="selectpicker" ng-model="ctrl.birthdateToModel">
+                  <!-- multiple -->
+                    <option ng-repeat="age in ctrl.listAge"value="{{age}}">{{age}}</option>
+                    <!-- <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option> -->
+                  </select>
+                </div>
+                <div class="search-left-side-select-item double">
+                  <label for="">Height (ft/cm)</label>
+                  <select name="" id="" class="selectpicker" ng-model="ctrl.heightFromModel">
+                    <option ng-repeat="hieght in ctrl.listHieght" value="{{hieght}}">{{hieght}}</option>
+                    <!-- <option value="2">val_2</option>
+                    <option value="3">val_3</option>
+                    <option value="4">val_4</option> -->
+                  </select>
+                  <span class="search-left-side-select-item-line">-</span>
+                  <select name="" id="" class="selectpicker" ng-model="ctrl.heightToModel">
+                    <option ng-repeat="hieght in ctrl.listHieght" value="{{hieght}}">{{hieght}}</option>
+                    <!-- <option value="2">val_2</option>
+                    <option value="3">val_3</option>
+                    <option value="4">val_4</option> -->
+                  </select>
+                </div>
+                <div class="search-left-side-select-item double">
+                  <label for="">Weight (lbs/kg)</label>
+                  <select name="" id="" class="selectpicker" ng-model="ctrl.weightFromModel">
+                    <option value="1">Doesn't matter</option>
+                    <option value="2">val_2</option>
+                    <option value="3">val_3</option>
+                    <option value="4">val_4</option>
+                  </select>
+                  <span class="search-left-side-select-item-line">-</span>
+                  <select name="" id="" class="selectpicker" ng-model="ctrl.weightToModel">
+                    <option value="1"></option>
+                    <option value="2">val_2</option>
+                    <option value="3">val_3</option>
+                    <option value="4">val_4</option>
+                  </select>
+                </div>
+                <div class="search-left-side-select-item">
+                  <label for="">Hair Color</label>
+                  <select name="" id="" class="selectpicker" ng-model="ctrl.hairColorModel">
+                    <!-- <option value="1">Doesn't matter</option> -->
+                    <option value="Black">Black</option>
+                    <option value="Blonde">Blonde</option>
+                    <option value="Brown">Brown</option>
+                    <option value="Red">Red</option>
+                    <option value="Light brown">Light brown</option>
+                  </select>
+                </div>
+                <div class="search-left-side-select-item">
+                  <label for="">Eye Color</label>
+                  <select name="" id="" class="selectpicker" ng-model="ctrl.eyeColorModel">
+                    <!-- <option value="1">Doesn't matter</option> -->
+                    <option value="Blue">Blue</option>
+                    <option value="Brown">Brown</option>
+                    <option value="Gray">Gray</option>
+                    <option value="Green">Green</option>
+                    <option value="Hazel">Hazel</option>
+                  </select>
+                </div>
+                <div class="search-left-side-select-item">
+                  <label for="">English Rating</label>
+                  <select name="" id="" class="selectpicker" ng-model="ctrl.englishRatingModel">
+                    <!-- <option value="1">Doesn't matter</option> -->
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Advanced">Advanced</option>
+                    <option value="Fluent">Fluent</option>
+                  </select>
+                </div>
+                <p class="grey-14-Th-italic mn-b-10">* Girl level of language itself indicates.</p>
+                <a ng-click="ctrl.advancedSearch=true" ng-hide="ctrl.advancedSearch" href="" class="red-18-Th adv-search mn-b-15">Advanced Search</a>
+
+    <div ng-show="ctrl.advancedSearch">
+                <div class="search-left-side-select-item double">
+                  <label for="">Number of Children</label>
+                  <select name="" id="" class="selectpicker" ng-model="ctrl.childrenNumberFromModel">
+                    <option value="0">Doesn't matter</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                  <span class="search-left-side-select-item-line">-</span>
+                  <select name="" id="" class="selectpicker" ng-model="ctrl.childrenNumberToModel">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                </div>
+                <div class="search-left-side-select-item">
+                  <label for="">Marital Status</label>
+                  <select name="" id="" class="selectpicker" ng-model="ctrl.maritalStatusModel">
+                    <!-- <option value="1">Doesn't matter</option> -->
+                    <option value="Never married">Never married</option>
+                    <option value="Divorced">Divorced</option>
+                    <option value="Widow">Widow</option>
+                  </select>
+                </div>
+                <div class="search-left-side-select-item">
+                  <label for="">Looking For</label>
+                  <select name="" id="" class="selectpicker" >
+                    <option value="0">Doesn't matter</option>
+                    <option value="Marriage">Marriage</option>
+                    <option value="Find a person with children">Find a person with children</option>
+                    <option value="Find a person who is good with children">Find a person who is good with children</option>
+                    <option value="A long term relationship">A long term relationship</option>
+                    <option value="Penpal relationship">Penpal relationship</option>
+                    <option value="Meeting with foreign person while they are travelling to CIS">Meeting with foreign person while they are travelling to CIS</option>
+                    <option value="A casual relationship">A casual relationship</option>
+                    <option value="Meet person of different cultures">Meet person of different cultures</option>
+                    <option value="Online chat (Phone, Video, Live)">Online chat (Phone, Video, Live)</option>
+                    <option value="Online Flirting">Online Flirting</option>
+                  </select>
+                </div>
+                <div class="search-left-side-select-item">
+                  <label for="">Profession</label>
+                  <select name="" id="" class="selectpicker" ng-model="ctrl.professionModel">
+                    <option value="1">Doesn't matter</option>
+                    <option value="2">val_2</option>
+                    <option value="3">val_3</option>
+                    <option value="4">val_4</option>
+                  </select>
+                </div>
+                <div class="search-left-side-select-item">
+                  <label for="">Education</label>
+                  <select name="" id="" class="selectpicker" ng-model="ctrl.educationModel">
+                    <option>Doesn't matter</option>
+                    <option value="University degree">University degree</option>
+                    <option value="University (unfinished)">University (unfinished)</option>
+                    <option value="Medical degree">Medical degree</option>
+                    <option value="Student">Student</option>
+                    <option value="College degree">College degree</option>
+                    <option value="High school">High school</option>
+                  </select>
+                </div>
+                <div class="search-left-side-select-item">
+                  <label for="">Religion</label>
+                  <select name="" id="" class="selectpicker" ng-model="ctrl.religionModel">
+                    <option value="1">Doesn't matter</option>
+                    <option value="Not Religious">Not Religious</option>
+                    <option value="Muslim">Muslim</option>
+                    <option value="Jewish">Jewish</option>
+                    <option value="Russian Orthodox">Russian Orthodox</option>
+                    <option value="Buddhism">Buddhism</option>
+                    <option value="Catholic">Catholic</option>
+                    <option value="Baptist">Baptist</option>
+                    <option value="Christian">Christian</option>
+                    <option value="Protestant">Protestant</option>
+                    <option value="Lutheran">Lutheran</option>
+                    <option value="Mormon">Mormon</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div class="search-left-side-select-item double">
+                  <label for="">Smoting&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  Drinking</label>
+                  <select name="" id="" class="selectpicker" ng-model="ctrl.smokingModel">
+                    <!-- <option value="1">Doesn't matter</option> -->
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                    <option value="Sometimes">Sometimes</option>
+                  </select>
+                  <span class="search-left-side-select-item-line">-</span>
+                  <select name="" id="" class="selectpicker" ng-model="ctrl.drinkingModel">
+                    <!-- <option value="1"></option> -->
+                    <option value="Never">Never</option>
+                    <option value="Socially">Socially</option>
+                    <option value="Occasionally">Occasionally</option>
+                  </select>
+                </div>
+                <div class="search-left-side-select-item">
+                  <label for="">Zodiac Sign</label>
+                  <select name="" id="" class="selectpicker" ng-model="ctrl.zodiacSignModel">
+                    <!-- <option value="1">Doesn't matter</option> -->
+                    <option value="Aries">Aries</option>
+                    <option value="Taurus">Taurus</option>
+                    <option value="Gemini">Gemini</option>
+                    <option value="Cancer">Cancer</option>
+                    <option value="Leo">Leo</option>
+                    <option value="Virgo">Virgo</option>
+                    <option value="Libra">Libra</option>
+                    <option value="Scorpio">Scorpio</option>
+                    <option value="Sagittarius">Sagittarius</option>
+                    <option value="Capricorn">Capricorn</option>
+                    <option value="Aquarius">Aquarius</option>
+                    <option value="Pisces">Pisces</option>
+                  </select>
+                </div>
+                <a ng-click="ctrl.advancedSearch=false" href="" class="red-18-Th adv-search mn-b-15">Quick Search</a>
+                </div>
+                <button class="btn-send" ng-click="ctrl.searchGirls()">Search</button></div>
+
+						</div>
+					</div>
+					<div class="search-right-side">
+						<div class="col-sm-8 col-md-8">
+							<div class="search-right-side-header clearfix">
+								<h4 class="red-21-Lt-w600 pull-left">Set criteria</h4>
+								<a href="" ng-click="ctrl.clearDataSearch()" class="a-clear pull-right">Clear</a>
+							</div>
+							<ul class="search-right-side-list">
+								<li><a href="#" class="grey-14-Lt">Beginner</a></li>
+								<li><a href="#" class="grey-14-Lt">5.7/174</a></li>
+								<li><a href="#" class="grey-14-Lt">Blonde</a></li>
+								<li><a href="#" class="grey-14-Lt">Beginner</a></li>
+								<li><a href="#" class="grey-14-Lt">Beginner</a></li>
+								<li><a href="#" class="grey-14-Lt">5.7/174</a></li>
+								<li><a href="#" class="grey-14-Lt">Blonde</a></li>
+								<li><a href="#" class="grey-14-Lt">Beginner</a></li>
+								<li><a href="#" class="grey-14-Lt">5.7/174</a></li>
+							</ul>
+							<div class="line mn-b-20"></div>
+							<button class="btn-send pull-right mn-b-20" ng-click="ctrl.searchGirlId(ctrl.girlIdModel)">Search by ID</button>
+							<input type="number" id="lady-id" placeholder="Lady's ID" ng-model="ctrl.girlIdModel" ng-maxlength="5">
+							<div class="clear"></div>
+							<div class="search-right-side-results-container clearfix">
+								<h3 class="white-21-Lt pull-left">Search Results</h3>
+								<div class="search-right-side-results-checkbox pull-right">
+									<label class="checkbox-1">
+										<p>Only Online</p>
+										<input type="checkbox">
+										<span></span>
+									</label>
+								</div>
+							</div>
+							<div class="search-right-side-girls-container">
+								<div class="row">
+
+
+<!-- <div>{{ctrl.girlsAll.girls[0]}}</div> -->
+
+									<div class="col-md-6" ng-repeat="girl in ctrl.resultGirls">
+										<div class="search-right-side-girls-item clearfix">
+											<img src="{{girl.user.mainphoto.pathOfQuad}}" alt="" class="s-img">
+											<div class="search-right-side-girls-item-info">
+												<span class="circle"></span>
+												<a href="#" class="white-18-Th-500">{{girl.user.firstname}}, {{ctrl.agePerson(girl.user.birthdate)}}</a>
+												<p class="white-14-Lt-500">{{girl.user.country.name}}, {{girl.user.city}}</p>
+												<span class="info-id">ID: {{girl.id}}</span>
+												<div class="girl-status-message">
+												{{girl.message}}
+												</div>
+												<ul class="search-right-side-girls-item-list">
+													<li><a href="#">
+														<span class="tooltipps">Chat</span>
+													</a></li>
+													<li><a href="#" class="e-mail"><span class="tooltipps">Send message</span></a></li>
+													<li><a href="#" class="gift"><span class="tooltipps">Send a gift</span></a></li>
+													<li><a href="#" class="heart"><span class="tooltipps">Add to favorites</span></a></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+
+
+
+								</div>
+								<div class="girls-arrow" ng-click="ctrl.paginaGirl()">
+									<img src="assets/angular-app/public/img/girls-arrow.png" alt="">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+
+	<div class="copyright">
+		<p>IrinaDating &copy; 2009-2015</p>
+	</div>
+	<!-- end copyright -->
+
+
+
+</biv>

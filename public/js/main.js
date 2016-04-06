@@ -7,6 +7,11 @@ require('angular-img-cropper');
 require('angular-base64-upload');
 require('./../node_modules/ng-repeat-owl-carousel/src/ngRepeatOwlCarousel');
 require('angular-ui-bootstrap');
+require('angular-cookies');
+// require('angular-websocket');
+ require('angular-socket-io');
+// require('socket.io');
+//require('angular-socket.io');
 // require('jquery');
 // require('bootstrap-select');
 
@@ -19,6 +24,7 @@ var mailIdController = require('./mail/mailIdController');
 var formController = require('./mail/formController');
 var girlsViewController = require('./mail/girlsViewController');
 var chatController = require('./mail/chatController');
+var searchController = require('./mail/searchController');
 
 var cropDirective = require('./directives/crop');
 var fileDirective = require('./directives/angular-file-model');
@@ -31,8 +37,9 @@ var girlsAllService = require('./mail/girlsAll_service');
 var mailIdService = require('./mail/mailId_service');
 var formService = require('./mail/form_service');
 var chatService = require('./mail/chat_service');
+var searchService = require('./mail/search_service');
 
-var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper', 'naif.base64', 'ocNgRepeat', 'ui.bootstrap'])
+var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper', 'naif.base64', 'ocNgRepeat', 'ui.bootstrap', 'ngCookies', 'btford.socket-io'])
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider.otherwise("/index");
@@ -102,7 +109,15 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
       templateUrl: 'assets/angular-app/public/chat.html',
       controller: chatController,
       controllerAs: 'ctrl'
+    })
+    .state('search', {
+      url: '/search',
+      templateUrl: 'assets/angular-app/public/search.html',
+      controller: searchController,
+      controllerAs: 'ctrl'
     });
+
+
 })
 // .run(function ($rootScope, $location, User) {
 //     //.run(function ($rootScope, $location) {
@@ -297,16 +312,18 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
     }
   };
 }])
-.controller('chatController', ['chatService',  chatController])
+.controller('chatController', ['chatService', chatController])
+.controller('searchController', ['searchService', 'userService', searchController])
 .factory('userService', ['$resource', userService])
 .factory('mailService', ['$resource', mailService])
 .factory('girlsService', ['$resource', girlsService])
 .factory('girlsAllService', ['$resource', girlsAllService])
 .factory('mailIdService', ['$resource', mailIdService])
 .factory('formService', ['$resource', formService])
-.factory('chatService', ['$resource', chatService]);
+.factory('chatService', ['socketFactory', chatService])
+.factory('searchService', ['$resource', searchService]);
 
-},{"./../node_modules/ng-repeat-owl-carousel/src/ngRepeatOwlCarousel":33,"./controllers/conversationsController":2,"./directives/angular-file-model":3,"./directives/crop":4,"./directives/owl-slider":5,"./mail/chatController":6,"./mail/chat_service":7,"./mail/formController":8,"./mail/form_service":9,"./mail/girlsAllController":10,"./mail/girlsAll_service":11,"./mail/girlsController":12,"./mail/girlsViewController":13,"./mail/girls_service":14,"./mail/mailController":15,"./mail/mailIdController":16,"./mail/mailId_service":17,"./mail/mail_service":18,"./mail/user_service":19,"./mail/usersController":20,"angular":30,"angular-base64-upload":21,"angular-img-cropper":23,"angular-resource":25,"angular-ui-bootstrap":27,"angular-ui-router":28,"ng-file-upload":32}],2:[function(require,module,exports){
+},{"./../node_modules/ng-repeat-owl-carousel/src/ngRepeatOwlCarousel":38,"./controllers/conversationsController":2,"./directives/angular-file-model":3,"./directives/crop":4,"./directives/owl-slider":5,"./mail/chatController":6,"./mail/chat_service":7,"./mail/formController":8,"./mail/form_service":9,"./mail/girlsAllController":10,"./mail/girlsAll_service":11,"./mail/girlsController":12,"./mail/girlsViewController":13,"./mail/girls_service":14,"./mail/mailController":15,"./mail/mailIdController":16,"./mail/mailId_service":17,"./mail/mail_service":18,"./mail/searchController":19,"./mail/search_service":20,"./mail/user_service":21,"./mail/usersController":22,"angular":35,"angular-base64-upload":23,"angular-cookies":26,"angular-img-cropper":27,"angular-resource":29,"angular-socket-io":30,"angular-ui-bootstrap":32,"angular-ui-router":33,"ng-file-upload":37}],2:[function(require,module,exports){
 module.exports = function() {
   /*this.conversations = [
     {'id':13, 'name':'Aleksandra Almazova', 'amount': 35, 'Last_incoming_letter': '13:47   03/12/2014', 'Last_outgoing_letter': '18:34   03/11/2015'},
@@ -1740,15 +1757,75 @@ angular.module('angular-img-cropper').factory("imageCropperDataShare", function 
 },{}],6:[function(require,module,exports){
 module.exports = chatController;
 
-function chatController ($document, $location, chatService, userService ) {
-  this.Hello = "Hello!!!!!";
+function chatController ($document, $location, $cookies, chatService, userService, socketFactory) {
+  var self2 = this;
+
+  self2.partners = {};
+
+  chatService.on('addPartner', function (data) {
+    self2.partners[data.id] = data;
+    console.log(self2 .partners);
+    console.log('hello');
+  });
+  chatService.emit('getCurChatPartners', {});
+
+  // var partners = {};
+  // var myIoSocket = io.connect('http://irinadating.loc/');
+
+  // mySocket = socketFactory({
+  //   ioSocket: myIoSocket
+  // });
+  // mySocket.on('addPartner', function (data) {
+  //  partners[data.id] = data;
+  //  console.log(data);
+  // console.log('hello');
+  // });
+  // mySocket.emit('getCurChatPartners', {});
+
+  // var partners = {};
+  // var myIoSocket = io.connect('http://irinadating.loc/');
+
+  // mySocket = socketFactory({
+  //   ioSocket: myIoSocket
+  // });
+  // mySocket.on('addPartner', function (data) {
+
+  //   partners[data.id] = data;
+  //   console.log(data);
+  // });
+  // console.log('hello!!!');
+  // mySocket.emit('getCurChatPartners', {});
+
+  this.getUserData = function () {
+    var self = this;
+    userService.getUser().$promise.then(
+      function(data) {
+        self.user = data;
+        //console.log(self.user.user.id);
+        // self.getlogChat(self.user.user.id);
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+
+  this.getUserData();
+
+
+  // this.MyData = chatService;
+  // console.log(this.MyData);
+
+
+
+
   this.getOnline = function () {
     var self = this;
 
     chatService.getChat().$promise.then(
       function(data) {
         self.online = data;
-
+        console.log(self.online);
 
       },
       function(error) {
@@ -1756,25 +1833,86 @@ function chatController ($document, $location, chatService, userService ) {
       }
     );
   };
-  this.getOnline();
-};
 
-chatController.$inject = ['$document', '$location', 'chatService', 'userService'];
-},{}],7:[function(require,module,exports){
-module.exports = chatService;
 
-function chatService ($resource) {
-  var chatResource = $resource('/api/chat/online');
+   // var Cookie = $cookies.getAll();
+   // console.log('Cookie');
+   // console.log(Cookie.PHPSESSID);
 
-  this.getChat = function () {
-    return chatResource.get({  });
+    // var c = angular.element(document.cookie)
+    // console.log(String(c));
+
+
+  this.getlogChat = function (id) {
+    var self = this;
+    chatService.logChat(id).$promise.then(
+      function(data) {
+        self.session = data;
+        console.log(self.session);
+        self.getOnline();
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
   };
 
 
-  return this;
 };
 
-chatService.$inject = ['$resource'];
+chatController.$inject = ['$document', '$location', '$cookies', 'chatService', 'userService', 'socketFactory'];
+},{}],7:[function(require,module,exports){
+module.exports = chatService;
+
+function chatService (socketFactory) {
+  // var chatResource = $resource('/chat/online');
+
+  // this.getChat = function () {
+  //   return chatResource.get({  });
+  // };
+
+  // var logChatResource = $resource('/chat/user/:user_id/login', {user_id: '@id'});
+
+  // this.logChat = function(id) {
+  //   return logChatResource.get({ user_id: id });
+  // }
+  //return this;
+
+   // var dataStream = $websocket('ws://irinadating.loc/socket.io/');
+   // // console.log($websocket('ws://echo.websocket.org'));
+   //    var collection = [];
+
+   //    dataStream.onMessage(function(message) {
+   //      collection.push(JSON.parse(message.data));
+   //    });
+
+   //    var methods = {
+   //      collection: collection,
+   //      get: function() {
+   //        dataStream.send(JSON.stringify({ action: 'get' }));
+   //      }
+   //    };
+
+   //    return methods;
+
+
+  // var partners = {};
+  // var myIoSocket = io.connect('http://irinadating.loc/');
+
+  // mySocket = socketFactory({
+  //   ioSocket: myIoSocket
+  // });
+  // mySocket.on('addPartner', function (data) {
+  //  partners[data.id] = data;
+  //  console.log(data);
+  // });
+  // console.log('hello');
+  // mySocket.emit('getCurChatPartners', {});
+
+  return  socketFactory({ioSocket: io.connect('http://irinadating.loc/')});
+};
+
+chatService.$inject = ['socketFactory'];
 },{}],8:[function(require,module,exports){
 module.exports = formController;
 
@@ -1785,9 +1923,9 @@ function formController (formService, $scope) {
   $scope.cropper.croppedImage = null;
   $scope.bounds = {};
   $scope.bounds.left = 10;
-  $scope.bounds.right = 400;
-  $scope.bounds.top = 200;
-  $scope.bounds.bottom = 600;
+  // $scope.bounds.right = 400;
+  // $scope.bounds.top = 200;
+  // $scope.bounds.bottom = 600;
 
 
   this.postPhoto = function ($event)  {
@@ -1808,16 +1946,43 @@ function formController (formService, $scope) {
     // console.log(htmlFiles[0]);
     // console.log(htmlFiles[0].files[0]);
     var isMainPhoto = this.isMainPhoto;
-    var photo = $scope.cropper.croppedImage
-    //var htmlFiles = angular.element(document.forms[0].photo);
+    // var photo = $scope.cropper.croppedImage
+    //var photo = this.image;
+    // var im = $('#subImg').val();
+    var htmlFiles = angular.element(document.forms[0].photo);
     var fd = new FormData();
-    fd.append('photo', photo);//htmlFiles[0].files[0]
-    fd.append('isMainPhoto', isMainPhoto);
-//console.log(htmlFiles[0].files[1]);
-// console.log(fd);
+    console.log('$scope.cropper.sourceImage');
+    console.log($scope.cropper.sourceImage);
 
-    formService.addPhotos(fd);
-    alert("Фотография загружена");
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext('2d');
+    var imageObj = new Image();
+    imageObj.onload = function () {
+      console.log('onload');
+      console.log(imageObj.naturalWidth);
+      console.log(imageObj.naturalHeight);
+    };
+    //imageObj.src = document.getElementById("tempImg").src;
+    imageObj.src = $scope.cropper.sourceImage;
+
+    console.log(htmlFiles[0].files[0]);
+    // console.log(im);
+    // console.log(htmlFiles[0].files[0]);
+    // fd.append('photo', photo);//htmlFiles[0].files[0]
+        fd.append('photo', htmlFiles[0].files[0]);
+
+    if(isMainPhoto) {
+      fd.append('isMainPhoto', true);
+      fd.append('startX', $scope.bounds.left);
+      fd.append('startY', 1);
+    }
+    // console.log(fd);
+  // console.log(fd);
+
+    // formService.addPhotos(fd);
+    // htmlFiles[0].files[0] = undefined;
+    // console.log(photo);
+    // alert("Фотография загружена");
 //     $event.preventDefault();
   };
 
@@ -1830,7 +1995,7 @@ module.exports = formService;
 function formService ($resource) {
 
   var formResource = $resource('/api/photos',
-    {  },
+{ },
     { savePhoto: {
       method: 'POST',
       // params: {
@@ -1859,7 +2024,7 @@ function girlsAllController ($document, $location, $stateParams, userService, gi
 
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
-  }
+  };
 
   this.getUserData = function () {
     var self = this;
@@ -1874,6 +2039,8 @@ function girlsAllController ($document, $location, $stateParams, userService, gi
     );
   };
 
+  this.getUserData();
+
   this.getCountries = function() {
     var self = this;
 
@@ -1884,7 +2051,7 @@ function girlsAllController ($document, $location, $stateParams, userService, gi
         for(var i=0; i<self.arrCountries.length; i++) {
           if(self.arrCountries[i].name==self.counryUrl) {
             self.countryIdURL = self.arrCountries[i].id
-            console.log(self.countryIdURL);
+            // console.log(self.countryIdURL);
             self.paginaGirl();
           }
         };
@@ -2097,7 +2264,7 @@ function girlsService ($resource) {
     { girls_id: '@id' });
 
   this.getGirlsId = function (id) {
-    return girlsResource.get({ girls_id: id, relations: '{"user":{"country":{} } }' });
+    return girlsResource.get({ girls_id: id, relations: '{"user":{"country":{}, "mainphoto": {} } }' });
   };
 
   return this;
@@ -2118,6 +2285,12 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
   this.showSelectCheck = function() {
     // console.log('showSelectCheck');
     this.showTumblerCheck = true;
+    this.deletedSelect = false;
+    //this.unreadSelectCheck();
+    var list = angular.element(document.getElementsByClassName('message-sort-dropdown'));
+    for(var i=1; i<8; i+=2){
+      list[0].childNodes[i].childNodes[1].className = '';
+    };
   }
 
   this.removeClassTab = function(arg) {
@@ -2134,7 +2307,11 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
   };
 
   this.showFilter = function() {
-    this.filterDiv  = this.filterDiv ? false : true;
+    this.toDate = new Date();
+    var dateFrom = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*20);
+    this.fromDate = new Date(dateFrom);
+    console.log(this.toDate);
+    this.filterDiv = this.filterDiv ? false : true;
   };
 
   this.getUserData = function () {
@@ -2142,6 +2319,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     userService.getUser().$promise.then(
       function(data) {
         self.user = data;
+        console.log(self.user.user);
       },
       function(error) {
         console.log(error);
@@ -2201,7 +2379,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       for(var i=0; i<arrPaginaClass.length; i++) {
         arrPaginaClass[i].childNodes[0].className = '';
       }
-      arrPaginaClass[index].childNodes[0].className = 'text_color_black';
+      arrPaginaClass[index].childNodes[0].className = 'text_width';
   };
 
   this.firstNamberPagin = function() {
@@ -2578,8 +2756,8 @@ this.girlsIdGet = function(id) {
       self.messages.letters[index]['deleted'] = true;
     });
     this.showTumblerCheck = false;
-    this.deletedSelect = true;
-
+    if(this.messages.letters)
+      this.deletedSelect = true;
   }
 
   this.readSelectCheck = function() {
@@ -2587,10 +2765,12 @@ this.girlsIdGet = function(id) {
     this.unselectCheck();
     this.addClassSelectCheck(3);
     angular.forEach(this.messages.letters, function(letter, index) {
-      if(self.messages.letters[index].isRead==true)
-      self.messages.letters[index]['deleted'] = true;
+      if(self.messages.letters[index].isRead==true) {
+        self.messages.letters[index]['deleted'] = true;
+        self.deletedSelect = true;
+      }
     });
-    this.deletedSelect = true;
+    // this.deletedSelect = true;
 // console.log("readSelectCheck");
     this.showTumblerCheck = false;
   };
@@ -2600,11 +2780,13 @@ this.girlsIdGet = function(id) {
     this.unselectCheck();
     this.addClassSelectCheck(5);
     angular.forEach(this.messages.letters, function(letter, index) {
-      if(self.messages.letters[index].isRead==false)
-      self.messages.letters[index]['deleted'] = true;
+      if(self.messages.letters[index].isRead==false) {
+        self.messages.letters[index]['deleted'] = true;
+        self.deletedSelect = true;
+      }
     });
     this.showTumblerCheck = false;
-    this.deletedSelect = true;
+    // this.deletedSelect = true;
   };
 
   this.unselectCheck = function() {
@@ -2627,11 +2809,18 @@ this.girlsIdGet = function(id) {
     list[0].childNodes[index].childNodes[1].className = 'text_color_black';
   };
 
-  //var self2 = this;
-  //$('body .girl-message-date').on('click', function() {
-  //  console.log('girls-messega-item-content');
-  //  console.log($scope.showTumblerCheck);
-  //});
+// this.showTumblerCheck = false;
+//   var self2 = this;
+//   $('*:not(#not_check_box)').on('click', function() {
+//       $(this).on('click', function() {
+// console.log($(this));
+       // if(self2.showTumblerCheck) {
+   // console.log('girls-messega-item-content');
+    // self2.showTumblerCheck = false;
+    //console.log(self2.showTumblerCheck)
+  // }
+   // console.log($scope.showTumblerCheck);
+  // });
 
   this.removeSelectBox = function(){
     // console.log(this.showTumblerCheck);
@@ -2697,7 +2886,7 @@ function mailIdController ($document, $stateParams, $location, $anchorScroll, $t
     },600)
   }
 
-// this.getUserData();
+  this.getUserData();
 // this.correspondence = function(partnerid, timeFrom, timeTo) {
 //     var self = this;
 //     self.currentPartnerid = partnerid;
@@ -3079,6 +3268,279 @@ function mailService ($resource) {
 mailService.$inject = ['$resource'];
 
 },{}],19:[function(require,module,exports){
+module.exports = searchController;
+
+function searchController (userService, searchService, girlsAllService, girlsService) {
+
+  this.birthdateFromModel = 18;
+  this.birthdateToModel = 60;
+
+   this.agePerson = function(birthdate) {
+    return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
+  };
+
+  this.getUserData = function () {
+    var self = this;
+
+    userService.getUser().$promise.then(
+      function(data) {
+        self.user = data;
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+
+  this.getUserData();
+
+  this.getCountries = function() {
+    var self = this;
+
+    girlsAllService.getCountries().$promise.then(
+      function(data) {
+        self.countries = data;
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+
+  this.getCountries();
+
+  this.setCountryId = function() {
+    this.arrCountries = this.countries.countries;
+        for(var i=0; i<this.arrCountries.length; i++) {
+          if(this.arrCountries[i].name == this.countryModel) {
+            this.countryId = this.arrCountries[i].id
+            // console.log(this.countryId);
+            // self.paginaGirl();
+          }
+        }
+  }
+
+this.birthdateFromAge = function() {
+  var dateBirthdateFrom = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*this.birthdateFromModel);
+  var resFromDate = new Date(dateBirthdateFrom);
+  var resMonth = resFromDate.getMonth() +1;
+  var arrRes = new String(resFromDate).split(' ');
+  this.birthdateTo = arrRes[3] + '-' + resMonth + '-' + arrRes[2];
+
+  var dateBirthdateTo = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*this.birthdateToModel);
+  var resToDate = new Date(dateBirthdateTo);
+  // var resMonth = resFromDate.getMonth() +1;
+  var arrRes2 = new String(resToDate).split(' ');
+  this.birthdateFrom = arrRes2[3] + '-' + resMonth + '-' + arrRes2[2];
+  // console.log(this.birthdateFromModel, this.birthdateToModel);
+  // console.log(this.birthdateTo, this.birthdateFrom );
+};
+  // this.getUserData();
+  // this.fromDateModel = birthDateArrId;
+  // this.toDateModel = birthDateToArrId;
+  // this.countryModel = country;
+
+  this.searchGirls = function() {
+    this.setCountryId();
+    // console.log(dateBirthdateFrom, dateBirthdateTo);
+    this.birthdateFromAge();
+    var self = this;
+    var options = {
+      birthdateFrom: this.birthdateFrom,
+      birthdateTo: this.birthdateTo,
+      countryId: this.countryId,//this.,
+      city: this.cityModel,
+      firstname: this.firstNameModel,
+      heightFrom: this.heightFromModel,
+      heightTo: this.heightToModel,
+      weightFrom: this.weightFromModel,
+      weightTo: this.weightToModel,
+      hairColor: this.hairColorModel,
+      eyeColor: this.eyeColorModel,
+      englishRating: this.englishRatingModel,
+      maritalStatus: this.maritalStatusModel,
+      profession: this.professionModel,
+      education: this.educationModel,
+      religion: this.religionModel,
+      smoking: this.smokingModel,
+      drinking: this.drinkingModel,
+      zodiacSign: this.zodiacSignModel,
+      childrenNumberFrom: this.childrenNumberFromModel,
+      childrenNumberTo: this.childrenNumberToModel,
+      limit: self.limit,
+      offset: 0
+    };
+
+    searchService.getSearch(options).$promise.then(
+      function(data) {
+        self.girlsAll = data;
+        self.resultGirls = self.girlsAll.girls
+        self.gillsLength = self.girlsAll.totalCount;
+        self.countPage = self.gillsLength / 3;
+        self.totalPage = Math.ceil(self.countPage);
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+
+  this.page = 0;
+  this.limit = 3;
+
+  this.paginaGirl = function() {
+    if (this.totalPage){
+      if(this.totalPage > this.page) {
+        this.searchGirls();
+        this.page += 1;
+        this.limit+= 3;
+      }
+    } else {
+      this.searchGirls();
+      this.page += 1;
+      this.limit += 3;
+    }
+  };
+
+  this.searchGirlId = function(id) {
+    //console.log(id);
+    var self = this;
+    girlsService.getGirlsId(id).$promise.then(
+      function(data) {
+        self.girlsAll = data;
+        console.log(self.girlsAll.girl);
+        if(self.girlsAll.girl) {
+          self.res = self.girlsAll.girl
+          self.resultGirls = [];
+          self.resultGirls[0] = self.res;
+        } else self.resultGirls = [];
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+
+  this.allNameGirl = function() {
+    this.birthdateFromAge();
+    var self = this;
+    var options = {
+      birthdateFrom: this.birthdateFrom,
+      birthdateTo: this.birthdateTo,
+      countryId: undefined,
+      direction: undefined,
+      limit: undefined,
+      offset: 0
+    };
+    girlsAllService.getGirlsAll(options).$promise.then(
+      function(data) {
+        self.arrNameGilrs = data;
+        console.log('self.arrNameGilrs');
+        console.log(self.arrNameGilrs.girls[0]);
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+
+  this.allNameGirl();
+
+  this.makeHeights =  function() {
+    var arrListHieght = [];
+    var count = 149
+    for(var i=0; i<12; i++) {
+      count +=3;
+      arrListHieght[i] = count;
+    }
+    this.listHieght = arrListHieght;
+  };
+
+  this.makeHeights();
+
+  this.makeAge = function() {
+    var arrlistAge = [];
+    var count = 17;
+    for(var i=0; i<43; i++){
+      count ++;
+      arrlistAge[i] = count;
+    }
+    this.listAge = arrlistAge;
+  };
+
+  this.makeAge();
+
+  this.clearDataSearch = function() {
+    this.birthdateFromModel = 18;
+    this.birthdateToModel = 60;
+    this.countryId = undefined;
+    this.cityModel = undefined;
+    this.firstNameModel = undefined;
+    this.heightFromModel = undefined,
+    this.heightToModel = undefined;
+    this.weightFromModel = undefined;
+    this.weightToModel = undefined;
+    this.hairColorModel = undefined;
+    this.eyeColorModel = undefined;
+    this.englishRatingModel = undefined;
+    this.maritalStatusModel = undefined;
+    this.professionModel = undefined;
+    this.educationModel = undefined;
+    this.religionModel = undefined;
+    this.smokingModel = undefined;
+    this.drinkingModel = undefined;
+    this.zodiacSignModel = undefined;
+    this.childrenNumberFromModel = undefined;
+    this.childrenNumberToModel = undefined;
+    this.limit = 3;
+    this.resultGirls = [];
+  }
+};
+
+  searchController.$inject = ['userService', 'searchService', 'girlsAllService','girlsService'];
+
+},{}],20:[function(require,module,exports){
+module.exports = searchService;
+
+function searchService ($resource) {
+  var searchResource = $resource('/api/girls');
+
+  this.getSearch = function (options) {
+    return searchResource.get({
+      birthdateFrom: options.birthdateFrom,
+      birthdateTo: options.birthdateTo,
+      countryId: options.countryId,
+      city: options.city,
+      firstname: options.firstname,
+      heightFrom: options.heightFrom,
+      heightTo: options.heightTo,
+      weightFrom: options.weightFrom,
+      weightTo: options.weightTo,
+      hairColor: options.hairColor,
+      eyeColor: options.eyeColor,
+      englishRating: options.englishRating,
+      maritalStatus: options.maritalStatus,
+      profession: options.profession,
+      education: options.education,
+      religion: options.religion,
+      smoking: options.smoking,
+      drinking: options.drinking,
+      zodiacSign: options.zodiacSign,
+      childrenNumberFrom: options.childrenNumberFrom,
+      childrenNumberTo: options.childrenNumberTo,
+      limit: options.limit,
+      offset: options.offset,
+      // direction: options.direction,
+      relations: '{"user":{"country":{}, "mainphoto": {} } }'
+    });
+  };
+
+
+  return this;
+};
+
+searchService.$inject = ['$resource'];
+},{}],21:[function(require,module,exports){
 module.exports = userService;
 
 function userService ($resource) {
@@ -3093,7 +3555,7 @@ function userService ($resource) {
 };
 
 userService.$inject = ['$resource'];
-},{}],20:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 module.exports = usersController;
 
 function usersController ($document, $location, userService ) {
@@ -3119,14 +3581,16 @@ function usersController ($document, $location, userService ) {
     );
   };
   this.getUserData();
+
+  this.hello = true;
 }
 
 usersController.$inject = ['$document', '$location', 'userService'];
-},{}],21:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 require('./src/angular-base64-upload.js');
 module.exports = 'naif.base64';
 
-},{"./src/angular-base64-upload.js":22}],22:[function(require,module,exports){
+},{"./src/angular-base64-upload.js":24}],24:[function(require,module,exports){
 (function(window, undefined) {
 
   'use strict';
@@ -3412,7 +3876,335 @@ module.exports = 'naif.base64';
 
 })(window);
 
-},{}],23:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
+/**
+ * @license AngularJS v1.5.3
+ * (c) 2010-2016 Google, Inc. http://angularjs.org
+ * License: MIT
+ */
+(function(window, angular, undefined) {'use strict';
+
+/**
+ * @ngdoc module
+ * @name ngCookies
+ * @description
+ *
+ * # ngCookies
+ *
+ * The `ngCookies` module provides a convenient wrapper for reading and writing browser cookies.
+ *
+ *
+ * <div doc-module-components="ngCookies"></div>
+ *
+ * See {@link ngCookies.$cookies `$cookies`} for usage.
+ */
+
+
+angular.module('ngCookies', ['ng']).
+  /**
+   * @ngdoc provider
+   * @name $cookiesProvider
+   * @description
+   * Use `$cookiesProvider` to change the default behavior of the {@link ngCookies.$cookies $cookies} service.
+   * */
+   provider('$cookies', [function $CookiesProvider() {
+    /**
+     * @ngdoc property
+     * @name $cookiesProvider#defaults
+     * @description
+     *
+     * Object containing default options to pass when setting cookies.
+     *
+     * The object may have following properties:
+     *
+     * - **path** - `{string}` - The cookie will be available only for this path and its
+     *   sub-paths. By default, this is the URL that appears in your `<base>` tag.
+     * - **domain** - `{string}` - The cookie will be available only for this domain and
+     *   its sub-domains. For security reasons the user agent will not accept the cookie
+     *   if the current domain is not a sub-domain of this domain or equal to it.
+     * - **expires** - `{string|Date}` - String of the form "Wdy, DD Mon YYYY HH:MM:SS GMT"
+     *   or a Date object indicating the exact date/time this cookie will expire.
+     * - **secure** - `{boolean}` - If `true`, then the cookie will only be available through a
+     *   secured connection.
+     *
+     * Note: By default, the address that appears in your `<base>` tag will be used as the path.
+     * This is important so that cookies will be visible for all routes when html5mode is enabled.
+     *
+     **/
+    var defaults = this.defaults = {};
+
+    function calcOptions(options) {
+      return options ? angular.extend({}, defaults, options) : defaults;
+    }
+
+    /**
+     * @ngdoc service
+     * @name $cookies
+     *
+     * @description
+     * Provides read/write access to browser's cookies.
+     *
+     * <div class="alert alert-info">
+     * Up until Angular 1.3, `$cookies` exposed properties that represented the
+     * current browser cookie values. In version 1.4, this behavior has changed, and
+     * `$cookies` now provides a standard api of getters, setters etc.
+     * </div>
+     *
+     * Requires the {@link ngCookies `ngCookies`} module to be installed.
+     *
+     * @example
+     *
+     * ```js
+     * angular.module('cookiesExample', ['ngCookies'])
+     *   .controller('ExampleController', ['$cookies', function($cookies) {
+     *     // Retrieving a cookie
+     *     var favoriteCookie = $cookies.get('myFavorite');
+     *     // Setting a cookie
+     *     $cookies.put('myFavorite', 'oatmeal');
+     *   }]);
+     * ```
+     */
+    this.$get = ['$$cookieReader', '$$cookieWriter', function($$cookieReader, $$cookieWriter) {
+      return {
+        /**
+         * @ngdoc method
+         * @name $cookies#get
+         *
+         * @description
+         * Returns the value of given cookie key
+         *
+         * @param {string} key Id to use for lookup.
+         * @returns {string} Raw cookie value.
+         */
+        get: function(key) {
+          return $$cookieReader()[key];
+        },
+
+        /**
+         * @ngdoc method
+         * @name $cookies#getObject
+         *
+         * @description
+         * Returns the deserialized value of given cookie key
+         *
+         * @param {string} key Id to use for lookup.
+         * @returns {Object} Deserialized cookie value.
+         */
+        getObject: function(key) {
+          var value = this.get(key);
+          return value ? angular.fromJson(value) : value;
+        },
+
+        /**
+         * @ngdoc method
+         * @name $cookies#getAll
+         *
+         * @description
+         * Returns a key value object with all the cookies
+         *
+         * @returns {Object} All cookies
+         */
+        getAll: function() {
+          return $$cookieReader();
+        },
+
+        /**
+         * @ngdoc method
+         * @name $cookies#put
+         *
+         * @description
+         * Sets a value for given cookie key
+         *
+         * @param {string} key Id for the `value`.
+         * @param {string} value Raw value to be stored.
+         * @param {Object=} options Options object.
+         *    See {@link ngCookies.$cookiesProvider#defaults $cookiesProvider.defaults}
+         */
+        put: function(key, value, options) {
+          $$cookieWriter(key, value, calcOptions(options));
+        },
+
+        /**
+         * @ngdoc method
+         * @name $cookies#putObject
+         *
+         * @description
+         * Serializes and sets a value for given cookie key
+         *
+         * @param {string} key Id for the `value`.
+         * @param {Object} value Value to be stored.
+         * @param {Object=} options Options object.
+         *    See {@link ngCookies.$cookiesProvider#defaults $cookiesProvider.defaults}
+         */
+        putObject: function(key, value, options) {
+          this.put(key, angular.toJson(value), options);
+        },
+
+        /**
+         * @ngdoc method
+         * @name $cookies#remove
+         *
+         * @description
+         * Remove given cookie
+         *
+         * @param {string} key Id of the key-value pair to delete.
+         * @param {Object=} options Options object.
+         *    See {@link ngCookies.$cookiesProvider#defaults $cookiesProvider.defaults}
+         */
+        remove: function(key, options) {
+          $$cookieWriter(key, undefined, calcOptions(options));
+        }
+      };
+    }];
+  }]);
+
+angular.module('ngCookies').
+/**
+ * @ngdoc service
+ * @name $cookieStore
+ * @deprecated
+ * @requires $cookies
+ *
+ * @description
+ * Provides a key-value (string-object) storage, that is backed by session cookies.
+ * Objects put or retrieved from this storage are automatically serialized or
+ * deserialized by angular's toJson/fromJson.
+ *
+ * Requires the {@link ngCookies `ngCookies`} module to be installed.
+ *
+ * <div class="alert alert-danger">
+ * **Note:** The $cookieStore service is **deprecated**.
+ * Please use the {@link ngCookies.$cookies `$cookies`} service instead.
+ * </div>
+ *
+ * @example
+ *
+ * ```js
+ * angular.module('cookieStoreExample', ['ngCookies'])
+ *   .controller('ExampleController', ['$cookieStore', function($cookieStore) {
+ *     // Put cookie
+ *     $cookieStore.put('myFavorite','oatmeal');
+ *     // Get cookie
+ *     var favoriteCookie = $cookieStore.get('myFavorite');
+ *     // Removing a cookie
+ *     $cookieStore.remove('myFavorite');
+ *   }]);
+ * ```
+ */
+ factory('$cookieStore', ['$cookies', function($cookies) {
+
+    return {
+      /**
+       * @ngdoc method
+       * @name $cookieStore#get
+       *
+       * @description
+       * Returns the value of given cookie key
+       *
+       * @param {string} key Id to use for lookup.
+       * @returns {Object} Deserialized cookie value, undefined if the cookie does not exist.
+       */
+      get: function(key) {
+        return $cookies.getObject(key);
+      },
+
+      /**
+       * @ngdoc method
+       * @name $cookieStore#put
+       *
+       * @description
+       * Sets a value for given cookie key
+       *
+       * @param {string} key Id for the `value`.
+       * @param {Object} value Value to be stored.
+       */
+      put: function(key, value) {
+        $cookies.putObject(key, value);
+      },
+
+      /**
+       * @ngdoc method
+       * @name $cookieStore#remove
+       *
+       * @description
+       * Remove given cookie
+       *
+       * @param {string} key Id of the key-value pair to delete.
+       */
+      remove: function(key) {
+        $cookies.remove(key);
+      }
+    };
+
+  }]);
+
+/**
+ * @name $$cookieWriter
+ * @requires $document
+ *
+ * @description
+ * This is a private service for writing cookies
+ *
+ * @param {string} name Cookie name
+ * @param {string=} value Cookie value (if undefined, cookie will be deleted)
+ * @param {Object=} options Object with options that need to be stored for the cookie.
+ */
+function $$CookieWriter($document, $log, $browser) {
+  var cookiePath = $browser.baseHref();
+  var rawDocument = $document[0];
+
+  function buildCookieString(name, value, options) {
+    var path, expires;
+    options = options || {};
+    expires = options.expires;
+    path = angular.isDefined(options.path) ? options.path : cookiePath;
+    if (angular.isUndefined(value)) {
+      expires = 'Thu, 01 Jan 1970 00:00:00 GMT';
+      value = '';
+    }
+    if (angular.isString(expires)) {
+      expires = new Date(expires);
+    }
+
+    var str = encodeURIComponent(name) + '=' + encodeURIComponent(value);
+    str += path ? ';path=' + path : '';
+    str += options.domain ? ';domain=' + options.domain : '';
+    str += expires ? ';expires=' + expires.toUTCString() : '';
+    str += options.secure ? ';secure' : '';
+
+    // per http://www.ietf.org/rfc/rfc2109.txt browser must allow at minimum:
+    // - 300 cookies
+    // - 20 cookies per unique domain
+    // - 4096 bytes per cookie
+    var cookieLength = str.length + 1;
+    if (cookieLength > 4096) {
+      $log.warn("Cookie '" + name +
+        "' possibly not set or overflowed because it was too large (" +
+        cookieLength + " > 4096 bytes)!");
+    }
+
+    return str;
+  }
+
+  return function(name, value, options) {
+    rawDocument.cookie = buildCookieString(name, value, options);
+  };
+}
+
+$$CookieWriter.$inject = ['$document', '$log', '$browser'];
+
+angular.module('ngCookies').provider('$$cookieWriter', function $$CookieWriterProvider() {
+  this.$get = $$CookieWriter;
+});
+
+
+})(window, window.angular);
+
+},{}],26:[function(require,module,exports){
+require('./angular-cookies');
+module.exports = 'ngCookies';
+
+},{"./angular-cookies":25}],27:[function(require,module,exports){
 angular.module('angular-img-cropper', []).directive("imageCropper", ['$document', '$window', 'imageCropperDataShare', function ($document, $window, imageCropperDataShare) {
     return {
         scope: {
@@ -4814,7 +5606,7 @@ angular.module('angular-img-cropper').factory("imageCropperDataShare", function 
     return share;
 });
 
-},{}],24:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.0
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -5584,11 +6376,116 @@ angular.module('ngResource', ['ng']).
 
 })(window, window.angular);
 
-},{}],25:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 require('./angular-resource');
 module.exports = 'ngResource';
 
-},{"./angular-resource":24}],26:[function(require,module,exports){
+},{"./angular-resource":28}],30:[function(require,module,exports){
+/*
+ * @license
+ * angular-socket-io v0.7.0
+ * (c) 2014 Brian Ford http://briantford.com
+ * License: MIT
+ */
+
+angular.module('btford.socket-io', []).
+  provider('socketFactory', function () {
+
+    'use strict';
+
+    // when forwarding events, prefix the event name
+    var defaultPrefix = 'socket:',
+      ioSocket;
+
+    // expose to provider
+    this.$get = ['$rootScope', '$timeout', function ($rootScope, $timeout) {
+
+      var asyncAngularify = function (socket, callback) {
+        return callback ? function () {
+          var args = arguments;
+          $timeout(function () {
+            callback.apply(socket, args);
+          }, 0);
+        } : angular.noop;
+      };
+
+      return function socketFactory (options) {
+        options = options || {};
+        var socket = options.ioSocket || io.connect();
+        var prefix = options.prefix === undefined ? defaultPrefix : options.prefix ;
+        var defaultScope = options.scope || $rootScope;
+
+        var addListener = function (eventName, callback) {
+          socket.on(eventName, callback.__ng = asyncAngularify(socket, callback));
+        };
+
+        var addOnceListener = function (eventName, callback) {
+          socket.once(eventName, callback.__ng = asyncAngularify(socket, callback));
+        };
+
+        var wrappedSocket = {
+          on: addListener,
+          addListener: addListener,
+          once: addOnceListener,
+
+          emit: function (eventName, data, callback) {
+            var lastIndex = arguments.length - 1;
+            var callback = arguments[lastIndex];
+            if(typeof callback == 'function') {
+              callback = asyncAngularify(socket, callback);
+              arguments[lastIndex] = callback;
+            }
+            return socket.emit.apply(socket, arguments);
+          },
+
+          removeListener: function (ev, fn) {
+            if (fn && fn.__ng) {
+              arguments[1] = fn.__ng;
+            }
+            return socket.removeListener.apply(socket, arguments);
+          },
+
+          removeAllListeners: function() {
+            return socket.removeAllListeners.apply(socket, arguments);
+          },
+
+          disconnect: function (close) {
+            return socket.disconnect(close);
+          },
+
+          connect: function() {
+            return socket.connect();
+          },
+
+          // when socket.on('someEvent', fn (data) { ... }),
+          // call scope.$broadcast('someEvent', data)
+          forward: function (events, scope) {
+            if (events instanceof Array === false) {
+              events = [events];
+            }
+            if (!scope) {
+              scope = defaultScope;
+            }
+            events.forEach(function (eventName) {
+              var prefixedEvent = prefix + eventName;
+              var forwardBroadcast = asyncAngularify(socket, function () {
+                Array.prototype.unshift.call(arguments, prefixedEvent);
+                scope.$broadcast.apply(scope, arguments);
+              });
+              scope.$on('$destroy', function () {
+                socket.removeListener(eventName, forwardBroadcast);
+              });
+              socket.on(eventName, forwardBroadcast);
+            });
+          }
+        };
+
+        return wrappedSocket;
+      };
+    }];
+  });
+
+},{}],31:[function(require,module,exports){
 /*
  * angular-ui-bootstrap
  * http://angular-ui.github.io/bootstrap/
@@ -12985,12 +13882,12 @@ angular.module('ui.bootstrap.datepicker').run(function() {!angular.$$csp().noInl
 angular.module('ui.bootstrap.tooltip').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTooltipCss && angular.element(document).find('head').prepend('<style type="text/css">[uib-tooltip-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-popup].tooltip.right-bottom > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.right-bottom > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.right-bottom > .tooltip-arrow,[uib-popover-popup].popover.top-left > .arrow,[uib-popover-popup].popover.top-right > .arrow,[uib-popover-popup].popover.bottom-left > .arrow,[uib-popover-popup].popover.bottom-right > .arrow,[uib-popover-popup].popover.left-top > .arrow,[uib-popover-popup].popover.left-bottom > .arrow,[uib-popover-popup].popover.right-top > .arrow,[uib-popover-popup].popover.right-bottom > .arrow,[uib-popover-html-popup].popover.top-left > .arrow,[uib-popover-html-popup].popover.top-right > .arrow,[uib-popover-html-popup].popover.bottom-left > .arrow,[uib-popover-html-popup].popover.bottom-right > .arrow,[uib-popover-html-popup].popover.left-top > .arrow,[uib-popover-html-popup].popover.left-bottom > .arrow,[uib-popover-html-popup].popover.right-top > .arrow,[uib-popover-html-popup].popover.right-bottom > .arrow,[uib-popover-template-popup].popover.top-left > .arrow,[uib-popover-template-popup].popover.top-right > .arrow,[uib-popover-template-popup].popover.bottom-left > .arrow,[uib-popover-template-popup].popover.bottom-right > .arrow,[uib-popover-template-popup].popover.left-top > .arrow,[uib-popover-template-popup].popover.left-bottom > .arrow,[uib-popover-template-popup].popover.right-top > .arrow,[uib-popover-template-popup].popover.right-bottom > .arrow{top:auto;bottom:auto;left:auto;right:auto;margin:0;}[uib-popover-popup].popover,[uib-popover-html-popup].popover,[uib-popover-template-popup].popover{display:block !important;}</style>'); angular.$$uibTooltipCss = true; });
 angular.module('ui.bootstrap.timepicker').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTimepickerCss && angular.element(document).find('head').prepend('<style type="text/css">.uib-time input{width:50px;}</style>'); angular.$$uibTimepickerCss = true; });
 angular.module('ui.bootstrap.typeahead').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTypeaheadCss && angular.element(document).find('head').prepend('<style type="text/css">[uib-typeahead-popup].dropdown-menu{display:block;}</style>'); angular.$$uibTypeaheadCss = true; });
-},{}],27:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 require('./dist/ui-bootstrap-tpls');
 
 module.exports = 'ui.bootstrap';
 
-},{"./dist/ui-bootstrap-tpls":26}],28:[function(require,module,exports){
+},{"./dist/ui-bootstrap-tpls":31}],33:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -17361,7 +18258,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],29:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.0
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -47790,11 +48687,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],30:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":29}],31:[function(require,module,exports){
+},{"./angular":34}],36:[function(require,module,exports){
 /**!
  * AngularJS file upload directives and services. Supoorts: file upload/drop/paste, resume, cancel/abort,
  * progress, resize, thumbnail, preview, validation and CORS
@@ -50597,10 +51494,10 @@ ngFileUpload.service('UploadExif', ['UploadResize', '$q', function (UploadResize
 }]);
 
 
-},{}],32:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 require('./dist/ng-file-upload-all');
 module.exports = 'ngFileUpload';
-},{"./dist/ng-file-upload-all":31}],33:[function(require,module,exports){
+},{"./dist/ng-file-upload-all":36}],38:[function(require,module,exports){
 // Generated by CoffeeScript 1.9.0
 (function() {
   angular.module("ocNgRepeat", []).directive('ngRepeatOwlCarousel', function() {

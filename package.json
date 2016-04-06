@@ -25,6 +25,11 @@
     "angular-img-cropper": "",
     "bootstrap-select": "~1.10.0",
     "ng-repeat-owl-carousel": "0.0.2",
-    "angular-ui-bootstrap": "~1.2.5"
+    "angular-ui-bootstrap": "~1.2.5",
+    "angular-cookies": "~1.5.3",
+    "angular-websocket": "~1.0.14",
+    "angular-socket-io": "~0.7.0",
+    "socket.io": "~1.4.5",
+    "angular-socket.io": "~0.1.6"
   }
 }

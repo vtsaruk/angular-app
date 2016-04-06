@@ -19,7 +19,7 @@
 					<nav class="header--nav">
 						<ul class="clearfix">
 							<li>
-								<a href="/#/girls">Ladies</a>
+								<a href="/#/girls/18-30-Ukraine">Ladies</a>
 							</li>
 							<li>
 								<a href="#">Search</a>
@@ -28,7 +28,7 @@
 								<a href="/#/man">Mail</a>
 							</li>
 							<li>
-								<a href="#">Chat</a>
+								<a href="/#/chat">Chat</a>
 							</li>
 							<li>
 								<a href="#">Gifts Delivery</a>
@@ -43,7 +43,7 @@
 					<div class="header--profile">
 						<div class="header--profile-img-likes">
 							<a href="#">
-								<img src="assets/angular-app/public/img/profile.jpg" width="40" height="40" alt=""></a>
+								<img src="{{ctrl.user.user.mainphoto.pathOfQuad}}" width="40" height="40" alt=""></a>
 							<div class="header--heart">
 								<p>
 									<img src="assets/angular-app/public/img/header-heart.png" alt=""></p>
@@ -111,7 +111,7 @@
 								</ul>
 								<div class="girl-message-img">
 
-									<img src="assets/angular-app/public/img/girl-message-1.jpg" alt="">
+		<img src="{{ctrl.messagesId.letter.sender.mainphoto.pathOfQuad}}" alt="">
 									<a href="#" class="girl-message-photo">
 										<p>Attached files</p>
 										<img src="assets/angular-app/public/img/photo.png" alt="" class="mn-t-10"><span>3</span></a>
@@ -186,10 +186,10 @@
                 </p>
 							</div>
               <!-- <div>{{ctrl.user}}</div> -->
-<!-- <div>{{ctrl.letterCor.letters.length}}</div> -->
+<!-- <div>{{ctrl.letterCor.letters[0]}}</div> -->
 							<div class="dialog-container " >
 								<div ng-repeat="letter in ctrl.letterCor.letters" ng-class="{0:'dialog-item dialog-item-out clearfix', 1:'dialog-item dialog-item-in clearfix', 2:'dialog-item dialog-item-in dialog-red-fl clearfix'}[ctrl.addClass(ctrl.user.user.id, letter.senderId, letter.isPaid)]">
-									<img src="assets/angular-app/public/img/girl-message-1.jpg" alt="" class="img-dialog">
+									<img src="{{letter.sender.mainphoto.pathOfQuad}}" alt="" class="img-dialog">
 									<div class="girls-message-item-info open clearfix">
 										<div>
 											<a href="/#/girls/{{letter.sender.girl.id}}"><span>{{letter.sender.firstname}}</span></a>
@@ -226,83 +226,7 @@
 <!-- end page-message -->
 
 	<!-- footer -->
-	<footer>
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-2 col-sm-offset-1 col-md-2 col-md-offset-1 f-key-1">
-					<ul class="footer-list">
-						<li>
-							<a href="#">About Us</a>
-						</li>
-						<li>
-							<a href="#">F.A.Q.</a>
-						</li>
-						<li>
-							<a href="#">Anti-Scam Policy</a>
-						</li>
-						<li>
-							<a href="#">Privacy Policy</a>
-						</li>
-					</ul>
-				</div>
-				<div class="col-sm-2 col-md-2 f-key-2">
-					<ul class="footer-list">
-						<li>
-							<a href="#" class="transp">Privacy Policy</a>
-						</li>
-						<li>
-							<a href="#">Terms & Conditions</a>
-						</li>
-						<li>
-							<a href="#">Blog</a>
-						</li>
-						<li>
-							<a href="#">Contact Us</a>
-						</li>
-					</ul>
-				</div>
-				<div class="col-sm-2 col-md-3 col-lg-2 f-key-3">
-					<a href="#">
-						<img src="assets/angular-app/public/img/footer-logo.png" alt=""></a>
-				</div>
-				<div class="col-sm-3 col-md-3 f-key-4">
-					<div class="footer-right-side">
-						<button>Live Support 24/7</button>
-						<div class="clear"></div>
-						<p>Follow Irinadating on</p>
-						<ul>
-							<li>
-								<a href="#" class="fb">
-									<img src="assets/angular-app/public/img/fb.png" alt=""></a>
-							</li>
-							<li>
-								<a href="#" class="tt">
-									<img src="assets/angular-app/public/img/tb.png" alt=""></a>
-							</li>
-							<li>
-								<a href="#" class="g-plus">
-									<img src="assets/angular-app/public/img/g-plus.png" alt=""></a>
-							</li>
-							<li>
-								<a href="#" class="yb">
-									<img src="assets/angular-app/public/img/yb.png" alt=""></a>
-							</li>
-							<li>
-								<a href="#" class="pp">
-									<img src="assets/angular-app/public/img/p.png" alt="">
-								</a>
-							</li>
-							<li>
-								<a href="#" class="insta">
-									<img src="assets/angular-app/public/img/insta.png" alt="">
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
+
 
 	<!-- end footer -->
 
@@ -310,19 +234,7 @@
 	<div class="copyright">
 		<p>IrinaDating &copy; 2009-2015</p>
 	</div>
-	<!-- end copyright -->
 
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-	<script src="js/bootstrap-select.min.js"></script>
-	<script>
-		  //bootstrap select picker
-      $('.selectpicker').selectpicker({
-        style: 'btn-info',
-        size: 4
-      });
 
-	</script>
-	<script src="js/main.js"></script>
+
 </div>

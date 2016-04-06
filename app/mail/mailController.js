@@ -11,6 +11,12 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
   this.showSelectCheck = function() {
     // console.log('showSelectCheck');
     this.showTumblerCheck = true;
+    this.deletedSelect = false;
+    //this.unreadSelectCheck();
+    var list = angular.element(document.getElementsByClassName('message-sort-dropdown'));
+    for(var i=1; i<8; i+=2){
+      list[0].childNodes[i].childNodes[1].className = '';
+    };
   }
 
   this.removeClassTab = function(arg) {
@@ -27,7 +33,11 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
   };
 
   this.showFilter = function() {
-    this.filterDiv  = this.filterDiv ? false : true;
+    this.toDate = new Date();
+    var dateFrom = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*20);
+    this.fromDate = new Date(dateFrom);
+    console.log(this.toDate);
+    this.filterDiv = this.filterDiv ? false : true;
   };
 
   this.getUserData = function () {
@@ -35,6 +45,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     userService.getUser().$promise.then(
       function(data) {
         self.user = data;
+        console.log(self.user.user);
       },
       function(error) {
         console.log(error);
@@ -94,7 +105,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       for(var i=0; i<arrPaginaClass.length; i++) {
         arrPaginaClass[i].childNodes[0].className = '';
       }
-      arrPaginaClass[index].childNodes[0].className = 'text_color_black';
+      arrPaginaClass[index].childNodes[0].className = 'text_width';
   };
 
   this.firstNamberPagin = function() {
@@ -471,8 +482,8 @@ this.girlsIdGet = function(id) {
       self.messages.letters[index]['deleted'] = true;
     });
     this.showTumblerCheck = false;
-    this.deletedSelect = true;
-
+    if(this.messages.letters)
+      this.deletedSelect = true;
   }
 
   this.readSelectCheck = function() {
@@ -480,10 +491,12 @@ this.girlsIdGet = function(id) {
     this.unselectCheck();
     this.addClassSelectCheck(3);
     angular.forEach(this.messages.letters, function(letter, index) {
-      if(self.messages.letters[index].isRead==true)
-      self.messages.letters[index]['deleted'] = true;
+      if(self.messages.letters[index].isRead==true) {
+        self.messages.letters[index]['deleted'] = true;
+        self.deletedSelect = true;
+      }
     });
-    this.deletedSelect = true;
+    // this.deletedSelect = true;
 // console.log("readSelectCheck");
     this.showTumblerCheck = false;
   };
@@ -493,11 +506,13 @@ this.girlsIdGet = function(id) {
     this.unselectCheck();
     this.addClassSelectCheck(5);
     angular.forEach(this.messages.letters, function(letter, index) {
-      if(self.messages.letters[index].isRead==false)
-      self.messages.letters[index]['deleted'] = true;
+      if(self.messages.letters[index].isRead==false) {
+        self.messages.letters[index]['deleted'] = true;
+        self.deletedSelect = true;
+      }
     });
     this.showTumblerCheck = false;
-    this.deletedSelect = true;
+    // this.deletedSelect = true;
   };
 
   this.unselectCheck = function() {
@@ -520,11 +535,18 @@ this.girlsIdGet = function(id) {
     list[0].childNodes[index].childNodes[1].className = 'text_color_black';
   };
 
-  //var self2 = this;
-  //$('body .girl-message-date').on('click', function() {
-  //  console.log('girls-messega-item-content');
-  //  console.log($scope.showTumblerCheck);
-  //});
+// this.showTumblerCheck = false;
+//   var self2 = this;
+//   $('*:not(#not_check_box)').on('click', function() {
+//       $(this).on('click', function() {
+// console.log($(this));
+       // if(self2.showTumblerCheck) {
+   // console.log('girls-messega-item-content');
+    // self2.showTumblerCheck = false;
+    //console.log(self2.showTumblerCheck)
+  // }
+   // console.log($scope.showTumblerCheck);
+  // });
 
   this.removeSelectBox = function(){
     // console.log(this.showTumblerCheck);

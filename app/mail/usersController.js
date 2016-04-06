@@ -23,6 +23,8 @@ function usersController ($document, $location, userService ) {
     );
   };
   this.getUserData();
+
+  this.hello = true;
 }
 
 usersController.$inject = ['$document', '$location', 'userService'];
