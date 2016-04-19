@@ -1,0 +1,4 @@
+sendMsg  - отправить сообщение
+sendRequest - отправить запрос на чат
+cancelRequest - отменить запрос на чат (decline)
+

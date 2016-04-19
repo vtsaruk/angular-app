@@ -1,79 +1,7 @@
-	<!-- header -->
-	<header>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<!-- small-menu -->
-					<a href="#" class="small-menu">
-						<span></span>
-						<span></span>
-						<span></span>
-					</a>
-					<!-- end small-menu -->
-					<!-- logo -->
-					<a href="#" class="header--logo">
-						<img src="assets/angular-app/public/img/logo.png"  alt=""></a>
-					<!-- end logo -->
-					<!-- navigation -->
-					<nav class="header--nav">
-						<ul class="clearfix">
-							<li>
-								<a href="/#/girls/18-30-Ukraine">Ladies</a>
-							</li>
-							<li>
-								<a href="#">Search</a>
-							</li>
-							<li>
-								<a href="/#/man">Mail</a>
-							</li>
-							<li>
-								<a href="/#/chat">Chat</a>
-							</li>
-							<li>
-								<a href="#">Gifts Delivery</a>
-							</li>
-							<li>
-								<a href="#">Offers</a>
-							</li>
-						</ul>
-					</nav>
-					<!-- end navigation -->
-					<!-- header-profile info -->
-					<div class="header--profile">
-
-						<div class="header--profile-img-likes">
-
-							<a href="#">
-								<img src="{{ctrl.user.user.mainphoto.pathOfQuad}}" width="40" height="40" alt=""></a>
-							<div class="header--heart">
-								<p>
-									<img src="assets/angular-app/public/img/header-heart.png" alt=""></p>
-								<p>2000</p>
-							</div>
-
-						</div>
-						<div class="header--profile-info">
-							<p>
-								Welcome,
-								<span>{{ctrl.user.user.firstname}} {{ctrl.user.user.lastname}}</span>
-							</p>
-							<a href="#">My Profile</a>
-							&nbsp;  |&nbsp;&nbsp;
-							<a href="/index/logout">
-								<span>Log out</span>
-							</a>
-						</div>
-					</div>
-					<!-- end header-profile info -->
-				</div>
-			</div>
-		</div>
-	</header>
-	<!-- end header -->
-	<!-- main -->
+		<!-- main -->
 	<main>
-  <!-- <div>{{ctrl.session}}</div> -->
-  <div>{{ctrl.partners}}</div>
+  <!-- <div>{{ctrl.user.user.id}}</div> -->
+  <!-- <div>{{ctrl.partners}}</div> -->
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
@@ -99,40 +27,112 @@
 							<div class="main-members-list">
 								<ul class="main-members-nav">
 									<li class="active">
-										<a href="#">Online</a>
+										<a href="" ng-click="ctrl.changeDirectory1(1)">Online</a>
 									</li>
 									<li>
-										<a href="#">Requests</a>
+										<a href="" ng-click="ctrl.changeDirectory2(3)">Requests</a>
 									</li>
 									<li>
-										<a href="#">Recent</a>
+										<a href="" ng-click="ctrl.changeDirectory3(5)">Recent</a>
 									</li>
 								</ul>
 								<div class="main-members-container">
 									<div class="main-members-wrap active">
-										<!-- members-item -->
-										<div class="main-members-item clearfix" ng-repeat="partner in ctrl.partners">
+
+										<!-- members-item Online-->
+                  <div class="box_directory" ng-show="ctrl.onlineModel" ng-model="ctrl.onlineModel">
+										<div class="main-members-item clearfix" ng-repeat="partner in ctrl.partners" ng-model="ctrl.requstInOnLine[$index]" ng-show="partner.isOnline" ng-click="ctrl.correspondence(partner); ctrl.classActiv[$index]='active'">
 											<div class="main-members-item-soc">
-												<a href="#">
+												<a href="">
 													<img src="assets/angular-app/public/img/grey-heart.png" alt=""></a>
-												<a href="#">
+												<a href="">
 													<img src="assets/angular-app/public/img/letter.png" alt=""></a>
 											</div>
-											<a href="#" class="main-members-item-ava">
-												<img src="http://irinadating.loc/upload/photos/{{partner.photoAvatar}}" alt=""></a>
+											<a href="" class="main-members-item-ava">
+												<img src="http://irinadating.loc/upload/photos/{{partner.photoAvatar}}" alt="">
+                      </a>
 											<div class="main-members-info">
-												<span ng-show="partner.isOnline" class="online"></span>
-                        <span ng-hide="partner.isOnline" class="offline"></span>
+												<span class="online"></span>
+                        <!-- <span ng-hide="partner.isOnline" class="offline"></span> -->
 												<a href="#">{{partner.firstname}}, {{partner.age}}
 													<span>ID {{partner.id}}</span>
 												</a>
 											</div>
-
-											<div class="main-members-chat-status status-1">Chatting now</div>
+                      <div ng-show="ctrl.isStartChat(partner)" class="main-members-chat-status status-4" ng-click="ctrl.sendRequest(partner.id);ctrl.requstInOnLine[$index]=true">Start chat</div>
+                      <div ng-show="ctrl.isStartChat(partner)" class="main-members-chat-status status-5">Start Video<br/>Chat</div>
+                      <div ng-show="ctrl.isWaitingRequest(partner, ctrl.user.user.additionalData.groupId)" class="main-members-chat-status status-3">Waiting Request<br/>Confirmation<br/></div>
+											<div ng-show="ctrl.chattingNow(partner)" class="main-members-chat-status status-1">Chatting now</div>
 											<div class="main-members-sms">3</div>
 										</div>
-										<!-- end members-item -->
+                    </div>
+										<!-- end members-item Online-->
 
+                    <!-- members-item Request-->
+                  <div class="box_directory" ng-show="ctrl.requestModel" ng-model="ctrl.requestModel">
+                    <div class="main-members-item clearfix" ng-repeat="partner in ctrl.partners" ng-model="ctrl.requstInOnLine[$index]" ng-show="ctrl.acceptAndDeclineChat(partner, ctrl.user.user.additionalData.groupId)" ng-class="ctrl.classActiv[$index]" ng-click="ctrl.correspondence(partner); ctrl.classActiv[$index]='active'">
+                      <div class="main-members-item-soc">
+                        <a href="">
+                          <img src="assets/angular-app/public/img/grey-heart.png" alt=""></a>
+                        <a href="">
+                          <img src="assets/angular-app/public/img/letter.png" alt=""></a>
+                      </div>
+                      <a href="" class="main-members-item-ava">
+                        <img src="http://irinadating.loc/upload/photos/{{partner.photoAvatar}}" alt="" ng-click="ctrl.classActiv[$index]='active'">
+                      </a>
+                      <div class="main-members-info">
+                        <span ng-show="partner.isOnline" class="online"></span>
+                        <span ng-hide="partner.isOnline" class="offline"></span>
+                        <a href="#">{{partner.firstname}}, {{partner.age}}
+                          <span>ID {{partner.id}}</span>
+                        </a>
+                      </div>
+                      <!-- <div ng-hide="ctrl.requstInOnLine[$index]" class="main-members-chat-status status-4" ng-click="ctrl.sendRequest(partner.id);ctrl.requstInOnLine[$index]=true">Start chat</div>
+                      <div ng-hide="ctrl.requstInOnLine[$index]" class="main-members-chat-status status-5">Start Video<br/>Chat</div>
+                      <div ng-show="ctrl.requstInOnLine[$index]" class="main-members-chat-status status-3">Waiting Request<br/>Confirmation<br/></div> -->
+                  <!--    <div class="main-members-chat-status status-1">Chatting now</div> -->
+                  <div class="main-members-chat-status status-8" ng-click="ctrl.approveRequest(partner.sessionId)">Accept Chat</div>
+                      <div class="main-members-chat-status status-7" ng-click="ctrl.declineRequest(partner.sessionId)">Decline</div>
+                      <div class="main-members-sms">3</div>
+                    </div>
+                  </div>
+                    <!-- end members-item Request-->
+
+                    <!-- members-item Recent-->
+                  <div class="box_directory" ng-show="ctrl.recentModel" ng-model="ctrl.recentModel">
+                    <div class="main-members-item clearfix" ng-repeat="partner in ctrl.partners" ng-model="ctrl.requstInOnLine[$index]" ng-show="partner.sessionId" ng-class="ctrl.classActiv[$index]" ng-click="ctrl.correspondence(partner); ctrl.classActiv[$index]='active'">
+                      <div class="main-members-item-soc">
+                        <a href="">
+                          <img src="assets/angular-app/public/img/grey-heart.png" alt=""></a>
+                        <a href="">
+                          <img src="assets/angular-app/public/img/letter.png" alt=""></a>
+                      </div>
+                      <a href="" class="main-members-item-ava">
+                        <img src="http://irinadating.loc/upload/photos/{{partner.photoAvatar}}" alt="">
+                      </a>
+                      <div class="main-members-info">
+                        <span ng-show="partner.isOnline" class="online"></span>
+                        <span ng-hide="partner.isOnline" class="offline"></span>
+                        <a href="#">{{partner.firstname}}, {{partner.age}}
+                          <span>ID {{partner.id}}</span>
+                        </a>
+                      </div>
+                      <!-- <div ng-hide="ctrl.requstInOnLine[$index]" class="main-members-chat-status status-4" ng-click="ctrl.sendRequest(partner.id);ctrl.requstInOnLine[$index]=true">Start chat</div>
+                      <div ng-hide="ctrl.requstInOnLine[$index]" class="main-members-chat-status status-5">Start Video<br/>Chat</div>
+                      <div ng-show="ctrl.requstInOnLine[$index]" class="main-members-chat-status status-3">Waiting Request<br/>Confirmation<br/></div> -->
+                  <!--    <div class="main-members-chat-status status-1">Chatting now</div> -->
+                  <!-- <div class="main-members-chat-status status-6" ng-show="partner.sessionId">Accept<br/>Video Chat</div>
+                      <div class="main-members-chat-status status-7">Decline</div> -->
+                      <div ng-show="ctrl.isStartChat(partner)" class="main-members-chat-status status-4" ng-click="ctrl.sendRequest(partner.id);ctrl.requstInOnLine[$index]=true">Start chat</div>
+                      <div ng-show="ctrl.isStartChat(partner)" class="main-members-chat-status status-5">Start Video<br/>Chat</div>
+                      <div ng-show="ctrl.isWaitingRequest(partner, ctrl.user.user.additionalData.groupId)" class="main-members-chat-status status-3">Waiting Request<br/>Confirmation<br/></div>
+                      <div ng-show="ctrl.chattingNow(partner)" class="main-members-chat-status status-1">Chatting now</div>
+
+                     <!--  <div class="main-members-chat-status status-8" ng-show="partner.sessionId" ng-click="ctrl.approveRequest(partner.sessionId)">Accept Chat</div>
+                      <div class="main-members-chat-status status-7" ng-show="partner.sessionId" ng-click="ctrl.declineRequest(partner.sessionId)">Decline</div> -->
+                      <div class="main-members-sms">3</div>
+                    </div>
+                    </div>
+                    <!-- end members-item Recent-->
 
 
 									</div>
@@ -146,17 +146,17 @@
 									<div class="video-frame-left">
 										<img src="assets/angular-app/public/img/video-girl-girl.jpg" alt=""></div>
 									<div class="video-frame-right-info">
-										<a href="#">Natasha</a>
-										<span>,</span>
-										<span class="age">27</span>
+										<a href="">{{ctrl.namePartner}}</a>
+										<span ng-show="ctrl.namePartner">,</span>
+										<span class="age">{{ctrl.partnerAge}}</span>
 
-										<span>ID 234345</span>
+										<span>{{ctrl.partnerID}}</span>
 										<div class="video-frame-bottom-info">
 										<p>
-											Natasha typing ...
+											{{ctrl.namePartner}} typing ...
 											<img src="assets/angular-app/public/img/video-girl-typing.png" alt=""></p>
 										<button>Stop Video Chat</button>
-										<button>End Conversations</button>
+										<button ng-click="ctrl.endChatSession(ctrl.sessionID)">End Conversations</button>
 										</div>
 									</div>
 								</div>
@@ -164,8 +164,8 @@
 								<div class="chat-field-container">
 									<a href="#" class="chat-smile">
 										<img src="assets/angular-app/public/img/smile.png" alt=""></a>
-									<button class="btn-send">Send</button>
-									<input class="chat-field"></div>
+									<button class="btn-send" ng-click="ctrl.sendMsg(ctrl.partnerID ,ctrl.addMsgModel)" ng-model="ctrl.partnerID">Send</button>
+									<input class="chat-field" ng-model=ctrl.addMsgModel></div>
 
 								<p>
 									* Each minute of chat is billed - 1 credit; With video - 5 credits
@@ -173,53 +173,19 @@
 							</div>
 							<div class="chat-box-contaner">
 								<div class="chat-box clearfix">
-									<!-- chat-message-in -->
-									<div class="chat-message-in clearfix">
-										<p>Lena</p>
-										<div class="chat-message-box">
-											Thank you for organizing my trip to Odessa in March, 2012. Also my special greetings to our interpreter Natalia who did great job for us.
-										</div>
-										<span class="date">17:31</span>
-									</div>
-									<!-- end chat-message-in -->
-									<!-- chat-message-out -->
-									<div class="chat-message-out clearfix">
-										<div class="chat-message-box">
-											Thank you for organizing my trip to Odessa in March, 2012. Also my special greetings to our interpreter Natalia who did great job for us.
-										</div>
-										<span class="date">17:31</span>
-									</div>
-									<!-- end chat-message-out -->
-									<!-- chat-message-in -->
-									<div class="chat-message-in clearfix">
-										<p>Lena</p>
-										<div class="chat-message-box">Thank you for organizing my trip to Odessa in March, 2012.</div>
-										<span class="date">17:31</span>
-									</div>
-									<!-- end chat-message-in -->
-									<!-- chat-message-out -->
-									<div class="chat-message-out clearfix">
-										<div class="chat-message-box">Thank you for organizing my trip</div>
-										<span class="date">17:31</span>
-									</div>
-									<!-- end chat-message-out -->
-									<!-- day -->
-									<p class="day">Yesterday</p>
-									<!-- chat-message-in -->
-									<div class="chat-message-in clearfix">
-										<p>Lena</p>
-										<div class="chat-message-box">Thank you for organizing my trip to Odessa in March, 2012.</div>
-										<span class="date">17:31</span>
-									</div>
-									<!-- end chat-message-in -->
-									<p class="day">Monday</p>
-									<!-- chat-message-in -->
-									<div class="chat-message-in left-chat clearfix">
-										<p>Lena</p>
-										<div class="chat-message-box">has left the conversation</div>
-										<span class="date">17:31</span>
-									</div>
-									<!-- end chat-message-in -->
+    <!-- <div>{{ctrl.messages}}</div> -->
+                  <div ng-repeat="message in ctrl.messages">
+                    <p ng-show="ctrl.dayShow(message.sentTime)" class="day">{{ctrl.functionDate(message.sentTime)}}</p>
+									  <!-- chat-message -->
+									  <div ng-class="{true:'chat-message-in clearfix', false:'chat-message-out clearfix'}[ctrl.addClassMessages(message.direction)]" >
+										  <p ng-if="message.direction=='inbound'">{{ctrl.namePartner}}</p>
+										  <div class="chat-message-box">{{message.content}}</div>
+										  <span class="date">{{message.sentTime | date:'HH:mm'}}</span>
+									  </div>
+									  <!-- end chat-message -->
+                  </div>
+
+
 
 								</div>
 							</div>
@@ -231,10 +197,4 @@
 		</div>
 	</main>
 	<!-- end main -->
-	<!-- footer -->
 
-	<!-- end footer -->
-	<!-- copyright -->
-	<div class="copyright">
-		<p>IrinaDating &copy; 2009-2015</p>
-	</div>

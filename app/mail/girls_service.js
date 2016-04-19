@@ -8,6 +8,12 @@ function girlsService ($resource) {
     return girlsResource.get({ girls_id: id, relations: '{"user":{"country":{}, "mainphoto": {} } }' });
   };
 
+  var girlPhotoResource = $resource('/api//users/:girls_id/photos', { girls_id: '@id' });
+
+  this.getGirlPhoto = function (id) {
+    return girlPhotoResource.get({ girls_id: id });
+  };
+
   return this;
 };
 

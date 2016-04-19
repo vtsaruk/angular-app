@@ -28,7 +28,7 @@ var searchController = require('./mail/searchController');
 
 var cropDirective = require('./directives/crop');
 var fileDirective = require('./directives/angular-file-model');
-var owlDirective = require('./directives/owl-slider');
+//var owlDirective = require('./directives/owl-slider');
 
 var mailService = require('./mail/mail_service');
 var userService = require('./mail/user_service');
@@ -111,13 +111,53 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
       controllerAs: 'ctrl'
     })
     .state('search', {
-      url: '/search',
+      url: '/search/:id',
       templateUrl: 'assets/angular-app/public/search.html',
       controller: searchController,
       controllerAs: 'ctrl'
+    })
+    .state('blog', {
+      url: '/blog',
+      templateUrl: 'assets/angular-app/public/blog.html',
+      controller: formController,
+      controllerAs: 'ctrl'
+    })
+    .state('faq', {
+      url: '/faq',
+      templateUrl: 'assets/angular-app/public/faq.html',
+      controller: formController,
+      controllerAs: 'ctrl'
+    })
+    .state('contact-us', {
+      url: '/contact-us',
+      templateUrl: 'assets/angular-app/public/contact-us.html',
+      controller: formController,
+      controllerAs: 'ctrl'
+    })
+    .state('privacy-policy', {
+      url: '/privacy-policy',
+      templateUrl: 'assets/angular-app/public/privacy-policy.html',
+      controller: formController,
+      controllerAs: 'ctrl'
+    })
+    .state('success-stories', {
+      url: '/success-stories',
+      templateUrl: 'assets/angular-app/public/success-stories.html',
+      controller: formController,
+      controllerAs: 'ctrl'
+    })
+    .state('terms-conditions', {
+      url: '/terms-conditions',
+      templateUrl: 'assets/angular-app/public/terms-conditions.html',
+      controller: formController,
+      controllerAs: 'ctrl'
+    })
+    .state('testimonials', {
+      url: '/testimonials',
+      templateUrl: 'assets/angular-app/public/testimonials.html',
+      controller: formController,
+      controllerAs: 'ctrl'
     });
-
-
 })
 // .run(function ($rootScope, $location, User) {
 //     //.run(function ($rootScope, $location) {
@@ -160,7 +200,6 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
     transclude: false,
     link: function (scope) {
       scope.initCarousel = function(element) {
-        console.log('initCarousel-11');
 
         // provide any default options you want
         var defaultOptions = {
@@ -183,11 +222,12 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
     restrict: 'A',
     transclude: false,
     link: function(scope, element) {
-      console.log('initCarousel-22');
+
       // wait for the last item in the ng-repeat then call init
       //if(scope.$last) {
         //scope.initCarousel(element.parent());
 
+      // setTimeout(function(){
       var owl4 = $("#owl-demo4");
 
       owl4.owlCarousel({
@@ -206,28 +246,29 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
       $(".prev").click(function(){
         owl4.trigger('owl.prev');
       })
+      // }, 2000);
 
+      setTimeout(function(){
+        var owl5 = $("#owl-demo5");
 
+        owl5.owlCarousel({
+            items : 4, //10 items above 1000px browser width
+            itemsDesktop : [1000,2], //5 items between 1000px and 901px
+            itemsDesktopSmall : [900,3], // betweem 900px and 601px
+            itemsTablet: [600,2], //2 items between 600 and 0
+            pagination:true,
+            itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+        });
 
-      var owl5 = $("#owl-demo5");
-
-      owl5.owlCarousel({
-          items : 4, //10 items above 1000px browser width
-          itemsDesktop : [1000,2], //5 items between 1000px and 901px
-          itemsDesktopSmall : [900,3], // betweem 900px and 601px
-          itemsTablet: [600,2], //2 items between 600 and 0
-          pagination:true,
-          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
-      });
-
-      // Custom Navigation Events
-      $(".next").click(function(){
-        owl5.trigger('owl.next');
-      })
-      $(".prev").click(function(){
-        owl5.trigger('owl.prev');
-      })
-      //}
+        // Custom Navigation Events
+        $(".next").click(function(){
+          owl5.trigger('owl.next');
+        })
+        $(".prev").click(function(){
+          owl5.trigger('owl.prev');
+        })
+        //}
+      }, 2000);
     }
   };
 }])
@@ -235,83 +276,6 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
 .controller('mailIdController', ['userService', 'mailService', 'girlsAllService', 'mailIdService', mailIdController])
 .controller('formController', ['formService',  formController])
 .controller('girlsViewController', ['girlsService', 'userService', girlsViewController])
-.directive("owlCarousel", function() {
-  return {
-    restrict: 'E',
-    transclude: false,
-    link: function (scope) {
-      scope.initCarousel = function(element) {
-        console.log('initCarousel-11');
-
-        // provide any default options you want
-        var defaultOptions = {
-        };
-        var customOptions = scope.$eval($(element).attr('data-options'));
-        // combine the two options objects
-        for(var key in customOptions) {
-          defaultOptions[key] = customOptions[key];
-        }
-        console.log('defaultOptions');
-        console.log(defaultOptions);
-        // init carousel
-        $(element).owlCarousel(defaultOptions);
-      };
-    }
-  };
-})
-.directive('owlCarouselItem', [function() {
-  return {
-    restrict: 'A',
-    transclude: false,
-    link: function(scope, element) {
-      console.log('initCarousel-22');
-      // wait for the last item in the ng-repeat then call init
-      //if(scope.$last) {
-        //scope.initCarousel(element.parent());
-
-      var owl4 = $("#owl-demo4");
-
-      owl4.owlCarousel({
-          items : 1, //10 items above 1000px browser width
-          itemsDesktop : [1000,2], //5 items between 1000px and 901px
-          itemsDesktopSmall : [900,3], // betweem 900px and 601px
-          itemsTablet: [600,2], //2 items between 600 and 0
-          pagination:true,
-          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
-      });
-
-      // Custom Navigation Events
-      $(".next").click(function(){
-        owl4.trigger('owl.next');
-      })
-      $(".prev").click(function(){
-        owl4.trigger('owl.prev');
-      })
-
-
-
-      var owl5 = $("#owl-demo5");
-
-      owl5.owlCarousel({
-          items : 4, //10 items above 1000px browser width
-          itemsDesktop : [1000,2], //5 items between 1000px and 901px
-          itemsDesktopSmall : [900,3], // betweem 900px and 601px
-          itemsTablet: [600,2], //2 items between 600 and 0
-          pagination:true,
-          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
-      });
-
-      // Custom Navigation Events
-      $(".next").click(function(){
-        owl5.trigger('owl.next');
-      })
-      $(".prev").click(function(){
-        owl5.trigger('owl.prev');
-      })
-      //}
-    }
-  };
-}])
 .controller('chatController', ['chatService', chatController])
 .controller('searchController', ['searchService', 'userService', searchController])
 .factory('userService', ['$resource', userService])
@@ -323,7 +287,7 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
 .factory('chatService', ['socketFactory', chatService])
 .factory('searchService', ['$resource', searchService]);
 
-},{"./../node_modules/ng-repeat-owl-carousel/src/ngRepeatOwlCarousel":38,"./controllers/conversationsController":2,"./directives/angular-file-model":3,"./directives/crop":4,"./directives/owl-slider":5,"./mail/chatController":6,"./mail/chat_service":7,"./mail/formController":8,"./mail/form_service":9,"./mail/girlsAllController":10,"./mail/girlsAll_service":11,"./mail/girlsController":12,"./mail/girlsViewController":13,"./mail/girls_service":14,"./mail/mailController":15,"./mail/mailIdController":16,"./mail/mailId_service":17,"./mail/mail_service":18,"./mail/searchController":19,"./mail/search_service":20,"./mail/user_service":21,"./mail/usersController":22,"angular":35,"angular-base64-upload":23,"angular-cookies":26,"angular-img-cropper":27,"angular-resource":29,"angular-socket-io":30,"angular-ui-bootstrap":32,"angular-ui-router":33,"ng-file-upload":37}],2:[function(require,module,exports){
+},{"./../node_modules/ng-repeat-owl-carousel/src/ngRepeatOwlCarousel":37,"./controllers/conversationsController":2,"./directives/angular-file-model":3,"./directives/crop":4,"./mail/chatController":5,"./mail/chat_service":6,"./mail/formController":7,"./mail/form_service":8,"./mail/girlsAllController":9,"./mail/girlsAll_service":10,"./mail/girlsController":11,"./mail/girlsViewController":12,"./mail/girls_service":13,"./mail/mailController":14,"./mail/mailIdController":15,"./mail/mailId_service":16,"./mail/mail_service":17,"./mail/searchController":18,"./mail/search_service":19,"./mail/user_service":20,"./mail/usersController":21,"angular":34,"angular-base64-upload":22,"angular-cookies":25,"angular-img-cropper":26,"angular-resource":28,"angular-socket-io":29,"angular-ui-bootstrap":31,"angular-ui-router":32,"ng-file-upload":36}],2:[function(require,module,exports){
 module.exports = function() {
   /*this.conversations = [
     {'id':13, 'name':'Aleksandra Almazova', 'amount': 35, 'Last_incoming_letter': '13:47   03/12/2014', 'Last_outgoing_letter': '18:34   03/11/2015'},
@@ -1713,95 +1677,204 @@ angular.module('angular-img-cropper').factory("imageCropperDataShare", function 
     return share;
 });
 },{}],5:[function(require,module,exports){
-(function () {
-  'use strict';
-
-  angular.module('owl-slider', [])
-
-  .directive("owlCarousel", function() {
-    return {
-      restrict: 'E',
-      transclude: false,
-      link: function (scope) {
-        scope.initCarousel = function(element) {
-          console.log('initCarousel-1');
-          // provide any default options you want
-          var defaultOptions = {
-          };
-          var customOptions = scope.$eval($(element).attr('data-options'));
-          // combine the two options objects
-          for(var key in customOptions) {
-            defaultOptions[key] = customOptions[key];
-          }
-          // init carousel
-          $(element).owlCarousel(defaultOptions);
-        };
-      }
-    };
-  })
-  .directive('owlCarouselItem', [function() {
-    return {
-      restrict: 'A',
-      transclude: false,
-      link: function(scope, element) {
-        console.log('initCarousel-2');
-        // wait for the last item in the ng-repeat then call init
-        if(scope.$last) {
-          scope.initCarousel(element.parent());
-        }
-      }
-    };
-  }]);
-
-})();
-},{}],6:[function(require,module,exports){
 module.exports = chatController;
 
 function chatController ($document, $location, $cookies, chatService, userService, socketFactory) {
   var self2 = this;
+  this.onlineModel = true;
+  this.messages = [];
+
+
+  this.acitivNavLi = function(index) {
+    var el = angular.element(document.getElementsByClassName('main-members-nav'));
+    el[0].childNodes[1].className = '';
+    el[0].childNodes[3].className = '';
+    el[0].childNodes[5].className = '';
+    el[0].childNodes[index].className = 'active';
+  };
+
+
+  this.changeDirectory1 = function(index) {
+    this.requestModel = false;
+    this.recentModel = false;
+    this.onlineModel = true;
+    this.acitivNavLi(index);
+  };
+  this.changeDirectory2 = function(index) {
+    this.onlineModel = false;
+    this.requestModel = true;
+    this.recentModel = false;
+    this.acitivNavLi(index);
+  };
+  this.changeDirectory3 = function(index) {
+    this.onlineModel = false;
+    this.requestModel = false;
+    this.recentModel = true;
+    this.acitivNavLi(index);
+  };
+
+  this.isStartChat = function(partner) {
+    if (!partner.sessionId ||
+        (partner.sessionId && partner.startDateTime && partner.ceaseDateTime) ||
+        (partner.sessionId && partner.isCancelled) ||
+        (partner.sessionId && partner.isDeclined)
+        ){
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  this.isWaitingRequest = function(partner, groupId) {
+    // console.log(['sessionId', 'startDateTime', 'isInitByBoy'].map(function (val) {
+    //     return 'partner.' + val + ' = ' + partner[val];
+    //   }).join(', ') + 'gropupId = ' + groupId);
+    if(partner.sessionId && (!partner.startDateTime) && (partner.isInitByBoy == groupId) && (partner.isDeclined == 0) && (partner.isCancelled == 0)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  this.acceptAndDeclineChat = function(partner, groupId) {
+    // console.log(['sessionId', 'startDateTime', 'isInitByBoy'].map(function (val) {
+    //     return 'partner.' + val + ' = ' + partner[val];
+    //   }).join(', ') + 'gropupId = ' + groupId);
+    if(partner.sessionId && (!partner.startDateTime) && (partner.isInitByBoy != groupId) && (partner.isDeclined == 0) && (partner.isCancelled == 0)) {
+    // console.log('inbound req for '+ partner.sessionId);
+      return true;
+    } else {
+    // console.log('no inbound req for ' + partner.sessionId);
+      return false;
+    }
+  };
+
+  this.chattingNow = function(partner) {
+    if(partner.startDateTime && (!partner.ceaseDateTime)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  this.addClassMessages = function(typeMsg) {
+    return typeMsg=='inbound'? true: false;
+  };
+
+   this.dayShow = function(sentTimeMsg) {
+    if(new Date().getTime() - new Date(sentTimeMsg).getTime() > new Date().getUTCHours()*3600*1000+ new Date().getMinutes()*60*1000) {
+      return true;
+    } else false;
+
+  };
+
+  this.count = 0;
+
+  this.functionDate = function(sentTimeMsg) {
+
+    if(new Date().getTime() - new Date(sentTimeMsg).getTime() > new Date().getUTCHours()*3600*1000+ new Date().getMinutes()*60*1000) {
+      // self2.count += 1;
+      var day = '';
+      // // console.log('count');
+      // // console.log(count);
+      // if(self.count<10) {
+      //   day = 'Yesterday';
+      // } else day = 'Date';
+      // return self2.count;
+      return 'Yesterday';
+    }
+  };
 
   self2.partners = {};
 
   chatService.on('addPartner', function (data) {
     self2.partners[data.id] = data;
-    console.log(self2 .partners);
-    console.log('hello');
+    // console.log(self2 .partners);
+
   });
   chatService.emit('getCurChatPartners', {});
 
-  // var partners = {};
-  // var myIoSocket = io.connect('http://irinadating.loc/');
+  this.sendRequest = function(id) {
+    chatService.emit('sendRequest', { partnerId: id, withVideo: false });
+  };
 
-  // mySocket = socketFactory({
-  //   ioSocket: myIoSocket
-  // });
-  // mySocket.on('addPartner', function (data) {
-  //  partners[data.id] = data;
-  //  console.log(data);
-  // console.log('hello');
-  // });
-  // mySocket.emit('getCurChatPartners', {});
+  this.approveRequest = function(Id) {
+    // console.log(Id);
+    chatService.emit('approveRequest', { sessionId: Id });
+  };
 
-  // var partners = {};
-  // var myIoSocket = io.connect('http://irinadating.loc/');
+  this.declineRequest = function(Id) {
+     // console.log(Id);
+    chatService.emit('declineRequest', { sessionId: Id });
+  };
 
-  // mySocket = socketFactory({
-  //   ioSocket: myIoSocket
-  // });
-  // mySocket.on('addPartner', function (data) {
+  this.endChatSession = function(Id) {
+    // console.log(Id);
+    chatService.emit('endChatSession', { sessionId: Id });
+  };
 
-  //   partners[data.id] = data;
-  //   console.log(data);
-  // });
-  // console.log('hello!!!');
-  // mySocket.emit('getCurChatPartners', {});
+  this.sendMsg = function(Id, msg) {
+    console.log(Id + ' , ' + msg);
+    chatService.emit('sendMsg', { partnerId: Id, content: msg });
+    this.addMsgModel = "";
+  };
+
+  this.removePartner = function(Id) {
+    chatService.emit('removePartner', { partnerId: Id });
+  };
+
+  this.correspondence = function(partner) {
+    this.namePartner = partner.firstname;
+    this.partnerID = partner.id;
+    this.sessionID = partner.sessionId;
+    this.partnerAge = partner.age;
+    // console.log('this.partnerID');
+    // console.log(this.partnerID);
+    var arr = angular.element(document.getElementsByClassName('main-members-item clearfix'));
+    for(var i=0; i<arr.length; i++) {
+      arr[i].className = 'main-members-item clearfix';
+    };
+    chatService.emit('getChatLogDeeper', { partnerId: partner.id });
+  };
+
+  chatService.on('oldMsg', function(data) {
+    console.log(data);
+
+    self2.messages.push(data);
+    self2.lastMessageID = self2.messages[self2.messages.length-1].msgId;
+    // console.log("self2.lastMessageID");
+    // console.log(self2.lastMessageID);
+
+
+    // self2.messages = self2.messages.concat(data);
+    // console.log(self2.messages);
+  });
+
+  chatService.on('newMsg', function(data) {
+
+    self2.messages.unshift(data);
+    // console.log('newMsg');
+    // console.log(data);
+  });
+
+
+  //jQuery(function($) {
+    $('.chat-box').on('scroll', function(event) {
+        // console.log(event);
+        if($(this).scrollTop() + $(this).innerHeight() + 100 >= $(this)[0].scrollHeight) {
+          // console.log('end reached');
+          // console.log(self2.partnerID + ' , ' + self2.lastMessageID);
+          chatService.emit('getChatLogDeeper', { partnerId: this.partnerID, lastMsgId:self2.lastMessageID });
+        }
+    });
+  //});
 
   this.getUserData = function () {
     var self = this;
     userService.getUser().$promise.then(
       function(data) {
         self.user = data;
-        //console.log(self.user.user.id);
+        console.log(self.user.user.id);
         // self.getlogChat(self.user.user.id);
       },
       function(error) {
@@ -1811,13 +1884,6 @@ function chatController ($document, $location, $cookies, chatService, userServic
   };
 
   this.getUserData();
-
-
-  // this.MyData = chatService;
-  // console.log(this.MyData);
-
-
-
 
   this.getOnline = function () {
     var self = this;
@@ -1834,15 +1900,6 @@ function chatController ($document, $location, $cookies, chatService, userServic
     );
   };
 
-
-   // var Cookie = $cookies.getAll();
-   // console.log('Cookie');
-   // console.log(Cookie.PHPSESSID);
-
-    // var c = angular.element(document.cookie)
-    // console.log(String(c));
-
-
   this.getlogChat = function (id) {
     var self = this;
     chatService.logChat(id).$promise.then(
@@ -1857,11 +1914,10 @@ function chatController ($document, $location, $cookies, chatService, userServic
     );
   };
 
-
 };
 
 chatController.$inject = ['$document', '$location', '$cookies', 'chatService', 'userService', 'socketFactory'];
-},{}],7:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 module.exports = chatService;
 
 function chatService (socketFactory) {
@@ -1913,23 +1969,47 @@ function chatService (socketFactory) {
 };
 
 chatService.$inject = ['socketFactory'];
-},{}],8:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 module.exports = formController;
 
-function formController (formService, $scope) {
+function formController (formService, $scope, $timeout) {
 
   $scope.cropper = {};
   $scope.cropper.sourceImage = null;
   $scope.cropper.croppedImage = null;
   $scope.bounds = {};
-  $scope.bounds.left = 10;
-  // $scope.bounds.right = 400;
-  // $scope.bounds.top = 200;
-  // $scope.bounds.bottom = 600;
+  $scope.bounds.left = 0;
+  $scope.bounds.right = 457;
+  $scope.bounds.top = 552;
+  $scope.bounds.bottom = 95;
+  this.Height = 1;
+  // this.tumblerHeight = false;
+  this.onloadFotoCheck = function() {
+
+      self = this;
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext('2d');
+    var imageObj = new Image();
+    imageObj.onload = function () {
+      self.heightPicture = imageObj.naturalHeight;
+      // self.rateHeight = Math.round((500 / self.heightPicture) * 420);
+      // console.log(self.heightPicture);
+      // console.log(self.rateHeight);
+    };
+    imageObj.src = $scope.cropper.sourceImage;
+    // $timeout(function(){
+    //   self.tumblerHeight = true;
+    //   console.log(11111111111111);
+    // },5000)
+
+    };
+  //irinadating.loc/upload/photos/384/EsFeKxMO_300_420_crop.jpg
+  //irinadating.loc/upload/photos/384/EsFeKxMO.jpg
 
 
   this.postPhoto = function ($event)  {
     var self = this;
+
     // var photo = {
     //   photo: $scope.cropper.sourceImage.base64,
     //   filename: $scope.cropper.sourceImage.filename,
@@ -1951,21 +2031,24 @@ function formController (formService, $scope) {
     // var im = $('#subImg').val();
     var htmlFiles = angular.element(document.forms[0].photo);
     var fd = new FormData();
-    console.log('$scope.cropper.sourceImage');
-    console.log($scope.cropper.sourceImage);
+    // console.log('$scope.cropper.sourceImage');
+    // console.log($scope.cropper.sourceImage);
 
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext('2d');
     var imageObj = new Image();
     imageObj.onload = function () {
-      console.log('onload');
-      console.log(imageObj.naturalWidth);
+      self.heightPicture = imageObj.naturalHeight;
+      // self.topWindow =imageObj.naturalHeight;
       console.log(imageObj.naturalHeight);
     };
+      // console.log('onload');
+      // console.log(imageObj.naturalWidth);
     //imageObj.src = document.getElementById("tempImg").src;
     imageObj.src = $scope.cropper.sourceImage;
-
-    console.log(htmlFiles[0].files[0]);
+    console.log('self.topWindow');
+    console.log(this.heightPicture - $scope.bounds.top);
+    // console.log(htmlFiles[0].files[0]);
     // console.log(im);
     // console.log(htmlFiles[0].files[0]);
     // fd.append('photo', photo);//htmlFiles[0].files[0]
@@ -1974,12 +2057,12 @@ function formController (formService, $scope) {
     if(isMainPhoto) {
       fd.append('isMainPhoto', true);
       fd.append('startX', $scope.bounds.left);
-      fd.append('startY', 1);
+      fd.append('startY', this.heightPicture - $scope.bounds.top);
     }
     // console.log(fd);
   // console.log(fd);
 
-    // formService.addPhotos(fd);
+    formService.addPhotos(fd);
     // htmlFiles[0].files[0] = undefined;
     // console.log(photo);
     // alert("Фотография загружена");
@@ -1988,8 +2071,8 @@ function formController (formService, $scope) {
 
 };
 
-formController.$inject = ['formService', '$scope'];
-},{}],9:[function(require,module,exports){
+formController.$inject = ['formService', '$scope', '$timeout'];
+},{}],8:[function(require,module,exports){
 module.exports = formService;
 
 function formService ($resource) {
@@ -2017,18 +2100,17 @@ function formService ($resource) {
 };
 
 formService.$inject = ['$resource'];
-},{}],10:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 module.exports = girlsAllController;
 
 function girlsAllController ($document, $location, $stateParams, userService, girlsAllService) {
-
+/*Функция определяет возраст*/
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
   };
-
+/*Функция делает запрос к сервису и получает данные залогиненного пользователя*/
   this.getUserData = function () {
     var self = this;
-
     userService.getUser().$promise.then(
       function(data) {
         self.user = data;
@@ -2040,10 +2122,9 @@ function girlsAllController ($document, $location, $stateParams, userService, gi
   };
 
   this.getUserData();
-
+/*Функция делает запрос к сервису  и получает названия стран*/
   this.getCountries = function() {
     var self = this;
-
     girlsAllService.getCountries().$promise.then(
       function(data) {
         self.countries = data;
@@ -2051,11 +2132,9 @@ function girlsAllController ($document, $location, $stateParams, userService, gi
         for(var i=0; i<self.arrCountries.length; i++) {
           if(self.arrCountries[i].name==self.counryUrl) {
             self.countryIdURL = self.arrCountries[i].id
-            // console.log(self.countryIdURL);
             self.paginaGirl();
           }
         };
-
       },
       function(error) {
         console.log(error);
@@ -2064,47 +2143,72 @@ function girlsAllController ($document, $location, $stateParams, userService, gi
   };
 
   this.getCountries();
+/*Функция поиска леди по возрасту и стране, делает API запрос*/
+  this.searchGirls = function(page) {
+    var self = this;
+    this.arrURL = [];
+    var keyValURL = '';
+    this.arrURL[0] = ['ag', this.fromDateModel + "-" + this.toDateModel];
+    this.arrURL[1] = ['co', this.countryModel];
+    for(var i=0; i<2; i++) {
+      // if(self.arrURL[i][1] && self.arrURL[i][1] != "undefined" && self.arrURL[i][1] != "undefined-undefined" && self.arrURL[i][1] != null)
+      keyValURL += self.arrURL[i][0] + '-' + self.arrURL[i][1] + '-';
+    };
 
-  this.searchGirls = function() {
+    var resultURL = keyValURL.slice(0, keyValURL.length-1);
+    // console.log(resultURL);
 
-    $location.path('/girls/' + this.fromDateModel + '-' + this.toDateModel + '-' + this.countryModel)
-    console.log('this.fromDateModel, this.toDateModel');
-     console.log(this.fromDateModel, this.toDateModel, this.countryModel);
+    $location.path(page + '-' + resultURL);
+    };
+
+  // this.searchHomeGirls = function() {
+
+  //   $location.path('/home/' + this.fromDateModel + '-' + this.toDateModel + '-' + this.countryModel)
+  //     console.log('this.fromDateModel, this.toDateModel');
+  //    console.log(this.fromDateModel, this.toDateModel, this.countryModel);
+  // };
+/*парсим ULR, полученные данные приводим к нужному формату*/
+    var urlId = $stateParams.id;
+/*Получаем возраст из ULR*/
+  if(urlId.indexOf('-ag-')!= -1 ) {
+    var start = urlId.indexOf('-ag-') + 4;
+    var end = urlId.indexOf('-', start);
+    var birthDateArrId  = urlId.slice(start, end);
+    var start2 = urlId.indexOf('-', end );
+    var end2 = urlId.indexOf('-', end+1);
+    if(urlId.indexOf('-', end+1)==-1){
+      var birthDateToArrId = urlId.slice(start2+1, urlId.length);
+    } else var birthDateToArrId = urlId.slice(start2+1, end2);
+  } else {
+    var birthDateArrId = 18;
+    var birthDateToArrId = 60;
   };
-
-  this.searchHomeGirls = function() {
-
-    $location.path('/home/' + this.fromDateModel + '-' + this.toDateModel + '-' + this.countryModel)
-    console.log('this.fromDateModel, this.toDateModel');
-     console.log(this.fromDateModel, this.toDateModel, this.countryModel);
-  };
-
-// http://dev.irinadating.com/ladies/18-30-ukraine
-  // var id = $stateParams.id;
-  var arrId = $stateParams.id.split('-');
-  var country = arrId[arrId.length-1];
+/*Получаем страну из ULR*/
+    if(urlId.indexOf('-co-')!= -1) {
+      var start = urlId.indexOf('-co-') + 4;
+      var end = urlId.indexOf('-', start);
+      if(urlId.indexOf('-', start)==-1) {
+        var country = urlId.slice(start, urlId.length);
+      } else var country = urlId.slice(start, end);
+      ;
+    } else var country = undefined;
+/*Приводим к нужному формату для API запроса*/
   this.counryUrl = country;
-  var birthDateArrId = arrId[0];
-  var birthDateToArrId = arrId[arrId.length-2];
   var dateBirthdateFrom = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*birthDateArrId);
   var resFromDate = new Date(dateBirthdateFrom);
   var resMonth = resFromDate.getMonth() +1;
   var arrRes = new String(resFromDate).split(' ');
   this.birthdateTo = arrRes[3] + '-' + resMonth + '-' + arrRes[2];
-
   var dateBirthdateTo = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*birthDateToArrId);
   var resToDate = new Date(dateBirthdateTo);
-  // var resMonth = resFromDate.getMonth() +1;
   var arrRes2 = new String(resToDate).split(' ');
   this.birthdateFrom = arrRes2[3] + '-' + resMonth + '-' + arrRes2[2];
-  // console.log(resFromDate2);
-  console.log(this.birthdateTo, this.birthdateFrom );
 
-  // this.getUserData();
+  /*Полученные данные в нужном формате*/
   this.fromDateModel = birthDateArrId;
   this.toDateModel = birthDateToArrId;
   this.countryModel = country;
-
+/*Функция делает запрос к сервису, чтобы получить леди согласно выбранных параметров*/
   this.girlsAllGet = function() {
     var self = this;
     var options = {
@@ -2130,27 +2234,56 @@ function girlsAllController ($document, $location, $stateParams, userService, gi
 
   this.page = 0;
   this.limit = 3;
-
+  if(this.totalPage==this.page) this.buttonAdd = true;
+/*Функция пагинации - добавляем, пока есть кого добавлять*/
   this.paginaGirl = function() {
     if (this.totalPage){
       if(this.totalPage > this.page) {
+
         this.girlsAllGet();
         this.page += 1;
         this.limit+= 3;
+        if(this.totalPage==this.page) this.buttonAdd = true;
       }
     } else {
       this.girlsAllGet();
       this.page += 1;
       this.limit += 3;
+      if(this.totalPage==this.page) this.buttonAdd = true;
     }
   };
+/*Функция создаёт массив данных для поля возраст в поиске*/
+this.makeAge = function() {
+    var arrlistAge = [];
+    var count = 17;
+    for(var i=0; i<43; i++){
+      count ++;
+      arrlistAge[i] = count;
+    };
+    this.listAge = arrlistAge;
+  };
 
-  // this.paginaGirl();
+  this.makeAge();
+/*Функция подставляет в название фото нужные параметры*/
+  this.photoAvatar2 = function(arg) {
+    var photo = String(arg);
+    photo = photo.slice(0, photo.length-4) + '_220_220_auto' + photo.slice(-4);
+    return photo;
+  };
+/*меняем стили на выпадающих списках в select*/
+  $(document).ready(function(){
+   setInterval(function(){
+    $('.selectpicker').selectpicker({
+        style: 'btn-info',
+        size: 4
+      });
+  }, 2000);
+  })
 
 };
 
 girlsAllController.$inject = ['$document', '$location', '$stateParams','userService', 'girlsAllService'];
-},{}],11:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 module.exports = girlsAllService;
 
 function girlsAllService ($resource) {
@@ -2167,7 +2300,7 @@ function girlsAllService ($resource) {
       direction: options.direction,
       limit: options.limit,
       offset: options.offset,
-      relations: '{"user":{"country":{} } }'
+      relations: '{"user":{"country":{}, "mainphoto": {} } }'
     });
   };
 
@@ -2183,13 +2316,17 @@ function girlsAllService ($resource) {
 
 
 girlsAllService.$inject = ['$resource'];
-},{}],12:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 module.exports = girlsController;
 
 
 function girlsController ($document, $stateParams, $location, mailService, userService, girlsService, $scope) {
 
-
+  this.photoAvatar2 = function(arg) {
+    var photo = String(arg);
+    photo = photo.slice(0, photo.length-4) + '_300_420_crop' + photo.slice(-4);
+    return photo;
+  };
 
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
@@ -2217,46 +2354,127 @@ this.getUserData();
     girlsService.getGirlsId(id).$promise.then(
       function(data) {
         self.girlsId = data;
+        self.photosGirl(self.girlsId.girl.userId);
       },
       function(error) {
         console.log(error);
       }
     );
   };
+
   this.girlsIdGet(id);
+/*Функция делает запрос к сервису и получает фотографии для фото-карусели*/
+  this.photosGirl = function(id) {
+    var self = this;
+    girlsService.getGirlPhoto(id).$promise.then(
+      function(data) {
+        self.girlsPhotos = data;
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+/*Функция показавет весь текст письма в переписке*/
+  this.switchMore = function(letterText) {
+    if (letterText==null) {
+      return false;}
+      else if(letterText.length>90) {
+      return false;
+    } else return true;
+  };
+/*Функция обрезает текст письма, если в письме больше 90 символов*/
+  this.letterTextSlice = function(letterText, switchComment) {
+    if (switchComment) {
+       return letterText;
+    } else {
+      if (letterText==null) {
+        return 0;
+      } else if(letterText.length>90) {
+        var text = letterText.slice(0, 90);
+        return text;
+      }
+      return letterText;
+    }
+  }
 
 };
 
 
 girlsController.$inject = ['$document', '$stateParams', '$location', 'mailService', 'userService', 'girlsService', '$scope'];
-},{}],13:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 module.exports = girlsViewController;
 
 
 function girlsViewController ($document, $stateParams, $location, girlsService, $scope) {
 
   var id = $stateParams.id.split('-')[4];
+
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
+  };
+
+  /*Функция показавет весь текст письма в переписке*/
+  this.switchMore = function(letterText) {
+    if (letterText==null) {
+      return false;}
+      else if(letterText.length>90) {
+      return false;
+    } else return true;
+  };
+/*Функция обрезает текст письма, если в письме больше 90 символов*/
+  this.letterTextSlice = function(letterText, switchComment) {
+    if (switchComment) {
+       return letterText;
+    } else {
+      if (letterText==null) {
+        return 0;
+      } else if(letterText.length>90) {
+        var text = letterText.slice(0, 90);
+        return text;
+      }
+      return letterText;
+    }
   }
+
+  this.photoAvatar2 = function(arg) {
+    var photo = String(arg);
+    if(photo.length<64) {
+      photo = photo.slice(0, 51) + '_300_420_crop' + photo.slice(-4);
+    }
+    return photo;
+  };
 
   this.girlsIdGet = function(id) {
     var self = this;
     girlsService.getGirlsId(id).$promise.then(
       function(data) {
         self.girlsId = data;
+        self.photosGirl(self.girlsId.girl.userId);
       },
       function(error) {
         console.log(error);
       }
     );
   };
+
   this.girlsIdGet(id);
 
+this.photosGirl = function(id) {
+    var self = this;
+    girlsService.getGirlPhoto(id).$promise.then(
+      function(data) {
+        self.girlsPhotos = data;
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
 };
 
 girlsViewController.$inject = ['$document', '$stateParams', '$location', 'girlsService', '$scope'];
-},{}],14:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 module.exports = girlsService;
 
 function girlsService ($resource) {
@@ -2267,53 +2485,54 @@ function girlsService ($resource) {
     return girlsResource.get({ girls_id: id, relations: '{"user":{"country":{}, "mainphoto": {} } }' });
   };
 
+  var girlPhotoResource = $resource('/api//users/:girls_id/photos', { girls_id: '@id' });
+
+  this.getGirlPhoto = function (id) {
+    return girlPhotoResource.get({ girls_id: id });
+  };
+
   return this;
 };
 
 girlsService.$inject = ['$resource'];
-},{}],15:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 module.exports = mailController;
 
 function mailController ($document, $location, $timeout, $anchorScroll, mailService, userService , girlsService, $scope) {
 
-  // this.showTumblerCheck = false;
-
+/*Функция определяет возраст*/
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
-  }
-
+  };
+/*Функция показывает меню выделения писем прочитанных, непрочитанных*/
   this.showSelectCheck = function() {
-    // console.log('showSelectCheck');
     this.showTumblerCheck = true;
     this.deletedSelect = false;
-    //this.unreadSelectCheck();
-    var list = angular.element(document.getElementsByClassName('message-sort-dropdown'));
-    for(var i=1; i<8; i+=2){
-      list[0].childNodes[i].childNodes[1].className = '';
-    };
-  }
-
+    // var list = angular.element(document.getElementsByClassName('message-sort-dropdown'));
+    // for(var i=1; i<8; i+=2){
+    //   list[0].childNodes[i].childNodes[1].className = '';
+    // };
+  };
+/*Функция в меню выделения писем прочитанных, непрочитанных показывает текущее состояние */
   this.removeClassTab = function(arg) {
     var list = angular.element(document.getElementsByClassName('message-tabs-item'));
     for(var i=0; i<list.length; i++){
       list[i].className = 'message-tabs-item';
-      // list[i].on('click', 'activeAddClass')
     };
     list[arg].className = 'message-tabs-item active';
   };
-
+/*Функция показывает и скрывает фильтры по датам*/
   this.showList = function(){
     this.listDiv = this.listDiv ? false : true;
   };
-
+/*Функция показывает и скрывает список возможностей в области отправки письма*/
   this.showFilter = function() {
     this.toDate = new Date();
     var dateFrom = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*20);
     this.fromDate = new Date(dateFrom);
-    console.log(this.toDate);
     this.filterDiv = this.filterDiv ? false : true;
   };
-
+/*Функция запрашивает данные залогиненного пользователя*/
   this.getUserData = function () {
     var self = this;
     userService.getUser().$promise.then(
@@ -2328,7 +2547,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
   };
 
   this.getUserData();
-
+/*Функция, отвечающая за параметры в запросе на получение писем*/
   this.changeType = function (type) {
     this.resultFromDate = undefined;
     this.resultToDate = undefined;
@@ -2340,7 +2559,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     this.onThisWeek = false;
     this.onLastWeek = false;
   };
-
+/*Функция запроса писем через сервис*/
   this.getMessages = function () {
     if(this.tumbler==false) {
       this.tumbler=true
@@ -2363,7 +2582,6 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
         for(var i=1; i<self.arrLengthCeil+1; i++) {
           self.arrIndex.push(i);
         };
-
         angular.forEach(self.messages.letters, function(letter, index) {
           self.messages.letters[index]['deleted'] = false;
         });
@@ -2372,26 +2590,24 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
         console.log(error);
       });
     };
-
+/*Функция пагинации выделяет номер страницы из списка страниц*/
   this.paginaAddClass = function(index) {
-
-      var arrPaginaClass = angular.element(document.getElementsByClassName('pagina'));
-      for(var i=0; i<arrPaginaClass.length; i++) {
-        arrPaginaClass[i].childNodes[0].className = '';
-      }
-      arrPaginaClass[index].childNodes[0].className = 'text_width';
+    var arrPaginaClass = angular.element(document.getElementsByClassName('pagina'));
+    for(var i=0; i<arrPaginaClass.length; i++) {
+      arrPaginaClass[i].childNodes[0].className = '';
+    };
+    arrPaginaClass[index].childNodes[0].className = 'text_width';
   };
-
+/*Функция пагинации выделяет первую страницу из списка страниц при переходе по каталогам*/
   this.firstNamberPagin = function() {
     var self = this;
     $timeout(function(){
-      console.log(self.arrIndex.length);
       if(self.arrIndex.length>0) {
         self.paginaAddClass(0);
       }
     },100);
   };
-
+/*Функция переключения пагинации при нажатии на next */
   this.getNextMessages = function() {
     if (this.page < this.arrLengthCeil-1) {
       this.page += 1;
@@ -2400,7 +2616,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       this.paginaAddClass(this.page);
     }
   };
-
+/*Функция переключения пагинации при нажатии на pre*/
   this.getPrevMessages = function() {
     if(this.page>0) {
     this.page -= 1;
@@ -2412,9 +2628,8 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     this.page = index-1;
     this.getMessages();
     this.paginaAddClass(this.page);
-
   }
-
+/*Функция запрашивает общее кол-во писем Introductions*/
   this.getMessagesIntroductions = function() {
     var self = this;
     mailService.getMessagesLengthIntroductions().$promise.then(
@@ -2426,7 +2641,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       }
     );
   };
-
+/*Функция чтения письма и вызывает функцию переписки*/
   this.readTheLetter = function(id, partnerid){
     if(this.tumbler) {
         this.tumbler = false;
@@ -2445,7 +2660,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     $anchorScroll();
 
   };
-
+/*Функция возвращает кол-во непрочитанных писем с типом Inbox*/
   this.getMessagesInboxLength = function() {
     var self = this;
     mailService.getMessagesLengthInbox().$promise.then(
@@ -2458,13 +2673,13 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
   };
 
   this.getMessagesInboxLength();
-
+/*Функция отвечает за стили письма в переписке*/
   this.addClass = function(arg1, arg2, arg3) {
     if(arg3==false) {
       return 2;
     }else return arg1==arg2? 0:1;
   };
-
+/*Функция оплаты письма, чтобы прочитать его*/
   this.payment =function(id, partnerid) {
     var self = this;
     mailService.paymentLetter(id).$promise.then(
@@ -2476,10 +2691,11 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       },
       function(error) {
         console.log(error);
+        alert('У вас не денег на счете');
       }
     );
   };
-
+/*Функция чтения конкретного письма*/
   this.readLadyLetter =function(id, partnerid) {
     var self = this;
     mailService.readLetter(id).$promise.then(
@@ -2494,18 +2710,17 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       }
     );
   };
-
+/*Функция запроса на переписку*/
   this.correspondence = function(partnerId) {
     var self = this;
     self.partnerId = partnerId;
-  var options = {
+    var options = {
       partnerId: self.partnerId,
       dateTimeFrom: self.resultFromDate,
       dateTimeTo: self.resultToDate,
       limit: self.limit2,
       offset: 0
     };
-    //self.currentPartnerid = partnerid;
     mailService.correspondenceGet(options).$promise.then(
       function(data) {
         self.letterCor =data;
@@ -2524,7 +2739,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
 
   this.page2 = 0;
   this.limit2 = 20;
-
+/*Функция пагинации для переписки*/
   this.paginaLetterCor = function() {
      if (this.totalPage2){
       this.page2 += 1;
@@ -2534,23 +2749,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
         this.buttonAddLetter = true;
     }
   };
-
-  // this.correspondence = function(partnerid) {
-  //   if(this.tumbler) {
-  //       this.tumbler = false;
-  //     };
-  //   var self = this;
-  //   self.currentPartnerid = partnerid;
-  //   mailService.correspondenceGet(partnerid).$promise.then(
-  //     function(data) {
-  //       self.letterCor =data;
-  //     },
-  //     function(error) {
-  //       console.log(error);
-  //     }
-  //   );
-  // }
-
+/*Функция обрезает текст письма, если в письме больше 90 символов*/
   this.switchMore = function(letterText) {
     if (letterText==null) {
       return false;}
@@ -2558,8 +2757,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       return false;
     } else return true;
   };
-
-
+/*Функция показавет весь текст письма в переписке*/
   this.letterTextSlice = function(letterText, switchComment) {
     if (switchComment) {
        return letterText;
@@ -2567,21 +2765,18 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       if (letterText==null) {
         return 0;
       } else if(letterText.length>90) {
-
         var text = letterText.slice(0, 90);
         return text;
       }
       return letterText;
     }
   }
-
+/*Функция устанавливает позицию слева/справа для каритнки в переписке*/
   this.showSendMessage =function(senderId, userId) {
     return senderId==userId? true: false;
   }
-
-
   this.textArea = false;
-
+/*функция создаёт эффект моргания при отправке письма*/
   this.textAreaTime = function() {
     var self = this;
     self.textArea = true;
@@ -2589,7 +2784,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       self.textArea = false;
     },600);
   }
-
+/*Функция отправляет письмо по API*/
   this.addMessage = function(id) {
     var self = this;
     var msg = {
@@ -2610,7 +2805,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
   };
 
   this.changeType('inbox');
-
+/*Функция перемещает выделенное письмо в папку Delete*/
   this.deleteMessages = function() {
     var self = this;
     angular.forEach(this.messages.letters, function(letter) {
@@ -2626,7 +2821,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       }
     })
   };
-
+/*Функция выделяет кнопку отправки письма в каталог Delete после выделения письма*/
   this.classMessagesDeleted = function() {
     var self = this;
     var res = 0;
@@ -2639,27 +2834,15 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     }
     return res;
   };
+
   this.addRecipient = function(arg1, arg2) {
     return arg1==arg2? 1:0;
   };
-
-this.girlsIdGet = function(id) {
-    var self = this;
-    girlsService.getGirlsId(id).$promise.then(
-      function(data) {
-        self.girlsId = data;
-      },
-      function(error) {
-        console.log(error);
-      }
-    );
-  };
-
+/*функция сортировки писем за текущую неделю*/
   this.onThisWeekDate = function() {
     this.onLastWeek = false;
     this.onThisWeek = true;
     var toDate = new Date();
-
     var numberToDay = new Date().getDay();
     var firstDaySec = toDate.setDate(toDate.getDate() - (numberToDay-1));
     var firstDayWeek = new Date(firstDaySec);
@@ -2677,10 +2860,8 @@ this.girlsIdGet = function(id) {
       this.resultFromDate = undefined;
       this.resultToDate = undefined;
     },500);
-  }
-
-  //this.onThisWeekDate();
-
+  };
+/* функция сортировки писем за предыдущую неделю*/
   this.onLastWeekDate = function() {
     this.onLastWeek = true;
     this.onThisWeek = false;
@@ -2706,13 +2887,10 @@ this.girlsIdGet = function(id) {
     },500);
   };
 
-  //this.onLastWeekDate();
   this.showDate = function() {
-
     var arrDate2 = new String(this.fromDate).split(' ');
     var month2 = this.fromDate.getMonth() +1;
     this.resultFromDate = arrDate2[3] + '-' + month2 + '-' + arrDate2[2] + ' ' + '00:00:00';
-
     var arrDate = new String(this.toDate).split(' ');
     var month = this.toDate.getMonth() + 1;
     this.resultToDate = arrDate[3] + '-' + month +'-' + arrDate[2] + ' ' + '23:59:59';
@@ -2726,13 +2904,12 @@ this.girlsIdGet = function(id) {
       },500);
     }
   };
-
+/*Функция выделяет кнопку сортировки, если корректно выбраны даты */
   this.watchInputDate = function(fromDate, toDate) {
     if(fromDate && toDate)
-
-    // console.log(fromDate.getTime(), toDate.getTime());
     return fromDate.getTime()<toDate.getTime()? true : false;
   };
+/*Функция сброса временных параметров для сортировки*/
   this.resetSortDate = function() {
     this.onThisWeek = false;
     this.onLastWeek = false;
@@ -2740,14 +2917,12 @@ this.girlsIdGet = function(id) {
     this.fromDate = undefined;
     this.resultFromDate = undefined;
     this.resultToDate = undefined;
-    // this.getMessages();
     this.buttonAddLetter = false;
-    // this.correspondence(this.partnerId);
-     if(this.tumbler){
+    if(this.tumbler){
       this.getMessages();
     } else this.correspondence(this.partnerId);
   };
-
+/*Функция выделения всех писем*/
   this.selectAllCheck = function() {
     var self = this;
     this.unselectCheck();
@@ -2759,7 +2934,7 @@ this.girlsIdGet = function(id) {
     if(this.messages.letters)
       this.deletedSelect = true;
   }
-
+/*Функция выделения прочитанных писем*/
   this.readSelectCheck = function() {
     var self = this;
     this.unselectCheck();
@@ -2770,11 +2945,9 @@ this.girlsIdGet = function(id) {
         self.deletedSelect = true;
       }
     });
-    // this.deletedSelect = true;
-// console.log("readSelectCheck");
     this.showTumblerCheck = false;
   };
-
+/*Функция выделения непрочитанных писем*/
   this.unreadSelectCheck = function() {
     var self = this;
     this.unselectCheck();
@@ -2786,20 +2959,17 @@ this.girlsIdGet = function(id) {
       }
     });
     this.showTumblerCheck = false;
-    // this.deletedSelect = true;
   };
-
+/*Функция отмены всех выделенных писем*/
   this.unselectCheck = function() {
     var self = this;
     this.addClassSelectCheck(7);
     angular.forEach(self.messages.letters, function(letter, index) {
-          self.messages.letters[index]['deleted'] = false;
-        });
+      self.messages.letters[index]['deleted'] = false;
+    });
     this.showTumblerCheck = false;
     this.deletedSelect = false;
-    // console.log('unselectCheck');
-
-    };
+  };
 
   this.addClassSelectCheck = function(index) {
     var list = angular.element(document.getElementsByClassName('message-sort-dropdown'));
@@ -2808,41 +2978,30 @@ this.girlsIdGet = function(id) {
     };
     list[0].childNodes[index].childNodes[1].className = 'text_color_black';
   };
-
-// this.showTumblerCheck = false;
-//   var self2 = this;
-//   $('*:not(#not_check_box)').on('click', function() {
-//       $(this).on('click', function() {
-// console.log($(this));
-       // if(self2.showTumblerCheck) {
-   // console.log('girls-messega-item-content');
-    // self2.showTumblerCheck = false;
-    //console.log(self2.showTumblerCheck)
-  // }
-   // console.log($scope.showTumblerCheck);
-  // });
-
+/*Прячит меню выделения прочитанных, непрочитанных, всех писем при клике на любой элемент*/
+  var self2 = this;
+  $('body').on('click', function(event) {
+    console.log(event);
+    if (event.target.id == 'not_check_box') {
+      self2.showTumblerCheck = true;
+      self2.deletedSelect = false;
+      $('.message-sort-dropdown').show();
+    } else {
+      self2.showTumblerCheck = false;
+      $('.message-sort-dropdown').hide();
+    }
+  });
+/*Функция скрывает меню выделения прочитанных, непрочитанных, всех писем*/
   this.removeSelectBox = function(){
-    // console.log(this.showTumblerCheck);
     this.showTumblerCheck = false;
   };
-
-  this.deletedSelectCheckBox = function() {
-    console.log('deletedSelectCheckBox');
-    if(this.deletedSelect){
-      this.selectAllCheck();
-    } else {
-      this.unselectCheck();
-    };
-
-  }
 
 };
 
 
 mailController.$inject = ['$document', '$location', '$timeout', '$anchorScroll', 'mailService', 'userService', 'girlsService', '$scope'];
 
-},{}],16:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 module.exports = mailIdController;
 
 function mailIdController ($document, $stateParams, $location, $anchorScroll, $timeout, mailService, userService , girlsService, mailIdService) {
@@ -3144,7 +3303,7 @@ this.onThisWeekDate = function() {
 };
 
 mailIdController.$inject = ['$document', '$stateParams', '$location', '$anchorScroll', '$timeout', 'mailService', 'userService', 'girlsService', 'mailIdService'];
-},{}],17:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 module.exports = mailIdService;
 
 function mailIdService ($resource) {
@@ -3159,7 +3318,7 @@ function mailIdService ($resource) {
 };
 
 mailIdService.$inject = ['$resource'];
-},{}],18:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 module.exports = mailService;
 
 function mailService ($resource) {
@@ -3267,17 +3426,148 @@ function mailService ($resource) {
 
 mailService.$inject = ['$resource'];
 
-},{}],19:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 module.exports = searchController;
 
-function searchController (userService, searchService, girlsAllService, girlsService) {
+function searchController ($document, $location, $stateParams, $timeout, userService, searchService, girlsAllService, girlsService) {
+
+  var urlId = $stateParams.id
+
 
   this.birthdateFromModel = 18;
   this.birthdateToModel = 60;
 
-   this.agePerson = function(birthdate) {
-    return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
+  this.urlParsing = function(key, keyLength) {
+    if(urlId.indexOf(key)!= -1 ) {
+      var start = urlId.indexOf(key) + keyLength;
+      var end = urlId.indexOf('-', start);
+      model1 = urlId.slice(start, end);
+      var start2 = urlId.indexOf('-', end );
+      var end2 = urlId.indexOf('-', end+1);
+      if(urlId.indexOf('-', end+1)==-1){
+        model2 = urlId.slice(start2+1, urlId.length);
+      } else model2 = urlId.slice(start2+1, end2);
+    } else model1 = undefined;
+    return model1;
   };
+
+  this.urlParsing1 = function(key, keyLength) {
+    if(urlId.indexOf(key)!= -1 ) {
+      var start = urlId.indexOf(key) + keyLength;
+      var end = urlId.indexOf('-', start);
+      model1 = urlId.slice(start, end);
+      var start2 = urlId.indexOf('-', end );
+      var end2 = urlId.indexOf('-', end+1);
+      if(urlId.indexOf('-', end+1)==-1){
+        model2 = urlId.slice(start2+1, urlId.length);
+      } else model2 = urlId.slice(start2+1, end2);
+    } else model2 = undefined;
+    return model2;
+  };
+
+  this.urlParsing2 = function(key, keyLength){
+    if(urlId.indexOf(key)!= -1) {
+      var start = urlId.indexOf(key) + keyLength;
+      var end = urlId.indexOf('-', start);
+      if(urlId.indexOf('-', start)==-1) {
+        var model= urlId.slice(start, urlId.length);
+        var result = model.replace(/_/g, " ");
+      } else {
+        var model = urlId.slice(start, end);
+        var result = model.replace('_', " ");
+      };
+    } else var result = undefined;
+    return result;
+  };
+
+  this.birthdateFromModel = this.urlParsing('-ag-', 4);
+  this.birthdateToModel = this.urlParsing1('-ag-', 4);
+  this.heightFromModel = this.urlParsing('-h-', 3);
+  this.heightToModel = this.urlParsing1('-h-', 3);
+  this.childrenNumberFromModel = this.urlParsing('-nch-', 5);
+  this.childrenNumberToModel = this.urlParsing1('-nch-', 5);
+  this.weightFromModel = this.urlParsing('-we-', 4);
+  this.weightToModel = this.urlParsing1('-we-', 4);
+  this.countryModel = this.urlParsing2('-co-', 4);
+  this.drinkingModel = this.urlParsing2('-dr-', 4);
+  this.educationModel = this.urlParsing2('-ed-', 4);
+  this.englishRatingModel = this.urlParsing2('-en-', 4);
+  this.eyeColorModel = this.urlParsing2('-ec-', 4);
+  this.firstNameModel = this.urlParsing2('-fr-', 4);
+  this.hairColorModel = this.urlParsing2('-hc-', 4);
+  this.lookingForModel = this.urlParsing2('-lf-', 4);
+  this.maritalStatusModel = this.urlParsing2('-ms-', 4);
+  this.professionModel = this.urlParsing2('-pro-', 5);
+  this.religionModel = this.urlParsing2('-r-', 3);
+  this.smokingModel = this.urlParsing2('-sm-', 4);
+  this.zodiacSignModel = this.urlParsing2('-zs-', 4);
+  this.cityModel = this.urlParsing2('-ct-', 4);
+
+
+    this.arrURL = [];
+    this.arrURL[0] = ['ag', this.birthdateFromModel + "-" + this.birthdateToModel];
+    this.arrURL[1] = ['co', this.countryModel];
+    this.arrURL[2] = ['dr', this.drinkingModel];
+    this.arrURL[3] = ['ed', this.educationModel];
+    this.arrURL[4] = ['en', this.englishRatingModel];
+    this.arrURL[5] = ['ec', this.eyeColorModel];
+    this.arrURL[6] = ['fr', this.firstNameModel];
+    this.arrURL[7] = ['h', this.heightFromModel+ '-' + this.heightToModel];
+    this.arrURL[8] = ['hc', this.hairColorModel];
+    this.arrURL[9] = ['lf', this.lookingForModel];
+    this.arrURL[10] = ['ms', this.maritalStatusModel];
+    this.arrURL[11] = ['nch', this.childrenNumberFromModel + '-' + this.childrenNumberToModel];
+    this.arrURL[12] = ['pro', this.professionModel];
+    this.arrURL[13] = ['r', this.religionModel];
+    this.arrURL[14] = ['sm', this.smokingModel];
+    this.arrURL[15] = ['we', this.weightFromModel + '-' + this.weightToModel];
+    this.arrURL[16] = ['zs', this.zodiacSignModel];
+    this.arrURL[17] = ['ct', this.cityModel];
+
+
+
+
+  this.searchGirlsURL = function() {
+    var self = this;
+    this.arrURL = [];
+    var keyValURL = '';
+    this.arrURL[0] = ['ag', this.birthdateFromModel + "-" + this.birthdateToModel];
+    this.arrURL[1] = ['co', this.countryModel];
+    this.arrURL[2] = ['dr', this.drinkingModel];
+    this.arrURL[3] = ['ed', this.educationModel];
+    this.arrURL[4] = ['en', this.englishRatingModel];
+    this.arrURL[5] = ['ec', this.eyeColorModel];
+    this.arrURL[6] = ['fr', this.firstNameModel];
+    this.arrURL[7] = ['h', this.heightFromModel+ '-' + this.heightToModel];
+    this.arrURL[8] = ['hc', this.hairColorModel];
+    this.arrURL[9] = ['lf', this.lookingForModel];
+    this.arrURL[10] = ['ms', this.maritalStatusModel];
+    this.arrURL[11] = ['nch', this.childrenNumberFromModel + '-' + this.childrenNumberToModel];
+    this.arrURL[12] = ['pro', this.professionModel];
+    this.arrURL[13] = ['r', this.religionModel];
+    this.arrURL[14] = ['sm', this.smokingModel];
+    this.arrURL[15] = ['we', this.weightFromModel + '-' + this.weightToModel];
+    this.arrURL[16] = ['zs', this.zodiacSignModel];
+    this.arrURL[17] = ['ct', this.cityModel];
+
+
+    for(var i=0; i<18; i++) {
+      if(self.arrURL[i][1] && self.arrURL[i][1] != "undefined" && self.arrURL[i][1] != "undefined-undefined" && self.arrURL[i][1] != null) keyValURL += self.arrURL[i][0] + '-' + self.arrURL[i][1] + '-';
+    };
+    // console.log(this.arrURL);
+    // console.log(keyValURL);
+    var resultURL = keyValURL.slice(0, keyValURL.length-1);
+    // console.log(resultURL);
+
+    $location.path('/search/' + '-' + resultURL);
+
+  }
+
+  this.agePerson = function(birthdate) {
+    return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;
+  };
+
+
 
   this.getUserData = function () {
     var self = this;
@@ -3300,6 +3590,7 @@ function searchController (userService, searchService, girlsAllService, girlsSer
     girlsAllService.getCountries().$promise.then(
       function(data) {
         self.countries = data;
+        self.searchGirls()
       },
       function(error) {
         console.log(error);
@@ -3388,27 +3679,21 @@ this.birthdateFromAge = function() {
   this.page = 0;
   this.limit = 3;
 
-  this.paginaGirl = function() {
-    if (this.totalPage){
-      if(this.totalPage > this.page) {
-        this.searchGirls();
-        this.page += 1;
-        this.limit+= 3;
-      }
-    } else {
-      this.searchGirls();
+ this.paginaGirl = function() {
+     if (this.totalPage){
       this.page += 1;
       this.limit += 3;
-    }
+      this.searchGirls();
+      if(this.page==this.totalPage)
+        this.buttonAdd = true;
+    };
   };
 
   this.searchGirlId = function(id) {
-    //console.log(id);
     var self = this;
     girlsService.getGirlsId(id).$promise.then(
       function(data) {
         self.girlsAll = data;
-        console.log(self.girlsAll.girl);
         if(self.girlsAll.girl) {
           self.res = self.girlsAll.girl
           self.resultGirls = [];
@@ -3419,6 +3704,46 @@ this.birthdateFromAge = function() {
         console.log(error);
       }
     );
+  };
+
+  this.showParam = function(arg) {
+    return arg == 'undefined-undefined' || arg == undefined || arg == null? false : true;
+  };
+
+  this.hideParam = function(index) {
+    this.arrURL[index][1] = undefined;
+
+    if(index==0) {
+      this.birthdateFromModel = undefined;
+      this.birthdateToModel = undefined;
+    };
+    if(index==1) this.countryModel = undefined;
+    if(index==2) this.drinkingModel = undefined;
+    if(index==3) this.educationModel = undefined;
+    if(index==4) this.englishRatingModel = undefined;
+    if(index==5) this.eyeColorModel = undefined;
+    if(index==6) this.firstNameModel = undefined;
+    if(index==7) {
+      this.heightFromModel = undefined
+      this.heightToModel = undefined;
+    };
+    if(index==8) this.hairColorModel = undefined;
+    if(index==9) this.lookingForModel = undefined;;
+    if(index==10) this.maritalStatusModel = undefined;
+    if(index==11) {
+      this.childrenNumberFromModel = undefined;
+      this.childrenNumberToModel = undefined;
+    };
+    if(index==12) this.professionModel = undefined;
+    if(index==13) this.religionModel = undefined;
+    if(index==14) this.smokingModel = undefined;
+    if(index==15) {
+      this.weightFromModel = undefined;
+      this.weightToModel = undefined;
+    };
+    if(index==16) this.zodiacSignModel= undefined;
+    if(index==17) this.cityModel = undefined;
+    this.searchGirlsURL();
   };
 
   this.allNameGirl = function() {
@@ -3435,8 +3760,7 @@ this.birthdateFromAge = function() {
     girlsAllService.getGirlsAll(options).$promise.then(
       function(data) {
         self.arrNameGilrs = data;
-        console.log('self.arrNameGilrs');
-        console.log(self.arrNameGilrs.girls[0]);
+
       },
       function(error) {
         console.log(error);
@@ -3448,12 +3772,14 @@ this.birthdateFromAge = function() {
 
   this.makeHeights =  function() {
     var arrListHieght = [];
-    var count = 149
+    var count = 149;
+    var countR = 4.9;
     for(var i=0; i<12; i++) {
       count +=3;
-      arrListHieght[i] = count;
+      countR +=0.1;
+      arrListHieght[i] = [countR.toFixed(1), count];
     }
-    this.listHieght = arrListHieght;
+    this.arrHieght = arrListHieght;
   };
 
   this.makeHeights();
@@ -3464,7 +3790,7 @@ this.birthdateFromAge = function() {
     for(var i=0; i<43; i++){
       count ++;
       arrlistAge[i] = count;
-    }
+    };
     this.listAge = arrlistAge;
   };
 
@@ -3494,12 +3820,88 @@ this.birthdateFromAge = function() {
     this.childrenNumberToModel = undefined;
     this.limit = 3;
     this.resultGirls = [];
-  }
+  };
+
+  this.arrWeight = [];
+  this.arrWeight[0] = [99, 45];
+  this.arrWeight[1] = [101, 46];
+  this.arrWeight[2] = [104, 47];
+  this.arrWeight[3] = [106, 48];
+  this.arrWeight[4] = [106, 48];
+  this.arrWeight[5] = [108, 49];
+  this.arrWeight[6] = [110, 50];
+  this.arrWeight[7] = [112, 51];
+  this.arrWeight[8] = [115, 52];
+  this.arrWeight[9] = [117, 53];
+  this.arrWeight[10] = [119, 54];
+  this.arrWeight[11] = [121, 55];
+  this.arrWeight[12] = [123, 56];
+  this.arrWeight[13] = [126, 57];
+  this.arrWeight[14] = [128, 58];
+  this.arrWeight[15] = [130, 59];
+  this.arrWeight[16] = [132, 60];
+  this.arrWeight[17] = [135, 61];
+  this.arrWeight[18] = [137, 62];
+  this.arrWeight[19] = [139, 63];
+  this.arrWeight[20] = [141, 64];
+  this.arrWeight[21] = [143, 65];
+  this.arrWeight[22] = [146, 66];
+  this.arrWeight[23] = [148, 67];
+  this.arrWeight[24] = [150, 68];
+  this.arrWeight[25] = [152, 69];
+  this.arrWeight[26] = [154, 70];
+  this.arrWeight[27] = [157, 71];
+  this.arrWeight[28] = [159, 72];
+  this.arrWeight[29] = [161, 73];
+  this.arrWeight[30] = [163, 74];
+  this.arrWeight[31] = [165, 75];
+  this.arrWeight[32] = [168, 76];
+  this.arrWeight[33] = [170, 77];
+  this.arrWeight[34] = [172, 78];
+  this.arrWeight[35] = [174, 79];
+  this.arrWeight[36] = [176, 80];
+  this.arrWeight[37] = [179, 81];
+  this.arrWeight[38] = [181, 82];
+  this.arrWeight[39] = [183, 83];
+  this.arrWeight[40] = [185, 84];
+  this.arrWeight[41] = [187, 85];
+  this.arrWeight[42] = [190, 86];
+  this.arrWeight[43] = [192, 87];
+  this.arrWeight[44] = [194, 88];
+  this.arrWeight[45] = [196, 89];
+  this.arrWeight[46] = [198, 90];
+
+  this.photoAvatar2 = function(arg) {
+    var photo = String(arg);
+    photo = photo.slice(0, photo.length-4) + '_150_150_auto' + photo.slice(-4);
+    return photo;
+  };
+
+ this.selectInterval = function() {
+  setInterval(function(){
+    $('.selectpicker').selectpicker({
+        style: 'btn-info',
+        size: 4
+      });
+  }, 1000);
+};
+// $(document).ready(function(){
+   setInterval(function(){
+    $('.selectpicker').selectpicker({
+        style: 'btn-info',
+        size: 4
+      });
+  }, 1000);
+  // })
+
+// this.selectInterval();
+
+
 };
 
-  searchController.$inject = ['userService', 'searchService', 'girlsAllService','girlsService'];
+  searchController.$inject = ['$document', '$location','$stateParams', '$timeout', 'userService', 'searchService', 'girlsAllService','girlsService'];
 
-},{}],20:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 module.exports = searchService;
 
 function searchService ($resource) {
@@ -3540,7 +3942,7 @@ function searchService ($resource) {
 };
 
 searchService.$inject = ['$resource'];
-},{}],21:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 module.exports = userService;
 
 function userService ($resource) {
@@ -3555,7 +3957,7 @@ function userService ($resource) {
 };
 
 userService.$inject = ['$resource'];
-},{}],22:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 module.exports = usersController;
 
 function usersController ($document, $location, userService ) {
@@ -3572,25 +3974,31 @@ function usersController ($document, $location, userService ) {
         } else if(self.user.user.additionalData.groupId == 2){
           $location.path('/lady');
         }
-        else $location.path('/home/18-30-Ukraine');
+        else $location.path('/home/-ag-18-30-co-Ukraine');
       },
       function(error) {
-        $location.path('/home/18-30-Ukraine');
+        $location.path('/home/-ag-18-30-co-Ukraine');
         // console.log(error);
       }
     );
   };
   this.getUserData();
 
-  this.hello = true;
+  this.isMan = function(id) {
+    id == 1? true : false;
+  };
+
+  this.isLady = function(id) {
+    id == 2? true : false;
+  }
 }
 
 usersController.$inject = ['$document', '$location', 'userService'];
-},{}],23:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 require('./src/angular-base64-upload.js');
 module.exports = 'naif.base64';
 
-},{"./src/angular-base64-upload.js":24}],24:[function(require,module,exports){
+},{"./src/angular-base64-upload.js":23}],23:[function(require,module,exports){
 (function(window, undefined) {
 
   'use strict';
@@ -3876,7 +4284,7 @@ module.exports = 'naif.base64';
 
 })(window);
 
-},{}],25:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.3
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -4200,11 +4608,11 @@ angular.module('ngCookies').provider('$$cookieWriter', function $$CookieWriterPr
 
 })(window, window.angular);
 
-},{}],26:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 require('./angular-cookies');
 module.exports = 'ngCookies';
 
-},{"./angular-cookies":25}],27:[function(require,module,exports){
+},{"./angular-cookies":24}],26:[function(require,module,exports){
 angular.module('angular-img-cropper', []).directive("imageCropper", ['$document', '$window', 'imageCropperDataShare', function ($document, $window, imageCropperDataShare) {
     return {
         scope: {
@@ -5606,7 +6014,7 @@ angular.module('angular-img-cropper').factory("imageCropperDataShare", function 
     return share;
 });
 
-},{}],28:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.0
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -6376,11 +6784,11 @@ angular.module('ngResource', ['ng']).
 
 })(window, window.angular);
 
-},{}],29:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 require('./angular-resource');
 module.exports = 'ngResource';
 
-},{"./angular-resource":28}],30:[function(require,module,exports){
+},{"./angular-resource":27}],29:[function(require,module,exports){
 /*
  * @license
  * angular-socket-io v0.7.0
@@ -6485,7 +6893,7 @@ angular.module('btford.socket-io', []).
     }];
   });
 
-},{}],31:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 /*
  * angular-ui-bootstrap
  * http://angular-ui.github.io/bootstrap/
@@ -13882,12 +14290,12 @@ angular.module('ui.bootstrap.datepicker').run(function() {!angular.$$csp().noInl
 angular.module('ui.bootstrap.tooltip').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTooltipCss && angular.element(document).find('head').prepend('<style type="text/css">[uib-tooltip-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-popup].tooltip.right-bottom > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.right-bottom > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.right-bottom > .tooltip-arrow,[uib-popover-popup].popover.top-left > .arrow,[uib-popover-popup].popover.top-right > .arrow,[uib-popover-popup].popover.bottom-left > .arrow,[uib-popover-popup].popover.bottom-right > .arrow,[uib-popover-popup].popover.left-top > .arrow,[uib-popover-popup].popover.left-bottom > .arrow,[uib-popover-popup].popover.right-top > .arrow,[uib-popover-popup].popover.right-bottom > .arrow,[uib-popover-html-popup].popover.top-left > .arrow,[uib-popover-html-popup].popover.top-right > .arrow,[uib-popover-html-popup].popover.bottom-left > .arrow,[uib-popover-html-popup].popover.bottom-right > .arrow,[uib-popover-html-popup].popover.left-top > .arrow,[uib-popover-html-popup].popover.left-bottom > .arrow,[uib-popover-html-popup].popover.right-top > .arrow,[uib-popover-html-popup].popover.right-bottom > .arrow,[uib-popover-template-popup].popover.top-left > .arrow,[uib-popover-template-popup].popover.top-right > .arrow,[uib-popover-template-popup].popover.bottom-left > .arrow,[uib-popover-template-popup].popover.bottom-right > .arrow,[uib-popover-template-popup].popover.left-top > .arrow,[uib-popover-template-popup].popover.left-bottom > .arrow,[uib-popover-template-popup].popover.right-top > .arrow,[uib-popover-template-popup].popover.right-bottom > .arrow{top:auto;bottom:auto;left:auto;right:auto;margin:0;}[uib-popover-popup].popover,[uib-popover-html-popup].popover,[uib-popover-template-popup].popover{display:block !important;}</style>'); angular.$$uibTooltipCss = true; });
 angular.module('ui.bootstrap.timepicker').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTimepickerCss && angular.element(document).find('head').prepend('<style type="text/css">.uib-time input{width:50px;}</style>'); angular.$$uibTimepickerCss = true; });
 angular.module('ui.bootstrap.typeahead').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTypeaheadCss && angular.element(document).find('head').prepend('<style type="text/css">[uib-typeahead-popup].dropdown-menu{display:block;}</style>'); angular.$$uibTypeaheadCss = true; });
-},{}],32:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 require('./dist/ui-bootstrap-tpls');
 
 module.exports = 'ui.bootstrap';
 
-},{"./dist/ui-bootstrap-tpls":31}],33:[function(require,module,exports){
+},{"./dist/ui-bootstrap-tpls":30}],32:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -18258,7 +18666,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],34:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.0
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -48687,11 +49095,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],35:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":34}],36:[function(require,module,exports){
+},{"./angular":33}],35:[function(require,module,exports){
 /**!
  * AngularJS file upload directives and services. Supoorts: file upload/drop/paste, resume, cancel/abort,
  * progress, resize, thumbnail, preview, validation and CORS
@@ -51494,10 +51902,10 @@ ngFileUpload.service('UploadExif', ['UploadResize', '$q', function (UploadResize
 }]);
 
 
-},{}],37:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 require('./dist/ng-file-upload-all');
 module.exports = 'ngFileUpload';
-},{"./dist/ng-file-upload-all":36}],38:[function(require,module,exports){
+},{"./dist/ng-file-upload-all":35}],37:[function(require,module,exports){
 // Generated by CoffeeScript 1.9.0
 (function() {
   angular.module("ocNgRepeat", []).directive('ngRepeatOwlCarousel', function() {

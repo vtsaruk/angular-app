@@ -14,7 +14,7 @@ function girlsAllService ($resource) {
       direction: options.direction,
       limit: options.limit,
       offset: options.offset,
-      relations: '{"user":{"country":{} } }'
+      relations: '{"user":{"country":{}, "mainphoto": {} } }'
     });
   };
 

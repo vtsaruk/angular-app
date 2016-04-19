@@ -2,14 +2,14 @@
 
 <main class="profile">
     <div class="container">
-    <!-- <div>{{ctrl.girlsId}}</div> -->
+    <!-- <div>{{ctrl.girlsId.girl.aboutMe}}</div> -->
         <div class="row">
             <div class="col-md-12">
                 <div class="main-content clearfix">
                     <div class="col-sm-4 col-md-4">
                         <div class="profile-left-side">
                             <div class="profile-left-side-ava">
-                                <img src="/assets/main/img/profile-img.jpg" alt="">
+                                <img src="{{ctrl.photoAvatar2(ctrl.girlsId.girl.user.mainphoto.pathOfQuad)}}" alt="">
                                 <img src="/assets/main/img/check-icon.png" alt="" class="check-icon">
                             </div>
                             <div class="profile-left-side-carousel">
@@ -17,7 +17,7 @@
                                     <p>watching videos of paid
                                         and will be available after login</p>
                                 </div>
-<div id="owl-demo4" class="owl-carousel owl-theme">
+                  <div id="owl-demo4" class="owl-carousel owl-theme">
                   <div class="item">
                     <div class="profile-left-side-carousel-frame">
                     <iframe width="100%" height="200" src="https://www.youtube.com/embed/_lIrgC63WjI" frameborder="0" allowfullscreen>
@@ -154,29 +154,8 @@
 
                                         <div class="profile-right-side-photos-container">
                     <div id="owl-demo5" class="owl-carousel owl-theme" owl-carousel-item="">
-                      <div class="item">
-                        <img src="assets/angular-app/public/img/girls-222.jpg" alt="">
-                      </div>
-                      <div class="item">
-                        <img src="assets/angular-app/public/img/girls-333.jpg" alt="">
-                      </div>
-                      <div class="item">
-                        <img src="assets/angular-app/public/img/girls-111.jpg" alt="">
-                      </div>
-                      <div class="item">
-                        <img src="assets/angular-app/public/img/girls-333.jpg" alt="">
-                      </div>
-                      <div class="item">
-                        <img src="assets/angular-app/public/img/girls-222.jpg" alt="">
-                      </div>
-                      <div class="item">
-                        <img src="assets/angular-app/public/img/girls-333.jpg" alt="">
-                      </div>
-                      <div class="item">
-                        <img src="assets/angular-app/public/img/girls-111.jpg" alt="">
-                      </div>
-                      <div class="item">
-                        <img src="assets/angular-app/public/img/girls-333.jpg" alt="">
+                      <div class="item" ng-repeat="photos in ctrl.girlsPhotos.photos">
+                        <img src="{{photos.path}}" alt="">
                       </div>
                     </div>
                     <div class="customNavigation">
@@ -195,11 +174,13 @@
                                 <div class="col-md-12">
                                     <div class="profile-right-side-about-me">
                                         <h5 class="red-18-Lt-w600 mn-b-5">About me</h5>
-                                        <div class="grey-18-Lt profile-right-side-about-me-p">
-                                            <!--                    <div class="profile-right-side-about-me-popup">
-                                                                                        You need log in to see more information
-                                                                                    </div> -->
-                                            {{ctrl.girlsId.girl.aboutMe}}<a href="#" class="red-14-Lt-w600"> more...</a></div>
+                                        <div class="grey-18-Lt profile-right-side-about-me-p" ng-model="ctrl.switchComment">
+                                            <!--<div class="profile-right-side-about-me-popup"> ou need log in to see more information</div> -->
+                                            {{ctrl.letterTextSlice(ctrl.girlsId.girl.aboutMe, ctrl.switchComment)}}
+                                            <a ng-hide="ctrl.switchComment || ctrl.switchMore(ctrl.girlsId.girl.aboutMe)" href="" ng-click="ctrl.switchComment=true" class="message-toggle">&nbsp;more<i class="fa fa-chevron-right"></i>
+                      </a>
+                      <a ng-show="ctrl.switchComment" href="" ng-click="ctrl.switchComment=false" class="message-toggle">&nbsp;hide<i class="fa fa-chevron-up"></i>
+                      </a></div>
                                         <h5 class="red-18-Lt-w600 mn-b-5">My interests and hobbies</h5>
                                         <div class="grey-18-Lt profile-right-side-about-me-p">
                                             <div class="profile-right-side-about-me-popup">

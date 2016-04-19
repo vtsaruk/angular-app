@@ -1,0 +1,65 @@
+<header ng-show="ctrl.isMan(ctrl.user.user.additionalData.groupId)">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+
+        <a href="#" class="small-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </a>
+
+        <a href="/#/home" class="header--logo">
+          <img src="assets/angular-app/public/img/logo.png"  alt=""></a>
+
+        <nav class="header--nav">
+          <ul class="clearfix">
+            <li>
+              <a href="/#/girls/18-30-Ukraine">Ladies</a>
+            </li>
+            <li>
+              <a href="/#/search/ag-18-30">Search</a>
+            </li>
+            <li>
+              <a href="/#/man">Mail</a>
+            </li>
+            <li>
+              <a href="/#/chat">Chat</a>
+            </li>
+            <li>
+              <a href="">Gifts Delivery</a>
+            </li>
+            <li>
+              <a id="not_check_box" href="">Offers</a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="header--profile">
+          <div class="header--profile-img-likes">
+            <a href="#">
+              <img src="{{ctrl.user.user.mainphoto.pathOfQuad}}" width="40" height="40" alt=""></a>
+            <div class="header--heart">
+              <p>
+                <img src="assets/angular-app/public/img/header-heart.png" alt=""></p>
+              <p>2000</p>
+            </div>
+
+          </div>
+          <div class="header--profile-info">
+            <p>
+              Welcome,
+              <span>{{ctrl.user.user.firstname}} {{ctrl.user.user.lastname}}</span>
+            </p>
+            <a href="/#/form">My Profile</a>
+            &nbsp;  |&nbsp;&nbsp;
+            <a href="/index/logout">
+              <span>Log out</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</header>

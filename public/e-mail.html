@@ -18,10 +18,10 @@
           <nav class="header--nav">
             <ul class="clearfix">
               <li>
-                <a href="/#/girls/18-30-Ukraine">Ladies</a>
+                <a href="/#/girls/-ag-18-27-co-Ukraine">Ladies</a>
               </li>
               <li>
-                <a href="/#/search">Search</a>
+                <a href="/#/search/-ag-18-30">Search</a>
               </li>
               <li>
                 <a href="/#/man">Mail</a>
@@ -93,25 +93,24 @@
             </div>
             <div class="message-sort clearfix">
               <div class="message-sort-left">
-                <ul ng-show="ctrl.showTumblerCheck" class="message-sort-dropdown not_check_box">
-                  <li>
-                    <a href="" ng-click="ctrl.selectAllCheck()">Select all</a>
+                <ul ng-if="ctrl.showTumblerCheck==true" class="message-sort-dropdown">
+                  <li ng-click="ctrl.selectAllCheck()">
+                    <a href="" >Select all</a>
                   </li>
-                  <li>
-                    <a href="" ng-click="ctrl.readSelectCheck()">Read</a>
+                  <li ng-click="ctrl.readSelectCheck()">
+                    <a href="" >Read</a>
                   </li>
-                  <li>
-                    <a href="" ng-click="ctrl.unreadSelectCheck()">Unread</a>
+                  <li ng-click="ctrl.unreadSelectCheck()">
+                    <a href="" >Unread</a>
                   </li>
-                  <li>
-                    <a href="" ng-click="ctrl.unselectCheck()">Unselect</a>
+                  <li ng-click="ctrl.unselectCheck()">
+                    <a href="" >Unselect</a>
                   </li>
                 </ul>
                 <div class="message-sort-left-1">
                   <label class="checkbox-1">
-                      <input type="checkbox" ng-model="ctrl.deletedSelect" ng-click="ctrl.showSelectCheck()" class="not_check_box">
-                      <!-- ng-click="ctrl.deletedSelectCheckBox() -->
-                      <span class="not_check_box"></span>
+                      <input id="not_check_box" type="checkbox" ng-model="ctrl.deletedSelect" ng-click="ctrl.showSelectCheck()">
+                      <span></span>
                   </label>
                   <i class="fa fa-caret-right" ng-click="ctrl.showSelectCheck()"></i>
                 </div>

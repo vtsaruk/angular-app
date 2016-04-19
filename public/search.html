@@ -21,7 +21,7 @@
 					<nav class="header--nav">
 						<ul class="clearfix">
 							<li>
-								<a href="/#/girls/18-30-Ukraine">Ladies</a>
+								<a href="/#/girls/-ag-18-27-co-Ukraine">Ladies</a>
 							</li>
 							<li>
 								<a href="/#/search">Search</a>
@@ -73,6 +73,7 @@
 	<!-- end header -->
 	<!-- page-message -->
 <main class="search">
+<!-- <div>{{ctrl.resultGirls}}</div> -->
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
@@ -89,18 +90,15 @@
                 <div class="search-left-side-select-item">
                   <label for="">Country</label>
                   <select name="" id="" class="selectpicker" ng-model="ctrl.countryModel">
-                  <option>Doesn't matter</option>
-                  <option ng-repeat="country in ctrl.countries.countries" value="{{country.name}}">{{country.name}}</option>
-                    <!-- <option value="1">Doesn't matter</option>
-                    <option value="2">val_2</option>
-                    <option value="3">val_3</option>
-                    <option value="4">val_4</option> -->
+                    <option value="">Doesn't matter</option>
+                    <option ng-repeat="country in ctrl.countries.countries" value="{{country.name}}">{{country.name}}</option>
+
                   </select>
                 </div>
                 <div class="search-left-side-select-item">
                   <label for="">City</label>
                   <select name="" id="" class="selectpicker" ng-model="ctrl.cityModel">
-                    <option value="1">Doesn't matter</option>
+                    <option value="">Doesn't matter</option>
                     <option value="2">val_2</option>
                     <option value="3">val_3</option>
                     <option value="4">val_4</option>
@@ -109,6 +107,7 @@
                 <div class="search-left-side-select-item">
                   <label for="">First Name</label>
                   <select name="" id="" class="selectpicker" ng-model="ctrl.firstNameModel">
+                    <option value="">Doesn't matter</option>
                     <option ng-repeat="girl in ctrl.arrNameGilrs.girls"value="{{girl.user.firstname}}">{{girl.user.firstname}}</option>
                    <!--  <option value="2">val_2</option>
                     <option value="3">val_3</option>
@@ -118,15 +117,15 @@
                 <div class="search-left-side-select-item double">
                   <label for="">Age</label>
                   <select name="" id="" class="selectpicker" ng-model="ctrl.birthdateFromModel" >
-                  <!-- multiple -->
-                    <!-- <option value="1">Doesn't matter</option> -->
+                    <option value="">Doesn't matter</option>
                     <option ng-repeat="age in ctrl.listAge" value="{{age}}">{{age}}</option>
                     <!-- <option value="19">19</option>
                     <option value="20">20</option> -->
                   </select>
                   <span class="search-left-side-select-item-line">-</span>
                   <select name="" id="" class="selectpicker" ng-model="ctrl.birthdateToModel">
-                  <!-- multiple -->
+
+                    <option value="">Nothing selected</option>
                     <option ng-repeat="age in ctrl.listAge"value="{{age}}">{{age}}</option>
                     <!-- <option value="29">29</option>
                     <option value="30">30</option>
@@ -136,50 +135,42 @@
                 <div class="search-left-side-select-item double">
                   <label for="">Height (ft/cm)</label>
                   <select name="" id="" class="selectpicker" ng-model="ctrl.heightFromModel">
-                    <option ng-repeat="hieght in ctrl.listHieght" value="{{hieght}}">{{hieght}}</option>
-                    <!-- <option value="2">val_2</option>
-                    <option value="3">val_3</option>
-                    <option value="4">val_4</option> -->
+                    <option value="">Doesn't matter</option>
+                    <option ng-repeat="hieght in ctrl.arrHieght" value="{{hieght[1]}}">{{hieght[0]}}/{{hieght[1]}}</option>
                   </select>
                   <span class="search-left-side-select-item-line">-</span>
                   <select name="" id="" class="selectpicker" ng-model="ctrl.heightToModel">
-                    <option ng-repeat="hieght in ctrl.listHieght" value="{{hieght}}">{{hieght}}</option>
-                    <!-- <option value="2">val_2</option>
-                    <option value="3">val_3</option>
-                    <option value="4">val_4</option> -->
+                    <option value="">Nothing selected</option>
+                    <option ng-repeat="hieght in ctrl.arrHieght" value="{{hieght[1]}}">{{hieght[0]}}/{{hieght[1]}}</option>
                   </select>
                 </div>
                 <div class="search-left-side-select-item double">
                   <label for="">Weight (lbs/kg)</label>
                   <select name="" id="" class="selectpicker" ng-model="ctrl.weightFromModel">
-                    <option value="1">Doesn't matter</option>
-                    <option value="2">val_2</option>
-                    <option value="3">val_3</option>
-                    <option value="4">val_4</option>
+                    <option value="">Doesn't matter</option>
+                    <option ng-repeat="weight in ctrl.arrWeight" value="{{weight[1]}}">{{weight[0]}}/{{weight[1]}}</option>
                   </select>
                   <span class="search-left-side-select-item-line">-</span>
                   <select name="" id="" class="selectpicker" ng-model="ctrl.weightToModel">
-                    <option value="1"></option>
-                    <option value="2">val_2</option>
-                    <option value="3">val_3</option>
-                    <option value="4">val_4</option>
+                    <option value="">Nothing selected</option>
+                    <option ng-repeat="weight in ctrl.arrWeight" value="{{weight[1]}}">{{weight[0]}}/{{weight[1]}}</option>
                   </select>
                 </div>
                 <div class="search-left-side-select-item">
                   <label for="">Hair Color</label>
                   <select name="" id="" class="selectpicker" ng-model="ctrl.hairColorModel">
-                    <!-- <option value="1">Doesn't matter</option> -->
+                    <option value="">Doesn't matter</option>
                     <option value="Black">Black</option>
                     <option value="Blonde">Blonde</option>
                     <option value="Brown">Brown</option>
                     <option value="Red">Red</option>
-                    <option value="Light brown">Light brown</option>
+                    <option value="Light_brown">Light brown</option>
                   </select>
                 </div>
                 <div class="search-left-side-select-item">
                   <label for="">Eye Color</label>
                   <select name="" id="" class="selectpicker" ng-model="ctrl.eyeColorModel">
-                    <!-- <option value="1">Doesn't matter</option> -->
+                    <option value="">Doesn't matter</option>
                     <option value="Blue">Blue</option>
                     <option value="Brown">Brown</option>
                     <option value="Gray">Gray</option>
@@ -190,7 +181,7 @@
                 <div class="search-left-side-select-item">
                   <label for="">English Rating</label>
                   <select name="" id="" class="selectpicker" ng-model="ctrl.englishRatingModel">
-                    <!-- <option value="1">Doesn't matter</option> -->
+                    <option value="">Doesn't matter</option>
                     <option value="Beginner">Beginner</option>
                     <option value="Intermediate">Intermediate</option>
                     <option value="Advanced">Advanced</option>
@@ -204,7 +195,8 @@
                 <div class="search-left-side-select-item double">
                   <label for="">Number of Children</label>
                   <select name="" id="" class="selectpicker" ng-model="ctrl.childrenNumberFromModel">
-                    <option value="0">Doesn't matter</option>
+                    <option value="">Doesn't matter</option>
+                    <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -213,6 +205,7 @@
                   </select>
                   <span class="search-left-side-select-item-line">-</span>
                   <select name="" id="" class="selectpicker" ng-model="ctrl.childrenNumberToModel">
+                    <option value="">Nothing selected</option>
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -224,32 +217,32 @@
                 <div class="search-left-side-select-item">
                   <label for="">Marital Status</label>
                   <select name="" id="" class="selectpicker" ng-model="ctrl.maritalStatusModel">
-                    <!-- <option value="1">Doesn't matter</option> -->
-                    <option value="Never married">Never married</option>
+                    <option value="">Doesn't matter</option>
+                    <option value="Never_married">Never married</option>
                     <option value="Divorced">Divorced</option>
                     <option value="Widow">Widow</option>
                   </select>
                 </div>
                 <div class="search-left-side-select-item">
                   <label for="">Looking For</label>
-                  <select name="" id="" class="selectpicker" >
-                    <option value="0">Doesn't matter</option>
+                  <select name="" id="" class="selectpicker" ng-model="ctrl.lookingForModel">
+                    <option value="">Doesn't matter</option>
                     <option value="Marriage">Marriage</option>
-                    <option value="Find a person with children">Find a person with children</option>
-                    <option value="Find a person who is good with children">Find a person who is good with children</option>
-                    <option value="A long term relationship">A long term relationship</option>
-                    <option value="Penpal relationship">Penpal relationship</option>
-                    <option value="Meeting with foreign person while they are travelling to CIS">Meeting with foreign person while they are travelling to CIS</option>
-                    <option value="A casual relationship">A casual relationship</option>
-                    <option value="Meet person of different cultures">Meet person of different cultures</option>
-                    <option value="Online chat (Phone, Video, Live)">Online chat (Phone, Video, Live)</option>
-                    <option value="Online Flirting">Online Flirting</option>
+                    <option value="Find_a_person_with_children">Find a person with children</option>
+                    <option value="Find_a_person_who_is_good_with_children">Find a person who is good with children</option>
+                    <option value="A_long_term_relationship">A long term relationship</option>
+                    <option value="Penpal_relationship">Penpal_relationship</option>
+                    <option value="Meeting_with_foreign_person_while_the_are_travelling_to_CIS">Meeting with foreign person while they are travelling to CIS</option>
+                    <option value="A_casual_relationship">A casual relationship</option>
+                    <option value="Meet_person_of_different_cultures">Meet person of different cultures</option>
+                    <option value="Online_chat_(Phone,_Video,_Live)">Online chat (Phone, Video, Live)</option>
+                    <option value="Online_Flirting">Online Flirting</option>
                   </select>
                 </div>
                 <div class="search-left-side-select-item">
                   <label for="">Profession</label>
                   <select name="" id="" class="selectpicker" ng-model="ctrl.professionModel">
-                    <option value="1">Doesn't matter</option>
+                    <option value="">Doesn't matter</option>
                     <option value="2">val_2</option>
                     <option value="3">val_3</option>
                     <option value="4">val_4</option>
@@ -258,23 +251,23 @@
                 <div class="search-left-side-select-item">
                   <label for="">Education</label>
                   <select name="" id="" class="selectpicker" ng-model="ctrl.educationModel">
-                    <option>Doesn't matter</option>
-                    <option value="University degree">University degree</option>
-                    <option value="University (unfinished)">University (unfinished)</option>
-                    <option value="Medical degree">Medical degree</option>
+                    <option value="">Doesn't matter</option>
+                    <option value="University_degree">University degree</option>
+                    <option value="University_(unfinished)">University (unfinished)</option>
+                    <option value="Medical_degree">Medical degree</option>
                     <option value="Student">Student</option>
-                    <option value="College degree">College degree</option>
-                    <option value="High school">High school</option>
+                    <option value="College_degree">College degree</option>
+                    <option value="High_school">High school</option>
                   </select>
                 </div>
                 <div class="search-left-side-select-item">
                   <label for="">Religion</label>
                   <select name="" id="" class="selectpicker" ng-model="ctrl.religionModel">
-                    <option value="1">Doesn't matter</option>
-                    <option value="Not Religious">Not Religious</option>
+                    <option value="">Doesn't matter</option>
+                    <option value="Not_Religious">Not Religious</option>
                     <option value="Muslim">Muslim</option>
                     <option value="Jewish">Jewish</option>
-                    <option value="Russian Orthodox">Russian Orthodox</option>
+                    <option value="Russian_Orthodox">Russian Orthodox</option>
                     <option value="Buddhism">Buddhism</option>
                     <option value="Catholic">Catholic</option>
                     <option value="Baptist">Baptist</option>
@@ -291,14 +284,14 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   Drinking</label>
                   <select name="" id="" class="selectpicker" ng-model="ctrl.smokingModel">
-                    <!-- <option value="1">Doesn't matter</option> -->
+                    <option value="">Doesn't matter</option>
                     <option value="No">No</option>
                     <option value="Yes">Yes</option>
                     <option value="Sometimes">Sometimes</option>
                   </select>
                   <span class="search-left-side-select-item-line">-</span>
                   <select name="" id="" class="selectpicker" ng-model="ctrl.drinkingModel">
-                    <!-- <option value="1"></option> -->
+                    <option value="">Nothing selected</option>
                     <option value="Never">Never</option>
                     <option value="Socially">Socially</option>
                     <option value="Occasionally">Occasionally</option>
@@ -307,7 +300,7 @@
                 <div class="search-left-side-select-item">
                   <label for="">Zodiac Sign</label>
                   <select name="" id="" class="selectpicker" ng-model="ctrl.zodiacSignModel">
-                    <!-- <option value="1">Doesn't matter</option> -->
+                    <option value="">Doesn't matter</option>
                     <option value="Aries">Aries</option>
                     <option value="Taurus">Taurus</option>
                     <option value="Gemini">Gemini</option>
@@ -324,7 +317,7 @@
                 </div>
                 <a ng-click="ctrl.advancedSearch=false" href="" class="red-18-Th adv-search mn-b-15">Quick Search</a>
                 </div>
-                <button class="btn-send" ng-click="ctrl.searchGirls()">Search</button></div>
+                <button class="btn-send" ng-click="ctrl.searchGirls();ctrl.searchGirlsURL()">Search</button></div>
 
 						</div>
 					</div>
@@ -335,19 +328,15 @@
 								<a href="" ng-click="ctrl.clearDataSearch()" class="a-clear pull-right">Clear</a>
 							</div>
 							<ul class="search-right-side-list">
-								<li><a href="#" class="grey-14-Lt">Beginner</a></li>
-								<li><a href="#" class="grey-14-Lt">5.7/174</a></li>
-								<li><a href="#" class="grey-14-Lt">Blonde</a></li>
-								<li><a href="#" class="grey-14-Lt">Beginner</a></li>
-								<li><a href="#" class="grey-14-Lt">Beginner</a></li>
-								<li><a href="#" class="grey-14-Lt">5.7/174</a></li>
-								<li><a href="#" class="grey-14-Lt">Blonde</a></li>
-								<li><a href="#" class="grey-14-Lt">Beginner</a></li>
-								<li><a href="#" class="grey-14-Lt">5.7/174</a></li>
+<!-- <div>{{ctrl.arrURL}}</div> -->
+								<li ng-repeat="parameter in ctrl.arrURL" ng-show="ctrl.showParam(parameter[1])">
+                  <a href="" class="grey-14-Lt" ng-click="ctrl.hideParam($index)">{{parameter[1]}}</a>
+                </li>
+
 							</ul>
 							<div class="line mn-b-20"></div>
 							<button class="btn-send pull-right mn-b-20" ng-click="ctrl.searchGirlId(ctrl.girlIdModel)">Search by ID</button>
-							<input type="number" id="lady-id" placeholder="Lady's ID" ng-model="ctrl.girlIdModel" ng-maxlength="5">
+							<input type="number" id="lady-id" placeholder="Lady's ID" ng-model="ctrl.girlIdModel" ng-maxlength="5" min="1">
 							<div class="clear"></div>
 							<div class="search-right-side-results-container clearfix">
 								<h3 class="white-21-Lt pull-left">Search Results</h3>
@@ -361,13 +350,10 @@
 							</div>
 							<div class="search-right-side-girls-container">
 								<div class="row">
-
-
 <!-- <div>{{ctrl.girlsAll.girls[0]}}</div> -->
-
 									<div class="col-md-6" ng-repeat="girl in ctrl.resultGirls">
 										<div class="search-right-side-girls-item clearfix">
-											<img src="{{girl.user.mainphoto.pathOfQuad}}" alt="" class="s-img">
+											<img src="{{ctrl.photoAvatar2(girl.user.mainphoto.pathOfQuad)}}" alt="" class="s-img">
 											<div class="search-right-side-girls-item-info">
 												<span class="circle"></span>
 												<a href="#" class="white-18-Th-500">{{girl.user.firstname}}, {{ctrl.agePerson(girl.user.birthdate)}}</a>
@@ -387,11 +373,8 @@
 											</div>
 										</div>
 									</div>
-
-
-
 								</div>
-								<div class="girls-arrow" ng-click="ctrl.paginaGirl()">
+								<div class="girls-arrow" ng-hide="ctrl.buttonAdd" ng-click="ctrl.paginaGirl()" ng-model="ctrl.buttonAdd">
 									<img src="assets/angular-app/public/img/girls-arrow.png" alt="">
 								</div>
 							</div>
@@ -402,12 +385,8 @@
 		</div>
 	</div>
 </main>
-
-	<div class="copyright">
-		<p>IrinaDating &copy; 2009-2015</p>
-	</div>
-	<!-- end copyright -->
-
-
-
+<!--  <script>$('.selectpicker').selectpicker({
+        style: 'btn-info',
+        size: 4
+      });</script> -->
 </biv>

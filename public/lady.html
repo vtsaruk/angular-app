@@ -85,29 +85,28 @@
                 <p>Deleted</p>
               </div>
             </div>
-
             <div class="message-sort clearfix">
               <div class="message-sort-left">
-                <ul ng-show="showSortUl" class="message-sort-dropdown">
-                  <li>
-                    <a href="" ng-click="ctrl.selectAllCheck()">Select all</a>
+                <ul ng-if="ctrl.showTumblerCheck==true" class="message-sort-dropdown">
+                  <li ng-click="ctrl.selectAllCheck()">
+                    <a href="" >Select all</a>
                   </li>
-                  <li>
-                    <a href="" ng-click="ctrl.readSelectCheck()">Read</a>
+                  <li ng-click="ctrl.readSelectCheck()">
+                    <a href="" >Read</a>
                   </li>
-                  <li>
-                    <a href="" ng-click="ctrl.unreadSelectCheck()">Unread</a>
+                  <li ng-click="ctrl.unreadSelectCheck()">
+                    <a href="" >Unread</a>
                   </li>
-                  <li>
-                    <a href="" ng-click="ctrl.unselectCheck()">Unselect</a>
+                  <li ng-click="ctrl.unselectCheck()">
+                    <a href="" >Unselect</a>
                   </li>
                 </ul>
                 <div class="message-sort-left-1">
                   <label class="checkbox-1">
-                      <input type="checkbox" ng-model="showSortUl">
+                      <input id="not_check_box" type="checkbox" ng-model="ctrl.deletedSelect" ng-click="ctrl.showSelectCheck()">
                       <span></span>
                   </label>
-                  <i class="fa fa-caret-right"></i>
+                  <i class="fa fa-caret-right" ng-click="ctrl.showSelectCheck()"></i>
                 </div>
                 <p class="p-sort" ng-click="ctrl.showFilter(ctrl.filterDiv)"><img src="assets/angular-app/public/img/calendar.png" alt="">Sort by Date</p>
 

@@ -2,44 +2,39 @@ module.exports = mailController;
 
 function mailController ($document, $location, $timeout, $anchorScroll, mailService, userService , girlsService, $scope) {
 
-  // this.showTumblerCheck = false;
-
+/*Функция определяет возраст*/
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
-  }
-
+  };
+/*Функция показывает меню выделения писем прочитанных, непрочитанных*/
   this.showSelectCheck = function() {
-    // console.log('showSelectCheck');
     this.showTumblerCheck = true;
     this.deletedSelect = false;
-    //this.unreadSelectCheck();
-    var list = angular.element(document.getElementsByClassName('message-sort-dropdown'));
-    for(var i=1; i<8; i+=2){
-      list[0].childNodes[i].childNodes[1].className = '';
-    };
-  }
-
+    // var list = angular.element(document.getElementsByClassName('message-sort-dropdown'));
+    // for(var i=1; i<8; i+=2){
+    //   list[0].childNodes[i].childNodes[1].className = '';
+    // };
+  };
+/*Функция в меню выделения писем прочитанных, непрочитанных показывает текущее состояние */
   this.removeClassTab = function(arg) {
     var list = angular.element(document.getElementsByClassName('message-tabs-item'));
     for(var i=0; i<list.length; i++){
       list[i].className = 'message-tabs-item';
-      // list[i].on('click', 'activeAddClass')
     };
     list[arg].className = 'message-tabs-item active';
   };
-
+/*Функция показывает и скрывает фильтры по датам*/
   this.showList = function(){
     this.listDiv = this.listDiv ? false : true;
   };
-
+/*Функция показывает и скрывает список возможностей в области отправки письма*/
   this.showFilter = function() {
     this.toDate = new Date();
     var dateFrom = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*20);
     this.fromDate = new Date(dateFrom);
-    console.log(this.toDate);
     this.filterDiv = this.filterDiv ? false : true;
   };
-
+/*Функция запрашивает данные залогиненного пользователя*/
   this.getUserData = function () {
     var self = this;
     userService.getUser().$promise.then(
@@ -54,7 +49,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
   };
 
   this.getUserData();
-
+/*Функция, отвечающая за параметры в запросе на получение писем*/
   this.changeType = function (type) {
     this.resultFromDate = undefined;
     this.resultToDate = undefined;
@@ -66,7 +61,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     this.onThisWeek = false;
     this.onLastWeek = false;
   };
-
+/*Функция запроса писем через сервис*/
   this.getMessages = function () {
     if(this.tumbler==false) {
       this.tumbler=true
@@ -89,7 +84,6 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
         for(var i=1; i<self.arrLengthCeil+1; i++) {
           self.arrIndex.push(i);
         };
-
         angular.forEach(self.messages.letters, function(letter, index) {
           self.messages.letters[index]['deleted'] = false;
         });
@@ -98,26 +92,24 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
         console.log(error);
       });
     };
-
+/*Функция пагинации выделяет номер страницы из списка страниц*/
   this.paginaAddClass = function(index) {
-
-      var arrPaginaClass = angular.element(document.getElementsByClassName('pagina'));
-      for(var i=0; i<arrPaginaClass.length; i++) {
-        arrPaginaClass[i].childNodes[0].className = '';
-      }
-      arrPaginaClass[index].childNodes[0].className = 'text_width';
+    var arrPaginaClass = angular.element(document.getElementsByClassName('pagina'));
+    for(var i=0; i<arrPaginaClass.length; i++) {
+      arrPaginaClass[i].childNodes[0].className = '';
+    };
+    arrPaginaClass[index].childNodes[0].className = 'text_width';
   };
-
+/*Функция пагинации выделяет первую страницу из списка страниц при переходе по каталогам*/
   this.firstNamberPagin = function() {
     var self = this;
     $timeout(function(){
-      console.log(self.arrIndex.length);
       if(self.arrIndex.length>0) {
         self.paginaAddClass(0);
       }
     },100);
   };
-
+/*Функция переключения пагинации при нажатии на next */
   this.getNextMessages = function() {
     if (this.page < this.arrLengthCeil-1) {
       this.page += 1;
@@ -126,7 +118,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       this.paginaAddClass(this.page);
     }
   };
-
+/*Функция переключения пагинации при нажатии на pre*/
   this.getPrevMessages = function() {
     if(this.page>0) {
     this.page -= 1;
@@ -138,9 +130,8 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     this.page = index-1;
     this.getMessages();
     this.paginaAddClass(this.page);
-
   }
-
+/*Функция запрашивает общее кол-во писем Introductions*/
   this.getMessagesIntroductions = function() {
     var self = this;
     mailService.getMessagesLengthIntroductions().$promise.then(
@@ -152,7 +143,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       }
     );
   };
-
+/*Функция чтения письма и вызывает функцию переписки*/
   this.readTheLetter = function(id, partnerid){
     if(this.tumbler) {
         this.tumbler = false;
@@ -171,7 +162,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     $anchorScroll();
 
   };
-
+/*Функция возвращает кол-во непрочитанных писем с типом Inbox*/
   this.getMessagesInboxLength = function() {
     var self = this;
     mailService.getMessagesLengthInbox().$promise.then(
@@ -184,13 +175,13 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
   };
 
   this.getMessagesInboxLength();
-
+/*Функция отвечает за стили письма в переписке*/
   this.addClass = function(arg1, arg2, arg3) {
     if(arg3==false) {
       return 2;
     }else return arg1==arg2? 0:1;
   };
-
+/*Функция оплаты письма, чтобы прочитать его*/
   this.payment =function(id, partnerid) {
     var self = this;
     mailService.paymentLetter(id).$promise.then(
@@ -202,10 +193,11 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       },
       function(error) {
         console.log(error);
+        alert('У вас не денег на счете');
       }
     );
   };
-
+/*Функция чтения конкретного письма*/
   this.readLadyLetter =function(id, partnerid) {
     var self = this;
     mailService.readLetter(id).$promise.then(
@@ -220,18 +212,17 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       }
     );
   };
-
+/*Функция запроса на переписку*/
   this.correspondence = function(partnerId) {
     var self = this;
     self.partnerId = partnerId;
-  var options = {
+    var options = {
       partnerId: self.partnerId,
       dateTimeFrom: self.resultFromDate,
       dateTimeTo: self.resultToDate,
       limit: self.limit2,
       offset: 0
     };
-    //self.currentPartnerid = partnerid;
     mailService.correspondenceGet(options).$promise.then(
       function(data) {
         self.letterCor =data;
@@ -250,7 +241,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
 
   this.page2 = 0;
   this.limit2 = 20;
-
+/*Функция пагинации для переписки*/
   this.paginaLetterCor = function() {
      if (this.totalPage2){
       this.page2 += 1;
@@ -260,23 +251,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
         this.buttonAddLetter = true;
     }
   };
-
-  // this.correspondence = function(partnerid) {
-  //   if(this.tumbler) {
-  //       this.tumbler = false;
-  //     };
-  //   var self = this;
-  //   self.currentPartnerid = partnerid;
-  //   mailService.correspondenceGet(partnerid).$promise.then(
-  //     function(data) {
-  //       self.letterCor =data;
-  //     },
-  //     function(error) {
-  //       console.log(error);
-  //     }
-  //   );
-  // }
-
+/*Функция обрезает текст письма, если в письме больше 90 символов*/
   this.switchMore = function(letterText) {
     if (letterText==null) {
       return false;}
@@ -284,8 +259,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       return false;
     } else return true;
   };
-
-
+/*Функция показавет весь текст письма в переписке*/
   this.letterTextSlice = function(letterText, switchComment) {
     if (switchComment) {
        return letterText;
@@ -293,21 +267,18 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       if (letterText==null) {
         return 0;
       } else if(letterText.length>90) {
-
         var text = letterText.slice(0, 90);
         return text;
       }
       return letterText;
     }
   }
-
+/*Функция устанавливает позицию слева/справа для каритнки в переписке*/
   this.showSendMessage =function(senderId, userId) {
     return senderId==userId? true: false;
   }
-
-
   this.textArea = false;
-
+/*функция создаёт эффект моргания при отправке письма*/
   this.textAreaTime = function() {
     var self = this;
     self.textArea = true;
@@ -315,7 +286,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       self.textArea = false;
     },600);
   }
-
+/*Функция отправляет письмо по API*/
   this.addMessage = function(id) {
     var self = this;
     var msg = {
@@ -336,7 +307,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
   };
 
   this.changeType('inbox');
-
+/*Функция перемещает выделенное письмо в папку Delete*/
   this.deleteMessages = function() {
     var self = this;
     angular.forEach(this.messages.letters, function(letter) {
@@ -352,7 +323,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       }
     })
   };
-
+/*Функция выделяет кнопку отправки письма в каталог Delete после выделения письма*/
   this.classMessagesDeleted = function() {
     var self = this;
     var res = 0;
@@ -365,27 +336,15 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     }
     return res;
   };
+
   this.addRecipient = function(arg1, arg2) {
     return arg1==arg2? 1:0;
   };
-
-this.girlsIdGet = function(id) {
-    var self = this;
-    girlsService.getGirlsId(id).$promise.then(
-      function(data) {
-        self.girlsId = data;
-      },
-      function(error) {
-        console.log(error);
-      }
-    );
-  };
-
+/*функция сортировки писем за текущую неделю*/
   this.onThisWeekDate = function() {
     this.onLastWeek = false;
     this.onThisWeek = true;
     var toDate = new Date();
-
     var numberToDay = new Date().getDay();
     var firstDaySec = toDate.setDate(toDate.getDate() - (numberToDay-1));
     var firstDayWeek = new Date(firstDaySec);
@@ -403,10 +362,8 @@ this.girlsIdGet = function(id) {
       this.resultFromDate = undefined;
       this.resultToDate = undefined;
     },500);
-  }
-
-  //this.onThisWeekDate();
-
+  };
+/* функция сортировки писем за предыдущую неделю*/
   this.onLastWeekDate = function() {
     this.onLastWeek = true;
     this.onThisWeek = false;
@@ -432,13 +389,10 @@ this.girlsIdGet = function(id) {
     },500);
   };
 
-  //this.onLastWeekDate();
   this.showDate = function() {
-
     var arrDate2 = new String(this.fromDate).split(' ');
     var month2 = this.fromDate.getMonth() +1;
     this.resultFromDate = arrDate2[3] + '-' + month2 + '-' + arrDate2[2] + ' ' + '00:00:00';
-
     var arrDate = new String(this.toDate).split(' ');
     var month = this.toDate.getMonth() + 1;
     this.resultToDate = arrDate[3] + '-' + month +'-' + arrDate[2] + ' ' + '23:59:59';
@@ -452,13 +406,12 @@ this.girlsIdGet = function(id) {
       },500);
     }
   };
-
+/*Функция выделяет кнопку сортировки, если корректно выбраны даты */
   this.watchInputDate = function(fromDate, toDate) {
     if(fromDate && toDate)
-
-    // console.log(fromDate.getTime(), toDate.getTime());
     return fromDate.getTime()<toDate.getTime()? true : false;
   };
+/*Функция сброса временных параметров для сортировки*/
   this.resetSortDate = function() {
     this.onThisWeek = false;
     this.onLastWeek = false;
@@ -466,14 +419,12 @@ this.girlsIdGet = function(id) {
     this.fromDate = undefined;
     this.resultFromDate = undefined;
     this.resultToDate = undefined;
-    // this.getMessages();
     this.buttonAddLetter = false;
-    // this.correspondence(this.partnerId);
-     if(this.tumbler){
+    if(this.tumbler){
       this.getMessages();
     } else this.correspondence(this.partnerId);
   };
-
+/*Функция выделения всех писем*/
   this.selectAllCheck = function() {
     var self = this;
     this.unselectCheck();
@@ -485,7 +436,7 @@ this.girlsIdGet = function(id) {
     if(this.messages.letters)
       this.deletedSelect = true;
   }
-
+/*Функция выделения прочитанных писем*/
   this.readSelectCheck = function() {
     var self = this;
     this.unselectCheck();
@@ -496,11 +447,9 @@ this.girlsIdGet = function(id) {
         self.deletedSelect = true;
       }
     });
-    // this.deletedSelect = true;
-// console.log("readSelectCheck");
     this.showTumblerCheck = false;
   };
-
+/*Функция выделения непрочитанных писем*/
   this.unreadSelectCheck = function() {
     var self = this;
     this.unselectCheck();
@@ -512,20 +461,17 @@ this.girlsIdGet = function(id) {
       }
     });
     this.showTumblerCheck = false;
-    // this.deletedSelect = true;
   };
-
+/*Функция отмены всех выделенных писем*/
   this.unselectCheck = function() {
     var self = this;
     this.addClassSelectCheck(7);
     angular.forEach(self.messages.letters, function(letter, index) {
-          self.messages.letters[index]['deleted'] = false;
-        });
+      self.messages.letters[index]['deleted'] = false;
+    });
     this.showTumblerCheck = false;
     this.deletedSelect = false;
-    // console.log('unselectCheck');
-
-    };
+  };
 
   this.addClassSelectCheck = function(index) {
     var list = angular.element(document.getElementsByClassName('message-sort-dropdown'));
@@ -534,34 +480,23 @@ this.girlsIdGet = function(id) {
     };
     list[0].childNodes[index].childNodes[1].className = 'text_color_black';
   };
-
-// this.showTumblerCheck = false;
-//   var self2 = this;
-//   $('*:not(#not_check_box)').on('click', function() {
-//       $(this).on('click', function() {
-// console.log($(this));
-       // if(self2.showTumblerCheck) {
-   // console.log('girls-messega-item-content');
-    // self2.showTumblerCheck = false;
-    //console.log(self2.showTumblerCheck)
-  // }
-   // console.log($scope.showTumblerCheck);
-  // });
-
+/*Прячит меню выделения прочитанных, непрочитанных, всех писем при клике на любой элемент*/
+  var self2 = this;
+  $('body').on('click', function(event) {
+    console.log(event);
+    if (event.target.id == 'not_check_box') {
+      self2.showTumblerCheck = true;
+      self2.deletedSelect = false;
+      $('.message-sort-dropdown').show();
+    } else {
+      self2.showTumblerCheck = false;
+      $('.message-sort-dropdown').hide();
+    }
+  });
+/*Функция скрывает меню выделения прочитанных, непрочитанных, всех писем*/
   this.removeSelectBox = function(){
-    // console.log(this.showTumblerCheck);
     this.showTumblerCheck = false;
   };
-
-  this.deletedSelectCheckBox = function() {
-    console.log('deletedSelectCheckBox');
-    if(this.deletedSelect){
-      this.selectAllCheck();
-    } else {
-      this.unselectCheck();
-    };
-
-  }
 
 };
 

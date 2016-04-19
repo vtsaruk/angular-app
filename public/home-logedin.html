@@ -74,7 +74,7 @@
 <section class="filter-girls">
 <div class="filter-girls-wrap">
 	<div class="container">
-<!-- <div>{{ctrl.countries.countries}}</div> -->
+<!-- <div>{{ctrl.girlsAll.girls[0]}}</div> -->
 
 		<div class="row">
 			<div class="col-md-12">
@@ -125,17 +125,11 @@
 							<div class="age clearfix">
 								<p>Age</p>
 								<select name="" id="" class="selectpicker" ng-model="ctrl.fromDateModel">
-									<option value="18">18</option>
-									<option value="19">19</option>
-									<option value="20">20</option>
-									<option value="21">21</option>
+									<option ng-repeat="age in ctrl.listAge" value="{{age}}">{{age}}</option>
 								</select>
 								<span class="age-line">-</span>
 								<select name="" id="" class="selectpicker" ng-model="ctrl.toDateModel">
-									<option value="30">30</option>
-									<option value="31">31</option>
-									<option value="32">32</option>
-									<option value="33">33</option>
+								  <option ng-repeat="age in ctrl.listAge" value="{{age}}">{{age}}</option>
 								</select>
 
 							</div>
@@ -151,7 +145,7 @@
 							</div>
 						</div>
 						<div class="col-md-3">
-							<button class="btn-search" ng-click="ctrl.searchGirls()">Search</button>
+							<button class="btn-search" ng-click="ctrl.searchGirls('/girls/')">Search</button>
 						</div>
 						<div class="col-md-3">
 
@@ -167,7 +161,7 @@
 						<!-- girl-item -->
 						<div class="col-md-3"ng-repeat="girl in ctrl.girlsAll.girls">
 							<div class="girl-item">
-								<img src="assets/angular-app/public/img/girls-1.jpg" alt="">
+								<img src="{{ctrl.photoAvatar2(girl.user.mainphoto.pathOfQuad)}}" alt="">
 								<div class="girls-info clearfix">
 									<div class="girls-fix-info">
 										<ul class="tooltips-list">
@@ -215,7 +209,7 @@
 
 
 <!-- end girls -->
-<div class="girls-arrow" ng-click="ctrl.paginaGirl()">
+<div class="girls-arrow" ng-hide="ctrl.buttonAdd" ng-click="ctrl.paginaGirl()" ng-model="ctrl.buttonAdd">
 <img src="assets/angular-app/public/img/girls-arrow.png" alt=""></div>
 </div>
 </div>

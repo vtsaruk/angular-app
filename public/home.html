@@ -57,15 +57,15 @@
 						<button class="active">Register</button>
 						<button>Login</button>
 					</div>
-					<form action="" class="form-reg">
+					<form action="/index/signin" method="post" class="form-reg">
 						<label for="">User name</label>
-						<input type="text">
+						<input type="text" name="email">
 						<label for="">User email</label>
 						<input type="text">
 						<label for="">Password</label>
-						<input type="text">
+						<input type="text" name="password">
 						<input type="button" value="Start dating!"></form>
-					<form action="" class="form-login hidden">
+					<form action="/index/signin" method="post" class="form-login hidden">
 						<div class="sing-in clearfix">
 							<p>Sign In with</p>
 							<a href="#" class="fb"></a>
@@ -74,9 +74,9 @@
 						</div>
 						<div class="clear"></div>
 						<label for="">User email</label>
-						<input type="text">
+						<input type="text" name="email">
 						<label for="">Password</label>
-						<input type="text">
+						<input type="text" name="password">
 						<div class="form-login-bottom clearfix">
 
 							<label for="" class="checkbox-login">
@@ -127,17 +127,11 @@
 							<div class="age clearfix">
 								<p>Age</p>
 								<select name="" id="" class="selectpicker" ng-model="ctrl.fromDateModel">
-                  <option value="18">18</option>
-                  <option value="19">19</option>
-                  <option value="20">20</option>
-                  <option value="21">21</option>
+                  <option ng-repeat="age in ctrl.listAge" value="{{age}}">{{age}}</option>
                 </select>
 								<span class="age-line">-</span>
 								<select name="" id="" class="selectpicker" ng-model="ctrl.toDateModel">
-                  <option value="30">30</option>
-                  <option value="31">31</option>
-                  <option value="32">32</option>
-                  <option value="33">33</option>
+                  <option ng-repeat="age in ctrl.listAge" value="{{age}}">{{age}}</option>
                 </select>
 							</div>
 						</div>
@@ -146,14 +140,11 @@
 								<p>From</p>
 								<select name="" id="" class="selectpicker" ng-model="ctrl.countryModel">
                   <option ng-repeat="country in ctrl.countries.countries" value="{{country.name}}">{{country.name}}</option>
-                  <!-- <option value="Ukraun">Ukraun</option>
-                  <option value="Russia">Russia</option>
-                  <option value="Belarus">Belarus</option> -->
                 </select>
 							</div>
 						</div>
 						<div class="col-md-3">
-							<button class="btn-search" ng-click="ctrl.searchHomeGirls()">Search</button>
+							<button class="btn-search" ng-click="ctrl.searchGirls('/home/')">Search</button>
 						</div>
 						<div class="col-md-3">
 							<button class="btn-adv">Advanced Search</button>
@@ -161,16 +152,9 @@
 					</div>
 					<!-- girls -->
 					<div class="girls clearfix">
-						<!-- girl-item -->
-
-
-
-
-
-<!-- girl-item -->
             <div class="col-md-3"ng-repeat="girl in ctrl.girlsAll.girls">
               <div class="girl-item">
-                <img src="assets/angular-app/public/img/girls-1.jpg" alt="">
+                <img src="{{ctrl.photoAvatar2(girl.user.mainphoto.pathOfQuad)}}" alt="">
                 <div class="girls-info clearfix">
                   <div class="girls-fix-info">
                     <ul class="tooltips-list">
@@ -206,7 +190,7 @@
 <!-- end girl-item -->
 </div>
 <!-- end girls -->
-<div class="girls-arrow" ng-click="ctrl.paginaGirl()">
+<div class="girls-arrow" ng-hide="ctrl.buttonAdd" ng-click="ctrl.paginaGirl()" ng-model="ctrl.buttonAdd">
 <img src="assets/angular-app/public/img/girls-arrow.png" alt=""></div>
 </div>
 </div>

@@ -17,7 +17,7 @@
           <nav class="header--nav">
             <ul class="clearfix">
               <li>
-                <a href="/#/girls/18-30-Ukraine">Ladies</a>
+                <a href="/#/girls/-ag-18-27-co-Ukraine">Ladies</a>
               </li>
               <li>
                 <a href="#">Search</a>
@@ -36,12 +36,13 @@
               </li>
             </ul>
           </nav>
-          <!-- end navigation -->
+          <!-- end navigation --http://irinadating.loc/upload/photos/96768/YtIPrdWZ.jpg`
+                                http://irinadating.loc/upload/photos/96768/YtIPrdWZ.jpg>
           <!-- header-profile info -->
           <div class="header--profile">
             <div class="header--profile-img-likes">
               <a href="#">
-                <img src="{{ctrl.user.user.mainphoto.pathOfQuad}}`" width="40" height="40" alt=""></a>
+                <img src="{{ctrl.user.user.mainphoto.pathOfQuad}}" width="40" height="40" alt=""></a>
               <div class="header--heart">
                 <p>
                   <img src="assets/angular-app/public/img/header-heart.png" alt=""></p>
@@ -83,14 +84,15 @@
 	<!-- page-message -->
 <main class="profile">
 	<div class="container">
-<!-- <div>{{ctrl.girlsId.girl}}</div> -->
+<!-- <div>{{ctrl.girlsId.girl.user.mainphoto.pathOfQuad}}</div> -->
+<!-- <div>{{ctrl.girlsPhotos.photos}}</div> -->
 		<div class="row">
 			<div class="col-md-12">
 				<div class="main-content clearfix">
 					<div class="col-sm-4 col-md-4">
 						<div class="profile-left-side">
 							<div class="profile-left-side-ava">
-								<img src="assets/angular-app/public/img/profile-img.jpg" alt="" ng-click="ctlr.girlsIdGet(2)">
+								<img src="{{ctrl.photoAvatar2(ctrl.girlsId.girl.user.mainphoto.pathOfQuad)}}" alt="">
 								<img src="assets/angular-app/public/img/check-icon.png" alt="" class="check-icon">
 							</div>
 							<div class="profile-left-side-carousel">
@@ -151,7 +153,7 @@
 								</div>
 								<div class="profile-right-side-topinfo-right">
 									<p class="profile-right-side-topinfo-right-id">
-										ID 234345
+										ID {{ctrl.girlsId.girl.id}}
 									</p>
 								</div>
 							</div>
@@ -299,61 +301,11 @@
 								<div class="col-md-12">
 									<div class="profile-right-side-photo">
 										<h3>Photo</h3>
-
-
-                     <!--  <div class='about-carousel'></div>
-                      <div ng-repeat="item in items2" ng-repeat-owl-carousel carousel-init="carouselInitializer">
-                        <div class="item">
-                          <img src="assets/angular-app/public/img/girls-222.jpg" alt="">
-                        </div>
-                      </div> -->
-
-                      <!-- <h3>dir</h3> -->
-<!--                        <data-owl-carousel class="owl-carousel" data-options="{navigation: true, pagination: false, rewindNav : false}">
-                        <div owl-carousel-item="" ng-repeat="item in items1" class="item">
-                          <p>{{item}}</p>
-                        </div>
-                      </data-owl-carousel> -->
-<!--
-                      <data-owl-carousel class="owl-carousel owl-theme" data-options="{navigation: true, pagination: true, rewindNav : false}">
-                        <div owl-carousel-item="" ng-repeat="item in items2" class="item">
-                          <p>{{item}}</p>
-                        </div>
-                      </data-owl-carousel> -->
-
-
-                      <!--
-                       <data-owl-carousel class="owl-carousel" data-options="{navigation: true, pagination: false, rewindNav : false}">
-                        <div owl-carousel-item="" class="item">
-                          <img src="assets/angular-app/public/img/girls-222.jpg" alt="">
-                        </div>
-                      </data-owl-carousel> -->
 										<div class="profile-right-side-photos-container">
 										<div id="owl-demo5" class="owl-carousel owl-theme" owl-carousel-item="">
-											<div class="item">
-												<img src="assets/angular-app/public/img/girls-222.jpg" alt="">
-											</div>
-											<div class="item">
-												<img src="assets/angular-app/public/img/girls-333.jpg" alt="">
-											</div>
-											<div class="item">
-												<img src="assets/angular-app/public/img/girls-111.jpg" alt="">
-											</div>
-											<div class="item">
-												<img src="assets/angular-app/public/img/girls-333.jpg" alt="">
-											</div>
-											<div class="item">
-												<img src="assets/angular-app/public/img/girls-222.jpg" alt="">
-											</div>
-											<div class="item">
-												<img src="assets/angular-app/public/img/girls-333.jpg" alt="">
-											</div>
-											<div class="item">
-												<img src="assets/angular-app/public/img/girls-111.jpg" alt="">
-											</div>
-											<div class="item">
-												<img src="assets/angular-app/public/img/girls-333.jpg" alt="">
-											</div>
+                      <div class="item" ng-repeat="photos in ctrl.girlsPhotos.photos">
+                        <img src="{{photos.path}}" alt="">
+                      </div>
 										</div>
 										<div class="customNavigation">
 											<a class="btn next"><img src="assets/angular-app/public/img/profile-arrow-right.png" alt=""></a>
@@ -365,13 +317,14 @@
 								</div>
 							</div>
 						</div>
-
-
 						<div class="row">
 							<div class="col-md-12">
 								<div class="profile-right-side-about-me">
 									<h5 class="red-18-Lt-w600 mn-b-5">About me</h5>
-									<p class="grey-18-Lt mn-b-20">{{ctrl.girlsId.girl.aboutMe}}<a href="#" class="red-14-Lt-w600"> more...</a></p>
+									<p class="grey-18-Lt mn-b-20" ng-model="ctrl.switchComment">{{ctrl.letterTextSlice(ctrl.girlsId.girl.aboutMe, ctrl.switchComment)}}<a ng-hide="ctrl.switchComment || ctrl.switchMore(ctrl.girlsId.girl.aboutMe)" href="" ng-click="ctrl.switchComment=true" class="message-toggle">&nbsp;more<i class="fa fa-chevron-right"></i>
+                      </a>
+                      <a ng-show="ctrl.switchComment" href="" ng-click="ctrl.switchComment=false" class="message-toggle">&nbsp;hide<i class="fa fa-chevron-up"></i>
+                      </a></p>
 									<h5 class="red-18-Lt-w600 mn-b-5">My interests and hobbies</h5>
 									<p class="grey-18-Lt mn-b-20">{{ctrl.girlsId.girl.interests}}</p>
 									<h5 class="red-18-Lt-w600 mn-b-15">I'm looking for</h5>
@@ -400,8 +353,8 @@
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
 
 
-  <script src="/assets/angular-app/public/js/main2.js"></script>
-  <script src="/assets/angular-app/public/js/owl.carousel.min.js"></script>
-  <script src="/assets/angular-app/public/js/bootstrap-select.min.js"></script>
+  <!-- <script src="/assets/angular-app/public/js/main2.js"></script> -->
+  <!-- <script src="/assets/angular-app/public/js/owl.carousel.min.js"></script> -->
+  <!-- <script src="/assets/angular-app/public/js/bootstrap-select.min.js"></script> -->
 
 </div>
