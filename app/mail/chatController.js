@@ -1,10 +1,11 @@
 module.exports = chatController;
 
-function chatController ($document, $location, $cookies, chatService, userService, socketFactory) {
+function chatController ($document, $location, chatService, userService, socketFactory, $rootScope) {
 
   var self2 = this;
   this.onlineModel = true;
   this.messages = [];
+  this.messages2 = [];
 /*Функция выделяет в меню online, request, recent текущее нахождение*/
   this.acitivNavLi = function(index) {
     var el = angular.element(document.getElementsByClassName('main-members-nav'));
@@ -143,40 +144,64 @@ function chatController ($document, $location, $cookies, chatService, userServic
   this.removePartner = function(Id) {
     chatService.emit('removePartner', { partnerId: Id });
   };
+/*Функция выделяет выбранного партнёра в директориях online, request, recent*/
+  this.addClassActiv = function(index, number) {
+    if(index==0)
+      var index2 = 2;
+    else var index2 = index * 2 + 2;
+    var arr = angular.element(document.getElementsByClassName('box_directory'));
+    for(var i=2; i<arr[number].childNodes.length-2; i+=2) {
+      if(i==index2) {
+        arr[number].childNodes[i].className = 'main-members-item active clearfix';
+      } else arr[number].childNodes[i].className = 'main-members-item clearfix';
+    };
+  };
 /*Функция запрашивает переписку сообщений с выбранным партнёром*/
-  this.correspondence = function(partner) {
+  this.correspondence = function(partner, index, number) {
+    this.addClassActiv(index, number);
     this.namePartner = partner.firstname;
     this.partnerID = partner.id;
     this.sessionID = partner.sessionId;
     this.partnerAge = partner.age;
-    // console.log('this.partnerID');
-    // console.log(this.partnerID);
-    var arr = angular.element(document.getElementsByClassName('main-members-item clearfix'));
-    for(var i=0; i<arr.length; i++) {
-      arr[i].className = 'main-members-item clearfix';
-    };
+    this.messages = [];
+    this.messages2 = [];
+    this.messages3 = [];
     chatService.emit('getChatLogDeeper', { partnerId: partner.id });
   };
-
+/*Обработка события получения сообщения для переписки*/
   chatService.on('oldMsg', function(data) {
-    console.log(data);
-
+    // console.log(data);
     self2.messages.push(data);
+    self2.messages2.push(data);
+    self2.messages3 = self2.messages2;
+    self2.messages3.slice(1);
     self2.lastMessageID = self2.messages[self2.messages.length-1].msgId;
-    // console.log("self2.lastMessageID");
-    // console.log(self2.lastMessageID);
 
+    if(self2.messages2.length>2) {
+      for(var i=1; i<self2.messages2.length; i++) {
+        if(self2.messages3[i].sentTime && self2.messages2[i].sentTime) {
+       var day = new Date(self2.messages3[i].sentTime.slice(0,10)).getTime();
+       var day2 = new Date(self2.messages2[i].sentTime.slice(0,10)).getTime();
 
-    // self2.messages = self2.messages.concat(data);
-    // console.log(self2.messages);
-  });
-
+        if(day===day2){
+          self2.messages[i].sentTime = false;
+        }
+      }
+      }
+    }
+});
+/*Получение нового письма, только что написанного для пользователя в переписке*/
   chatService.on('newMsg', function(data) {
 
     self2.messages.unshift(data);
+    self2.messages2.unshift(data);
     // console.log('newMsg');
     // console.log(data);
   });
+  this.pushOldMessage = function(partnerID, lastMsgID) {
+    chatService.emit('getChatLogDeeper', { partnerId: partnerID, lastMsgId: lastMsgID });
+  }
+
 
 /*Функция ослеживает сообытие scroll и добавляет письма*/
   //jQuery(function($) {
@@ -184,18 +209,19 @@ function chatController ($document, $location, $cookies, chatService, userServic
         // console.log(event);
         if($(this).scrollTop() + $(this).innerHeight() + 100 >= $(this)[0].scrollHeight) {
           // console.log('end reached');
-          // console.log(self2.partnerID + ' , ' + self2.lastMessageID);
-          chatService.emit('getChatLogDeeper', { partnerId: this.partnerID, lastMsgId:self2.lastMessageID });
+          console.log(self2.partnerID + ' , ' + self2.lastMessageID);
+          chatService.emit('getChatLogDeeper', { partnerId: self2.partnerID, lastMsgId:self2.lastMessageID });
         }
     });
   //});
-
+/*Функция запрашивает данные пользователя через userService*/
   this.getUserData = function () {
     var self = this;
     userService.getUser().$promise.then(
       function(data) {
         self.user = data;
-        console.log(self.user.user.id);
+        $rootScope.global2 = data;
+        // console.log(self.user.user.id);
         // self.getlogChat(self.user.user.id);
       },
       function(error) {
@@ -206,35 +232,6 @@ function chatController ($document, $location, $cookies, chatService, userServic
 
   this.getUserData();
 
-  this.getOnline = function () {
-    var self = this;
-
-    chatService.getChat().$promise.then(
-      function(data) {
-        self.online = data;
-        console.log(self.online);
-
-      },
-      function(error) {
-        console.log(error);
-      }
-    );
-  };
-
-  this.getlogChat = function (id) {
-    var self = this;
-    chatService.logChat(id).$promise.then(
-      function(data) {
-        self.session = data;
-        console.log(self.session);
-        self.getOnline();
-      },
-      function(error) {
-        console.log(error);
-      }
-    );
-  };
-
 };
 
-chatController.$inject = ['$document', '$location', '$cookies', 'chatService', 'userService', 'socketFactory'];
+chatController.$inject = ['$document', '$location', 'chatService', 'userService', 'socketFactory', '$rootScope'];

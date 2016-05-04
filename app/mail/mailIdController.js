@@ -1,7 +1,7 @@
 module.exports = mailIdController;
 
-function mailIdController ($document, $stateParams, $location, $anchorScroll, $timeout, mailService, userService , girlsService, mailIdService) {
-
+function mailIdController ($document, $stateParams, $location, $anchorScroll, $timeout, $rootScope, mailService, userService , girlsService, mailIdService) {
+/*Функция после загрузки страницы подымает scroll вверх*/
   this.anchorScrollPage = function() {
      //$location.hash('top_anchorScroll');
      $anchorScroll.yOffset = 200;
@@ -10,19 +10,18 @@ function mailIdController ($document, $stateParams, $location, $anchorScroll, $t
   };
 
   this.anchorScrollPage();
-
+/*Забираем id из URL*/
   var id = $stateParams.id;
-  // console.log(id);
-
+/*Функция определяет возраст*/
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
   }
-
+/*Функция получает данние пользователя из сервиса userService*/
   this.getUserData = function () {
     var self = this;
-
     userService.getUser().$promise.then(
       function(data) {
+        $rootScope.global2 = data;
         self.user = data;
       },
       function(error) {
@@ -32,7 +31,7 @@ function mailIdController ($document, $stateParams, $location, $anchorScroll, $t
   };
 
   this.textArea = false;
-
+/*Функция создаёт моргание рамки после отправки письма*/
   this.textAreaTime = function() {
     var self = this;
     self.textArea = true;
@@ -42,30 +41,16 @@ function mailIdController ($document, $stateParams, $location, $anchorScroll, $t
   }
 
   this.getUserData();
-// this.correspondence = function(partnerid, timeFrom, timeTo) {
-//     var self = this;
-//     self.currentPartnerid = partnerid;
-//     mailService.correspondenceGet(partnerid, timeFrom, timeTo).$promise.then(
-//       function(data) {
-//         self.letterCor =data;
-
-//       },
-//       function(error) {
-//         console.log(error);
-//       }
-//     );
-//   };
-this.correspondence = function() {
+/*Функция получает письма из переписки из сервиса mailService*/
+  this.correspondence = function() {
     var self = this;
-
-  var options = {
+    var options = {
       partnerId: self.girlCorres,
       dateTimeFrom: self.resultFromDate,
       dateTimeTo: self.resultToDate,
       limit: self.limit,
       offset: 0
     };
-    //self.currentPartnerid = partnerid;
     mailService.correspondenceGet(options).$promise.then(
       function(data) {
         self.letterCor =data;
@@ -82,13 +67,9 @@ this.correspondence = function() {
     );
   };
 
-  // if(self.totalPage==self.page) {
-  //   self.buttonAddLetter = true;
-  // } else self.buttonAddLetter = false;
-
   this.page = 0;
   this.limit = 20;
-
+/*Функция добавление писем из переписки*/
   this.paginaLetterCor = function() {
      if (this.totalPage){
       this.page += 1;
@@ -98,10 +79,8 @@ this.correspondence = function() {
         this.buttonAddLetter = true;
     }
   };
-
-  // this.paginaLetterCor();
-
-  this.girlsIdGet = function(id) {
+/*Функция получае данные с кем ведется переписка из сервиса mailIdService*/
+   this.girlsIdGet = function(id) {
     console.log(id, id);
     var self = this;
     mailIdService.conversationGirlsId(id).$promise.then(
@@ -114,11 +93,9 @@ this.correspondence = function() {
         console.log(error);
       }
     );
-
-
   };
   this.girlsIdGet(id);
-
+/*Функция отправки письма обращается к сервису mailService*/
   this.addMessage = function(id) {
     var self = this;
     var msg = {
@@ -131,29 +108,27 @@ this.correspondence = function() {
         self.textAreaTime();
         self.newMessage = '';
         self.correspondence(id);
-
       },
       function(error) {
         console.log(error);
       }
     );
   };
-
+/*Функция отрисовывает письма в переписке где полученное, а где отправленное и выделенное*/
   this.addClass = function(arg1, arg2, arg3) {
     if(arg3==false) {
       return 2;
     }else return arg1==arg2? 0:1;
-
   };
-
+/*Функция показывает или прячит фильтры для писем*/
   this.showFilter = function() {
     this.filterDiv  = this.filterDiv ? false : true;
   };
-
+/*Функция показывает список ссылок*/
   this.showList = function(){
     this.listDiv = this.listDiv ? false : true;
   };
-
+/*Функция обрезает длинное письмо*/
   this.switchMore = function(letterText) {
     if (letterText==null) {
       return false;}
@@ -161,8 +136,7 @@ this.correspondence = function() {
       return false;
     } else return true;
   };
-
-
+/* Функция показывает полностью письмо и обрезает в исходное состояние*/
   this.letterTextSlice = function(letterText, switchComment) {
     if (switchComment) {
        return letterText;
@@ -170,14 +144,13 @@ this.correspondence = function() {
       if (letterText==null) {
         return 0;
       } else if(letterText.length>90) {
-
         var text = letterText.slice(0, 90);
         return text;
       }
       return letterText;
     }
   }
-
+/*Функция оплаты за окрытие письма*/
   this.payment =function(id, partnerid) {
     var self = this;
     mailService.paymentLetter(id).$promise.then(
@@ -190,9 +163,8 @@ this.correspondence = function() {
         console.log(error);
       }
     );
-
   };
-
+/*Функция выводит в отдельное окно выбранное письмо обращается к сервису mailService*/
   this.readTheLetter = function(id, partnerid){
     var self = this;
     mailService.getMessagesId(id).$promise.then(
@@ -207,8 +179,7 @@ this.correspondence = function() {
     $anchorScroll.yOffset = 200;
     $anchorScroll();
   };
-
-
+/*Функция сортировки писем за текущию неделю*/
 this.onThisWeekDate = function() {
     this.onLastWeek = false;
     this.onThisWeek = true;
@@ -230,9 +201,7 @@ this.onThisWeekDate = function() {
       this.resultToDate = undefined;
     },500);
   }
-
-  //this.onThisWeekDate();
-
+/*Функция сортировки писем за последнию неделю*/
   this.onLastWeekDate = function() {
     this.onLastWeek = true;
     this.onThisWeek = false;
@@ -256,8 +225,7 @@ this.onThisWeekDate = function() {
       this.resultToDate = undefined;
     },500);
   };
-
-  //this.onLastWeekDate();
+/*Функция сортировки писем по выбранным двум датам*/
   this.showDate = function() {
 
     var arrDate2 = new String(this.fromDate).split(' ');
@@ -277,13 +245,12 @@ this.onThisWeekDate = function() {
       this.resultToDate = undefined;
     },500);
   };
-
+/*Функция выделяет кнопку сортировки*/
   this.watchInputDate = function(fromDate, toDate) {
     if(fromDate && toDate)
-
-    // console.log(fromDate.getTime(), toDate.getTime());
-    return fromDate.getTime()<toDate.getTime()? true : false;
+      return fromDate.getTime()<toDate.getTime()? true : false;
   };
+/*Функция сбрасывает все параметры сортировки*/
   this.resetSortDate = function() {
     this.onThisWeek = false;
     this.onLastWeek = false;
@@ -293,9 +260,8 @@ this.onThisWeekDate = function() {
     this.resultToDate = undefined;
     this.buttonAddLetter = false;
     this.correspondence();
-
   }
 
 };
 
-mailIdController.$inject = ['$document', '$stateParams', '$location', '$anchorScroll', '$timeout', 'mailService', 'userService', 'girlsService', 'mailIdService'];
+mailIdController.$inject = ['$document', '$stateParams', '$location', '$anchorScroll', '$timeout', 'mailService', 'userService', 'girlsService', 'mailIdService', '$rootScope'];

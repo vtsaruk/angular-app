@@ -7,14 +7,22 @@ require('angular-base64-upload');
 require('./../node_modules/ng-repeat-owl-carousel/src/ngRepeatOwlCarousel');
 require('angular-ui-bootstrap');
 require('angular-cookies');
+require('jquery');
 // require('angular-websocket');
  require('angular-socket-io');
 // require('socket.io');
 //require('angular-socket.io');
-// require('jquery');
+// require('jquery-ui/themes/base/minified/jquery-ui.min.css');
+require('jquery-ui');
+require('angular-ui-date');
+// require('ui-select');
+require('angular-recaptcha');
+require('angular-sanitize');
+require('./../node_modules/angular-ui-select/select.js');
+// require('angular-ui-select');
 // require('bootstrap-select');
 
-var conversationsController = require('./controllers/conversationsController');
+// var conversationsController = require('./controllers/conversationsController');
 var mailController = require('./mail/mailController');
 var girlsController = require('./mail/girlsController');
 var usersController = require('./mail/usersController');
@@ -24,6 +32,7 @@ var formController = require('./mail/formController');
 var girlsViewController = require('./mail/girlsViewController');
 var chatController = require('./mail/chatController');
 var searchController = require('./mail/searchController');
+var contactUsController = require('./mail/contactUsController');
 
 var cropDirective = require('./directives/crop');
 var fileDirective = require('./directives/angular-file-model');
@@ -37,10 +46,12 @@ var mailIdService = require('./mail/mailId_service');
 var formService = require('./mail/form_service');
 var chatService = require('./mail/chat_service');
 var searchService = require('./mail/search_service');
+var contactUsService = require('./mail/contactUs_service');
 
-var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper', 'naif.base64', 'ocNgRepeat', 'ui.bootstrap', 'ngCookies', 'btford.socket-io'])
+var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper', 'naif.base64', 'ocNgRepeat', 'btford.socket-io', 'ui.select', 'ngSanitize', 'ui.date', 'vcRecaptcha'])
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+  //$rootScope.global = 'global';
   $urlRouterProvider.otherwise("/index");
   $stateProvider
     .state('index', {
@@ -49,12 +60,12 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
         controller: usersController,
         controllerAs: 'ctrl'
     })
-    .state('main', {
-      url: '/main',
-      templateUrl: 'assets/angular-app/public/conversation-list.html',
-      controller: conversationsController,
-      controllerAs: 'ctrl'
-    })
+  //   .state('main', {
+  //     url: '/main',
+  //     templateUrl: 'assets/angular-app/public/conversation-list.html',
+  //     controller: conversationsController,
+  //     controllerAs: 'ctrl'
+  //   })
     .state('man', {
       url: '/man',
       templateUrl: 'assets/angular-app/public/e-mail.html',
@@ -130,7 +141,7 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
     .state('contact-us', {
       url: '/contact-us',
       templateUrl: 'assets/angular-app/public/contact-us.html',
-      controller: formController,
+      controller: contactUsController,
       controllerAs: 'ctrl'
     })
     .state('privacy-policy', {
@@ -189,7 +200,7 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
 //           console.log(toParams);
 //         });
 //    })
-.controller('conversationsController', conversationsController)
+// .controller('conversationsController', conversationsController)
 .controller('usersController', ['userService', usersController])
 .controller('mailController', ['mailService','userService', 'girlsService', mailController])
 .controller('girlsController', ['mailService','userService', 'girlsService', girlsController])
@@ -273,10 +284,11 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
 }])
 .controller('girlsAllController', ['userService', 'girlsAllService', girlsAllController])
 .controller('mailIdController', ['userService', 'mailService', 'girlsAllService', 'mailIdService', mailIdController])
-.controller('formController', ['formService',  formController])
+.controller('formController', ['formService', 'userService', formController])
 .controller('girlsViewController', ['girlsService', 'userService', girlsViewController])
-.controller('chatController', ['chatService', chatController])
+.controller('chatController', ['chatService', 'userService', chatController])
 .controller('searchController', ['searchService', 'userService', searchController])
+.controller('contactUsController', ['contactUsService', 'userService', contactUsController])
 .factory('userService', ['$resource', userService])
 .factory('mailService', ['$resource', mailService])
 .factory('girlsService', ['$resource', girlsService])
@@ -284,4 +296,5 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
 .factory('mailIdService', ['$resource', mailIdService])
 .factory('formService', ['$resource', formService])
 .factory('chatService', ['socketFactory', chatService])
-.factory('searchService', ['$resource', searchService]);
+.factory('searchService', ['$resource', searchService])
+.factory('contactUsService', ['$resource', contactUsService]);

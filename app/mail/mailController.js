@@ -1,6 +1,8 @@
 module.exports = mailController;
 
-function mailController ($document, $location, $timeout, $anchorScroll, mailService, userService , girlsService, $scope) {
+function mailController ($document, $location, $timeout, $anchorScroll, mailService, userService , girlsService, $scope, $rootScope) {
+
+  // $('#ui-datepicker-div').hide();
 
 /*Функция определяет возраст*/
   this.agePerson = function(birthdate) {
@@ -40,7 +42,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     userService.getUser().$promise.then(
       function(data) {
         self.user = data;
-        console.log(self.user.user);
+        $rootScope.global2 = data;
       },
       function(error) {
         console.log(error);
@@ -483,7 +485,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
 /*Прячит меню выделения прочитанных, непрочитанных, всех писем при клике на любой элемент*/
   var self2 = this;
   $('body').on('click', function(event) {
-    console.log(event);
+    // console.log(event);
     if (event.target.id == 'not_check_box') {
       self2.showTumblerCheck = true;
       self2.deletedSelect = false;
@@ -497,8 +499,13 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
   this.removeSelectBox = function(){
     this.showTumblerCheck = false;
   };
+  this.dateOptions = {
+    changeYear: true,
+    changeMonth: true,
+    yearRange: '1900:-0'
+    };
 
 };
 
 
-mailController.$inject = ['$document', '$location', '$timeout', '$anchorScroll', 'mailService', 'userService', 'girlsService', '$scope'];
+mailController.$inject = ['$document', '$location', '$timeout', '$anchorScroll', 'mailService', 'userService', 'girlsService', '$scope', '$rootScope'];

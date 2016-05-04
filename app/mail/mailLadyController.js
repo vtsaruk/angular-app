@@ -1,6 +1,6 @@
 module.exports = mailController;
 
-function mailController ($document, $location, $timeout, $anchorScroll, mailService, userService , girlsService) {
+function mailController ($document, $location, $timeout, $anchorScroll, mailService, userService , girlsService, $rootScope) {
 
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
@@ -27,6 +27,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     var self = this;
     userService.getUser().$promise.then(
       function(data) {
+        $rootScope.global2 = data;
         self.user = data;
       },
       function(error) {
@@ -369,4 +370,4 @@ this.girlsIdGet = function(id) {
 };
 
 
-mailController.$inject = ['$document', '$location', '$timeout', '$anchorScroll', 'mailService', 'userService', 'girlsService'];
+mailController.$inject = ['$document', '$location', '$timeout', '$anchorScroll', 'mailService', 'userService', 'girlsService', '$rootScope'];

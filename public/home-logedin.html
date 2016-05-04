@@ -1,75 +1,6 @@
 
 <div class="home-logedin">
-	<!-- header -->
-	<header>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<!-- small-menu -->
-					<a href="#" class="small-menu">
-						<span></span>
-						<span></span>
-						<span></span>
-					</a>
-					<!-- end small-menu -->
-					<!-- logo -->
-					<a href="/#/home" class="header--logo">
-						<img src="assets/angular-app/public/img/logo.png"  alt=""></a>
-					<!-- end logo -->
-					<!-- navigation -->
-					<nav class="header--nav">
-						<ul class="clearfix">
-							<li>
-								<a href="/#/girls/18-30-Ukraine">Ladies</a>
-							</li>
-							<li>
-								<a href="#">Search</a>
-							</li>
-							<li>
-								<a href="/#/man">Mail</a>
-							</li>
-							<li>
-								<a href="/#/chat">Chat</a>
-							</li>
-							<li>
-								<a href="#">Gifts Delivery</a>
-							</li>
-							<li>
-								<a href="#">Offers</a>
-							</li>
-						</ul>
-					</nav>
-					<!-- end navigation -->
-					<!-- header-profile info -->
-					<div class="header--profile">
-						<div class="header--profile-img-likes">
-							<a href="#">
-								<img src="{{ctrl.user.user.mainphoto.pathOfQuad}}" width="40" height="40" alt=""></a>
-							<div class="header--heart">
-								<p>
-									<img src="assets/angular-app/public/img/header-heart.png" alt=""></p>
-								<p>2000</p>
-							</div>
 
-						</div>
-						<div class="header--profile-info">
-							<p>
-								Welcome,
-								<span>{{ctrl.user.user.firstname}} {{ctrl.user.user.lastname}}</span>
-							</p>
-							<a href="#">My Profile</a>
-							&nbsp;  |&nbsp;&nbsp;
-							<a href="/index/logout">
-								<span>Log out</span>
-							</a>
-						</div>
-					</div>
-					<!-- end header-profile info -->
-				</div>
-			</div>
-		</div>
-	</header>
-	<!-- end header -->
 <!-- filter girls -->
 <section class="filter-girls">
 <div class="filter-girls-wrap">
@@ -137,7 +68,7 @@
 						<div class="col-md-3 from-container">
 							<div class="from">
 								<p>From</p>
-								<select name="" id="" class="selectpicker" ng-model="ctrl.countryModel">
+								<select name="" class="select2_ua" id="" class="selectpicker" ng-model="ctrl.countryModel">
 									<option ng-repeat="country in ctrl.countries.countries" value="{{country.name}}">{{country.name}}</option>
 									<!-- <option value="Russia">Russia</option>
 									<option value="Belarus">Belarus</option> -->

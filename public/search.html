@@ -1,76 +1,7 @@
 
 
 <biv class="chat-with-girl">
-	<!-- header -->
-	<header>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<!-- small-menu -->
-					<a href="#" class="small-menu">
-						<span></span>
-						<span></span>
-						<span></span>
-					</a>
-					<!-- end small-menu -->
-					<!-- logo -->
-					<a href="#" class="header--logo">
-						<img src="assets/angular-app/public/img/logo.png"  alt=""></a>
-					<!-- end logo -->
-					<!-- navigation -->
-					<nav class="header--nav">
-						<ul class="clearfix">
-							<li>
-								<a href="/#/girls/-ag-18-27-co-Ukraine">Ladies</a>
-							</li>
-							<li>
-								<a href="/#/search">Search</a>
-							</li>
-							<li>
-								<a href="/#/man">Mail</a>
-							</li>
-							<li>
-								<a href="/#/chat">Chat</a>
-							</li>
-							<li>
-								<a href="">Gifts Delivery</a>
-							</li>
-							<li>
-								<a href="">Offers</a>
-							</li>
-						</ul>
-					</nav>
-					<!-- end navigation -->
-					<!-- header-profile info -->
-					<div class="header--profile">
-						<div class="header--profile-img-likes">
-							<a href="#">
-								<img src="{{ctrl.user.user.mainphoto.pathOfQuad}}" width="40" height="40" alt=""></a>
-							<div class="header--heart">
-								<p>
-									<img src="assets/angular-app/public/img/header-heart.png" alt=""></p>
-								<p>2000</p>
-							</div>
 
-						</div>
-						<div class="header--profile-info">
-							<p>
-								Welcome,
-								<span>{{ctrl.user.user.firstname}} {{ctrl.user.user.lastname}}</span>
-							</p>
-							<a href="/#/form">My Profile</a>
-							&nbsp;  |&nbsp;&nbsp;
-							<a href="/index/logout">
-								<span>Log out</span>
-							</a>
-						</div>
-					</div>
-					<!-- end header-profile info -->
-				</div>
-			</div>
-		</div>
-	</header>
-	<!-- end header -->
 	<!-- page-message -->
 <main class="search">
 <!-- <div>{{ctrl.resultGirls}}</div> -->
@@ -89,7 +20,7 @@
               <div class="search-left-side-select-items">
                 <div class="search-left-side-select-item">
                   <label for="">Country</label>
-                  <select name="" id="" class="selectpicker" ng-model="ctrl.countryModel">
+                  <select name="" id="" class="select-width-100" ng-model="ctrl.countryModel">
                     <option value="">Doesn't matter</option>
                     <option ng-repeat="country in ctrl.countries.countries" value="{{country.name}}">{{country.name}}</option>
 
@@ -97,7 +28,7 @@
                 </div>
                 <div class="search-left-side-select-item">
                   <label for="">City</label>
-                  <select name="" id="" class="selectpicker" ng-model="ctrl.cityModel">
+                  <select name="" id="" class="select-width-100" ng-model="ctrl.cityModel">
                     <option value="">Doesn't matter</option>
                     <option value="2">val_2</option>
                     <option value="3">val_3</option>
@@ -106,7 +37,7 @@
                 </div>
                 <div class="search-left-side-select-item">
                   <label for="">First Name</label>
-                  <select name="" id="" class="selectpicker" ng-model="ctrl.firstNameModel">
+                  <select name="" id="" class="select-width-100" ng-model="ctrl.firstNameModel">
                     <option value="">Doesn't matter</option>
                     <option ng-repeat="girl in ctrl.arrNameGilrs.girls"value="{{girl.user.firstname}}">{{girl.user.firstname}}</option>
                    <!--  <option value="2">val_2</option>
@@ -158,7 +89,7 @@
                 </div>
                 <div class="search-left-side-select-item">
                   <label for="">Hair Color</label>
-                  <select name="" id="" class="selectpicker" ng-model="ctrl.hairColorModel">
+                  <select name="" id="" class="select-width-100" ng-model="ctrl.hairColorModel">
                     <option value="">Doesn't matter</option>
                     <option value="Black">Black</option>
                     <option value="Blonde">Blonde</option>
@@ -169,7 +100,7 @@
                 </div>
                 <div class="search-left-side-select-item">
                   <label for="">Eye Color</label>
-                  <select name="" id="" class="selectpicker" ng-model="ctrl.eyeColorModel">
+                  <select name="" id="" class="select-width-100" ng-model="ctrl.eyeColorModel">
                     <option value="">Doesn't matter</option>
                     <option value="Blue">Blue</option>
                     <option value="Brown">Brown</option>
@@ -180,7 +111,7 @@
                 </div>
                 <div class="search-left-side-select-item">
                   <label for="">English Rating</label>
-                  <select name="" id="" class="selectpicker" ng-model="ctrl.englishRatingModel">
+                  <select name="" id="" class="select-width-100" ng-model="ctrl.englishRatingModel">
                     <option value="">Doesn't matter</option>
                     <option value="Beginner">Beginner</option>
                     <option value="Intermediate">Intermediate</option>
@@ -204,7 +135,7 @@
                     <option value="5">5</option>
                   </select>
                   <span class="search-left-side-select-item-line">-</span>
-                  <select name="" id="" class="selectpicker" ng-model="ctrl.childrenNumberToModel">
+                  <select name="" id="" class="select-width-100" ng-model="ctrl.childrenNumberToModel">
                     <option value="">Nothing selected</option>
                     <option value="0">0</option>
                     <option value="1">1</option>

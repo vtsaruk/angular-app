@@ -1,13 +1,12 @@
 module.exports = usersController;
 
-function usersController ($document, $location, userService ) {
-
+function usersController ($document, $location, userService, $rootScope ) {
   this.getUserData = function () {
     var self = this;
-
     userService.getUser().$promise.then(
       function(data) {
         self.user = data;
+        $rootScope.global2 = data;//self.user.user.additionalData.groupId;
 
         if (self.user.user.additionalData.groupId == 1) {
           $location.path('/man');
@@ -24,6 +23,12 @@ function usersController ($document, $location, userService ) {
   };
   this.getUserData();
 
+
+  // if(this.user.user.additionalData.groupId) {
+  //   $rootScope.global2 = this.user.user.additionalData.groupId;
+  //   console.log('$rootScope.global');
+  //   console.log($rootScope.global);
+  // }
   this.isMan = function(id) {
     id == 1? true : false;
   };
@@ -33,4 +38,4 @@ function usersController ($document, $location, userService ) {
   }
 }
 
-usersController.$inject = ['$document', '$location', 'userService'];
+usersController.$inject = ['$document', '$location', 'userService', '$rootScope'];

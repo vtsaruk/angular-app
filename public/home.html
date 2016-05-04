@@ -1,71 +1,31 @@
 
 <biv class="home-page">
-	<!-- header -->
-	<header>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<!-- small-menu -->
-					<a href="#" class="small-menu">
-						<span></span>
-						<span></span>
-						<span></span>
-					</a>
-					<!-- end small-menu -->
-					<!-- logo -->
-					<a href="#" class="header--logo">
-						<img src="assets/angular-app/public/img/logo.png"  alt=""></a>
-					<!-- end logo -->
-					<!-- navigation -->
-					<nav class="header--nav">
-						<ul class="clearfix">
-							<li>
-								<a href="/#/girls">Ladies</a>
-							</li>
-							<li>
-								<a href="#">Chat</a>
-							</li>
-							<li>
-								<a href="#">Special Offers</a>
-							</li>
-						</ul>
-					</nav>
-					<!-- end navigation -->
-
-					<div class="header--profile">
-
-					<div class="header--profile-info">
-						<a href="/index/signin">Login</a>
-					&nbsp;  |&nbsp;&nbsp;
-					<a href="#">Register</a>
-				</div>
-			</div>
-			<!-- end header-profile info -->
-		</div>
-	</div>
-</div>
-</header>
-<!-- end header -->
 <!-- promo -->
 <div class="promo">
 <div class="container">
 	<div class="row">
 		<div class="col-md-4">
 			<div class="promo--left-side">
+
 				<div class="form-register">
 					<div class="form-register-tabs">
-						<button class="active">Register</button>
-						<button>Login</button>
+						<button ng-class="{'active': ctrl.formUseModel==false}" ng-click="ctrl.formUser()">Register</button>
+						<button ng-class="{'active': ctrl.formUseModel==true}" ng-click="ctrl.formUser()">Login</button>
 					</div>
-					<form action="/index/signin" method="post" class="form-reg">
+					<form ng-show="ctrl.formUseModel" action="" method="post" class="form-reg">
 						<label for="">User name</label>
-						<input type="text" name="email">
+						<input type="text" name="email" ng-model="ctrl.regisUser.name">
 						<label for="">User email</label>
-						<input type="text">
+						<input type="text" ng-model="ctrl.regisUser.email">
 						<label for="">Password</label>
-						<input type="text" name="password">
-						<input type="button" value="Start dating!"></form>
-					<form action="/index/signin" method="post" class="form-login hidden">
+						<input type="password" name="password" ng-model="ctrl.regisUser.password" ng-minlength="4">
+						<input type="button" value="Start dating!" ng-click="ctrl.registUser(ctrl.regisUser)">
+            <!-- <div class="g-recaptcha" data-sitekey="6LeROR4TAAAAAPjFlEpuqZI8Antq-VK8hxZafle6"></div> -->
+
+            <div vc-recaptcha key="'6LeROR4TAAAAAPjFlEpuqZI8Antq-VK8hxZafle6'" ng-model="ctrl.myRecaptchaResponse"></div>
+
+          </form>
+					<form ng-hide="ctrl.formUseModel" action="/index/signin" method="post" class="form-login">
 						<div class="sing-in clearfix">
 							<p>Sign In with</p>
 							<a href="#" class="fb"></a>
@@ -74,9 +34,9 @@
 						</div>
 						<div class="clear"></div>
 						<label for="">User email</label>
-						<input type="text" name="email">
+						<input type="text" ng-model="ctrl.User.name" name="email">
 						<label for="">Password</label>
-						<input type="text" name="password">
+						<input type="password" ng-model="ctrl.User.password" name="password" ng-minlength="4">
 						<div class="form-login-bottom clearfix">
 
 							<label for="" class="checkbox-login">
@@ -84,9 +44,9 @@
 								<span class="box"></span>
 								Remember me
 							</label>
-							<a href="#">Forgot password</a>
+							<a href="">Forgot password</a>
 						</div>
-						<input type="button" value="Log In"></form>
+						<input type="submit" value="Log In" ng-click="ctrl.loginUser(ctrl.User)"></form>
 				</div>
 			</div>
 		</div>
@@ -126,11 +86,11 @@
 						<div class="col-md-3 age-container">
 							<div class="age clearfix">
 								<p>Age</p>
-								<select name="" id="" class="selectpicker" ng-model="ctrl.fromDateModel">
+								<select ng-model="ctrl.fromDateModel">
                   <option ng-repeat="age in ctrl.listAge" value="{{age}}">{{age}}</option>
                 </select>
 								<span class="age-line">-</span>
-								<select name="" id="" class="selectpicker" ng-model="ctrl.toDateModel">
+								<select ng-model="ctrl.toDateModel">
                   <option ng-repeat="age in ctrl.listAge" value="{{age}}">{{age}}</option>
                 </select>
 							</div>
@@ -138,7 +98,32 @@
 						<div class="col-md-3 from-container">
 							<div class="from">
 								<p>From</p>
-								<select name="" id="" class="selectpicker" ng-model="ctrl.countryModel">
+                <!-- {{ctrl.countries.countries[1].name}} -->
+               <!--  <ui-select ng-model="form.gender" theme="bootstrap">
+    <ui-select-choices class="ui-select-choices" repeat="country in ctrl.countries.countries">
+        {{country.name}}
+    </ui-select-choices>
+</ui-select> -->
+
+<!-- <ui-select ng-model="ctrl.country2.selected" theme="selectize" ng-disabled="ctrl.disabled" style="width: 300px;" title="Choose a country">
+    <ui-select-match placeholder="Select or search a country in the list...">{{$select.selected.name}}</ui-select-match> -->
+    <!-- <ui-select-choices repeat="country2 in ctrl.countries2"> -->
+    <!-- <ui-select-choices repeat="country2 in ctrl.countries2 | filter: $select.search">
+      <span ng-bind-html="country2.name | highlight: $select.search"></span>
+      <small ng-bind-html="country2.code | highlight: $select.search"></small>
+    </ui-select-choices>
+  </ui-select> -->
+
+
+
+<!--   <ui-select ng-model="ctrl.countryModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 300px;" title="Choose a country">
+    <ui-select-match placeholder="list...">{{$select.countryModel}}</ui-select-match>
+    <ui-select-choices repeat="country in ctrl.countries.countries | filter: $select.search">
+      <span ng-bind-html="country.name | highlight: $select.search"></span>
+
+    </ui-select-choices>
+  </ui-select> -->
+								<select class="select2_ua" ng-model="ctrl.countryModel">
                   <option ng-repeat="country in ctrl.countries.countries" value="{{country.name}}">{{country.name}}</option>
                 </select>
 							</div>
@@ -182,10 +167,6 @@
               </div>
             </div>
             <!-- end girl-item -->
-
-
-
-
 
 <!-- end girl-item -->
 </div>

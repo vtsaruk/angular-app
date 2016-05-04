@@ -1,73 +1,5 @@
 <div class="chat-with-girl">
-	<!-- header -->
-	<header>
-		<div class="container" id="top_anchorScroll">
-			<div class="row">
-				<div class="col-md-12">
-					<!-- small-menu -->
-					<a href="#" class="small-menu">
-						<span></span>
-						<span></span>
-						<span></span>
-					</a>
-					<!-- end small-menu -->
-					<!-- logo -->
-					<a href="#" class="header--logo">
-						<img src="assets/angular-app/public/img/logo.png"  alt=""></a>
-					<!-- end logo -->
-					<!-- navigation -->
-					<nav class="header--nav">
-						<ul class="clearfix">
-							<li>
-								<a href="/#/girls/18-30-Ukraine">Ladies</a>
-							</li>
-							<li>
-								<a href="#">Search</a>
-							</li>
-							<li>
-								<a href="/#/man">Mail</a>
-							</li>
-							<li>
-								<a href="/#/chat">Chat</a>
-							</li>
-							<li>
-								<a href="#">Gifts Delivery</a>
-							</li>
-							<li>
-								<a href="#">Offers</a>
-							</li>
-						</ul>
-					</nav>
-					<!-- end navigation -->
-					<!-- header-profile info -->
-					<div class="header--profile">
-						<div class="header--profile-img-likes">
-							<a href="#">
-								<img src="{{ctrl.user.user.mainphoto.pathOfQuad}}" width="40" height="40" alt=""></a>
-							<div class="header--heart">
-								<p>
-									<img src="assets/angular-app/public/img/header-heart.png" alt=""></p>
-								<p>2000</p>
-							</div>
-						</div>
-						<div class="header--profile-info">
-							<p>
-								Welcome,
-								<span>{{ctrl.user.user.firstname}} {{ctrl.user.user.lastname}}</span>
-							</p>
-							<a href="#">My Profile</a>
-							&nbsp;  |&nbsp;&nbsp;
-							<a href="/index/logout">
-								<span>Log out</span>
-							</a>
-						</div>
-					</div>
-					<!-- end header-profile info -->
-				</div>
-			</div>
-		</div>
-	</header>
-	<!-- end header -->
+
 	<!-- page-message -->
 <main class="page-message conversation">
 	<div class="container">
@@ -111,7 +43,7 @@
 								</ul>
 								<div class="girl-message-img">
 
-		<img src="{{ctrl.messagesId.letter.sender.mainphoto.pathOfQuad}}" alt="">
+		<img width="130" height="130" src="{{ctrl.messagesId.letter.sender.mainphoto.pathOfQuad}}" alt="">
 									<a href="#" class="girl-message-photo">
 										<p>Attached files</p>
 										<img src="assets/angular-app/public/img/photo.png" alt="" class="mn-t-10"><span>3</span></a>
@@ -208,13 +140,7 @@
                   </div>
 									</div>
                   <button ng-hide="ctrl.buttonAddLetter" class="button_add_letter" ng-click="ctrl.paginaLetterCor()" ng-model="ctrl.buttonAddLetter">Ещё</button>
-
 								</div>
-
-
-
-
-
 							</div>
 </div>
 						</div>
@@ -224,17 +150,4 @@
 	</div>
 </main>
 <!-- end page-message -->
-
-	<!-- footer -->
-
-
-	<!-- end footer -->
-
-	<!-- copyright -->
-	<div class="copyright">
-		<p>IrinaDating &copy; 2009-2015</p>
-	</div>
-
-
-
 </div>

@@ -1,48 +1,5 @@
 
-	<header>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <!-- small-menu -->
-          <a href="#" class="small-menu">
-            <span></span>
-            <span></span>
-            <span></span>
-          </a>
-          <!-- end small-menu -->
-          <!-- logo -->
-          <a href="#" class="header--logo">
-            <img src="assets/angular-app/public/img/logo.png"  alt=""></a>
-          <!-- end logo -->
-          <!-- navigation -->
-          <nav class="header--nav">
-            <ul class="clearfix">
-              <li>
-                <a href="/#/girls">Ladies</a>
-              </li>
-              <li>
-                <a href="#">Chat</a>
-              </li>
-              <li>
-                <a href="#">Special Offers</a>
-              </li>
-            </ul>
-          </nav>
-          <!-- end navigation -->
 
-          <div class="header--profile">
-
-          <div class="header--profile-info">
-            <a href="/index/signin">Login</a>
-          &nbsp;  |&nbsp;&nbsp;
-          <a href="#">Register</a>
-        </div>
-      </div>
-      <!-- end header-profile info -->
-    </div>
-  </div>
-</div>
-</header>
 	<!-- page-message -->
 <main class="page-message page-blog contact-us">
 	<div class="container">
@@ -95,25 +52,37 @@
 										Do you have a question?
 									</div>
 									<div class="contact-us-right-side-content clearfix">
+
 										<h5 class="red-21-Lt-w600">We want to hear from you!</h5>
 										<label for="">Email Address<sup>*</sup></label>
-										<input type="text" id="men-account-form-input">
+										<input type="text" id="men-account-form-input" name="email" ng-model="ctrl.feedback.email">
 										<label for="">How can we help you?*<sup>*</sup></label>
-										<select name="" id="" class="selectpicker">
+
+<ui-select ng-model="ctrl.country.selected" theme="selectize" ng-disabled="ctrl.disabled" style="width: 300px;" title="Choose a country">
+    <ui-select-match placeholder="Select or search a country in the list...">{{$select.selected.name}}</ui-select-match>
+    <ui-select-choices repeat="country in ctrl.countries | filter: $select.search">
+      <span ng-bind-html="country.name | highlight: $select.search"></span>
+      <small ng-bind-html="country.code | highlight: $select.search"></small>
+    </ui-select-choices>
+  </ui-select>
+										<!-- <select name="" id="men-account-form-select"  ng-model="ctrl.feedback.subject">
 											<option value="1">Mounth</option>
 											<option value="2">2</option>
 											<option value="3">3</option>
 											<option value="4">4</option>
-										</select>
+										</select> -->
+
+
+
 										<div class="online-status-right clearfix mn-b-50">
 											<label for="">Please enter your inquiry/feedback here<sup>*</sup></label>
-											<textarea class="online-status-right-descr"></textarea>
+											<textarea class="online-status-right-descr" ng-model="ctrl.feedback.message" name="message" ng-minlength="1"></textarea>
 											<div class="clearfix">
 												<p class="online-status-p">limit - 1000 characters</p>
 												<p class="online-status-p">396 Characters Remaining</p>
 											</div>
 										</div>
-										<button class="btn-send">Submit</button>
+										<button class="btn-send" ng-click="ctrl.addFeedback(ctrl.feedback)">Submit</button>
 									</div>
 								</div>
 							</div>

@@ -1,11 +1,9 @@
 module.exports = girlsAllService;
-
+/*фабрика*/
 function girlsAllService ($resource) {
-  var girlsResource = $resource('/api/girls',
-    { });
-  var countriesResource = $resource('/api/countries',
-    { });
-
+  var girlsResource = $resource('/api/girls', { });
+  var countriesResource = $resource('/api/countries', { });
+/*Получаем данные девушек согласно выбранных критериев*/
   this.getGirlsAll = function (options) {
     return girlsResource.get({
       birthdateFrom: options.birthdateFrom,
@@ -17,16 +15,11 @@ function girlsAllService ($resource) {
       relations: '{"user":{"country":{}, "mainphoto": {} } }'
     });
   };
-
+/*Получаем странны*/
   this.getCountries = function() {
     return countriesResource.get({direction: 'asc'});
-  }
-
-
-
+  };
   return this;
 };
-
-
 
 girlsAllService.$inject = ['$resource'];

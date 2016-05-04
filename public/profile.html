@@ -1,91 +1,12 @@
-<header>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <!-- small-menu -->
-          <a href="#" class="small-menu">
-            <span></span>
-            <span></span>
-            <span></span>
-          </a>
-          <!-- end small-menu -->
-          <!-- logo -->
-          <a ui-sref="main" class="header--logo">
-            <img src="assets/angular-app/public/img/logo.png"  alt=""></a>
-          <!-- end logo -->
-          <!-- navigation -->
-          <nav class="header--nav">
-            <ul class="clearfix">
-              <li>
-                <a href="/#/girls/-ag-18-27-co-Ukraine">Ladies</a>
-              </li>
-              <li>
-                <a href="#">Search</a>
-              </li>
-              <li>
-                <a href="/#/man">Mail</a>
-              </li>
-              <li>
-                <a href="/#/chat">Chat</a>
-              </li>
-              <li>
-                <a href="#">Gifts Delivery</a>
-              </li>
-              <li>
-                <a href="#">Offers</a>
-              </li>
-            </ul>
-          </nav>
-          <!-- end navigation --http://irinadating.loc/upload/photos/96768/YtIPrdWZ.jpg`
-                                http://irinadating.loc/upload/photos/96768/YtIPrdWZ.jpg>
-          <!-- header-profile info -->
-          <div class="header--profile">
-            <div class="header--profile-img-likes">
-              <a href="#">
-                <img src="{{ctrl.user.user.mainphoto.pathOfQuad}}" width="40" height="40" alt=""></a>
-              <div class="header--heart">
-                <p>
-                  <img src="assets/angular-app/public/img/header-heart.png" alt=""></p>
-                <p>2000</p>
-              </div>
-
-            </div>
-            <div class="header--profile-info">
-              <p>
-                Welcome,
-                <span>{{ctrl.user.user.firstname}} {{ctrl.user.user.lastname}}</span>
-              </p>
-              <a href="/index/logout">My Profile</a>
-              &nbsp;  |&nbsp;&nbsp;
-              <a href="/index/logout">
-                <span>Log out</span>
-              </a>
-            </div>
-          </div>
-          <!-- end header-profile info -->
-        </div>
-      </div>
-    </div>
-  </header><!--
-  <!-- end header -->
   <!-- page-message -->
-
-
-
-
-
-
-
-
-
 <div class="chat-with-girl">
 
 	<!-- end header -->
 	<!-- page-message -->
 <main class="profile">
 	<div class="container">
-<!-- <div>{{ctrl.girlsId.girl.user.mainphoto.pathOfQuad}}</div> -->
-<!-- <div>{{ctrl.girlsPhotos.photos}}</div> -->
+<!-- <div>{{ctrl.girlsId.girl}}</div>
+ --><!-- <div>{{ctrl.girlsPhotos.photos}}</div> -->
 		<div class="row">
 			<div class="col-md-12">
 				<div class="main-content clearfix">
@@ -162,14 +83,14 @@
 								<div class="row">
 									<div class="col-sm-12 col-md-10">
 										<div class="profile-right-side-about">
-											<p>Give me your hand! I will show you the right choice! Give me your hand! I will show you the right choice! Give me your hand! I will show you the right choice! </p>
+											<p>{{ctrl.girlsId.girl.message}}</p>
 										</div>
 										<div class="profile-right-side-about-item-container">
 											<div class="row">
 												<div class="col-sm-4 col-md-4 mn-b-25">
 													<div class="profile-right-side-about-item">
 														<h6 class="red-14-Lt-w600 mn-b-5">Date of birth</h6>
-														<p class="grey-14-Lt">07.23.1984 (fish)</p>
+														<p class="grey-14-Lt">{{ctrl.girlsId.girl.user.birthdate | date: 'dd.MM.yyyy'}} (fish)</p>
 													</div>
 												</div>
 												<div class="col-sm-3 col-md-3 mn-b-25">

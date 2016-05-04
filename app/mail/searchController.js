@@ -1,9 +1,25 @@
 module.exports = searchController;
 
-function searchController ($document, $location, $stateParams, $timeout, userService, searchService, girlsAllService, girlsService) {
+function searchController ($document, $location, $stateParams, $timeout, $rootScope, userService, searchService, girlsAllService, girlsService) {
 
   var urlId = $stateParams.id
 
+this.getUserData = function () {
+    var self = this;
+    userService.getUser().$promise.then(
+      function(data) {
+        $rootScope.global2 = data;
+        console.log('$rootScope.global2');
+        console.log($rootScope.global2)
+        self.user = data;
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+
+  this.getUserData();
 
   this.birthdateFromModel = 18;
   this.birthdateToModel = 60;
@@ -128,32 +144,14 @@ function searchController ($document, $location, $stateParams, $timeout, userSer
     // console.log(this.arrURL);
     // console.log(keyValURL);
     var resultURL = keyValURL.slice(0, keyValURL.length-1);
-    // console.log(resultURL);
-
+    console.log('resultURL');
+    console.log(resultURL);
     $location.path('/search/' + '-' + resultURL);
-
   }
 
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;
   };
-
-
-
-  this.getUserData = function () {
-    var self = this;
-
-    userService.getUser().$promise.then(
-      function(data) {
-        self.user = data;
-      },
-      function(error) {
-        console.log(error);
-      }
-    );
-  };
-
-  this.getUserData();
 
   this.getCountries = function() {
     var self = this;
@@ -161,6 +159,7 @@ function searchController ($document, $location, $stateParams, $timeout, userSer
     girlsAllService.getCountries().$promise.then(
       function(data) {
         self.countries = data;
+        $('select').select2();
         self.searchGirls()
       },
       function(error) {
@@ -194,17 +193,11 @@ this.birthdateFromAge = function() {
   // var resMonth = resFromDate.getMonth() +1;
   var arrRes2 = new String(resToDate).split(' ');
   this.birthdateFrom = arrRes2[3] + '-' + resMonth + '-' + arrRes2[2];
-  // console.log(this.birthdateFromModel, this.birthdateToModel);
-  // console.log(this.birthdateTo, this.birthdateFrom );
 };
-  // this.getUserData();
-  // this.fromDateModel = birthDateArrId;
-  // this.toDateModel = birthDateToArrId;
-  // this.countryModel = country;
+
 
   this.searchGirls = function() {
     this.setCountryId();
-    // console.log(dateBirthdateFrom, dateBirthdateTo);
     this.birthdateFromAge();
     var self = this;
     var options = {
@@ -238,7 +231,7 @@ this.birthdateFromAge = function() {
         self.girlsAll = data;
         self.resultGirls = self.girlsAll.girls
         self.gillsLength = self.girlsAll.totalCount;
-        self.countPage = self.gillsLength / 3;
+        self.countPage = self.gillsLength / 4;
         self.totalPage = Math.ceil(self.countPage);
       },
       function(error) {
@@ -248,12 +241,12 @@ this.birthdateFromAge = function() {
   };
 
   this.page = 0;
-  this.limit = 3;
+  this.limit = 4;
 
  this.paginaGirl = function() {
      if (this.totalPage){
       this.page += 1;
-      this.limit += 3;
+      this.limit += 4;
       this.searchGirls();
       if(this.page==this.totalPage)
         this.buttonAdd = true;
@@ -368,29 +361,7 @@ this.birthdateFromAge = function() {
   this.makeAge();
 
   this.clearDataSearch = function() {
-    this.birthdateFromModel = 18;
-    this.birthdateToModel = 60;
-    this.countryId = undefined;
-    this.cityModel = undefined;
-    this.firstNameModel = undefined;
-    this.heightFromModel = undefined,
-    this.heightToModel = undefined;
-    this.weightFromModel = undefined;
-    this.weightToModel = undefined;
-    this.hairColorModel = undefined;
-    this.eyeColorModel = undefined;
-    this.englishRatingModel = undefined;
-    this.maritalStatusModel = undefined;
-    this.professionModel = undefined;
-    this.educationModel = undefined;
-    this.religionModel = undefined;
-    this.smokingModel = undefined;
-    this.drinkingModel = undefined;
-    this.zodiacSignModel = undefined;
-    this.childrenNumberFromModel = undefined;
-    this.childrenNumberToModel = undefined;
-    this.limit = 3;
-    this.resultGirls = [];
+    $location.path('/search/-ag-18-30');
   };
 
   this.arrWeight = [];
@@ -448,26 +419,15 @@ this.birthdateFromAge = function() {
     return photo;
   };
 
- this.selectInterval = function() {
-  setInterval(function(){
-    $('.selectpicker').selectpicker({
-        style: 'btn-info',
-        size: 4
-      });
-  }, 1000);
-};
 // $(document).ready(function(){
-   setInterval(function(){
-    $('.selectpicker').selectpicker({
-        style: 'btn-info',
-        size: 4
-      });
-  }, 1000);
+  //  setInterval(function(){
+  //   $('.selectpicker').selectpicker({
+  //       style: 'btn-info',
+  //       size: 4
+  //     });
+  // }, 1000);
   // })
 
-// this.selectInterval();
-
-
 };
 
-  searchController.$inject = ['$document', '$location','$stateParams', '$timeout', 'userService', 'searchService', 'girlsAllService','girlsService'];
+  searchController.$inject = ['$document', '$location','$stateParams', '$rootScope', '$timeout', 'userService', 'searchService', 'girlsAllService','girlsService'];

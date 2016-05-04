@@ -2,9 +2,9 @@ module.exports = girlsViewController;
 
 
 function girlsViewController ($document, $stateParams, $location, girlsService, $scope) {
-
+/*Забираем id из URL*/
   var id = $stateParams.id.split('-')[4];
-
+/*Функция определяет возраст*/
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
   };
@@ -31,7 +31,7 @@ function girlsViewController ($document, $stateParams, $location, girlsService, 
       return letterText;
     }
   }
-
+/*Функция меняет название фотграфии подставляя _300_420_crop*/
   this.photoAvatar2 = function(arg) {
     var photo = String(arg);
     if(photo.length<64) {
@@ -39,7 +39,7 @@ function girlsViewController ($document, $stateParams, $location, girlsService, 
     }
     return photo;
   };
-
+/*Функция получает данные девушки из girlsService*/
   this.girlsIdGet = function(id) {
     var self = this;
     girlsService.getGirlsId(id).$promise.then(
@@ -54,7 +54,7 @@ function girlsViewController ($document, $stateParams, $location, girlsService, 
   };
 
   this.girlsIdGet(id);
-
+/*Функция делает запрос к сервису и получает фотографии для фото-карусели*/
 this.photosGirl = function(id) {
     var self = this;
     girlsService.getGirlPhoto(id).$promise.then(

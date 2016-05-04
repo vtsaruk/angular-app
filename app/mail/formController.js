@@ -1,6 +1,21 @@
 module.exports = formController;
 
-function formController (formService, $scope, $timeout) {
+function formController (formService, $scope, $timeout, userService, $rootScope) {
+
+  this.getUserData = function () {
+    var self = this;
+    userService.getUser().$promise.then(
+      function(data) {
+        self.user = data;
+        $rootScope.global2 = self.user.user.additionalData.groupId;
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+
+  this.getUserData();
 
   $scope.cropper = {};
   $scope.cropper.sourceImage = null;
@@ -99,4 +114,4 @@ function formController (formService, $scope, $timeout) {
 
 };
 
-formController.$inject = ['formService', '$scope', '$timeout'];
+formController.$inject = ['formService', '$scope', '$timeout', 'userService','$rootScope'];

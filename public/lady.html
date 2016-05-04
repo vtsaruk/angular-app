@@ -1,66 +1,4 @@
-<header>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <!-- small-menu -->
-          <a href="#" class="small-menu">
-            <span></span>
-            <span></span>
-            <span></span>
-          </a>
-          <!-- end small-menu -->
-          <!-- logo -->
-          <a href="/#/home" class="header--logo">
-            <img src="assets/angular-app/public/img/logo.png"  alt=""></a>
-          <!-- end logo -->
-          <!-- navigation -->
-          <nav class="header--nav">
-            <ul class="clearfix">
-              <li>
-                <a href="#">Men</a>
-              </li>
-
-              <li>
-                <a href="/lady">Mail</a>
-              </li>
-              <li>
-                <a href="/#/chat">Chat</a>
-              </li>
-
-            </ul>
-          </nav>
-          <!-- end navigation -->
-          <!-- header-profile info -->
-          <div class="header--profile">
-            <div class="header--profile-img-likes">
-              <a href="#">
-                <img src="{{ctrl.user.user.mainphoto.pathOfQuad}}" width="40" height="40" alt=""></a>
-              <div class="header--heart">
-                <p>
-                  <img src="assets/angular-app/public/img/header-heart.png" alt=""></p>
-                <p>2000</p>
-              </div>
-
-            </div>
-            <div class="header--profile-info">
-              <p>
-                Welcome,
-                <span>{{ctrl.user.user.firstname}} {{ctrl.user.user.lastname}}</span>
-              </p>
-              <a href="/#/form">My Profile</a>
-              &nbsp;  |&nbsp;&nbsp;
-              <a href="/index/logout">
-                <span>Log out</span>
-              </a>
-            </div>
-          </div>
-          <!-- end header-profile info -->
-        </div>
-      </div>
-    </div>
-  </header><!--
-  <!-- end header -->
-  <!-- page-message -->
+<!-- page-message -->
 <!-- <div>{{ctrl.user}}</div> -->
 
 
@@ -128,7 +66,7 @@
               <a href="" class="active" ng-class="{true:'activ_message-filter'}[ctrl.onThisWeek]" ng-model="ctrl.onThisWeek" ng-click="ctrl.onThisWeekDate()">On this week</a>
               <a href="" class="on-last-week" ng-class="{true:'activ_message-filter'}[ctrl.onLastWeek]" ng-model="ctrl.onLastWeek" ng-click="ctrl.onLastWeekDate()">On last week</a>
               <div class="message-filter-select clearfix">
-                <input type="date" ng-model="ctrl.fromDate">
+              <input ng-model="ctrl.fromDate" ui-date class="calendar_mail">
                 <!-- <select name="" id="" class="selectpicker">
                   <option value="">From date</option>
                   <option value="">19</option>
@@ -136,7 +74,7 @@
                   <option value="">21</option>
                 </select> -->
                 <span class="message-filter-select-line"></span>
-                <input type="date" ng-model="ctrl.toDate">
+                <input ng-model="ctrl.toDate" ui-date class="calendar_mail">
                 <!-- <select name="" id="" class="selectpicker">
                   <option value="">To Date</option>
                   <option value="">31</option>
@@ -248,7 +186,7 @@
 
                 <div class="girl-message-img">
 
-                  <img src="{{ctrl.messagesId.letter.sender.mainphoto.pathOfQuad}}" alt="">
+                  <img width="130" height="130" src="{{ctrl.messagesId.letter.sender.mainphoto.pathOfQuad}}" alt="">
                   <a href="#" class="girl-message-photo">
                     <p>Attached files</p>
                     <img src="assets/angular-app/public/img/photo.png" alt="" class="mn-t-10"><span>3</span></a>
@@ -296,7 +234,8 @@
                 <a href="" class="active" ng-class="{true:'activ_message-filter'}[ctrl.onThisWeek]" ng-model="ctrl.onThisWeek" ng-click="ctrl.onThisWeekDate()">On this week</a>
                 <a href="" class="on-last-week" ng-class="{true:'activ_message-filter'}[ctrl.onLastWeek]" ng-model="ctrl.onLastWeek" ng-click="ctrl.onLastWeekDate()">On last week</a>
                 <div class="message-filter-select clearfix">
-                  <input type="date" ng-model="ctrl.fromDate">
+                  <input ng-model="ctrl.fromDate" ui-date class="calendar_mail">
+
                   <!-- <select name="" id="" class="selectpicker">
                     <option value="">From date</option>
                     <option value="">19</option>
@@ -304,7 +243,7 @@
                     <option value="">21</option>
                   </select> -->
                   <span class="message-filter-select-line"></span>
-                  <input type="date" ng-model="ctrl.toDate">
+                  <input ng-model="ctrl.toDate" ui-date class="calendar_mail">
                   <!-- <select name="" id="" class="selectpicker">
                     <option value="">To Date</option>
                     <option value="">31</option>

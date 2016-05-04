@@ -1,23 +1,23 @@
 module.exports = girlsController;
 
 
-function girlsController ($document, $stateParams, $location, mailService, userService, girlsService, $scope) {
-
+function girlsController ($document, $stateParams, $location, mailService, userService, girlsService, $scope, $rootScope) {
+/*Функция меняет название фотграфии подставляя _300_420_crop*/
   this.photoAvatar2 = function(arg) {
     var photo = String(arg);
     photo = photo.slice(0, photo.length-4) + '_300_420_crop' + photo.slice(-4);
     return photo;
   };
-
+/*Функция определяет возраст*/
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
   }
-
+/*Функция получает данние пользователя из сервиса userService*/
   this.getUserData = function () {
     var self = this;
-
     userService.getUser().$promise.then(
       function(data) {
+        $rootScope.global2 = data;
         self.user = data;
       },
       function(error) {
@@ -27,9 +27,9 @@ function girlsController ($document, $stateParams, $location, mailService, userS
   };
 
 this.getUserData();
-
+/*Забираем id из URL*/
   var id = $stateParams.id.split('-')[4];
-
+/*Функция получает данные девушки из girlsService*/
   this.girlsIdGet = function(id) {
     var self = this;
     girlsService.getGirlsId(id).$promise.then(
@@ -82,4 +82,4 @@ this.getUserData();
 };
 
 
-girlsController.$inject = ['$document', '$stateParams', '$location', 'mailService', 'userService', 'girlsService', '$scope'];
+girlsController.$inject = ['$document', '$stateParams', '$location', 'mailService', 'userService', 'girlsService', '$scope', '$rootScope'];

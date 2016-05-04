@@ -40,8 +40,8 @@
 									<div class="main-members-wrap active">
 
 										<!-- members-item Online-->
-                  <div class="box_directory" ng-show="ctrl.onlineModel" ng-model="ctrl.onlineModel">
-										<div class="main-members-item clearfix" ng-repeat="partner in ctrl.partners" ng-model="ctrl.requstInOnLine[$index]" ng-show="partner.isOnline" ng-click="ctrl.correspondence(partner); ctrl.classActiv[$index]='active'">
+                  <div class="box_directory" id="online" ng-show="ctrl.onlineModel" ng-model="ctrl.onlineModel">
+										<div class="main-members-item clearfix" ng-repeat="partner in ctrl.partners" ng-model="ctrl.requstInOnLine[$index]" ng-show="partner.isOnline" ng-click="ctrl.correspondence(partner, $index, 0)">
 											<div class="main-members-item-soc">
 												<a href="">
 													<img src="assets/angular-app/public/img/grey-heart.png" alt=""></a>
@@ -53,8 +53,7 @@
                       </a>
 											<div class="main-members-info">
 												<span class="online"></span>
-                        <!-- <span ng-hide="partner.isOnline" class="offline"></span> -->
-												<a href="#">{{partner.firstname}}, {{partner.age}}
+                        <a href="#">{{partner.firstname}}, {{partner.age}}
 													<span>ID {{partner.id}}</span>
 												</a>
 											</div>
@@ -68,8 +67,8 @@
 										<!-- end members-item Online-->
 
                     <!-- members-item Request-->
-                  <div class="box_directory" ng-show="ctrl.requestModel" ng-model="ctrl.requestModel">
-                    <div class="main-members-item clearfix" ng-repeat="partner in ctrl.partners" ng-model="ctrl.requstInOnLine[$index]" ng-show="ctrl.acceptAndDeclineChat(partner, ctrl.user.user.additionalData.groupId)" ng-class="ctrl.classActiv[$index]" ng-click="ctrl.correspondence(partner); ctrl.classActiv[$index]='active'">
+                  <div class="box_directory" id="request" ng-show="ctrl.requestModel" ng-model="ctrl.requestModel">
+                    <div class="main-members-item clearfix" ng-repeat="partner in ctrl.partners" ng-model="ctrl.requstInOnLine[$index]" ng-show="ctrl.acceptAndDeclineChat(partner, ctrl.user.user.additionalData.groupId)" ng-class="ctrl.classActiv[$index]" ng-click="ctrl.correspondence(partner, $index, 1)">
                       <div class="main-members-item-soc">
                         <a href="">
                           <img src="assets/angular-app/public/img/grey-heart.png" alt=""></a>
@@ -86,20 +85,20 @@
                           <span>ID {{partner.id}}</span>
                         </a>
                       </div>
-                      <!-- <div ng-hide="ctrl.requstInOnLine[$index]" class="main-members-chat-status status-4" ng-click="ctrl.sendRequest(partner.id);ctrl.requstInOnLine[$index]=true">Start chat</div>
-                      <div ng-hide="ctrl.requstInOnLine[$index]" class="main-members-chat-status status-5">Start Video<br/>Chat</div>
-                      <div ng-show="ctrl.requstInOnLine[$index]" class="main-members-chat-status status-3">Waiting Request<br/>Confirmation<br/></div> -->
-                  <!--    <div class="main-members-chat-status status-1">Chatting now</div> -->
-                  <div class="main-members-chat-status status-8" ng-click="ctrl.approveRequest(partner.sessionId)">Accept Chat</div>
+                      <div class="main-members-chat-status status-8" ng-click="ctrl.approveRequest(partner.sessionId)">Accept Chat</div>
                       <div class="main-members-chat-status status-7" ng-click="ctrl.declineRequest(partner.sessionId)">Decline</div>
                       <div class="main-members-sms">3</div>
                     </div>
                   </div>
                     <!-- end members-item Request-->
 
+ <!-- ng-class="ctrl.classActiv[$index]" -->
+
                     <!-- members-item Recent-->
                   <div class="box_directory" ng-show="ctrl.recentModel" ng-model="ctrl.recentModel">
-                    <div class="main-members-item clearfix" ng-repeat="partner in ctrl.partners" ng-model="ctrl.requstInOnLine[$index]" ng-show="partner.sessionId" ng-class="ctrl.classActiv[$index]" ng-click="ctrl.correspondence(partner); ctrl.classActiv[$index]='active'">
+
+
+                    <div class="main-members-item clearfix" ng-repeat="partner in ctrl.partners" ng-model="ctrl.requstInOnLine[$index]" ng-show="partner.sessionId"  ng-click="ctrl.correspondence(partner, $index, 2)">
                       <div class="main-members-item-soc">
                         <a href="">
                           <img src="assets/angular-app/public/img/grey-heart.png" alt=""></a>
@@ -116,21 +115,17 @@
                           <span>ID {{partner.id}}</span>
                         </a>
                       </div>
-                      <!-- <div ng-hide="ctrl.requstInOnLine[$index]" class="main-members-chat-status status-4" ng-click="ctrl.sendRequest(partner.id);ctrl.requstInOnLine[$index]=true">Start chat</div>
-                      <div ng-hide="ctrl.requstInOnLine[$index]" class="main-members-chat-status status-5">Start Video<br/>Chat</div>
-                      <div ng-show="ctrl.requstInOnLine[$index]" class="main-members-chat-status status-3">Waiting Request<br/>Confirmation<br/></div> -->
-                  <!--    <div class="main-members-chat-status status-1">Chatting now</div> -->
-                  <!-- <div class="main-members-chat-status status-6" ng-show="partner.sessionId">Accept<br/>Video Chat</div>
-                      <div class="main-members-chat-status status-7">Decline</div> -->
+
                       <div ng-show="ctrl.isStartChat(partner)" class="main-members-chat-status status-4" ng-click="ctrl.sendRequest(partner.id);ctrl.requstInOnLine[$index]=true">Start chat</div>
                       <div ng-show="ctrl.isStartChat(partner)" class="main-members-chat-status status-5">Start Video<br/>Chat</div>
                       <div ng-show="ctrl.isWaitingRequest(partner, ctrl.user.user.additionalData.groupId)" class="main-members-chat-status status-3">Waiting Request<br/>Confirmation<br/></div>
                       <div ng-show="ctrl.chattingNow(partner)" class="main-members-chat-status status-1">Chatting now</div>
 
-                     <!--  <div class="main-members-chat-status status-8" ng-show="partner.sessionId" ng-click="ctrl.approveRequest(partner.sessionId)">Accept Chat</div>
-                      <div class="main-members-chat-status status-7" ng-show="partner.sessionId" ng-click="ctrl.declineRequest(partner.sessionId)">Decline</div> -->
+
                       <div class="main-members-sms">3</div>
                     </div>
+
+
                     </div>
                     <!-- end members-item Recent-->
 
@@ -175,7 +170,8 @@
 								<div class="chat-box clearfix">
     <!-- <div>{{ctrl.messages}}</div> -->
                   <div ng-repeat="message in ctrl.messages">
-                    <p ng-show="ctrl.dayShow(message.sentTime)" class="day">{{ctrl.functionDate(message.sentTime)}}</p>
+                    <!-- <p ng-show="ctrl.dayShow(message.sentTime)" class="day">{{ctrl.functionDate(message.sentTime)}}</p> -->
+                    <p ng-show="message.sentTime" class="day">{{message.sentTime | date: 'd.MM.yyyy'}}</p>
 									  <!-- chat-message -->
 									  <div ng-class="{true:'chat-message-in clearfix', false:'chat-message-out clearfix'}[ctrl.addClassMessages(message.direction)]" >
 										  <p ng-if="message.direction=='inbound'">{{ctrl.namePartner}}</p>
@@ -198,3 +194,13 @@
 	</main>
 	<!-- end main -->
 
+  <!--  <div class="main-members-chat-status status-8" ng-show="partner.sessionId" ng-click="ctrl.approveRequest(partner.sessionId)">Accept Chat</div>
+                      <div class="main-members-chat-status status-7" ng-show="partner.sessionId" ng-click="ctrl.declineRequest(partner.sessionId)">Decline</div> -->
+
+
+<!-- <div ng-hide="ctrl.requstInOnLine[$index]" class="main-members-chat-status status-4" ng-click="ctrl.sendRequest(partner.id);ctrl.requstInOnLine[$index]=true">Start chat</div>
+                      <div ng-hide="ctrl.requstInOnLine[$index]" class="main-members-chat-status status-5">Start Video<br/>Chat</div>
+                      <div ng-show="ctrl.requstInOnLine[$index]" class="main-members-chat-status status-3">Waiting Request<br/>Confirmation<br/></div> -->
+                  <!--    <div class="main-members-chat-status status-1">Chatting now</div> -->
+                  <!-- <div class="main-members-chat-status status-6" ng-show="partner.sessionId">Accept<br/>Video Chat</div>
+                      <div class="main-members-chat-status status-7">Decline</div> -->

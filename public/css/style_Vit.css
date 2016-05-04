@@ -38,3 +38,47 @@
 .not_check_box {
   /*display: none !important;*/
 }
+
+.calendar_mail {
+  width: 120px !important;
+}
+.select2_ua {
+  width: 150px !important;
+  height: 30px !important;
+}
+
+#men-account-form-select {
+  width: 100%;
+}
+.select-width-100 {
+    width: 100% !important;
+}
+.select2-selection--single {
+  height: 30px !important;
+}
+.mn-b-50 {
+    margin-top: 5px !important;
+};
+.select2-results__option--highlighted[aria-selected] {
+  background-color: #999 !important;
+}
+
+.select2 > .select2-choice.ui-select-match {
+            /* Because of the inclusion of Bootstrap */
+            height: 29px;
+        }
+
+        .selectize-control > .selectize-dropdown {
+            top: 36px;
+        }
+        /* Some additional styling to demonstrate that append-to-body helps achieve the proper z-index layering. */
+        .select-box {
+          background: #fff;
+          position: relative;
+          z-index: 1;
+        }
+        .alert-info.positioned {
+          margin-top: 1em;
+          position: relative;
+          z-index: 10000; /* The select2 dropdown has a z-index of 9999 */
+        }
