@@ -18,23 +18,8 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
         console.log(error);
       }
     );
-  }
+  };
 
-  this.functionDataRecipiend = function(messageObg, userID, model) {
-console.log('recipientID');
-console.log(messageObg);
-console.log('userID');
-console.log(userID);
-console.log('model');
-console.log(model);
-    if(messageObg.recipientId==userID) {
-      if(model==false && messageObg.isRead==true)
-      return 0;
-
-    } else return 1
-
-
-  }
 /*Функция определяет возраст*/
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;

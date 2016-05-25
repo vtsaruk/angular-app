@@ -8,6 +8,7 @@ function girlsAllController ($document, $location, $stateParams, userService, gi
   // console.log('recaptchaKey = ' + this.recaptchaKey);
   // console.log('secret = ' + meConfig.recapthaSecret);
   this.disabled = undefined;
+
 /*Функция определяет возраст*/
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
