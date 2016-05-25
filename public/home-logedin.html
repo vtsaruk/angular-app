@@ -55,44 +55,51 @@
 						<div class="col-md-3 age-container">
 							<div class="age clearfix">
 								<p>Age</p>
-								<select name="" id="" class="selectpicker" ng-model="ctrl.fromDateModel">
-									<option ng-repeat="age in ctrl.listAge" value="{{age}}">{{age}}</option>
-								</select>
+                <div class="select_box_inline">
+                <ui-select ng-model="ctrl.fromDateModel"  theme="selectize" ng-disabled="ctrl.disabled" style="width: 70px;" title="Choose age">
+                  <ui-select-match class="ui-select-match" placeholder="Select age...">{{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices class="ui-select-choices" repeat="age in ctrl.listAge | filter: $select.search">
+                  <span ng-bind-html="age.name | highlight: $select.search"></span>
+                  </ui-select-choices>
+                </ui-select>
+                </div>
 								<span class="age-line">-</span>
-								<select name="" id="" class="selectpicker" ng-model="ctrl.toDateModel">
-								  <option ng-repeat="age in ctrl.listAge" value="{{age}}">{{age}}</option>
-								</select>
-
+                <div class="select_box_inline">
+								<ui-select ng-model="ctrl.toDateModel"  theme="selectize" ng-disabled="ctrl.disabled" style="width: 70px;" title="Choose age">
+                  <ui-select-match class="ui-select-match" placeholder="Select age...">{{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices class="ui-select-choices" repeat="age in ctrl.listAge | filter: $select.search">
+                  <span ng-bind-html="age.name | highlight: $select.search"></span>
+                  </ui-select-choices>
+                </ui-select>
+                </div>
 							</div>
 						</div>
 						<div class="col-md-3 from-container">
 							<div class="from">
 								<p>From</p>
-								<select name="" class="select2_ua" id="" class="selectpicker" ng-model="ctrl.countryModel">
-									<option ng-repeat="country in ctrl.countries.countries" value="{{country.name}}">{{country.name}}</option>
-									<!-- <option value="Russia">Russia</option>
-									<option value="Belarus">Belarus</option> -->
-								</select>
+                <div class="select_box_inline">
+								<ui-select ng-model="ctrl.countryModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 150px;" title="Choose country">
+                  <ui-select-match class="ui-select-match" placeholder="Select country...">{{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices class="ui-select-choices" repeat="country in ctrl.countries.countries | filter: $select.search">
+                  <span ng-bind-html="country.name | highlight: $select.search"></span>
+                  </ui-select-choices>
+                </ui-select>
+                </div>
 							</div>
 						</div>
 						<div class="col-md-3">
 							<button class="btn-search" ng-click="ctrl.searchGirls('/girls/')">Search</button>
 						</div>
 						<div class="col-md-3">
-
 							<button class="btn-adv">Advanced Search</button>
 						</div>
-
 					</div>
-
           <!-- girls -->
-
 					<div class="girls clearfix">
-
 						<!-- girl-item -->
 						<div class="col-md-3"ng-repeat="girl in ctrl.girlsAll.girls">
 							<div class="girl-item">
-								<img src="{{ctrl.photoAvatar2(girl.user.mainphoto.pathOfQuad)}}" alt="">
+								<img src="{{girl.photoAvatar}}" alt="">
 								<div class="girls-info clearfix">
 									<div class="girls-fix-info">
 										<ul class="tooltips-list">
@@ -111,8 +118,10 @@
 									</div>
 									<span class="status online"></span>
 									<div class="girl-info-cont">
-										<p>{{girl.user.firstname}}, {{ctrl.agePerson(girl.user.birthdate)}}</p>
-										<p class="girl-location">{{girl.user.country.name}}, {{girl.user.city}}</p>
+                    <a href="/#/girl/{{girl.user.firstname}}-{{ctrl.agePerson(girl.user.birthdate)}}-{{girl.user.country.name}}-{{girl.user.city}}-{{girl.id}}">
+                      <p>{{girl.user.firstname}}, {{ctrl.agePerson(girl.user.birthdate)}}</p>
+										  <p class="girl-location">{{girl.user.country.name}}, {{girl.user.city}}</p>
+                    </a>
 									</div>
                   <a href="#" class="like">
                     <img src="assets/angular-app/public/img/like.png" alt=""></a>
@@ -361,31 +370,7 @@ Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.</span>
 
 	</div>
 </section>
-<!-- end reviews -->
-<!-- footer -->
-
-
-<!-- end footer -->
-<!-- copyright -->
-<!-- <div class="copyright">
-<p>IrinaDating &copy; 2009-2015</p>
 </div>
--->
-<!-- end copyright -->
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
-	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script> -->
-	<!-- <script src="assets/angular-app/public/js/bootstrap-select.min.js"></script> -->
-	<!-- <script src="assets/angular-app/public/js/owl.carousel.min.js"></script> -->
-	<script>
-		  // bootstrap select picker
-      // $('.selectpicker').selectpicker({
-      //   style: 'btn-info',
-      //   size: 4
-      // });
+<script src="assets/angular-app/public/js/owl.carousel.min.js"></script>
+<script src="assets/angular-app/public/js/main2.js"></script>
 
-	</script>
-	<!-- <script src="js/main.js"></script> -->
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
-
-</div>

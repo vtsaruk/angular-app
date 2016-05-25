@@ -21,18 +21,20 @@ require('angular-sanitize');
 require('./../node_modules/angular-ui-select/select.js');
 // require('angular-ui-select');
 // require('bootstrap-select');
-
+// var meConfig = require('./config');
 // var conversationsController = require('./controllers/conversationsController');
 var mailController = require('./mail/mailController');
 var girlsController = require('./mail/girlsController');
 var usersController = require('./mail/usersController');
 var girlsAllController = require('./mail/girlsAllController');
+var ladyAllController = require('./mail/ladyAllController');
 var mailIdController = require('./mail/mailIdController');
 var formController = require('./mail/formController');
 var girlsViewController = require('./mail/girlsViewController');
 var chatController = require('./mail/chatController');
 var searchController = require('./mail/searchController');
 var contactUsController = require('./mail/contactUsController');
+var favoriteController = require('./mail/favoriteController');
 
 var cropDirective = require('./directives/crop');
 var fileDirective = require('./directives/angular-file-model');
@@ -47,12 +49,14 @@ var formService = require('./mail/form_service');
 var chatService = require('./mail/chat_service');
 var searchService = require('./mail/search_service');
 var contactUsService = require('./mail/contactUs_service');
+var favoriteService = require('./mail/favorite_service');
 
 var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper', 'naif.base64', 'ocNgRepeat', 'btford.socket-io', 'ui.select', 'ngSanitize', 'ui.date', 'vcRecaptcha'])
 
-.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
   //$rootScope.global = 'global';
-  $urlRouterProvider.otherwise("/index");
+
+  $urlRouterProvider.otherwise("/home/-ag-18-30-co-Ukraine");
   $stateProvider
     .state('index', {
         url: '/index',
@@ -87,7 +91,7 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
     .state('girls', {
       url: '/girls/:id',
       templateUrl: 'assets/angular-app/public/home-logedin.html',
-      controller: girlsAllController,
+      controller: ladyAllController,
       controllerAs: 'ctrl'
     })
     .state('home', {
@@ -102,8 +106,8 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
       controller: mailIdController,
       controllerAs: 'ctrl'
     })
-    .state('form', {
-      url: '/form',
+    .state('temp_photoAvatar', {
+      url: '/temp_photoAvatar',
       templateUrl: 'assets/angular-app/public/form.html',
       controller: formController,
       controllerAs: 'ctrl'
@@ -165,41 +169,20 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
     .state('testimonials', {
       url: '/testimonials',
       templateUrl: 'assets/angular-app/public/testimonials.html',
+      controller: favoriteController,
+      controllerAs: 'ctrl'
+    })
+    .state('men-account', {
+      url: '/men-account',
+      templateUrl: 'assets/angular-app/public/men-account.html',
       controller: formController,
       controllerAs: 'ctrl'
     });
+
+    if(window.history && window.history.pushState){
+      $locationProvider.html5Mode(true);
+    }
 })
-// .run(function ($rootScope, $location, User) {
-//     //.run(function ($rootScope, $location) {
-//     // Redirect to login if route requires auth and you're not logged in
-//         $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-//           // Auth.isLoggedInAsync(function(loggedIn) {
-//           //   if (toState.authenticate && !loggedIn) {
-//           //         $rootScope.returnToState = toState.url;
-//           //         $rootScope.returnToStateParams = toParams.Id;
-//           //         $location.path('/login');
-//           //     }
-//           // });
-//           if (toState.name == 'login'){
-
-//           } else {
-//             if(!$rootScope.current_user){
-//               $rootScope.current_user = User.login();
-//               $location.path('/main');
-//             }
-//              //Auth.isLoggedInAsync(function(loggedIn) {
-//              //  if (toState.authenticate && !loggedIn) {
-//               //       $rootScope.returnToState = toState.url;
-//                //      $rootScope.returnToStateParams = toParams.Id;
-//                //      $location.path('/login');
-//                //  }
-//              //});
-//           }
-
-//           console.log(toState);
-//           console.log(toParams);
-//         });
-//    })
 // .controller('conversationsController', conversationsController)
 .controller('usersController', ['userService', usersController])
 .controller('mailController', ['mailService','userService', 'girlsService', mailController])
@@ -232,63 +215,18 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
     restrict: 'A',
     transclude: false,
     link: function(scope, element) {
-
-      // wait for the last item in the ng-repeat then call init
-      //if(scope.$last) {
-        //scope.initCarousel(element.parent());
-
-      // setTimeout(function(){
-      var owl4 = $("#owl-demo4");
-
-      owl4.owlCarousel({
-          items : 1, //10 items above 1000px browser width
-          itemsDesktop : [1000,2], //5 items between 1000px and 901px
-          itemsDesktopSmall : [900,3], // betweem 900px and 601px
-          itemsTablet: [600,2], //2 items between 600 and 0
-          pagination:true,
-          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
-      });
-
-      // Custom Navigation Events
-      $(".next").click(function(){
-        owl4.trigger('owl.next');
-      })
-      $(".prev").click(function(){
-        owl4.trigger('owl.prev');
-      })
-      // }, 2000);
-
-      setTimeout(function(){
-        var owl5 = $("#owl-demo5");
-
-        owl5.owlCarousel({
-            items : 4, //10 items above 1000px browser width
-            itemsDesktop : [1000,2], //5 items between 1000px and 901px
-            itemsDesktopSmall : [900,3], // betweem 900px and 601px
-            itemsTablet: [600,2], //2 items between 600 and 0
-            pagination:true,
-            itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
-        });
-
-        // Custom Navigation Events
-        $(".next").click(function(){
-          owl5.trigger('owl.next');
-        })
-        $(".prev").click(function(){
-          owl5.trigger('owl.prev');
-        })
-        //}
-      }, 2000);
     }
   };
 }])
 .controller('girlsAllController', ['userService', 'girlsAllService', girlsAllController])
+.controller('ladyAllController', ['userService', 'girlsAllService', ladyAllController])
 .controller('mailIdController', ['userService', 'mailService', 'girlsAllService', 'mailIdService', mailIdController])
 .controller('formController', ['formService', 'userService', formController])
 .controller('girlsViewController', ['girlsService', 'userService', girlsViewController])
 .controller('chatController', ['chatService', 'userService', chatController])
 .controller('searchController', ['searchService', 'userService', searchController])
 .controller('contactUsController', ['contactUsService', 'userService', contactUsController])
+.controller('favoriteController', ['favoriteService', 'userService', favoriteController])
 .factory('userService', ['$resource', userService])
 .factory('mailService', ['$resource', mailService])
 .factory('girlsService', ['$resource', girlsService])
@@ -297,4 +235,5 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
 .factory('formService', ['$resource', formService])
 .factory('chatService', ['socketFactory', chatService])
 .factory('searchService', ['$resource', searchService])
-.factory('contactUsService', ['$resource', contactUsService]);
+.factory('contactUsService', ['$resource', contactUsService])
+.factory('favoriteService', ['$resource', favoriteService]);

@@ -59,7 +59,8 @@ function mailService ($resource) {
       type: options.type,
       limit: options.limit,
       offset: options.offset,
-      relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'
+      relations: '{"recipient": {"country": {}, "mainphoto": {}, "girl": {} }, "sender": { "country": {}, "girl": {}, "mainphoto": {} } }'
+      // relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'
     });
   };
 
@@ -72,7 +73,10 @@ function mailService ($resource) {
   };
 
   this.getMessagesId = function (id) {
-    return mailResource.get({mail_id: id, relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'});
+    return mailResource.get({
+      mail_id: id,
+      relations: '{"recipient": {"country": {}, "mainphoto": {} }, "sender": { "country": {}, "girl": {}, "mainphoto": {} } }'
+    });
   };
 
   // this.correspondenceGet = function(id, timeFrom, timeTo) {

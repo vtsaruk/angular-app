@@ -1,6 +1,6 @@
 module.exports = mailIdController;
 
-function mailIdController ($document, $stateParams, $location, $anchorScroll, $timeout, $rootScope, mailService, userService , girlsService, mailIdService) {
+function mailIdController ($document, $stateParams, $location, $anchorScroll, $timeout, mailService,   userService , girlsService, mailIdService, $rootScope) {
 /*Функция после загрузки страницы подымает scroll вверх*/
   this.anchorScrollPage = function() {
      //$location.hash('top_anchorScroll');
@@ -23,9 +23,11 @@ function mailIdController ($document, $stateParams, $location, $anchorScroll, $t
       function(data) {
         $rootScope.global2 = data;
         self.user = data;
+        $('.head_footer').show();
       },
       function(error) {
         console.log(error);
+        $('.head_footer').show();
       }
     );
   };
@@ -265,3 +267,4 @@ this.onThisWeekDate = function() {
 };
 
 mailIdController.$inject = ['$document', '$stateParams', '$location', '$anchorScroll', '$timeout', 'mailService', 'userService', 'girlsService', 'mailIdService', '$rootScope'];
+

@@ -1,11 +1,35 @@
 module.exports = chatController;
+var meConfig = require('../config');
 
 function chatController ($document, $location, chatService, userService, socketFactory, $rootScope) {
 
+  this.phtoPartner = meConfig.ioConnect;
+  /*Функция запрашивает данные пользователя через userService*/
+  this.getUserData = function () {
+    var self = this;
+    userService.getUser().$promise.then(
+      function(data) {
+        self.user = data;
+        $rootScope.global2 = data;
+        $('.head_footer').show();
+        // self.getlogChat(self.user.user.id);
+      },
+      function(error) {
+        console.log(error);
+        $('.head_footer').show();
+      }
+    );
+  };
+
+  this.getUserData();
+  // console.log(this.phtoPartner);
   var self2 = this;
   this.onlineModel = true;
   this.messages = [];
   this.messages2 = [];
+  this.messages3 = [];
+  this.part = [];
+  this.notSendLetters = [];
 /*Функция выделяет в меню online, request, recent текущее нахождение*/
   this.acitivNavLi = function(index) {
     var el = angular.element(document.getElementsByClassName('main-members-nav'));
@@ -50,18 +74,28 @@ function chatController ($document, $location, chatService, userService, socketF
     // console.log(['sessionId', 'startDateTime', 'isInitByBoy'].map(function (val) {
     //     return 'partner.' + val + ' = ' + partner[val];
     //   }).join(', ') + 'gropupId = ' + groupId);
-    if(partner.sessionId && (!partner.startDateTime) && (partner.isInitByBoy == groupId) && (partner.isDeclined == 0) && (partner.isCancelled == 0)) {
+    if(partner.sessionId && (!partner.startDateTime) && (partner.isDeclined == 0) && (partner.isCancelled == 0)) {
       return true;
     } else {
       return false;
-    }
+    }//(partner.isInitByBoy == groupId) &&
   };
-/*Функция отрисовывает состояние Accept and decline chat*/
+/*Функция отрисовывает состояние Accept and decline chat для мужчин*/
   this.acceptAndDeclineChat = function(partner, groupId) {
     // console.log(['sessionId', 'startDateTime', 'isInitByBoy'].map(function (val) {
     //     return 'partner.' + val + ' = ' + partner[val];
     //   }).join(', ') + 'gropupId = ' + groupId);
-    if(partner.sessionId && (!partner.startDateTime) && (partner.isInitByBoy != groupId) && (partner.isDeclined == 0) && (partner.isCancelled == 0)) {
+    if(partner.sessionId && (!partner.startDateTime) &&(partner.isInitByBoy != groupId) && (partner.isDeclined == 0) && (partner.isCancelled == 0)) {
+    // console.log('inbound req for '+ partner.sessionId);
+      return true;
+    } else {
+    // console.log('no inbound req for ' + partner.sessionId);
+      return false;
+    }
+  };
+  /*Функция отрисовывает состояние Accept and decline chat для девушек*/
+  this.acceptAndDeclineChat2 = function(partner) {
+    if(partner.sessionId && (!partner.startDateTime) &&(partner.isInitByBoy!=0) && (partner.isDeclined == 0) && (partner.isCancelled == 0)) {
     // console.log('inbound req for '+ partner.sessionId);
       return true;
     } else {
@@ -110,6 +144,8 @@ function chatController ($document, $location, chatService, userService, socketF
 /*Функция отслеживает событие-сигнал addPartner и записывает данные партнёров*/
   chatService.on('addPartner', function (data) {
     self2.partners[data.id] = data;
+    self2.partners[data.id].newLetters = false;
+
     // console.log(self2 .partners);
 
   });
@@ -136,7 +172,8 @@ function chatController ($document, $location, chatService, userService, socketF
   };
 /*Функция отправляет сообщение в переписке*/
   this.sendMsg = function(Id, msg) {
-    console.log(Id + ' , ' + msg);
+    // console.log(Id + ' , ' + msg);
+    this.notSendLetters[Id] = '';
     chatService.emit('sendMsg', { partnerId: Id, content: msg });
     this.addMsgModel = "";
   };
@@ -156,16 +193,49 @@ function chatController ($document, $location, chatService, userService, socketF
       } else arr[number].childNodes[i].className = 'main-members-item clearfix';
     };
   };
-/*Функция запрашивает переписку сообщений с выбранным партнёром*/
-  this.correspondence = function(partner, index, number) {
-    this.addClassActiv(index, number);
+  this.funcActivStatu = function(partner) {
+    // console.log(partner.id);
+    return partner.id==this.partnerID? true: false;
+  }
+  /*Функция записывает дату дня в переписке*/
+  this.dateInCorrespondence = function() {
+    if(self2.messages2.length>2) {
+      for(var i=0; i<self2.messages2.length; i++) {
+        if(self2.messages[i] && self2.messages[i].sentTime && self2.messages2[i].sentTime && self2.messages[i+1] && self2.messages[i+1].sentTime && self2.messages2[i+1].sentTime) {
+          self2.messages[0].sentTime2 = true;
+          if(self2.messages[0].sentTime&&self2.messages[0].sentTime&&self2.messages3[0].sentTime.slice(0,10)==self2.messages3[1].sentTime.slice(0,10)) {
+            self2.messages[0].sentTime2 = true;
+          }
+          var day = self2.messages2[i].sentTime.slice(0,10);
+          var day2 = self2.messages2[i+1].sentTime.slice(0,10);
+          if(day==day2 ) {
+            if(self2.messages[i].sentTime2==true) {
+              self2.messages[i].sentTime2=true
+            } else self2.messages[i].sentTime2 = false;
+          }
+          else {
+            self2.messages[i+1].sentTime2 = true;
+          }
+        }
+      }
+    }
+  }
+  /*Функция запрашивает переписку сообщений с выбранным партнёром*/
+  this.correspondence = function(partner) {
+    if(this.addMsgModel) {
+      this.notSendLetters[this.partnerID] = this.addMsgModel;
+      this.addMsgModel = '';
+    }
+    this.addMsgModel = this.notSendLetters[partner.id];
     this.namePartner = partner.firstname;
     this.partnerID = partner.id;
     this.sessionID = partner.sessionId;
     this.partnerAge = partner.age;
+    this.photoAvatPartner = partner.photoAvatar;
     this.messages = [];
     this.messages2 = [];
     this.messages3 = [];
+    this.part[partner.id] = false;
     chatService.emit('getChatLogDeeper', { partnerId: partner.id });
   };
 /*Обработка события получения сообщения для переписки*/
@@ -176,30 +246,40 @@ function chatController ($document, $location, chatService, userService, socketF
     self2.messages3 = self2.messages2;
     self2.messages3.slice(1);
     self2.lastMessageID = self2.messages[self2.messages.length-1].msgId;
-
-    if(self2.messages2.length>2) {
-      for(var i=1; i<self2.messages2.length; i++) {
-        if(self2.messages3[i].sentTime && self2.messages2[i].sentTime) {
-       var day = new Date(self2.messages3[i].sentTime.slice(0,10)).getTime();
-       var day2 = new Date(self2.messages2[i].sentTime.slice(0,10)).getTime();
-
-        if(day===day2){
-          self2.messages[i].sentTime = false;
-        }
-      }
-      }
-    }
-});
+    self2.dateInCorrespondence();
+  });
+  this.funcShow = function(arg) {
+    return arg? true: false;
+  }
 /*Получение нового письма, только что написанного для пользователя в переписке*/
   chatService.on('newMsg', function(data) {
+    if(self2.partnerID!=data.partnerId) {
+      self2.part[data.partnerId] = { newLetters: true };
+    }
+    // console.log(self2.partners[data.partnerId]);
 
+    // if(self2.partners[self2.partnerID]) {
+    //   self2.namePartner = self2.partners[self2.partnerID].firstname;
+    //   self2.sessionID = self2.partners[self2.partnerID].sessionId
+    //   self2.partnerAge = self2.partners[self2.partnerID].age
+    //   self2.sessionID = self2.partners[self2.partnerID].sessionId
+    // }
+    // self2.partnerID = data.partnerId;
+    // self2.messages = [];
+    // chatService.emit('getChatLogDeeper', { partnerId: data.partnerId });
     self2.messages.unshift(data);
     self2.messages2.unshift(data);
-    // console.log('newMsg');
-    // console.log(data);
+    self2.messages3.unshift(data);
+    // console.log(self2.messages);
+    self2.dateInCorrespondence();
   });
   this.pushOldMessage = function(partnerID, lastMsgID) {
     chatService.emit('getChatLogDeeper', { partnerId: partnerID, lastMsgId: lastMsgID });
+  };
+
+  this.namePartnerFunc = function() {
+    // console.log(self2.partners[self2.partnerID].sessionId);
+    return self2.partners[self2.partnerID].firstname;
   }
 
 
@@ -209,28 +289,11 @@ function chatController ($document, $location, chatService, userService, socketF
         // console.log(event);
         if($(this).scrollTop() + $(this).innerHeight() + 100 >= $(this)[0].scrollHeight) {
           // console.log('end reached');
-          console.log(self2.partnerID + ' , ' + self2.lastMessageID);
+          // console.log(self2.partnerID + ' , ' + self2.lastMessageID);
           chatService.emit('getChatLogDeeper', { partnerId: self2.partnerID, lastMsgId:self2.lastMessageID });
         }
     });
   //});
-/*Функция запрашивает данные пользователя через userService*/
-  this.getUserData = function () {
-    var self = this;
-    userService.getUser().$promise.then(
-      function(data) {
-        self.user = data;
-        $rootScope.global2 = data;
-        // console.log(self.user.user.id);
-        // self.getlogChat(self.user.user.id);
-      },
-      function(error) {
-        console.log(error);
-      }
-    );
-  };
-
-  this.getUserData();
 
 };
 

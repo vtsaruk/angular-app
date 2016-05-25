@@ -1,9 +1,40 @@
 module.exports = mailController;
 
-function mailController ($document, $location, $timeout, $anchorScroll, mailService, userService , girlsService, $scope, $rootScope) {
+function mailController ($document, $location, $timeout, $anchorScroll, mailService, userService , girlsService, $scope, $rootScope, girlsService) {
 
-  // $('#ui-datepicker-div').hide();
+  this.showLetter = true;
 
+  this.girlsId = [];
+
+  this.girlsIdGet = function(recipientID) {
+    var self = this;
+    girlsService.getGirlsId(recipientID).$promise.then(
+      function(data) {
+        self.girlsId[recipientID] = data;
+        $location.path('/home/-ag-18-30-co-Ukraine');
+        console.log(self.girlsId);
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  }
+
+  this.functionDataRecipiend = function(messageObg, userID, model) {
+console.log('recipientID');
+console.log(messageObg);
+console.log('userID');
+console.log(userID);
+console.log('model');
+console.log(model);
+    if(messageObg.recipientId==userID) {
+      if(model==false && messageObg.isRead==true)
+      return 0;
+
+    } else return 1
+
+
+  }
 /*Функция определяет возраст*/
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
@@ -32,8 +63,8 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
 /*Функция показывает и скрывает список возможностей в области отправки письма*/
   this.showFilter = function() {
     this.toDate = new Date();
-    var dateFrom = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*20);
-    this.fromDate = new Date(dateFrom);
+    // var dateFrom = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*20);
+    // this.fromDate = new Date(dateFrom);
     this.filterDiv = this.filterDiv ? false : true;
   };
 /*Функция запрашивает данные залогиненного пользователя*/
@@ -43,9 +74,12 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       function(data) {
         self.user = data;
         $rootScope.global2 = data;
+        self.userID = data.user.id;
+        $('.head_footer').show();
       },
       function(error) {
         console.log(error);
+        $('.head_footer').show();
       }
     );
   };
@@ -53,6 +87,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
   this.getUserData();
 /*Функция, отвечающая за параметры в запросе на получение писем*/
   this.changeType = function (type) {
+
     this.resultFromDate = undefined;
     this.resultToDate = undefined;
     this.tumbler = true;
@@ -62,13 +97,16 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     this.getMessages();
     this.onThisWeek = false;
     this.onLastWeek = false;
+    if(type=='outbox')
+      this.showLetter = false
+    else this.showLetter = true;
   };
 /*Функция запроса писем через сервис*/
   this.getMessages = function () {
     if(this.tumbler==false) {
       this.tumbler=true
     }
-    console.log(this.type);
+    // console.log(this.type);
     var self = this;
     var options = {
       dateTimeFrom: self.resultFromDate,
@@ -89,6 +127,17 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
         angular.forEach(self.messages.letters, function(letter, index) {
           self.messages.letters[index]['deleted'] = false;
         });
+
+        for(var i=0; i<self.messages.letters.length; i++) {
+          if(self.messages.letters[i].senderId==self.user.user.id) {
+            self.messages.letters[i].isRead = true;
+          }
+        //   // console.log(self.userID + ' : ' + self.messages.letters[i].recipientId)
+        //   if(self.userID!=self.messages.letters[i].recipientId) {
+        //     console.log(self.messages.letters[i].recipientId);
+        //     self.girlsIdGet(self.messages.letters[i].recipientId);
+        //   }
+        }
       },
       function(error) {
         console.log(error);
@@ -508,4 +557,4 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
 };
 
 
-mailController.$inject = ['$document', '$location', '$timeout', '$anchorScroll', 'mailService', 'userService', 'girlsService', '$scope', '$rootScope'];
+mailController.$inject = ['$document', '$location', '$timeout', '$anchorScroll', 'mailService', 'userService', 'girlsService', '$scope', '$rootScope', 'girlsService'];

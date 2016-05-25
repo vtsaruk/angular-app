@@ -83,10 +83,13 @@
   <!-- <div ng-click="ctrl.readTheLetter(19)">{{ctrl.messages.letters}}</div> -->
 
             </div>
-<!-- <div>{{ctrl.messages}}</div> -->
+<!-- <div>{{ctrl.girlsId[2]}}</div> -->
+<!-- <div>{{ctrl.messages.letters[0]}}</div> -->
             <div class="girls-messages">
+
               <div ng-repeat="messag in ctrl.messages.letters"
                    ng-class="{'girls-message-item': messag.isPaid==true, 'girls-message-item red-bg': messag.isPaid==false, 'girls-message-item active': messag.deleted}">
+
                 <div class="girls-messega-item-content">
                   <div class="girls-message-checkbox">
                   <label class="checkbox-1">
@@ -104,16 +107,18 @@
                     <p class="tooltips add-chat">Chat</p>
                     <a href="#" class="add-f-chat"></a></li>
                 </ul>
-                <img src="{{messag.sender.mainphoto.pathOfQuad}}" alt="">
+                <img ng-hide="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id )"src="{{messag.sender.mainphoto.pathOfQuad}}" alt="">
+                <img ng-show="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id )"src="{{messag.recipient.mainphoto.pathOfQuad}}" alt="">
                 <div class="girls-message-item-info">
                   <div>
                     <a href="/#/girl/{{messag.sender.firstname}}-{{ctrl.agePerson(messag.sender.birthdate)}}-{{messag.sender.country.name}}-{{messag.sender.city}}-{{messag.sender.girl.id}}" ng-hide="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id )">
                       <span ng-hide="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id )">{{messag.sender.firstname}}</span>, {{ctrl.agePerson(messag.sender.birthdate)}}
                     </a>
-                    <a href="" ng-show="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id)"><span>{{ctrl.user.user.firstname}}</span></a>
+                    <a href="/#/girl/{{messag.recipient.firstname}}-{{ctrl.agePerson(messag.recipient.birthdate)}}-{{messag.recipient.country.name}}-{{messag.recipient.city}}-{{messag.recipient.girl.id}}" ng-show="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id)"><span>{{messag.recipient.firstname}}</span></a>
                     <p><span></span>online</p>
                   </div>
-                  <a href="#">{{messag.sender.country.name}}, {{messag.sender.city}}</a>
+                  <a ng-hide="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id )" href="#">{{messag.sender.country.name}}, {{messag.sender.city}}</a>
+                  <a ng-show="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id )" href="#">{{messag.recipient.country.name}}, {{messag.recipient.city}}</a>
                   <div class="clear" ng-show="messag.isPaid"></div>
                   <span ng-show="messag.isPaid">{{ctrl.letterTextSlice(messag.additionalData.text)}}</span>
                 </div>
@@ -125,6 +130,19 @@
 
                 </div>
               </div>
+
+
+
+
+
+              </div>
+
+
+
+
+
+
+
 <!-- ctrl.payment(messag.id) -->
             </div>
           </div>

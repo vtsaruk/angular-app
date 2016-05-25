@@ -58,9 +58,9 @@
 										<input type="text" id="men-account-form-input" name="email" ng-model="ctrl.feedback.email">
 										<label for="">How can we help you?*<sup>*</sup></label>
 
-<ui-select ng-model="ctrl.country.selected" theme="selectize" ng-disabled="ctrl.disabled" style="width: 300px;" title="Choose a country">
-    <ui-select-match placeholder="Select or search a country in the list...">{{$select.selected.name}}</ui-select-match>
-    <ui-select-choices repeat="country in ctrl.countries | filter: $select.search">
+<ui-select ng-model="ctrl.country.selected" id="men-account-form-select" theme="selectize" ng-disabled="ctrl.disabled" style="width: 100%;" title="Choose ">
+    <ui-select-match class="ui-select-match" placeholder="Select or search a country in the list...">{{$select.selected.name}}</ui-select-match>
+    <ui-select-choices class="ui-select-choices" repeat="country in ctrl.countries | filter: $select.search">
       <span ng-bind-html="country.name | highlight: $select.search"></span>
       <small ng-bind-html="country.code | highlight: $select.search"></small>
     </ui-select-choices>

@@ -1,0 +1,651 @@
+	<div class="page-men-account">
+  <div class="man-head">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 clearfix man-head-container">
+					<p><img src="assets/angular-app/public/img/man-img-1.jpg" class="man-head__man-img-1" alt=""></p>
+					<div class="man-head__man-head-status">
+						<p>Hi, I'm John B.</p>
+						<span class="man-head__man-head-status__descr">Thank you for organizing my trip to Odessa in March, 2012. Also my special greetings to our interpreter Natalia who did great job for us.</span>
+						<span class="man-head__man-head-status__quates">
+						</span>
+					</div>
+					<div class="message-tabs">
+						<div class="message-tabs-item " ng-click="ctrl.showBlock(1)" ng-class="{'active': ctrl.showMainContent==1}">
+							<p>Account Info</p>
+						</div>
+						<div class="message-tabs-item" ng-click="ctrl.showBlock(2)" ng-class="{'active': ctrl.showMainContent==2}">
+							<p>About Me</p>
+						</div>
+						<div class="message-tabs-item" ng-click="ctrl.showBlock(3)" ng-class="{'active': ctrl.showMainContent==3}">
+							<p>Photo Gallery</p>
+						</div>
+						<div class="message-tabs-item" ng-click="ctrl.showBlock(4)" ng-class="{'active': ctrl.showMainContent==4}">
+							<p>I'm Looking for</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<!-- end man-head -->
+	<main>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 man-head-container">
+
+
+					<!-- main-content -->
+					<div ng-if="ctrl.showMainContent==1" class="main-content active">
+						<div class="line mn-b-35"></div>
+						<div class="online-status-photo clearfix">
+							<div class="col-md-3">
+								<p><img src="assets/angular-app/public/img/man-img-1.jpg" class="man-head__man-img-1" alt=""></p>
+							</div>
+							<div class="col-md-9">
+								<!-- online-status -->
+								<div class="online-status-right clearfix">
+									<h5>Online status</h5>
+									<p class="online-status-right-descr">Hello my dear)) today morning was fun, went with a friend to walk the dog. He breaks out of the Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. pariatur. Ex</p>
+									<div class="clearfix">
+										<p class="online-status-p">limit - 400 characters</p>
+									<p class="online-status-p">396 Characters Remaining</p>
+									</div>
+									<div class="line mn-b-35"></div>
+								</div>
+								<!-- contact-info -->
+								<div class="contact-info clearfix mn-b-35">
+									<div class="contact-info-left">
+										<h5>Contact Info</h5>
+										<p>We won't share any of the private information you provide below. We ask for your contact information so we can send you offers, notifications and promos</p>
+									</div>
+									<div class="contact-info-right">
+										<p class="contact-info-right-e-mail"><img src="assets/angular-app/public/img/grey-letter.png" width="20" height="16" alt="">user email@user email</p>
+										<div class="contact-info-right-pass">
+											<p>
+												<img src="assets/angular-app/public/img/grey-pensil.png" width="19" height="19" alt="">
+											</p>
+											<div class="contact-info-right-pass-choose">
+												<a href="#" id="change-email">Change email</a>
+												<a href="#">Reset your password</a>
+											</div>
+
+										</div>
+									</div>
+								</div>
+
+
+								<!-- men-account-form -->
+								<div class="men-account-form clearfix">
+									<div class="col-md-4">
+										<label for="">First name<sup>*</sup></label>
+										<input type="text" id="men-account-form-input">
+									</div>
+									<div class="col-md-8">
+										<label for="">Last name<sup>*</sup></label>
+										<input type="text" id="men-account-form-input">
+									</div>
+									<div class="col-md-8">
+										<label for="">Street address<sup>*</sup></label>
+										<input type="text" id="men-account-form-input">
+									</div>
+									<div class="col-md-4">
+										<label for="">Apartment, Suite, Etc.</label>
+										<input type="text" id="men-account-form-input">
+									</div>
+									<div class="col-md-4">
+										<label for="">City</label>
+										<input type="text" id="men-account-form-input">
+									</div>
+									<div class="col-md-4">
+										<label for="">State</label>
+										<input type="text" id="men-account-form-input">
+									</div>
+									<div class="col-md-4">
+										<label for="">Country</label>
+										<input type="text" id="men-account-form-input">
+									</div>
+									<div class="col-md-6">
+										<label for="">Zip Code</label>
+										<input type="text" id="men-account-form-input">
+									</div>
+									<div class="col-md-6">
+										<label for="">Telephone Number</label>
+										<input type="text" id="men-account-form-input">
+									</div>
+									<div class="col-md-4">
+										<label for="">Date of Birth<sup>*</sup></label>
+										<select name="" id="" class="selectpicker">
+											<option value="1">Mounth</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select>
+									</div>
+									<div class="col-md-2">
+										<label for="" class="opacity">1</label>
+										<select name="" id="" class="selectpicker">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select>
+									</div>
+									<div class="col-md-3">
+										<label for="" class="opacity">1</label>
+										<select name="" id="" class="selectpicker">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select>
+									</div>
+								</div>
+							<p class="required-f">“<sup>*</sup>” - Required fields</p>
+							<button class="btn-send">Save Changes</button>
+							<a href="" class="a-underline">Remove my profile from Irina Dating</a>
+							</div>
+						</div>
+
+					</div>
+
+					<!-- end main-content -->
+					<!-- main-content -->
+					<div ng-if="ctrl.showMainContent==2" class="main-content active">
+						<div class="online-status-photo clearfix">
+							<!-- line -->
+							<div class="line"></div>
+
+								<!-- online-status -->
+								<!-- <div class="online-status-right clearfix">
+									<h5>Online status</h5>
+									<p class="online-status-right-descr">Hello my dear)) today morning was fun, went with a friend to walk the dog. He breaks out of the Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. pariatur. Ex</p>
+									<div class="clearfix">
+										<p class="online-status-p">limit - 400 characters</p>
+									<p class="online-status-p">396 Characters Remaining</p>
+									</div>
+									<div class="line"></div>
+								</div> -->
+								<!-- contact-info -->
+							<!-- 	<div class="contact-info clearfix">
+									<div class="contact-info-left">
+										<h5>Contact Info</h5>
+										<p>We won't share any of the private information you provide below. We ask for your contact information so we can send you offers, notifications and promos</p>
+									</div>
+									<div class="contact-info-right">
+										<p class="contact-info-right-e-mail"><img src="img/grey-letter.png" width="20" height="16" alt="">user email@user email</p>
+										<div class="contact-info-right-pass">
+											<p>
+												<img src="img/grey-pensil.png" width="19" height="19" alt="">
+											</p>
+											<div class="contact-info-right-pass-choose">
+												<a href="#">Change email</a>
+												<a href="#">Reset your password</a>
+											</div>
+
+										</div>
+									</div>
+								</div> -->
+								<!-- men-account-form -->
+								<div class="men-account-form clearfix border-none">
+									<div class="col-md-3 col-md-offset-1 mn-b-35">
+										<label for="">Eye Color</label>
+										<select name="" id="" class="selectpicker">
+											<option value="1">Mounth</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select>
+									</div>
+									<div class="col-md-3 col-md-offset-2 mn-b-35">
+										<label for="">Hair Color</label>
+										<select name="" id="" class="selectpicker">
+											<option value="1">Mounth</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select>
+									</div>
+									<div class="col-md-3 col-md-offset-1 mn-b-35">
+										<label for="">Height</label>
+										<select name="" id="" class="selectpicker">
+											<option value="1">Mounth</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select>
+									</div>
+									<div class="col-md-3 col-md-offset-2 mn-b-35">
+										<label for="">Weight</label>
+										<select name="" id="" class="selectpicker">
+											<option value="1">Mounth</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select>
+									</div>
+									<div class="col-md-3 col-md-offset-1 mn-b-35">
+										<label for="">Height</label>
+										<select name="" id="" class="selectpicker">
+											<option value="1">Mounth</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select>
+									</div>
+									<div class="col-md-3 col-md-offset-2 mn-b-35">
+										<label for="">Profession</label>
+										<select name="" id="" class="selectpicker">
+											<option value="1">Mounth</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select>
+									</div>
+									<div class="col-md-3 col-md-offset-1 mn-b-35">
+										<label for="">Profession</label>
+										<select name="" id="" class="selectpicker">
+											<option value="1">Mounth</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select>
+									</div>
+									<div class="col-md-3 col-md-offset-2 mn-b-35">
+										<label for="">Education</label>
+										<select name="" id="" class="selectpicker">
+											<option value="1">Mounth</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select>
+									</div>
+									<div class="col-md-3 col-md-offset-1 mn-b-35">
+										<label for="">Smoking</label>
+										<select name="" id="" class="selectpicker">
+											<option value="1">Mounth</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select>
+									</div>
+									<div class="col-md-3 col-md-offset-2 mn-b-35">
+										<label for="">Drinking</label>
+										<select name="" id="" class="selectpicker">
+											<option value="1">Mounth</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select>
+									</div>
+								</div>
+
+
+							<div class="clear"></div>
+							<!-- line -->
+							<div class="line"></div>
+							<div class="men-account-form clearfix border-none">
+								<div class="col-md-3 col-md-offset-1 mn-b-35 ds-in-b">
+									<label for="">Child Sex</label>
+									<select name="" id="" class="selectpicker">
+											<option value="1">Mounth</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+									</select>
+									<p><a href="#" class="a-underline">Add more ...</a></p>
+
+								</div>
+								<div class="col-md-3 col-md-offset-2 mn-b-35 ds-in-b">
+									<label for="">Child Birth date</label>
+									<select name="" id="" class="selectpicker">
+											<option value="1">Mounth</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+									</select>
+								</div>
+								<div class="col-md-3 ds-in-b">
+									<a href="#" class="remove"><img src="img/delete.png" alt="">Remove</a>
+								</div>
+
+								<div class="clear"></div>
+
+								<!-- line -->
+								<div class="line mn-b-35"></div>
+
+
+								<div class="col-md-8">
+										<!-- online-status -->
+								<div class="online-status-right clearfix mn-b-50">
+									<h5>My personality description</h5>
+									<p class="online-status-right-descr">Hello my dear)) today morning was fun, went with a friend to walk the dog. He breaks out of the Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste </p>
+									<div class="clearfix">
+										<p class="online-status-p">limit - 400 characters</p>
+									<p class="online-status-p">396 Characters Remaining</p>
+									</div>
+
+								</div>
+								<div class="online-status-right clearfix mn-b-50">
+									<h5>My personality description</h5>
+									<p class="online-status-right-descr">Hello my dear)) today morning was fun, went with a friend to walk the dog. He breaks out of the Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste </p>
+									<div class="clearfix">
+										<p class="online-status-p">limit - 400 characters</p>
+									<p class="online-status-p">396 Characters Remaining</p>
+									</div>
+
+								</div>
+								</div>
+							</div>
+
+						</div>
+						<button class="btn-send send-men-form">Save Changes</button>
+					</div>
+					<!-- end main-content -->
+					<!-- main-content -->
+					<div ng-if="ctrl.showMainContent==3" class="main-content active">
+						<!-- line -->
+						<div class="line mn-b-35"></div>
+						<h3 class="red-21-Lt-w600 text-center mn-b-35">Upload a profile picture</h3>
+						<div class="men-photo-container clearfix">
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-md-3 text-center mn-b-20">
+										<div class="men-photo">
+											<img src="img/men-foto-1.jpg" alt="">
+											<!-- <ul ng-show="ctrl.showList[$index]">
+												<li>
+													<a href="#" class="pic-ic">
+														<span class="tooltipp">Edit</span>
+													</a>
+												</li>
+												<li>
+													<a href="#" class="pen-ic">
+														<span class="tooltipp">Edit</span>
+													</a>
+												</li>
+												<li>
+													<a href="#" class="bug-ic">
+														<span class="tooltipp">Edit</span>
+													</a>
+												</li>
+											</ul> -->
+										</div>
+									</div>
+									<div class="col-md-3 text-center mn-b-20">
+										<div class="men-photo">
+											<img src="assets/angular-app/public/img/men-foto-2.jpg" alt="">
+											<ul>
+												<li>
+													<a href="#" class="pic-ic">
+														<span class="tooltipp">Edit</span>
+													</a>
+												</li>
+												<li>
+													<a href="#" class="pen-ic">
+														<span class="tooltipp">Edit</span>
+													</a>
+												</li>
+												<li>
+													<a href="#" class="bug-ic">
+														<span class="tooltipp">Edit</span>
+													</a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="col-md-3 text-center mn-b-20">
+										<div class="men-photo men-stock-foto">
+											<div class="men-stock-foto-content">
+												<p class="add-foto">Add Photo</p>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3 text-center mn-b-20">
+										<div class="men-photo men-stock-foto">
+											<div class="men-stock-foto-content">
+												<p class="add-foto">Add Photo</p>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3 text-center mn-b-20">
+										<div class="men-photo men-stock-foto">
+											<div class="men-stock-foto-content">
+												<p class="add-foto">Add Photo</p>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3 text-center mn-b-20">
+										<div class="men-photo men-stock-foto">
+											<div class="men-stock-foto-content">
+												<p class="add-foto">Add Photo</p>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3 text-center mn-b-20">
+										<div class="men-photo men-stock-foto">
+											<div class="men-stock-foto-content">
+												<p class="add-foto">Add Photo</p>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3 text-center mn-b-20">
+										<div class="men-photo men-stock-foto">
+											<div class="men-stock-foto-content">
+												<p class="add-foto">Add Photo</p>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3 text-center mn-b-20">
+										<div class="men-photo men-stock-foto">
+											<div class="men-stock-foto-content">
+												<p class="add-foto">Add Photo</p>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3 text-center mn-b-20">
+										<div class="men-photo men-stock-foto">
+											<div class="men-stock-foto-content">
+												<p class="add-foto">Add Photo</p>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3 text-center mn-b-20">
+										<div class="men-photo men-stock-foto">
+											<div class="men-stock-foto-content">
+												<p class="add-foto">Add Photo</p>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3 text-center mn-b-20">
+										<div class="men-photo men-stock-foto">
+											<div class="men-stock-foto-content">
+												<p class="add-foto">Add Photo</p>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3 text-center mn-b-20">
+										<div class="men-photo men-stock-foto">
+											<div class="men-stock-foto-content">
+												<p class="add-foto">Add Photo</p>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3 text-center mn-b-20">
+										<div class="men-photo men-stock-foto">
+											<div class="men-stock-foto-content">
+												<p class="add-foto">Add Photo</p>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3 text-center mn-b-20">
+										<div class="men-photo men-stock-foto">
+											<div class="men-stock-foto-content">
+												<p class="add-foto">Add Photo</p>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3 text-center mn-b-20">
+										<div class="men-photo men-stock-foto">
+											<div class="men-stock-foto-content">
+												<p class="add-foto">Add Photo</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<button class="btn-send">Save Changes</button>
+						</div>
+
+					</div>
+					<!-- end main-content -->
+					<!-- main-content -->
+					<div ng-if="ctrl.showMainContent==4" class="main-content active clearfix look-for-container">
+						<!-- line -->
+						<div class="line mn-b-35"></div>
+						<div class="men-account-form clearfix border-none look-for">
+									<div class="col-md-4 col-md-offset-1 mn-b-35">
+										<label for="">Preferable partner's age</label>
+										<select name="" id="" class="selectpicker">
+											<option value="1">Mounth</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select>
+									</div>
+									<div class="col-md-4 col-md-offset-1 mn-b-35 opacity z-index--1">
+										<label for="">Hair Color</label>
+										<select name="" id="" class="selectpicker">
+											<option value="1">Mounth</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select>
+									</div>
+									<div class="col-md-4 col-md-offset-1 mn-b-35">
+										<label for="">Preferable partner's height (ft/cm)</label>
+										<select name="" id="" class="selectpicker">
+											<option value="1">Mounth</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select>
+									</div>
+									<div class="col-md-4 col-md-offset-1 mn-b-35">
+										<label for="">Marital Status</label>
+										<select name="" id="" class="selectpicker">
+											<option value="1">Mounth</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select>
+									</div>
+									<div class="col-md-4 col-md-offset-1 mn-b-35">
+										<label for="">Preferable partner's weight (lbs/kg)</label>
+										<select name="" id="" class="selectpicker">
+											<option value="1">Mounth</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select>
+									</div>
+									<div class="col-md-4 col-md-offset-1 mn-b-35">
+										<label for="">Children</label>
+										<select name="" id="" class="selectpicker">
+											<option value="1">Mounth</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select>
+									</div>
+						</div>
+								<!-- line -->
+						<div class="line mn-b-20"></div>
+						<div class="col-md-9 col-md-offset-1 online-status-right clearfix">
+									<h5>My ideal partner is</h5>
+									<p class="online-status-right-descr">Hello my dear)) today morning was fun, went with a friend to walk the dog. He breaks out of the Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. pariatur. Ex</p>
+									<div class="clearfix">
+										<p class="online-status-p">limit - 400 characters</p>
+									<p class="online-status-p">396 Characters Remaining</p>
+									</div>
+
+								</div>
+			<!-- line -->
+						<div class="line mn-b-20"></div>
+						<div class="look-for-checkbox clearfix">
+							<div class="col-md-9 col-md-offset-1">
+								<h5 class="mn-b-20">I'm looking for</h5>
+								<label class="checkbox-1">
+									<p>Marriage</p>
+									<input type="checkbox">
+									<span></span>
+								</label>
+								<label class="checkbox-1">
+									<p>Serious relationship</p>
+									<input type="checkbox">
+									<span></span>
+								</label>
+								<label class="checkbox-1">
+									<p>Casual relationship</p>
+									<input type="checkbox">
+									<span></span>
+								</label>
+								<label class="checkbox-1">
+									<p>Experienced parent</p>
+									<input type="checkbox">
+									<span></span>
+								</label>
+								<label class="checkbox-1">
+									<p>Hanging out</p>
+									<input type="checkbox">
+									<span></span>
+								</label>
+								<label class="checkbox-1">
+									<p>Chatting</p>
+									<input type="checkbox">
+									<span></span>
+								</label>
+								<label class="checkbox-1">
+									<p>Flirting</p>
+									<input type="checkbox">
+									<span></span>
+								</label>
+								<label class="checkbox-1">
+									<p>Sugar baby</p>
+									<input type="checkbox">
+									<span></span>
+								</label>
+							</div>
+
+						</div>
+							<!-- line -->
+						<div class="line mn-b-20"></div>
+						<div class="look-for-checkbox clearfix">
+							<div class="col-md-9 col-md-offset-1">
+								<label class="checkbox-1">
+									<p>I don't wish to receive introductory letters from ladies</p>
+									<input type="checkbox">
+									<span></span>
+								</label>
+								<button class="btn-send">Save Changes</button>
+							</div>
+						</div>
+
+					<!-- end main-content -->
+
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+<!-- <script src="js/bootstrap-select.min.js"></script> -->
+<script>
+      //bootstrap select picker
+      $('.selectpicker').selectpicker({
+        style: 'btn-info',
+        size: 4
+      });
+
+  </script>
+</div>

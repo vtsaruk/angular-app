@@ -18,9 +18,11 @@ function contactUsController ($anchorScroll, $rootScope, userService, contactUsS
       function(data) {
         self.user = data;
         $rootScope.global2 = data;
+        $('.head_footer').show();
       },
       function(error) {
         console.log(error);
+        $('.head_footer').show();
       }
     );
   };
@@ -44,18 +46,6 @@ this.getUserData();
       // $('select').select2();
     // }, 100);
   });
-
-  this.disabled = undefined;
-  this.searchEnabled = undefined;
-
-  this.setInputFocus = function (){
-    $scope.$broadcast('UiSelectDemo1');
-  };
-
-  this.enable = function() {
-    vm.disabled = false;
-  };
-
 
   this.country = {};
   this.countries = [ // Taken from https://gist.github.com/unceus/6501985

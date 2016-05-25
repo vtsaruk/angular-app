@@ -1,0 +1,7 @@
+var meConfig = {
+  ioConnect: 'http://irinadating.loc/',
+  recaptcha: '6LeROR4TAAAAAPjFlEpuqZI8Antq-VK8hxZafle6',
+  recapthaSecret: '6LeROR4TAAAAAHB7MP4Yx0sgA28bimUC3vyiOpkA'
+}
+module.exports = meConfig;
+

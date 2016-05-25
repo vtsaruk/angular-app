@@ -8,9 +8,9 @@
         <div class="col-md-12">
           <div class="main-content clearfix">
             <div class="message-tabs">
-              <div class="message-tabs-item" ng-click="ctrl.changeType('introductions'); ctrl.removeClassTab(0); ctrl.firstNamberPagin()">
+              <!-- <div class="message-tabs-item" ng-click="ctrl.changeType('introductions'); ctrl.removeClassTab(0); ctrl.firstNamberPagin()">
                 <p>Introductions</p>
-              </div>
+              </div> -->
               <div class="message-tabs-item active" ng-click="ctrl.changeType('inbox'); ctrl.removeClassTab(1); ctrl.firstNamberPagin()">
                 <p>Inbox <span ng-show="ctrl.messagesInbox.letters.length">({{ctrl.messagesInbox.totalNewCount}})</span></p>
               </div>
@@ -18,10 +18,10 @@
               ctrl.removeClassTab(2); ctrl.firstNamberPagin()">
                 <p>Sent</p>
               </div>
-              <div class="message-tabs-item" ng-click="ctrl.changeType('deleted');
+              <!-- <div class="message-tabs-item" ng-click="ctrl.changeType('deleted');
               ctrl.removeClassTab(3); ctrl.firstNamberPagin()">
                 <p>Deleted</p>
-              </div>
+              </div> -->
             </div>
             <div class="message-sort clearfix">
               <div class="message-sort-left">
@@ -48,8 +48,8 @@
                 </div>
                 <p class="p-sort" ng-click="ctrl.showFilter(ctrl.filterDiv)"><img src="assets/angular-app/public/img/calendar.png" alt="">Sort by Date</p>
 
-                <p ng-show="ctrl.classMessagesDeleted()" class="p-delete text_color_black" ng-click="ctrl.deleteMessages()"><i class=" fa fa-caret-down" ></i><img src="assets/angular-app/public/img/imgpsh_fullsize.png" alt="">Delete</p>
-                <p ng-hide="ctrl.classMessagesDeleted()" class="p-delete" ng-click="ctrl.classMessagesDeleted()" ng-hide="ctrl.deleteMessages()"><i class=" fa fa-caret-down" ></i><img src="assets/angular-app/public/img/delete.png" alt="">Delete</p>
+                <!-- <p ng-show="ctrl.classMessagesDeleted()" class="p-delete text_color_black" ng-click="ctrl.deleteMessages()"><i class=" fa fa-caret-down" ></i><img src="assets/angular-app/public/img/imgpsh_fullsize.png" alt="">Delete</p>
+                <p ng-hide="ctrl.classMessagesDeleted()" class="p-delete" ng-click="ctrl.classMessagesDeleted()" ng-hide="ctrl.deleteMessages()"><i class=" fa fa-caret-down" ></i><img src="assets/angular-app/public/img/delete.png" alt="">Delete</p> -->
 
               </div>
               <div class="message-sort-right">
@@ -86,14 +86,9 @@
   <!-- <div ng-click="ctrl.readTheLetter(19)">{{ctrl.messages.letters}}</div> -->
             </div>
             <!-- <div>{{ctrl.messages.letters[5]}}</div> -->
-
             <div class="girls-messages">
-
-
-
-
              <div ng-repeat="messag in ctrl.messages.letters"
-                   ng-class="{'girls-message-item': messag.isRead==true, 'girls-message-item red-bg': messag.isRead==false, 'girls-message-item active': messag.deleted}">
+                  ng-class="{'girls-message-item': messag.isRead==true, 'girls-message-item red-bg': messag.isRead==false, 'girls-message-item active': messag.deleted}">
                 <div class="girls-messega-item-content">
                   <div class="girls-message-checkbox">
                   <label class="checkbox-1">
@@ -111,28 +106,28 @@
                     <p class="tooltips add-chat">Chat</p>
                     <a href="#" class="add-f-chat"></a></li>
                 </ul>
-                <img src="{{messag.sender.mainphoto.pathOfQuad}}" alt="">
+                <img ng-hide="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id )"src="{{messag.sender.mainphoto.pathOfQuad}}" alt="">
+                <img ng-show="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id )"src="{{messag.recipient.mainphoto.pathOfQuad}}" alt="">
                 <div class="girls-message-item-info">
                   <div>
-                    <a href="/#/girls/{{messag.sender.firstname}}-{{ctrl.agePerson(messag.sender.birthdate)}}-{{messag.sender.country.name}}-{{messag.sender.city}}-{{messag.sender.girl.id}}" ng-hide="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id)">
+                    <a href="/#/girl/{{messag.sender.firstname}}-{{ctrl.agePerson(messag.sender.birthdate)}}-{{messag.sender.country.name}}-{{messag.sender.city}}-{{messag.sender.girl.id}}" ng-hide="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id )">
                       <span ng-hide="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id )">{{messag.sender.firstname}}</span>, {{ctrl.agePerson(messag.sender.birthdate)}}
                     </a>
-                    <a href="" ng-show="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id)"><span>{{ctrl.user.user.firstname}}</span></a>
+                    <a href="/#/girl/{{messag.recipient.firstname}}-{{ctrl.agePerson(messag.recipient.birthdate)}}-{{messag.recipient.country.name}}-{{messag.recipient.city}}-{{messag.recipient.girl.id}}" ng-show="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id)"><span>{{messag.recipient.firstname}}</span></a>
                     <p><span></span>online</p>
                   </div>
-                  <a href="#">{{messag.sender.country.name}}, {{messag.sender.city}}</a>
-                  <div class="clear" ng-show="messag.isPaid"></div>
-                  <span ng-show="messag.isPaid">{{ctrl.letterTextSlice(messag.additionalData.text)}}</span>
+                  <a ng-hide="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id )" href="#">{{messag.sender.country.name}}, {{messag.sender.city}}</a>
+                  <a ng-show="ctrl.addRecipient(ctrl.user.user.id, messag.sender.id )" href="#">{{messag.recipient.country.name}}, {{messag.recipient.city}}</a>
+                  <div class="clear" ng-show="messag.isRead"></div>
+                  <span ng-show="messag.isRead">{{ctrl.letterTextSlice(messag.additionalData.text)}}</span>
                 </div>
                 <p class="girl-message-date" ng-show="messag.isRead">{{messag.createdAt| date:'yyyy-MM-dd HH:mm'}}</p>
                 <a href="" class="girl-message-photo" ng-show="messag.isRead"><img src="assets/angular-app/public/img/photo.png" alt=""><span>3</span></a>
                  <a href="" class="new" ng-hide="messag.isRead" ng-click="ctrl.readLadyLetter(messag.id, messag.senderId)">NEW</a>
                 <button class="btn-send"ng-hide="messag.isRead" ng-click="ctrl.readLadyLetter(messag.id, messag.senderId)">Read the letter</button>
                 <button class="btn-send"ng-show="messag.isRead" ng-click="ctrl.readTheLetter(messag.id, messag.senderId)">Read the letter</button>
-
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -288,13 +283,3 @@
     </div>
   </div>
 </main>
-
-
-<!-- end footer -->
-<!-- copyright -->
-<div class="copyright">
-  <p>IrinaDating &copy; 2009-2015</p>
-</div>
-
-
-

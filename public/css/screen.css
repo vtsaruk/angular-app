@@ -3662,7 +3662,7 @@ main .main-content .main-content-left .main-members-list .main-members-wrap .mai
 }
 /* line 1530, ../sass/screen.scss */
 main .main-content .main-content-left .main-members-list .main-members-wrap .main-members-item-ava img {
-  width: 50px;
+  width: 60px;
   height: 60px;
   border-radius: 5px;
 }
@@ -5264,6 +5264,8 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   bottom: 0px;
   z-index: -1;
   opacity: 0;
+  /*z-index: 1;
+  opacity: 1;*/
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
   background-color: rgba(255, 255, 255, 0.66);
@@ -6306,7 +6308,7 @@ main .main-content .main-content-right .chat-box .chat-message-out .chat-message
   background-color: rgba(255, 255, 255, 0.81);
   height: 150px;
   width: 40px;
-  display: none;
+  display: block;
   left: -40px;
   top: 0;
   padding-top: 11px;

@@ -1,5 +1,3 @@
-
-
 <biv class="chat-with-girl">
 
 	<!-- page-message -->
@@ -14,110 +12,183 @@
 							<div class="search-left-side-header">
 								<p class="white-21-Lt">Quick Search</p>
 							</div>
-
-
-
               <div class="search-left-side-select-items">
                 <div class="search-left-side-select-item">
                   <label for="">Country</label>
-                  <select name="" id="" class="select-width-100" ng-model="ctrl.countryModel">
+                  <ui-select ng-model="ctrl.countryModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 100%;" title="Choose country">
+                  <ui-select-match class="ui-select-match" placeholder="Select country...">{{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices class="ui-select-choices" repeat="country in ctrl.countries.countries | filter: $select.search">
+                  <span ng-bind-html="country.name | highlight: $select.search"></span>
+                  </ui-select-choices>
+                </ui-select>
+                  <!-- <select name="" id="" class="select-width-100" ng-model="ctrl.countryModel">
                     <option value="">Doesn't matter</option>
                     <option ng-repeat="country in ctrl.countries.countries" value="{{country.name}}">{{country.name}}</option>
-
-                  </select>
+                  </select> -->
                 </div>
+
                 <div class="search-left-side-select-item">
                   <label for="">City</label>
-                  <select name="" id="" class="select-width-100" ng-model="ctrl.cityModel">
+                  <ui-select ng-model="ctrl.cityModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 100%;" title="Choose city">
+                  <ui-select-match class="ui-select-match" placeholder="Select city...">{{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices class="ui-select-choices" repeat="city in ctrl.arrCities | filter: $select.search">
+                  <span ng-bind-html="city.name | highlight: $select.search"></span>
+                  </ui-select-choices>
+                </ui-select>
+                  <!-- <select name="" id="" class="select-width-100" ng-model="ctrl.cityModel">
                     <option value="">Doesn't matter</option>
                     <option value="2">val_2</option>
                     <option value="3">val_3</option>
                     <option value="4">val_4</option>
-                  </select>
+                  </select> -->
                 </div>
                 <div class="search-left-side-select-item">
                   <label for="">First Name</label>
-                  <select name="" id="" class="select-width-100" ng-model="ctrl.firstNameModel">
+                  <ui-select ng-model="ctrl.firstNameModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 100%;" title="Choose first name">
+                  <ui-select-match class="ui-select-match" placeholder="Select first name...">{{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices class="ui-select-choices" repeat="girl in ctrl.namesGirls | filter: $select.search">
+                  <span ng-bind-html="girl.name | highlight: $select.search"></span>
+                  </ui-select-choices>
+                </ui-select>
+                  <!-- <select name="" id="" class="select-width-100" ng-model="ctrl.firstNameModel">
                     <option value="">Doesn't matter</option>
                     <option ng-repeat="girl in ctrl.arrNameGilrs.girls"value="{{girl.user.firstname}}">{{girl.user.firstname}}</option>
-                   <!--  <option value="2">val_2</option>
-                    <option value="3">val_3</option>
-                    <option value="4">val_4</option> -->
-                  </select>
+                  </select> -->
                 </div>
                 <div class="search-left-side-select-item double">
                   <label for="">Age</label>
-                  <select name="" id="" class="selectpicker" ng-model="ctrl.birthdateFromModel" >
+                  <div class="select_box_inline">
+                  <ui-select ng-model="ctrl.birthdateFromModel"  theme="selectize" ng-disabled="ctrl.disabled" style="width: 120px;" title="Choose age">
+                    <ui-select-match class="ui-select-match" placeholder="Select age...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices class="ui-select-choices" repeat="age in ctrl.listAge | filter: $select.search">
+                      <span ng-bind-html="age.name | highlight: $select.search"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                  </div>
+                  <!-- <select name="" id="" class="selectpicker" ng-model="ctrl.birthdateFromModel" >
                     <option value="">Doesn't matter</option>
                     <option ng-repeat="age in ctrl.listAge" value="{{age}}">{{age}}</option>
-                    <!-- <option value="19">19</option>
-                    <option value="20">20</option> -->
-                  </select>
+                  </select> -->
                   <span class="search-left-side-select-item-line">-</span>
-                  <select name="" id="" class="selectpicker" ng-model="ctrl.birthdateToModel">
-
+                  <div class="select_box_inline">
+                  <ui-select ng-model="ctrl.birthdateToModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 120px;" title="Choose age">
+                    <ui-select-match class="ui-select-match" placeholder="Select age...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices class="ui-select-choices" repeat="age in ctrl.listAge | filter: $select.search">
+                        <span ng-bind-html="age.name | highlight: $select.search"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                  </div>
+                  <!-- <select name="" id="" class="selectpicker" ng-model="ctrl.birthdateToModel">
                     <option value="">Nothing selected</option>
                     <option ng-repeat="age in ctrl.listAge"value="{{age}}">{{age}}</option>
-                    <!-- <option value="29">29</option>
-                    <option value="30">30</option>
-                    <option value="31">31</option> -->
-                  </select>
+                  </select> -->
                 </div>
                 <div class="search-left-side-select-item double">
                   <label for="">Height (ft/cm)</label>
-                  <select name="" id="" class="selectpicker" ng-model="ctrl.heightFromModel">
+                  <div class="select_box_inline">
+                    <ui-select ng-model="ctrl.heightFromModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 120px;" title="Choose height">
+                      <ui-select-match class="ui-select-match" placeholder="Select height...">{{$select.selected.name}}</ui-select-match>
+                      <ui-select-choices class="ui-select-choices" repeat="hieght in ctrl.arrHieghts | filter: $select.search">
+                        <span ng-bind-html="hieght.name | highlight: $select.search"></span>
+                      </ui-select-choices>
+                  </ui-select>
+                  </div>
+                  <!-- <select name="" id="" class="selectpicker" ng-model="ctrl.heightFromModel">
                     <option value="">Doesn't matter</option>
                     <option ng-repeat="hieght in ctrl.arrHieght" value="{{hieght[1]}}">{{hieght[0]}}/{{hieght[1]}}</option>
-                  </select>
+                  </select> -->
                   <span class="search-left-side-select-item-line">-</span>
-                  <select name="" id="" class="selectpicker" ng-model="ctrl.heightToModel">
+                  <div class="select_box_inline">
+                    <ui-select ng-model="ctrl.heightToModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 120px;" title="Choose height">
+                      <ui-select-match class="ui-select-match" placeholder="Select height...">{{$select.selected.name}}</ui-select-match>
+                      <ui-select-choices class="ui-select-choices" repeat="hieght in ctrl.arrHieghts | filter: $select.search">
+                        <span ng-bind-html="hieght.name | highlight: $select.search"></span>
+                    </ui-select-choices>
+                    </ui-select>
+                  </div>
+                  <!-- <select name="" id="" class="selectpicker" ng-model="ctrl.heightToModel">
                     <option value="">Nothing selected</option>
                     <option ng-repeat="hieght in ctrl.arrHieght" value="{{hieght[1]}}">{{hieght[0]}}/{{hieght[1]}}</option>
-                  </select>
+                  </select> -->
                 </div>
                 <div class="search-left-side-select-item double">
                   <label for="">Weight (lbs/kg)</label>
-                  <select name="" id="" class="selectpicker" ng-model="ctrl.weightFromModel">
+                  <div class="select_box_inline">
+                  <ui-select ng-model="ctrl.weightFromModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 120px;" title="Choose weight">
+                  <ui-select-match class="ui-select-match" placeholder="Select weight...">{{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices class="ui-select-choices" repeat="weight in ctrl.arrWeights | filter: $select.search">
+                  <span ng-bind-html="weight.name | highlight: $select.search"></span>
+                  </ui-select-choices>
+                  </ui-select>
+                  </div>
+                  <!-- <select name="" id="" class="selectpicker" ng-model="ctrl.weightFromModel">
                     <option value="">Doesn't matter</option>
                     <option ng-repeat="weight in ctrl.arrWeight" value="{{weight[1]}}">{{weight[0]}}/{{weight[1]}}</option>
-                  </select>
+                  </select> -->
                   <span class="search-left-side-select-item-line">-</span>
-                  <select name="" id="" class="selectpicker" ng-model="ctrl.weightToModel">
+                  <div class="select_box_inline">
+                    <ui-select ng-model="ctrl.weightToModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 120px;" title="Choose height">
+                    <ui-select-match class="ui-select-match" placeholder="Select height...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices class="ui-select-choices" repeat="weight in ctrl.arrWeights | filter: $select.search">
+                      <span ng-bind-html="weight.name | highlight: $select.search"></span>
+                    </ui-select-choices>
+                    </ui-select>
+                  </div>
+                  <!-- <select name="" id="" class="selectpicker" ng-model="ctrl.weightToModel">
                     <option value="">Nothing selected</option>
                     <option ng-repeat="weight in ctrl.arrWeight" value="{{weight[1]}}">{{weight[0]}}/{{weight[1]}}</option>
-                  </select>
+                  </select> -->
                 </div>
                 <div class="search-left-side-select-item">
                   <label for="">Hair Color</label>
-                  <select name="" id="" class="select-width-100" ng-model="ctrl.hairColorModel">
+                  <ui-select ng-model="ctrl.hairColorModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 100%;" title="Choose hair color">
+                    <ui-select-match class="ui-select-match" placeholder="Select hair color...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices class="ui-select-choices" repeat="gilr in ctrl.arrHairColor | filter: $select.search">
+                        <span ng-bind-html="gilr.name | highlight: $select.search"></span>
+                    </ui-select-choices>
+                  </ui-select>
+
+                  <!-- <select name="" id="" class="select-width-100" ng-model="ctrl.hairColorModel">
                     <option value="">Doesn't matter</option>
                     <option value="Black">Black</option>
                     <option value="Blonde">Blonde</option>
                     <option value="Brown">Brown</option>
                     <option value="Red">Red</option>
                     <option value="Light_brown">Light brown</option>
-                  </select>
+                  </select> -->
                 </div>
                 <div class="search-left-side-select-item">
                   <label for="">Eye Color</label>
-                  <select name="" id="" class="select-width-100" ng-model="ctrl.eyeColorModel">
+                  <ui-select ng-model="ctrl.eyeColorModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 100%;" title="Choose eye color">
+                    <ui-select-match class="ui-select-match" placeholder="Select eye color...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices class="ui-select-choices" repeat="color in ctrl.arreYeColor | filter: $select.search">
+                        <span ng-bind-html="color.name | highlight: $select.search"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                  <!-- <select name="" id="" class="select-width-100" ng-model="ctrl.eyeColorModel">
                     <option value="">Doesn't matter</option>
                     <option value="Blue">Blue</option>
                     <option value="Brown">Brown</option>
                     <option value="Gray">Gray</option>
                     <option value="Green">Green</option>
                     <option value="Hazel">Hazel</option>
-                  </select>
+                  </select> -->
                 </div>
                 <div class="search-left-side-select-item">
                   <label for="">English Rating</label>
-                  <select name="" id="" class="select-width-100" ng-model="ctrl.englishRatingModel">
+                  <ui-select ng-model="ctrl.englishRatingModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 100%;" title="Choose english rating">
+                    <ui-select-match class="ui-select-match" placeholder="Select english rating...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices class="ui-select-choices" repeat="rating in ctrl.arrEnglishRating | filter: $select.search">
+                        <span ng-bind-html="rating.name | highlight: $select.search"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                  <!-- <select name="" id="" class="select-width-100" ng-model="ctrl.englishRatingModel">
                     <option value="">Doesn't matter</option>
                     <option value="Beginner">Beginner</option>
                     <option value="Intermediate">Intermediate</option>
                     <option value="Advanced">Advanced</option>
                     <option value="Fluent">Fluent</option>
-                  </select>
+                  </select> -->
                 </div>
                 <p class="grey-14-Th-italic mn-b-10">* Girl level of language itself indicates.</p>
                 <a ng-click="ctrl.advancedSearch=true" ng-hide="ctrl.advancedSearch" href="" class="red-18-Th adv-search mn-b-15">Advanced Search</a>
@@ -125,7 +196,15 @@
     <div ng-show="ctrl.advancedSearch">
                 <div class="search-left-side-select-item double">
                   <label for="">Number of Children</label>
-                  <select name="" id="" class="selectpicker" ng-model="ctrl.childrenNumberFromModel">
+                  <div class="select_box_inline">
+                  <ui-select ng-model="ctrl.childrenNumberFromModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 120px;" title="Choose number of children">
+                    <ui-select-match class="ui-select-match" placeholder="Select number...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices class="ui-select-choices" repeat="children in ctrl.arrChildrenNumber | filter: $select.search">
+                        <span ng-bind-html="children.name | highlight: $select.search"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                  </div>
+                  <!-- <select name="" id="" class="selectpicker" ng-model="ctrl.childrenNumberFromModel">
                     <option value="">Doesn't matter</option>
                     <option value="0">0</option>
                     <option value="1">1</option>
@@ -133,9 +212,17 @@
                     <option value="3">3</option>
                     <option value="4">4</option>
                     <option value="5">5</option>
-                  </select>
+                  </select> -->
                   <span class="search-left-side-select-item-line">-</span>
-                  <select name="" id="" class="select-width-100" ng-model="ctrl.childrenNumberToModel">
+                  <div class="select_box_inline">
+                  <ui-select ng-model="ctrl.childrenNumberToModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 120px;" title="Choose number of children">
+                    <ui-select-match class="ui-select-match" placeholder="Select number...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices class="ui-select-choices" repeat="children in ctrl.arrChildrenNumber | filter: $select.search">
+                        <span ng-bind-html="children.name | highlight: $select.search"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                  </div>
+                  <!-- <select name="" id="" class="select-width-100" ng-model="ctrl.childrenNumberToModel">
                     <option value="">Nothing selected</option>
                     <option value="0">0</option>
                     <option value="1">1</option>
@@ -143,20 +230,32 @@
                     <option value="3">3</option>
                     <option value="4">4</option>
                     <option value="5">5</option>
-                  </select>
+                  </select> -->
                 </div>
                 <div class="search-left-side-select-item">
                   <label for="">Marital Status</label>
-                  <select name="" id="" class="selectpicker" ng-model="ctrl.maritalStatusModel">
+                  <ui-select ng-model="ctrl.maritalStatusModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 100%;" title="Choose age">
+                    <ui-select-match class="ui-select-match" placeholder="Select marital status...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices class="ui-select-choices" repeat="status in ctrl.arrMaritalStatus | filter: $select.search">
+                        <span ng-bind-html="status.name | highlight: $select.search"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                  <!-- <select name="" id="" class="selectpicker" ng-model="ctrl.maritalStatusModel">
                     <option value="">Doesn't matter</option>
                     <option value="Never_married">Never married</option>
                     <option value="Divorced">Divorced</option>
                     <option value="Widow">Widow</option>
-                  </select>
+                  </select> -->
                 </div>
                 <div class="search-left-side-select-item">
                   <label for="">Looking For</label>
-                  <select name="" id="" class="selectpicker" ng-model="ctrl.lookingForModel">
+                  <ui-select ng-model="ctrl.lookingForModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 100%;" title="Choose looking for">
+                    <ui-select-match class="ui-select-match" placeholder="Select looking for...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices class="ui-select-choices" repeat="option in ctrl.arrLookingFor | filter: $select.search">
+                        <span ng-bind-html="option.name | highlight: $select.search"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                  <!-- <select name="" id="" class="selectpicker" ng-model="ctrl.lookingForModel">
                     <option value="">Doesn't matter</option>
                     <option value="Marriage">Marriage</option>
                     <option value="Find_a_person_with_children">Find a person with children</option>
@@ -168,20 +267,32 @@
                     <option value="Meet_person_of_different_cultures">Meet person of different cultures</option>
                     <option value="Online_chat_(Phone,_Video,_Live)">Online chat (Phone, Video, Live)</option>
                     <option value="Online_Flirting">Online Flirting</option>
-                  </select>
+                  </select> -->
                 </div>
                 <div class="search-left-side-select-item">
                   <label for="">Profession</label>
-                  <select name="" id="" class="selectpicker" ng-model="ctrl.professionModel">
+                  <ui-select ng-model="ctrl.professionModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 100%;" title="Choose profession">
+                    <ui-select-match class="ui-select-match" placeholder="Select profession...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices class="ui-select-choices" repeat="profession in ctrl.arrProfessions | filter: $select.search">
+                        <span ng-bind-html="profession.name | highlight: $select.search"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                  <!-- <select name="" id="" class="selectpicker" ng-model="ctrl.professionModel">
                     <option value="">Doesn't matter</option>
                     <option value="2">val_2</option>
                     <option value="3">val_3</option>
                     <option value="4">val_4</option>
-                  </select>
+                  </select> -->
                 </div>
                 <div class="search-left-side-select-item">
                   <label for="">Education</label>
-                  <select name="" id="" class="selectpicker" ng-model="ctrl.educationModel">
+                  <ui-select ng-model="ctrl.educationModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 100%;" title="Choose education">
+                    <ui-select-match class="ui-select-match" placeholder="Select education...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices class="ui-select-choices" repeat="profession in ctrl.arrProfessions | filter: $select.search">
+                        <span ng-bind-html="profession.name | highlight: $select.search"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                  <!-- <select name="" id="" class="selectpicker" ng-model="ctrl.educationModel">
                     <option value="">Doesn't matter</option>
                     <option value="University_degree">University degree</option>
                     <option value="University_(unfinished)">University (unfinished)</option>
@@ -189,11 +300,17 @@
                     <option value="Student">Student</option>
                     <option value="College_degree">College degree</option>
                     <option value="High_school">High school</option>
-                  </select>
+                  </select> -->
                 </div>
                 <div class="search-left-side-select-item">
                   <label for="">Religion</label>
-                  <select name="" id="" class="selectpicker" ng-model="ctrl.religionModel">
+                  <ui-select ng-model="ctrl.religionModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 100%;" title="Choose religion">
+                    <ui-select-match class="ui-select-match" placeholder="Select peligion...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices class="ui-select-choices" repeat="religion in ctrl.arrReligions | filter: $select.search">
+                        <span ng-bind-html="religion.name | highlight: $select.search"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                  <!-- <select name="" id="" class="selectpicker" ng-model="ctrl.religionModel">
                     <option value="">Doesn't matter</option>
                     <option value="Not_Religious">Not Religious</option>
                     <option value="Muslim">Muslim</option>
@@ -207,30 +324,52 @@
                     <option value="Lutheran">Lutheran</option>
                     <option value="Mormon">Mormon</option>
                     <option value="Other">Other</option>
-                  </select>
+                  </select> -->
                 </div>
                 <div class="search-left-side-select-item double">
                   <label for="">Smoting&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   Drinking</label>
-                  <select name="" id="" class="selectpicker" ng-model="ctrl.smokingModel">
+                  <div class="select_box_inline">
+                  <ui-select ng-model="ctrl.smokingModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 120px;" title="Choose smoting">
+                    <ui-select-match class="ui-select-match" placeholder="Select smoting...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices class="ui-select-choices" repeat="option in ctrl.arrSmokingOptions | filter: $select.search">
+                        <span ng-bind-html="option.name | highlight: $select.search"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                  </div>
+                  <!-- <select name="" id="" class="selectpicker" ng-model="ctrl.smokingModel">
                     <option value="">Doesn't matter</option>
                     <option value="No">No</option>
                     <option value="Yes">Yes</option>
                     <option value="Sometimes">Sometimes</option>
-                  </select>
+                  </select> -->
                   <span class="search-left-side-select-item-line">-</span>
-                  <select name="" id="" class="selectpicker" ng-model="ctrl.drinkingModel">
+                  <div class="select_box_inline">
+                  <ui-select ng-model="ctrl.drinkingModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 120px;" title="Choose Drinking">
+                    <ui-select-match class="ui-select-match" placeholder="Select drinking...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices class="ui-select-choices" repeat="option in ctrl.arrDrinkingOptions | filter: $select.search">
+                        <span ng-bind-html="option.name | highlight: $select.search"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                  </div>
+                  <!-- <select name="" id="" class="selectpicker" ng-model="ctrl.drinkingModel">
                     <option value="">Nothing selected</option>
                     <option value="Never">Never</option>
                     <option value="Socially">Socially</option>
                     <option value="Occasionally">Occasionally</option>
-                  </select>
+                  </select> -->
                 </div>
                 <div class="search-left-side-select-item">
                   <label for="">Zodiac Sign</label>
-                  <select name="" id="" class="selectpicker" ng-model="ctrl.zodiacSignModel">
+                  <ui-select ng-model="ctrl.zodiacSignModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 100%;" title="Choose zodiac sign">
+                    <ui-select-match class="ui-select-match" placeholder="Select zodiac sign...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices class="ui-select-choices" repeat="zodiac in ctrl.arrZodiacs | filter: $select.search">
+                        <span ng-bind-html="zodiac.name | highlight: $select.search"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                  <!-- <select name="" id="" class="selectpicker" ng-model="ctrl.zodiacSignModel">
                     <option value="">Doesn't matter</option>
                     <option value="Aries">Aries</option>
                     <option value="Taurus">Taurus</option>
@@ -244,7 +383,7 @@
                     <option value="Capricorn">Capricorn</option>
                     <option value="Aquarius">Aquarius</option>
                     <option value="Pisces">Pisces</option>
-                  </select>
+                  </select> -->
                 </div>
                 <a ng-click="ctrl.advancedSearch=false" href="" class="red-18-Th adv-search mn-b-15">Quick Search</a>
                 </div>
@@ -273,7 +412,7 @@
 								<h3 class="white-21-Lt pull-left">Search Results</h3>
 								<div class="search-right-side-results-checkbox pull-right">
 									<label class="checkbox-1">
-										<p>Only Online</p>
+										<p ng-click="ctrl.allNamesGirls()">Only Online</p>
 										<input type="checkbox">
 										<span></span>
 									</label>
@@ -284,20 +423,23 @@
 <!-- <div>{{ctrl.girlsAll.girls[0]}}</div> -->
 									<div class="col-md-6" ng-repeat="girl in ctrl.resultGirls">
 										<div class="search-right-side-girls-item clearfix">
-											<img src="{{ctrl.photoAvatar2(girl.user.mainphoto.pathOfQuad)}}" alt="" class="s-img">
+											<img ng-mouseenter="ctrl.mouseenterImg($index)"
+                           ng-mouseleave="ctrl.mouseleave($index)" src="{{girl.photoAvatar}}" alt="" class="s-img">
 											<div class="search-right-side-girls-item-info">
 												<span class="circle"></span>
-												<a href="#" class="white-18-Th-500">{{girl.user.firstname}}, {{ctrl.agePerson(girl.user.birthdate)}}</a>
+                        <a href="/#/girl/{{girl.user.firstname}}-{{ctrl.agePerson(girl.user.birthdate)}}-{{girl.user.country.name}}-{{girl.user.city}}-{{girl.id}}" class="white-18-Th-500">{{girl.user.firstname}}, {{ctrl.agePerson(girl.user.birthdate)}}</a>
+
 												<p class="white-14-Lt-500">{{girl.user.country.name}}, {{girl.user.city}}</p>
 												<span class="info-id">ID: {{girl.id}}</span>
 												<div class="girl-status-message">
-												{{girl.message}}
+												{{ctrl.repliceMessages(girl.message)}}
 												</div>
-												<ul class="search-right-side-girls-item-list">
+												<ul ng-mouseenter="ctrl.mouseenterImg($index)"
+                           ng-mouseleave="ctrl.mouseleave($index)" ng-show= ctrl.showListImg[$index] class="search-right-side-girls-item-list">
 													<li><a href="#">
 														<span class="tooltipps">Chat</span>
 													</a></li>
-													<li><a href="#" class="e-mail"><span class="tooltipps">Send message</span></a></li>
+													<li><a href="/#/mail/{{girl.user.id}}" class="e-mail"><span class="tooltipps">Send message</span></a></li>
 													<li><a href="#" class="gift"><span class="tooltipps">Send a gift</span></a></li>
 													<li><a href="#" class="heart"><span class="tooltipps">Add to favorites</span></a></li>
 												</ul>

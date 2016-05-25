@@ -38,6 +38,8 @@
     "owl.carousel": "0.0.1",
     "ui-select": "~0.16.1",
     "angular-recaptcha": "~2.5.0",
+    "angular-ui-select": "~0.12.100",
+    "angular-base64-upload": "~0.1.19",
     "angular-sanitize": "~1.5.5"
   }
 }

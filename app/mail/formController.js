@@ -1,16 +1,23 @@
 module.exports = formController;
 
 function formController (formService, $scope, $timeout, userService, $rootScope) {
+  this.showMainContent = 1;
+
+  this.showBlock = function(id) {
+    this.showMainContent = id;
+  }
 
   this.getUserData = function () {
     var self = this;
     userService.getUser().$promise.then(
       function(data) {
         self.user = data;
-        $rootScope.global2 = self.user.user.additionalData.groupId;
+        $rootScope.global2 = data;
+        $('.head_footer').show();
       },
       function(error) {
         console.log(error);
+        $('.head_footer').show();
       }
     );
   };
@@ -19,6 +26,7 @@ function formController (formService, $scope, $timeout, userService, $rootScope)
 
   $scope.cropper = {};
   $scope.cropper.sourceImage = null;
+  this.cropperSourceImg = $scope.cropper.sourceImage = null;
   $scope.cropper.croppedImage = null;
   $scope.bounds = {};
   $scope.bounds.left = 0;
@@ -28,8 +36,7 @@ function formController (formService, $scope, $timeout, userService, $rootScope)
   this.Height = 1;
   // this.tumblerHeight = false;
   this.onloadFotoCheck = function() {
-
-      self = this;
+    self = this;
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext('2d');
     var imageObj = new Image();
@@ -82,15 +89,16 @@ function formController (formService, $scope, $timeout, userService, $rootScope)
     var imageObj = new Image();
     imageObj.onload = function () {
       self.heightPicture = imageObj.naturalHeight;
+      self.widthPicture = imageObj.naturalWidth;
       // self.topWindow =imageObj.naturalHeight;
-      console.log(imageObj.naturalHeight);
+      // console.log(imageObj.naturalHeight);
     };
       // console.log('onload');
       // console.log(imageObj.naturalWidth);
     //imageObj.src = document.getElementById("tempImg").src;
     imageObj.src = $scope.cropper.sourceImage;
-    console.log('self.topWindow');
-    console.log(this.heightPicture - $scope.bounds.top);
+    // console.log('self.topWindow');
+    // console.log(this.heightPicture - $scope.bounds.top);
     // console.log(htmlFiles[0].files[0]);
     // console.log(im);
     // console.log(htmlFiles[0].files[0]);
@@ -98,9 +106,26 @@ function formController (formService, $scope, $timeout, userService, $rootScope)
         fd.append('photo', htmlFiles[0].files[0]);
 
     if(isMainPhoto) {
+      if($scope.bounds.left==0) $scope.bounds.left=1;
+
       fd.append('isMainPhoto', true);
-      fd.append('startX', $scope.bounds.left);
-      fd.append('startY', this.heightPicture - $scope.bounds.top);
+      var widthPhoto = $scope.bounds.right - $scope.bounds.left;
+      var heightPhotoA = $scope.bounds.top - $scope.bounds.bottom;
+      var startXPhoto = $scope.bounds.left;
+      var startYPhoto = this.heightPicture - $scope.bounds.top;
+      if (startYPhoto==0) startYPhoto = 1;
+      if(heightPhotoA<420) {
+        startYPhoto = this.heightPicture-420;
+        startXPhoto =800-420;
+        heightPhotoA = 420;
+      }
+      console.log(heightPhotoA);
+      console.log(startXPhoto);
+      console.log(startYPhoto);
+      fd.append('startX', startXPhoto);
+      fd.append('startY', startYPhoto);
+      fd.append('width', heightPhotoA);
+      fd.append('height', heightPhotoA);//420);//heightPhoto)
     }
     // console.log(fd);
   // console.log(fd);
@@ -110,6 +135,7 @@ function formController (formService, $scope, $timeout, userService, $rootScope)
     // console.log(photo);
     // alert("Фотография загружена");
 //     $event.preventDefault();
+  // this.cropperSourceImg = null;
   };
 
 };

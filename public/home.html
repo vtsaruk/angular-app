@@ -1,5 +1,5 @@
 
-<biv class="home-page">
+<div class="home-page">
 <!-- promo -->
 <div class="promo">
 <div class="container">
@@ -20,10 +20,10 @@
 						<label for="">Password</label>
 						<input type="password" name="password" ng-model="ctrl.regisUser.password" ng-minlength="4">
 						<input type="button" value="Start dating!" ng-click="ctrl.registUser(ctrl.regisUser)">
-            <!-- <div class="g-recaptcha" data-sitekey="6LeROR4TAAAAAPjFlEpuqZI8Antq-VK8hxZafle6"></div> -->
 
-            <div vc-recaptcha key="'6LeROR4TAAAAAPjFlEpuqZI8Antq-VK8hxZafle6'" ng-model="ctrl.myRecaptchaResponse"></div>
-
+            <div vc-recaptcha key="ctrl.recaptchaKey" ng-model="ctrl.myRecaptchaResponse"></div>
+            <!-- <div vc-recaptcha key="'6LeKeR0TAAAAAKTzT16ysklE14u7stpxQ5wuuF7j'" ng-model="ctrl.myRecaptchaResponse"></div> -->
+  <!-- action="/index/signin" method="post" -->
           </form>
 					<form ng-hide="ctrl.formUseModel" action="/index/signin" method="post" class="form-login">
 						<div class="sing-in clearfix">
@@ -34,9 +34,9 @@
 						</div>
 						<div class="clear"></div>
 						<label for="">User email</label>
-						<input type="text" ng-model="ctrl.User.name" name="email">
+						<input type="text" ng-model="ctrl.User.name2" name="email">
 						<label for="">Password</label>
-						<input type="password" ng-model="ctrl.User.password" name="password" ng-minlength="4">
+						<input type="password" ng-model="ctrl.User.password2" name="password" ng-minlength="4">
 						<div class="form-login-bottom clearfix">
 
 							<label for="" class="checkbox-login">
@@ -80,52 +80,46 @@
 <div class="filter-girls-wrap">
 	<div class="container">
 		<div class="row">
+    <!-- <div>{{ctrl.girlsAll.girls.length}}</div> -->
 			<div class="col-md-12">
 				<div class="filter-girls-container">
 					<div class="filter-girls-filter clearfix">
 						<div class="col-md-3 age-container">
 							<div class="age clearfix">
 								<p>Age</p>
-								<select ng-model="ctrl.fromDateModel">
-                  <option ng-repeat="age in ctrl.listAge" value="{{age}}">{{age}}</option>
-                </select>
+                <div class="select_box_inline">
+                <ui-select ng-model="ctrl.fromDateModel"  theme="selectize" ng-disabled="ctrl.disabled" style="width: 70px;" title="Choose age">
+                  <ui-select-match class="ui-select-match" placeholder="Select age...">{{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices class="ui-select-choices" repeat="age in ctrl.listAge | filter: $select.search">
+                  <span ng-bind-html="age.name | highlight: $select.search"></span>
+                  </ui-select-choices>
+                </ui-select>
+                </div>
 								<span class="age-line">-</span>
-								<select ng-model="ctrl.toDateModel">
+                <div class="select_box_inline">
+                <ui-select ng-model="ctrl.toDateModel"  theme="selectize" ng-disabled="ctrl.disabled" style="width: 70px;" title="Choose age">
+                  <ui-select-match class="ui-select-match" placeholder="Select age...">{{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices class="ui-select-choices" repeat="age in ctrl.listAge | filter: $select.search">
+                  <span ng-bind-html="age.name | highlight: $select.search"></span>
+                  </ui-select-choices>
+                </ui-select>
+                </div>
+								<!-- <select ng-model="ctrl.toDateModel">
                   <option ng-repeat="age in ctrl.listAge" value="{{age}}">{{age}}</option>
-                </select>
+                </select> -->
 							</div>
 						</div>
 						<div class="col-md-3 from-container">
 							<div class="from">
 								<p>From</p>
-                <!-- {{ctrl.countries.countries[1].name}} -->
-               <!--  <ui-select ng-model="form.gender" theme="bootstrap">
-    <ui-select-choices class="ui-select-choices" repeat="country in ctrl.countries.countries">
-        {{country.name}}
-    </ui-select-choices>
-</ui-select> -->
-
-<!-- <ui-select ng-model="ctrl.country2.selected" theme="selectize" ng-disabled="ctrl.disabled" style="width: 300px;" title="Choose a country">
-    <ui-select-match placeholder="Select or search a country in the list...">{{$select.selected.name}}</ui-select-match> -->
-    <!-- <ui-select-choices repeat="country2 in ctrl.countries2"> -->
-    <!-- <ui-select-choices repeat="country2 in ctrl.countries2 | filter: $select.search">
-      <span ng-bind-html="country2.name | highlight: $select.search"></span>
-      <small ng-bind-html="country2.code | highlight: $select.search"></small>
-    </ui-select-choices>
-  </ui-select> -->
-
-
-
-<!--   <ui-select ng-model="ctrl.countryModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 300px;" title="Choose a country">
-    <ui-select-match placeholder="list...">{{$select.countryModel}}</ui-select-match>
-    <ui-select-choices repeat="country in ctrl.countries.countries | filter: $select.search">
-      <span ng-bind-html="country.name | highlight: $select.search"></span>
-
-    </ui-select-choices>
-  </ui-select> -->
-								<select class="select2_ua" ng-model="ctrl.countryModel">
-                  <option ng-repeat="country in ctrl.countries.countries" value="{{country.name}}">{{country.name}}</option>
-                </select>
+                <div class="select_box_inline">
+                <ui-select ng-model="ctrl.countryModel" theme="selectize" ng-disabled="ctrl.disabled" style="width: 150px;" title="Choose country">
+                  <ui-select-match class="ui-select-match" placeholder="Select country...">{{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices class="ui-select-choices" repeat="country in ctrl.countries.countries | filter: $select.search">
+                  <span ng-bind-html="country.name | highlight: $select.search"></span>
+                  </ui-select-choices>
+                </ui-select>
+                </div>
 							</div>
 						</div>
 						<div class="col-md-3">
@@ -139,10 +133,10 @@
 					<div class="girls clearfix">
             <div class="col-md-3"ng-repeat="girl in ctrl.girlsAll.girls">
               <div class="girl-item">
-                <img src="{{ctrl.photoAvatar2(girl.user.mainphoto.pathOfQuad)}}" alt="">
+                <img src="{{girl.photoAvatar}}" alt="">
                 <div class="girls-info clearfix">
                   <div class="girls-fix-info">
-                    <ul class="tooltips-list">
+                    <ul ng-if="$root.global2.user.additionalData.groupId==1"class="tooltips-list">
                       <li>
                         <p class="tooltips add-f">Add to favorites</p>
                         <a href="#" class="add-f-icon"></a></li>
@@ -155,13 +149,26 @@
                         <p class="tooltips add-message">Send message</p>
                         <a href="/#/mail/{{girl.id}}" class="add-f-message"></a></li>
                     </ul>
+                     <ul ng-if="$root.global2.user.additionalData.groupId!=1"class="tooltips-list">
+                      <li>
+                        <p class="tooltips add-f">Add to favorites</p>
+                        <a href="#" class="add-f-icon"></a></li>
+                      <li>
+                        <p class="tooltips add-gift">Send a gift</p><a href="#" class="add-f-gift"></a></li>
+                      <li>
+                        <p class="tooltips add-chat">Chat</p>
+                        <a href="#" class="add-f-chat"></a></li>
+                      <li>
+                        <p class="tooltips add-message">Send message</p>
+                        <a href="" class="add-f-message"></a></li>
+                    </ul>
                   </div>
                   <span class="status online"></span>
                   <div class="girl-info-cont">
                     <a href="/#/girlsView/{{girl.user.firstname}}-{{ctrl.agePerson(girl.user.birthdate)}}-{{girl.user.country.name}}-{{girl.user.city}}-{{girl.id}}"><p>{{girl.user.firstname}}, {{ctrl.agePerson(girl.user.birthdate)}}</p>
                     <p class="girl-location">{{girl.user.country.name}}, {{girl.user.city}}</p></a>
                   </div>
-                  <a href="#" class="like">
+                  <a ng-if="$root.global2.user.additionalData.groupId==1" href="" class="like">
                     <img src="assets/angular-app/public/img/like.png" alt=""></a>
                 </div>
               </div>
@@ -297,7 +304,7 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 <p>USA</p>
 </div>
 <div class="reviews-descr">
-<img src="img/reviews-quats.png" alt="">
+<img src="assets/angular-app/public/img/reviews-quats.png" alt="">
 <p>
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aliquipquia consequuntur magni dolores. eos qui ratione voluptatem sequi nesciunt.
 </p>
@@ -321,102 +328,79 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 </div>
 </section>
 <section class="stories">
-	<h1>Success stories</h1>
-	<div class="container">
-		<div class="row">
-			<div class="col-md-10 col-md-offset-1">
-				<div class="stories-container clearfix">
-				<div id="owl-demo2" class="owl-carousel owl-theme">
+  <h1>Success stories</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="stories-container clearfix">
+        <div id="owl-demo2" class="owl-carousel owl-theme">
 <div class="item">
 
-					<div class="stories-left-side">
-						<img src="assets/angular-app/public/img/stories-happy.jpg" alt="">
-						<p class="stories-date">May, 2015</p>
-					</div>
-					<div class="stories-right-side">
-						<p>Anna and Rick</p>
-						<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aliquipquia consequuntur magni dolores. eos qui ratione voluptatem sequi nesciunt.
+          <div class="stories-left-side">
+            <img src="assets/angular-app/public/img/stories-happy.jpg" alt="">
+            <p class="stories-date">May, 2015</p>
+          </div>
+          <div class="stories-right-side">
+            <p>Anna and Rick</p>
+            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aliquipquia consequuntur magni dolores. eos qui ratione voluptatem sequi nesciunt.
 Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.</span>
 <a href="#">Read more...</a>
-					</div>
-				</div>
+          </div>
+        </div>
 
-			<div class="item">
+      <div class="item">
 
-					<div class="stories-left-side">
-						<img src="assets/angular-app/public/img/stories-happy.jpg" alt="">
-						<p class="stories-date">May, 2015</p>
-					</div>
-					<div class="stories-right-side">
-						<p>Anna and Rick</p>
-						<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aliquipquia consequuntur magni dolores. eos qui ratione voluptatem sequi nesciunt.
+          <div class="stories-left-side">
+            <img src="assets/angular-app/public/img/stories-happy.jpg" alt="">
+            <p class="stories-date">May, 2015</p>
+          </div>
+          <div class="stories-right-side">
+            <p>Anna and Rick</p>
+            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aliquipquia consequuntur magni dolores. eos qui ratione voluptatem sequi nesciunt.
 Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.</span>
 <a href="#">Read more...</a>
-					</div>
-				</div>
+          </div>
+        </div>
 
-			<div class="item">
+      <div class="item">
 
-					<div class="stories-left-side">
-						<img src="img/stories-happy.jpg" alt="">
-						<p class="stories-date">May, 2015</p>
-					</div>
-					<div class="stories-right-side">
-						<p>Anna and Rick</p>
-						<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aliquipquia consequuntur magni dolores. eos qui ratione voluptatem sequi nesciunt.
+          <div class="stories-left-side">
+            <img src="assets/angular-app/public/img/stories-happy.jpg" alt="">
+            <p class="stories-date">May, 2015</p>
+          </div>
+          <div class="stories-right-side">
+            <p>Anna and Rick</p>
+            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aliquipquia consequuntur magni dolores. eos qui ratione voluptatem sequi nesciunt.
 Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.</span>
 <a href="#">Read more...</a>
-					</div>
-				</div>
+          </div>
+        </div>
 
-			<div class="item">
+      <div class="item">
 
-					<div class="stories-left-side">
-						<img src="assets/angular-app/public/img/stories-happy.jpg" alt="">
-						<p class="stories-date">May, 2015</p>
-					</div>
-					<div class="stories-right-side">
-						<p>Anna and Rick</p>
-						<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aliquipquia consequuntur magni dolores. eos qui ratione voluptatem sequi nesciunt.
+          <div class="stories-left-side">
+            <img src="assets/angular-app/public/img/stories-happy.jpg" alt="">
+            <p class="stories-date">May, 2015</p>
+          </div>
+          <div class="stories-right-side">
+            <p>Anna and Rick</p>
+            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aliquipquia consequuntur magni dolores. eos qui ratione voluptatem sequi nesciunt.
 Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.</span>
 <a href="#">Read more...</a>
-					</div>
-				</div>
-			</div>
-<!-- 			<div class="customNavigation">
+          </div>
+        </div>
+      </div>
+<!--      <div class="customNavigation">
 <a class="btn prev"></a>
 <a class="btn next"></a>
 
 </div> -->
-		</div>
+    </div>
 
-	</div>
+  </div>
 </section>
-<!-- end reviews -->
-<!-- footer -->
-
-
-<!-- end footer -->
-<!-- copyright -->
-<!-- <div class="copyright">
-<p>IrinaDating &copy; 2009-2015</p>
 </div>
--->
-<!-- end copyright -->
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
-	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-	<script src="js/bootstrap-select.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script>
-		  //bootstrap select picker
-      $('.selectpicker').selectpicker({
-        style: 'btn-info',
-        size: 4
-      });
+  <script src="assets/angular-app/public/js/owl.carousel.min.js"></script>
+  <script src="assets/angular-app/public/js/main2.js"></script>
 
-	</script>
-	<script src="js/main.js"></script> -->
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
 
-</biv>

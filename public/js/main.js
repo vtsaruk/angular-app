@@ -22,18 +22,20 @@ require('angular-sanitize');
 require('./../node_modules/angular-ui-select/select.js');
 // require('angular-ui-select');
 // require('bootstrap-select');
-
+// var meConfig = require('./config');
 // var conversationsController = require('./controllers/conversationsController');
 var mailController = require('./mail/mailController');
 var girlsController = require('./mail/girlsController');
 var usersController = require('./mail/usersController');
 var girlsAllController = require('./mail/girlsAllController');
+var ladyAllController = require('./mail/ladyAllController');
 var mailIdController = require('./mail/mailIdController');
 var formController = require('./mail/formController');
 var girlsViewController = require('./mail/girlsViewController');
 var chatController = require('./mail/chatController');
 var searchController = require('./mail/searchController');
 var contactUsController = require('./mail/contactUsController');
+var favoriteController = require('./mail/favoriteController');
 
 var cropDirective = require('./directives/crop');
 var fileDirective = require('./directives/angular-file-model');
@@ -48,12 +50,14 @@ var formService = require('./mail/form_service');
 var chatService = require('./mail/chat_service');
 var searchService = require('./mail/search_service');
 var contactUsService = require('./mail/contactUs_service');
+var favoriteService = require('./mail/favorite_service');
 
 var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper', 'naif.base64', 'ocNgRepeat', 'btford.socket-io', 'ui.select', 'ngSanitize', 'ui.date', 'vcRecaptcha'])
 
-.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
   //$rootScope.global = 'global';
-  $urlRouterProvider.otherwise("/index");
+
+  $urlRouterProvider.otherwise("/home/-ag-18-30-co-Ukraine");
   $stateProvider
     .state('index', {
         url: '/index',
@@ -88,7 +92,7 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
     .state('girls', {
       url: '/girls/:id',
       templateUrl: 'assets/angular-app/public/home-logedin.html',
-      controller: girlsAllController,
+      controller: ladyAllController,
       controllerAs: 'ctrl'
     })
     .state('home', {
@@ -103,8 +107,8 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
       controller: mailIdController,
       controllerAs: 'ctrl'
     })
-    .state('form', {
-      url: '/form',
+    .state('temp_photoAvatar', {
+      url: '/temp_photoAvatar',
       templateUrl: 'assets/angular-app/public/form.html',
       controller: formController,
       controllerAs: 'ctrl'
@@ -166,41 +170,20 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
     .state('testimonials', {
       url: '/testimonials',
       templateUrl: 'assets/angular-app/public/testimonials.html',
+      controller: favoriteController,
+      controllerAs: 'ctrl'
+    })
+    .state('men-account', {
+      url: '/men-account',
+      templateUrl: 'assets/angular-app/public/men-account.html',
       controller: formController,
       controllerAs: 'ctrl'
     });
+
+    if(window.history && window.history.pushState){
+      $locationProvider.html5Mode(true);
+    }
 })
-// .run(function ($rootScope, $location, User) {
-//     //.run(function ($rootScope, $location) {
-//     // Redirect to login if route requires auth and you're not logged in
-//         $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-//           // Auth.isLoggedInAsync(function(loggedIn) {
-//           //   if (toState.authenticate && !loggedIn) {
-//           //         $rootScope.returnToState = toState.url;
-//           //         $rootScope.returnToStateParams = toParams.Id;
-//           //         $location.path('/login');
-//           //     }
-//           // });
-//           if (toState.name == 'login'){
-
-//           } else {
-//             if(!$rootScope.current_user){
-//               $rootScope.current_user = User.login();
-//               $location.path('/main');
-//             }
-//              //Auth.isLoggedInAsync(function(loggedIn) {
-//              //  if (toState.authenticate && !loggedIn) {
-//               //       $rootScope.returnToState = toState.url;
-//                //      $rootScope.returnToStateParams = toParams.Id;
-//                //      $location.path('/login');
-//                //  }
-//              //});
-//           }
-
-//           console.log(toState);
-//           console.log(toParams);
-//         });
-//    })
 // .controller('conversationsController', conversationsController)
 .controller('usersController', ['userService', usersController])
 .controller('mailController', ['mailService','userService', 'girlsService', mailController])
@@ -233,63 +216,18 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
     restrict: 'A',
     transclude: false,
     link: function(scope, element) {
-
-      // wait for the last item in the ng-repeat then call init
-      //if(scope.$last) {
-        //scope.initCarousel(element.parent());
-
-      // setTimeout(function(){
-      var owl4 = $("#owl-demo4");
-
-      owl4.owlCarousel({
-          items : 1, //10 items above 1000px browser width
-          itemsDesktop : [1000,2], //5 items between 1000px and 901px
-          itemsDesktopSmall : [900,3], // betweem 900px and 601px
-          itemsTablet: [600,2], //2 items between 600 and 0
-          pagination:true,
-          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
-      });
-
-      // Custom Navigation Events
-      $(".next").click(function(){
-        owl4.trigger('owl.next');
-      })
-      $(".prev").click(function(){
-        owl4.trigger('owl.prev');
-      })
-      // }, 2000);
-
-      setTimeout(function(){
-        var owl5 = $("#owl-demo5");
-
-        owl5.owlCarousel({
-            items : 4, //10 items above 1000px browser width
-            itemsDesktop : [1000,2], //5 items between 1000px and 901px
-            itemsDesktopSmall : [900,3], // betweem 900px and 601px
-            itemsTablet: [600,2], //2 items between 600 and 0
-            pagination:true,
-            itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
-        });
-
-        // Custom Navigation Events
-        $(".next").click(function(){
-          owl5.trigger('owl.next');
-        })
-        $(".prev").click(function(){
-          owl5.trigger('owl.prev');
-        })
-        //}
-      }, 2000);
     }
   };
 }])
 .controller('girlsAllController', ['userService', 'girlsAllService', girlsAllController])
+.controller('ladyAllController', ['userService', 'girlsAllService', ladyAllController])
 .controller('mailIdController', ['userService', 'mailService', 'girlsAllService', 'mailIdService', mailIdController])
 .controller('formController', ['formService', 'userService', formController])
 .controller('girlsViewController', ['girlsService', 'userService', girlsViewController])
 .controller('chatController', ['chatService', 'userService', chatController])
 .controller('searchController', ['searchService', 'userService', searchController])
 .controller('contactUsController', ['contactUsService', 'userService', contactUsController])
+.controller('favoriteController', ['favoriteService', 'userService', favoriteController])
 .factory('userService', ['$resource', userService])
 .factory('mailService', ['$resource', mailService])
 .factory('girlsService', ['$resource', girlsService])
@@ -298,9 +236,18 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
 .factory('formService', ['$resource', formService])
 .factory('chatService', ['socketFactory', chatService])
 .factory('searchService', ['$resource', searchService])
-.factory('contactUsService', ['$resource', contactUsService]);
+.factory('contactUsService', ['$resource', contactUsService])
+.factory('favoriteService', ['$resource', favoriteService]);
 
-},{"./../node_modules/angular-ui-select/select.js":38,"./../node_modules/ng-repeat-owl-carousel/src/ngRepeatOwlCarousel":47,"./directives/angular-file-model":2,"./directives/crop":3,"./mail/chatController":4,"./mail/chat_service":5,"./mail/contactUsController":6,"./mail/contactUs_service":7,"./mail/formController":8,"./mail/form_service":9,"./mail/girlsAllController":10,"./mail/girlsAll_service":11,"./mail/girlsController":12,"./mail/girlsViewController":13,"./mail/girls_service":14,"./mail/mailController":15,"./mail/mailIdController":16,"./mail/mailId_service":17,"./mail/mail_service":18,"./mail/searchController":19,"./mail/search_service":20,"./mail/user_service":21,"./mail/usersController":22,"angular":40,"angular-base64-upload":23,"angular-cookies":26,"angular-img-cropper":27,"angular-recaptcha":28,"angular-resource":30,"angular-sanitize":32,"angular-socket-io":33,"angular-ui-bootstrap":35,"angular-ui-date":36,"angular-ui-router":37,"jquery":44,"jquery-ui":43,"ng-file-upload":46}],2:[function(require,module,exports){
+},{"./../node_modules/angular-ui-select/select.js":42,"./../node_modules/ng-repeat-owl-carousel/src/ngRepeatOwlCarousel":51,"./directives/angular-file-model":3,"./directives/crop":4,"./mail/chatController":5,"./mail/chat_service":6,"./mail/contactUsController":7,"./mail/contactUs_service":8,"./mail/favoriteController":9,"./mail/favorite_service":10,"./mail/formController":11,"./mail/form_service":12,"./mail/girlsAllController":13,"./mail/girlsAll_service":14,"./mail/girlsController":15,"./mail/girlsViewController":16,"./mail/girls_service":17,"./mail/ladyAllController":18,"./mail/mailController":19,"./mail/mailIdController":20,"./mail/mailId_service":21,"./mail/mail_service":22,"./mail/searchController":23,"./mail/search_service":24,"./mail/user_service":25,"./mail/usersController":26,"angular":44,"angular-base64-upload":27,"angular-cookies":30,"angular-img-cropper":31,"angular-recaptcha":32,"angular-resource":34,"angular-sanitize":36,"angular-socket-io":37,"angular-ui-bootstrap":39,"angular-ui-date":40,"angular-ui-router":41,"jquery":48,"jquery-ui":47,"ng-file-upload":50}],2:[function(require,module,exports){
+var meConfig = {
+  ioConnect: 'http://dev.irinadating.com/',
+  recaptcha: '6LeKeR0TAAAAAKTzT16ysklE14u7stpxQ5wuuF7j',
+  recapthaSecret: '6LeKeR0TAAAAAHgv7QcaVHtTWT7ScsfeGpCMDQwB'
+};
+module.exports = meConfig;
+
+},{}],3:[function(require,module,exports){
 //
 // angular-file-model
 // ==================
@@ -339,7 +286,7 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
 
 })();
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 
 angular.module('angular-img-cropper', []).directive("imageCropper", ['$document', '$window', 'imageCropperDataShare', function ($document, $window, imageCropperDataShare) {
     return {
@@ -1678,15 +1625,39 @@ angular.module('angular-img-cropper').factory("imageCropperDataShare", function 
     };
     return share;
 });
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 module.exports = chatController;
+var meConfig = require('../config');
 
 function chatController ($document, $location, chatService, userService, socketFactory, $rootScope) {
 
+  this.phtoPartner = meConfig.ioConnect;
+  /*Функция запрашивает данные пользователя через userService*/
+  this.getUserData = function () {
+    var self = this;
+    userService.getUser().$promise.then(
+      function(data) {
+        self.user = data;
+        $rootScope.global2 = data;
+        $('.head_footer').show();
+        // self.getlogChat(self.user.user.id);
+      },
+      function(error) {
+        console.log(error);
+        $('.head_footer').show();
+      }
+    );
+  };
+
+  this.getUserData();
+  // console.log(this.phtoPartner);
   var self2 = this;
   this.onlineModel = true;
   this.messages = [];
   this.messages2 = [];
+  this.messages3 = [];
+  this.part = [];
+  this.notSendLetters = [];
 /*Функция выделяет в меню online, request, recent текущее нахождение*/
   this.acitivNavLi = function(index) {
     var el = angular.element(document.getElementsByClassName('main-members-nav'));
@@ -1731,18 +1702,28 @@ function chatController ($document, $location, chatService, userService, socketF
     // console.log(['sessionId', 'startDateTime', 'isInitByBoy'].map(function (val) {
     //     return 'partner.' + val + ' = ' + partner[val];
     //   }).join(', ') + 'gropupId = ' + groupId);
-    if(partner.sessionId && (!partner.startDateTime) && (partner.isInitByBoy == groupId) && (partner.isDeclined == 0) && (partner.isCancelled == 0)) {
+    if(partner.sessionId && (!partner.startDateTime) && (partner.isDeclined == 0) && (partner.isCancelled == 0)) {
       return true;
     } else {
       return false;
-    }
+    }//(partner.isInitByBoy == groupId) &&
   };
-/*Функция отрисовывает состояние Accept and decline chat*/
+/*Функция отрисовывает состояние Accept and decline chat для мужчин*/
   this.acceptAndDeclineChat = function(partner, groupId) {
     // console.log(['sessionId', 'startDateTime', 'isInitByBoy'].map(function (val) {
     //     return 'partner.' + val + ' = ' + partner[val];
     //   }).join(', ') + 'gropupId = ' + groupId);
-    if(partner.sessionId && (!partner.startDateTime) && (partner.isInitByBoy != groupId) && (partner.isDeclined == 0) && (partner.isCancelled == 0)) {
+    if(partner.sessionId && (!partner.startDateTime) &&(partner.isInitByBoy != groupId) && (partner.isDeclined == 0) && (partner.isCancelled == 0)) {
+    // console.log('inbound req for '+ partner.sessionId);
+      return true;
+    } else {
+    // console.log('no inbound req for ' + partner.sessionId);
+      return false;
+    }
+  };
+  /*Функция отрисовывает состояние Accept and decline chat для девушек*/
+  this.acceptAndDeclineChat2 = function(partner) {
+    if(partner.sessionId && (!partner.startDateTime) &&(partner.isInitByBoy!=0) && (partner.isDeclined == 0) && (partner.isCancelled == 0)) {
     // console.log('inbound req for '+ partner.sessionId);
       return true;
     } else {
@@ -1791,6 +1772,8 @@ function chatController ($document, $location, chatService, userService, socketF
 /*Функция отслеживает событие-сигнал addPartner и записывает данные партнёров*/
   chatService.on('addPartner', function (data) {
     self2.partners[data.id] = data;
+    self2.partners[data.id].newLetters = false;
+
     // console.log(self2 .partners);
 
   });
@@ -1817,7 +1800,8 @@ function chatController ($document, $location, chatService, userService, socketF
   };
 /*Функция отправляет сообщение в переписке*/
   this.sendMsg = function(Id, msg) {
-    console.log(Id + ' , ' + msg);
+    // console.log(Id + ' , ' + msg);
+    this.notSendLetters[Id] = '';
     chatService.emit('sendMsg', { partnerId: Id, content: msg });
     this.addMsgModel = "";
   };
@@ -1837,16 +1821,49 @@ function chatController ($document, $location, chatService, userService, socketF
       } else arr[number].childNodes[i].className = 'main-members-item clearfix';
     };
   };
-/*Функция запрашивает переписку сообщений с выбранным партнёром*/
-  this.correspondence = function(partner, index, number) {
-    this.addClassActiv(index, number);
+  this.funcActivStatu = function(partner) {
+    // console.log(partner.id);
+    return partner.id==this.partnerID? true: false;
+  }
+  /*Функция записывает дату дня в переписке*/
+  this.dateInCorrespondence = function() {
+    if(self2.messages2.length>2) {
+      for(var i=0; i<self2.messages2.length; i++) {
+        if(self2.messages[i] && self2.messages[i].sentTime && self2.messages2[i].sentTime && self2.messages[i+1] && self2.messages[i+1].sentTime && self2.messages2[i+1].sentTime) {
+          self2.messages[0].sentTime2 = true;
+          if(self2.messages[0].sentTime&&self2.messages[0].sentTime&&self2.messages3[0].sentTime.slice(0,10)==self2.messages3[1].sentTime.slice(0,10)) {
+            self2.messages[0].sentTime2 = true;
+          }
+          var day = self2.messages2[i].sentTime.slice(0,10);
+          var day2 = self2.messages2[i+1].sentTime.slice(0,10);
+          if(day==day2 ) {
+            if(self2.messages[i].sentTime2==true) {
+              self2.messages[i].sentTime2=true
+            } else self2.messages[i].sentTime2 = false;
+          }
+          else {
+            self2.messages[i+1].sentTime2 = true;
+          }
+        }
+      }
+    }
+  }
+  /*Функция запрашивает переписку сообщений с выбранным партнёром*/
+  this.correspondence = function(partner) {
+    if(this.addMsgModel) {
+      this.notSendLetters[this.partnerID] = this.addMsgModel;
+      this.addMsgModel = '';
+    }
+    this.addMsgModel = this.notSendLetters[partner.id];
     this.namePartner = partner.firstname;
     this.partnerID = partner.id;
     this.sessionID = partner.sessionId;
     this.partnerAge = partner.age;
+    this.photoAvatPartner = partner.photoAvatar;
     this.messages = [];
     this.messages2 = [];
     this.messages3 = [];
+    this.part[partner.id] = false;
     chatService.emit('getChatLogDeeper', { partnerId: partner.id });
   };
 /*Обработка события получения сообщения для переписки*/
@@ -1857,30 +1874,40 @@ function chatController ($document, $location, chatService, userService, socketF
     self2.messages3 = self2.messages2;
     self2.messages3.slice(1);
     self2.lastMessageID = self2.messages[self2.messages.length-1].msgId;
-
-    if(self2.messages2.length>2) {
-      for(var i=1; i<self2.messages2.length; i++) {
-        if(self2.messages3[i].sentTime && self2.messages2[i].sentTime) {
-       var day = new Date(self2.messages3[i].sentTime.slice(0,10)).getTime();
-       var day2 = new Date(self2.messages2[i].sentTime.slice(0,10)).getTime();
-
-        if(day===day2){
-          self2.messages[i].sentTime = false;
-        }
-      }
-      }
-    }
-});
+    self2.dateInCorrespondence();
+  });
+  this.funcShow = function(arg) {
+    return arg? true: false;
+  }
 /*Получение нового письма, только что написанного для пользователя в переписке*/
   chatService.on('newMsg', function(data) {
+    if(self2.partnerID!=data.partnerId) {
+      self2.part[data.partnerId] = { newLetters: true };
+    }
+    // console.log(self2.partners[data.partnerId]);
 
+    // if(self2.partners[self2.partnerID]) {
+    //   self2.namePartner = self2.partners[self2.partnerID].firstname;
+    //   self2.sessionID = self2.partners[self2.partnerID].sessionId
+    //   self2.partnerAge = self2.partners[self2.partnerID].age
+    //   self2.sessionID = self2.partners[self2.partnerID].sessionId
+    // }
+    // self2.partnerID = data.partnerId;
+    // self2.messages = [];
+    // chatService.emit('getChatLogDeeper', { partnerId: data.partnerId });
     self2.messages.unshift(data);
     self2.messages2.unshift(data);
-    // console.log('newMsg');
-    // console.log(data);
+    self2.messages3.unshift(data);
+    // console.log(self2.messages);
+    self2.dateInCorrespondence();
   });
   this.pushOldMessage = function(partnerID, lastMsgID) {
     chatService.emit('getChatLogDeeper', { partnerId: partnerID, lastMsgId: lastMsgID });
+  };
+
+  this.namePartnerFunc = function() {
+    // console.log(self2.partners[self2.partnerID].sessionId);
+    return self2.partners[self2.partnerID].firstname;
   }
 
 
@@ -1890,41 +1917,28 @@ function chatController ($document, $location, chatService, userService, socketF
         // console.log(event);
         if($(this).scrollTop() + $(this).innerHeight() + 100 >= $(this)[0].scrollHeight) {
           // console.log('end reached');
-          console.log(self2.partnerID + ' , ' + self2.lastMessageID);
+          // console.log(self2.partnerID + ' , ' + self2.lastMessageID);
           chatService.emit('getChatLogDeeper', { partnerId: self2.partnerID, lastMsgId:self2.lastMessageID });
         }
     });
   //});
-/*Функция запрашивает данные пользователя через userService*/
-  this.getUserData = function () {
-    var self = this;
-    userService.getUser().$promise.then(
-      function(data) {
-        self.user = data;
-        $rootScope.global2 = data;
-        // console.log(self.user.user.id);
-        // self.getlogChat(self.user.user.id);
-      },
-      function(error) {
-        console.log(error);
-      }
-    );
-  };
-
-  this.getUserData();
 
 };
 
 chatController.$inject = ['$document', '$location', 'chatService', 'userService', 'socketFactory', '$rootScope'];
-},{}],5:[function(require,module,exports){
+},{"../config":2}],6:[function(require,module,exports){
 module.exports = chatService;
 /*фабрика*/
+var meConfig = require('../config');
 function chatService (socketFactory) {
-  return  socketFactory({ioSocket: io.connect('http://irinadating.loc/')});
+  // console.log('meConfig')
+  // console.log(meConfig.ioConnect)
+  return  socketFactory({ioSocket: io.connect(meConfig.ioConnect)});
+  // return  socketFactory({ioSocket: io.connect('http://irinadating.loc/')});
 };
 
 chatService.$inject = ['socketFactory'];
-},{}],6:[function(require,module,exports){
+},{"../config":2}],7:[function(require,module,exports){
 module.exports = contactUsController;
 
 
@@ -1945,9 +1959,11 @@ function contactUsController ($anchorScroll, $rootScope, userService, contactUsS
       function(data) {
         self.user = data;
         $rootScope.global2 = data;
+        $('.head_footer').show();
       },
       function(error) {
         console.log(error);
+        $('.head_footer').show();
       }
     );
   };
@@ -1972,18 +1988,6 @@ this.getUserData();
     // }, 100);
   });
 
-  this.disabled = undefined;
-  this.searchEnabled = undefined;
-
-  this.setInputFocus = function (){
-    $scope.$broadcast('UiSelectDemo1');
-  };
-
-  this.enable = function() {
-    vm.disabled = false;
-  };
-
-
   this.country = {};
   this.countries = [ // Taken from https://gist.github.com/unceus/6501985
     {name: 'Afghanistan', code: 'AF'},
@@ -2003,7 +2007,7 @@ this.getUserData();
 
 
 contactUsController.$inject = ['$anchorScroll', '$rootScope', 'userService', 'contactUsService', '$http', '$timeout', '$interval'];
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 module.exports = contactUsService;
 /*Фабрика*/
 function contactUsService ($resource) {
@@ -2027,20 +2031,83 @@ function contactUsService ($resource) {
   }
 
 contactUsService.$inject = ['$resource'];
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
+module.exports = favoriteController;
+
+function favoriteController (formService, $scope, $timeout, userService, $rootScope, favoriteService) {
+  this.getUserData = function () {
+    var self = this;
+    userService.getUser().$promise.then(
+      function(data) {
+        self.user = data;
+        $rootScope.global2 = data;
+        $('.head_footer').show();
+      },
+      function(error) {
+        console.log(error);
+        $('.head_footer').show();
+      }
+    );
+  };
+
+  this.getUserData();
+  console.log('!!!!!!!!!!!!!');
+
+  };
+
+favoriteController.$inject = ['formService', '$scope', '$timeout', 'userService','$rootScope', 'favoriteService'];
+},{}],10:[function(require,module,exports){
+module.exports = favoriteService;
+
+function favoriteService() {
+  var favoriteResource = $resource('/users/:user_id/favorite', { user_id: '@id' },
+    {
+      addUserFavor: {
+        method:'POST',
+        params: {
+          id: '@id'
+        }
+      },
+      deletedUserFavor: {
+        method: 'DELETE',
+        params: {
+          id: '@id'
+        }
+      }
+    }
+  );
+
+  this.addFavorStatus = function(id) {
+    return favoriteResource.addUserFavor(userId);
+  };
+  this.deleteFavorStatus = function(id) {
+    return favoriteResource.deletedUserFavor(iuserId);
+  };
+  return this;
+};
+
+favoriteService.$inject = ['$resource'];
+},{}],11:[function(require,module,exports){
 module.exports = formController;
 
 function formController (formService, $scope, $timeout, userService, $rootScope) {
+  this.showMainContent = 1;
+
+  this.showBlock = function(id) {
+    this.showMainContent = id;
+  }
 
   this.getUserData = function () {
     var self = this;
     userService.getUser().$promise.then(
       function(data) {
         self.user = data;
-        $rootScope.global2 = self.user.user.additionalData.groupId;
+        $rootScope.global2 = data;
+        $('.head_footer').show();
       },
       function(error) {
         console.log(error);
+        $('.head_footer').show();
       }
     );
   };
@@ -2049,6 +2116,7 @@ function formController (formService, $scope, $timeout, userService, $rootScope)
 
   $scope.cropper = {};
   $scope.cropper.sourceImage = null;
+  this.cropperSourceImg = $scope.cropper.sourceImage = null;
   $scope.cropper.croppedImage = null;
   $scope.bounds = {};
   $scope.bounds.left = 0;
@@ -2058,8 +2126,7 @@ function formController (formService, $scope, $timeout, userService, $rootScope)
   this.Height = 1;
   // this.tumblerHeight = false;
   this.onloadFotoCheck = function() {
-
-      self = this;
+    self = this;
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext('2d');
     var imageObj = new Image();
@@ -2112,15 +2179,16 @@ function formController (formService, $scope, $timeout, userService, $rootScope)
     var imageObj = new Image();
     imageObj.onload = function () {
       self.heightPicture = imageObj.naturalHeight;
+      self.widthPicture = imageObj.naturalWidth;
       // self.topWindow =imageObj.naturalHeight;
-      console.log(imageObj.naturalHeight);
+      // console.log(imageObj.naturalHeight);
     };
       // console.log('onload');
       // console.log(imageObj.naturalWidth);
     //imageObj.src = document.getElementById("tempImg").src;
     imageObj.src = $scope.cropper.sourceImage;
-    console.log('self.topWindow');
-    console.log(this.heightPicture - $scope.bounds.top);
+    // console.log('self.topWindow');
+    // console.log(this.heightPicture - $scope.bounds.top);
     // console.log(htmlFiles[0].files[0]);
     // console.log(im);
     // console.log(htmlFiles[0].files[0]);
@@ -2128,9 +2196,26 @@ function formController (formService, $scope, $timeout, userService, $rootScope)
         fd.append('photo', htmlFiles[0].files[0]);
 
     if(isMainPhoto) {
+      if($scope.bounds.left==0) $scope.bounds.left=1;
+
       fd.append('isMainPhoto', true);
-      fd.append('startX', $scope.bounds.left);
-      fd.append('startY', this.heightPicture - $scope.bounds.top);
+      var widthPhoto = $scope.bounds.right - $scope.bounds.left;
+      var heightPhotoA = $scope.bounds.top - $scope.bounds.bottom;
+      var startXPhoto = $scope.bounds.left;
+      var startYPhoto = this.heightPicture - $scope.bounds.top;
+      if (startYPhoto==0) startYPhoto = 1;
+      if(heightPhotoA<420) {
+        startYPhoto = this.heightPicture-420;
+        startXPhoto =800-420;
+        heightPhotoA = 420;
+      }
+      console.log(heightPhotoA);
+      console.log(startXPhoto);
+      console.log(startYPhoto);
+      fd.append('startX', startXPhoto);
+      fd.append('startY', startYPhoto);
+      fd.append('width', heightPhotoA);
+      fd.append('height', heightPhotoA);//420);//heightPhoto)
     }
     // console.log(fd);
   // console.log(fd);
@@ -2140,12 +2225,13 @@ function formController (formService, $scope, $timeout, userService, $rootScope)
     // console.log(photo);
     // alert("Фотография загружена");
 //     $event.preventDefault();
+  // this.cropperSourceImg = null;
   };
 
 };
 
 formController.$inject = ['formService', '$scope', '$timeout', 'userService','$rootScope'];
-},{}],9:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 module.exports = formService;
 /*фабрика*/
 function formService ($resource) {
@@ -2172,11 +2258,16 @@ function formService ($resource) {
 };
 
 formService.$inject = ['$resource'];
-},{}],10:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 module.exports = girlsAllController;
 
-function girlsAllController ($document, $location, $stateParams, userService, girlsAllService, $rootScope) {
+var meConfig = require('../config');
 
+function girlsAllController ($document, $location, $stateParams, userService, girlsAllService, $rootScope, $http, $timeout, $interval) {
+
+  this.recaptchaKey = meConfig.recaptcha;
+  // console.log('recaptchaKey = ' + this.recaptchaKey);
+  // console.log('secret = ' + meConfig.recapthaSecret);
   this.disabled = undefined;
 /*Функция определяет возраст*/
   this.agePerson = function(birthdate) {
@@ -2191,21 +2282,24 @@ function girlsAllController ($document, $location, $stateParams, userService, gi
 
   // this.loginUser = function(User) {
   //   var self = this;
-  //   console.log(User.name + ' , ' + User.password);
-    // userService.loginUser(User).$promise.then(
-    //   function(data) {
-    //     self.user = data;
-    //     if (self.user.user.additionalData.groupId == 1) {
-    //       $location.path('/man');
-    //     } else if(self.user.user.additionalData.groupId == 2){
-    //       $location.path('/lady');
-    //     }
-    //     else $location.path('/home/-ag-18-30-co-Ukraine');
-    //   },
-    //   function(error) {
-    //     $location.path('/home/-ag-18-30-co-Ukraine');
-    //   }
-    // );
+  //   console.log(User.name2 + ' , ' + User.password2);
+  //   var fd = new FormData();
+  //   fd.append('email', User.email2);
+  //   fd.append('password', User.password2);
+  //   userService.loginUser(fd).$promise.then(
+  //     function(data) {
+  //       self.user = data;
+  //       if (self.user.user.additionalData.groupId == 1) {
+  //         $location.path('/man');
+  //       } else if(self.user.user.additionalData.groupId == 2){
+  //         $location.path('/lady');
+  //       }
+  //       else $location.path('/home/-ag-18-30-co-Ukraine');
+  //     },
+  //     function(error) {
+  //       $location.path('/home/-ag-18-30-co-Ukraine');
+  //     }
+  //   );
   // };
 
   this.registUser = function(User) {
@@ -2215,19 +2309,10 @@ function girlsAllController ($document, $location, $stateParams, userService, gi
 var fd = new FormData();
     fd.append('email', User.email);
     fd.append('password', User.message);
-    fd.append('secret', '6LeROR4TAAAAAHB7MP4Yx0sgA28bimUC3vyiOpkA');
+    fd.append('secret', meConfig.recapthaSecret );
+    // fd.append('secret', '6LeKeR0TAAAAAHgv7QcaVHtTWT7ScsfeGpCMDQwB' );
     fd.append('response', this.myRecaptchaResponse);
-
-
-    // user.email = User.email;
-    // user.password = User.password;
-    // user.secret = '6LeROR4TAAAAAHB7MP4Yx0sgA28bimUC3vyiOpkA';
-    // user.response = this.myRecaptchaResponse;//'g-recaptcha-response';
-    // console.log('this.myRecaptchaResponse');
-    // console.log(this.myRecaptchaResponse);
-    //user.response = $('#recaptcha-token').value;//'g-recaptcha-response';
-    console.log(User.email + ' , ' + User.password);
-     userService.registUser(fd);//.$promise.then(
+    userService.registUser(fd);//.$promise.then(
     //   function(data) {
     //     self.user = data;
     //     if (self.user.user.additionalData.groupId == 1) {
@@ -2248,24 +2333,27 @@ var fd = new FormData();
     var self = this;
     userService.getUser().$promise.then(
       function(data) {
+
         $rootScope.global2 = data;
         self.user = data;
-        console.log('$rootScope.global2')
-        console.log($rootScope.global2)
+        if (self.user.user.additionalData.groupId == 1) {
+          $location.path('/man');
+        } else if(self.user.user.additionalData.groupId == 2){
+          $location.path('/lady');
+        }
+        else $location.path('/home/-ag-18-30-co-Ukraine');
+        $('.head_footer').show();
       },
       function(error) {
-        console.log(error);
+        // $rootScope.global2=0;
+        // console.log(error);
+        $('.head_footer').show();
       }
     );
   };
 
   this.getUserData();
 
-  // if(this.user.user.additionalData.groupId) {
-  //   $rootScope.global2 = this.user.user.additionalData.groupId;
-  //   console.log('$rootScope.global');
-  //   console.log($rootScope.global);
-  // }
 /*Функция делает запрос к сервису  и получает названия стран*/
   this.getCountries = function() {
     var self = this;
@@ -2273,13 +2361,49 @@ var fd = new FormData();
       function(data) {
         self.countries = data;
         self.arrCountries = self.countries.countries;
-        $('select').select2();
+        // $('select').select2();
         for(var i=0; i<self.arrCountries.length; i++) {
           if(self.arrCountries[i].name==self.counryUrl) {
             self.countryIdURL = self.arrCountries[i].id
             self.paginaGirl();
           }
         };
+        // $(".owl-carousel").owlCarousel();
+         var owl = $("#owl-demo");
+
+      owl.owlCarousel({
+          items : 2, //10 items above 1000px browser width
+          itemsDesktop : [1000,2], //5 items between 1000px and 901px
+          itemsDesktopSmall : [900,3], // betweem 900px and 601px
+          itemsTablet: [600,2], //2 items between 600 and 0
+          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+      });
+
+      // Custom Navigation Events
+      $(".next").click(function(){
+        owl.trigger('owl.next');
+      })
+      $(".prev").click(function(){
+        owl.trigger('owl.prev');
+      })
+      var owl2 = $("#owl-demo2");
+
+      owl2.owlCarousel({
+          items : 1, //10 items above 1000px browser width
+          itemsDesktop : [1000,2], //5 items between 1000px and 901px
+          itemsDesktopSmall : [900,3], // betweem 900px and 601px
+          itemsTablet: [600,2], //2 items between 600 and 0
+          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+      });
+
+      // Custom Navigation Events
+      $(".next").click(function(){
+        owl2.trigger('owl.next');
+      })
+      $(".prev").click(function(){
+        owl2.trigger('owl.prev');
+      })
+
       },
       function(error) {
         console.log(error);
@@ -2287,14 +2411,25 @@ var fd = new FormData();
     );
   };
 
+  // this.replaceUndefFrom = function(arg) {
+  //   if(arg) return arg.name.name
+  //   else return 18
+  // };
+
+  // this.replaceUndefTo = function(arg) {
+  //   if(arg) return arg.name.name
+  //   else return 60
+  // };
+
   this.getCountries();
 /*Функция поиска леди по возрасту и стране, делает API запрос*/
   this.searchGirls = function(page) {
+    // console.log(this.fromDateModel.name.name);
     var self = this;
     this.arrURL = [];
     var keyValURL = '';
-    this.arrURL[0] = ['ag', this.fromDateModel + "-" + this.toDateModel];
-    this.arrURL[1] = ['co', this.countryModel];
+    this.arrURL[0] = ['ag', this.fromDateModel.name + "-" + this.toDateModel.name];
+    this.arrURL[1] = ['co', this.countryModel.name];
     for(var i=0; i<2; i++) {
       // if(self.arrURL[i][1] && self.arrURL[i][1] != "undefined" && self.arrURL[i][1] != "undefined-undefined" && self.arrURL[i][1] != null)
       keyValURL += self.arrURL[i][0] + '-' + self.arrURL[i][1] + '-';
@@ -2350,9 +2485,11 @@ var fd = new FormData();
   this.birthdateFrom = arrRes2[3] + '-' + resMonth + '-' + arrRes2[2];
 
   /*Полученные данные в нужном формате*/
-  this.fromDateModel = birthDateArrId;
-  this.toDateModel = birthDateToArrId;
-  this.countryModel = country;
+  this.fromDateModel = { name: birthDateArrId };
+  this.toDateModel = { name: birthDateToArrId };
+  this.countryModel = { name: country };
+  // console.log('this.fromDateModel');
+  // console.log(this.fromDateModel);
 /*Функция делает запрос к сервису, чтобы получить леди согласно выбранных параметров*/
   this.girlsAllGet = function() {
     var self = this;
@@ -2368,8 +2505,20 @@ var fd = new FormData();
       function(data) {
         self.girlsAll = data;
         self.gillsLength = self.girlsAll.totalCount;
-        self.countPage = self.gillsLength / 4;
+        self.countPage = self.gillsLength / 16;
         self.totalPage = Math.ceil(self.countPage);
+        for(var i=0; i<self.girlsAll.girls.length; i++) {
+          if(self.girlsAll.girls[i].user &&
+            self.girlsAll.girls[i].user.mainphoto &&
+            self.girlsAll.girls[i].user.mainphoto.pathOfQuad &&
+            self.girlsAll.girls[i].user.mainphoto.pathOfQuad!=null) {
+            var photo = self.girlsAll.girls[i].user.mainphoto.pathOfQuad;
+            self.girlsAll.girls[i].photoAvatar = photo.slice(0, photo.length-4) + '_220_220_auto' + photo.slice(-4);;
+          } else self.girlsAll.girls[i].photoAvatar = null;
+        }
+        // self.fromDateModel = { name: undefined };
+        // self.toDateModel = { name: undefined };
+        // self.countryModel = { name: undefined };
       },
       function(error) {
         console.log(error);
@@ -2378,7 +2527,7 @@ var fd = new FormData();
   };
 
   this.page = 0;
-  this.limit = 4;
+  this.limit = 16;
   if(this.totalPage==this.page) this.buttonAdd = true;
 /*Функция пагинации - добавляем, пока есть кого добавлять*/
   this.paginaGirl = function() {
@@ -2387,25 +2536,24 @@ var fd = new FormData();
 
         this.girlsAllGet();
         this.page += 1;
-        this.limit+= 4;
+        this.limit+= 16;
         if(this.totalPage==this.page) this.buttonAdd = true;
       }
     } else {
       this.girlsAllGet();
       this.page += 1;
-      this.limit += 4;
+      this.limit += 16;
       if(this.totalPage==this.page) this.buttonAdd = true;
     }
   };
 /*Функция создаёт массив данных для поля возраст в поиске*/
 this.makeAge = function() {
-    var arrlistAge = [];
+    this.listAge = [];
     var count = 17;
     for(var i=0; i<43; i++){
       count ++;
-      arrlistAge[i] = count;
+      this.listAge[i] = {id: i, name: count};
     };
-    this.listAge = arrlistAge;
   };
 
   this.makeAge();
@@ -2443,8 +2591,8 @@ this.makeAge = function() {
 
 };
 
-girlsAllController.$inject = ['$document', '$location', '$stateParams','userService', 'girlsAllService', '$rootScope'];
-},{}],11:[function(require,module,exports){
+girlsAllController.$inject = ['$document', '$location', '$stateParams','userService', 'girlsAllService', '$rootScope', '$http', '$timeout', '$interval'];
+},{"../config":2}],14:[function(require,module,exports){
 module.exports = girlsAllService;
 /*фабрика*/
 function girlsAllService ($resource) {
@@ -2470,20 +2618,61 @@ function girlsAllService ($resource) {
 };
 
 girlsAllService.$inject = ['$resource'];
-},{}],12:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 module.exports = girlsController;
 
 
 function girlsController ($document, $stateParams, $location, mailService, userService, girlsService, $scope, $rootScope) {
-/*Функция меняет название фотграфии подставляя _300_420_crop*/
-  this.photoAvatar2 = function(arg) {
-    var photo = String(arg);
-    photo = photo.slice(0, photo.length-4) + '_300_420_crop' + photo.slice(-4);
-    return photo;
-  };
-/*Функция определяет возраст*/
+  /*Забираем id из URL*/
+  var idArr =$stateParams.id.split('-');
+  var id = idArr[idArr.length-1];
+  /*Функция определяет возраст*/
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
+  }
+  /*Функция зпускает карусель фото и видео*/
+  this.caruselPhotoVideo = function() {
+    var owl4 = $("#owl-demo4");
+
+      owl4.owlCarousel({
+          items : 1, //10 items above 1000px browser width
+          itemsDesktop : [1000,2], //5 items between 1000px and 901px
+          itemsDesktopSmall : [900,3], // betweem 900px and 601px
+          itemsTablet: [600,2], //2 items between 600 and 0
+          pagination:true,
+          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+      });
+
+      // Custom Navigation Events
+      $(".profile-left-side-carousel .next").click(function(){
+        owl4.trigger('owl.next');
+      })
+      $(".profile-left-side-carousel .prev").click(function(){
+        owl4.trigger('owl.prev');
+      })
+      // }, 2000);
+
+      setTimeout(function(){
+        var owl5 = $("#owl-demo5");
+
+        owl5.owlCarousel({
+            items : 4, //10 items above 1000px browser width
+            itemsDesktop : [1000,2], //5 items between 1000px and 901px
+            itemsDesktopSmall : [900,3], // betweem 900px and 601px
+            itemsTablet: [600,2], //2 items between 600 and 0
+            pagination:true,
+            itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+        });
+
+        // Custom Navigation Events
+        $(".profile-right-side-photos-container .next").click(function(){
+          owl5.trigger('owl.next');
+        })
+        $(".profile-right-side-photos-container .prev").click(function(){
+          owl5.trigger('owl.prev');
+        })
+        //}
+      }, 1500);
   }
 /*Функция получает данние пользователя из сервиса userService*/
   this.getUserData = function () {
@@ -2492,16 +2681,18 @@ function girlsController ($document, $stateParams, $location, mailService, userS
       function(data) {
         $rootScope.global2 = data;
         self.user = data;
+        $('.head_footer').show();
       },
       function(error) {
+        $location.path('/home/-ag-18-30-co-Ukraine');
         console.log(error);
+        $('.head_footer').show();
       }
     );
   };
 
 this.getUserData();
-/*Забираем id из URL*/
-  var id = $stateParams.id.split('-')[4];
+   // var id = $stateParams.id.split('-')[4];
 /*Функция получает данные девушки из girlsService*/
   this.girlsIdGet = function(id) {
     var self = this;
@@ -2509,6 +2700,14 @@ this.getUserData();
       function(data) {
         self.girlsId = data;
         self.photosGirl(self.girlsId.girl.userId);
+        self.caruselPhotoVideo();
+        if(self.girlsId.girl.user &&
+          self.girlsId.girl.user.mainphoto &&
+          self.girlsId.girl.user.mainphoto.pathOfQuad &&
+          self.girlsId.girl.user.mainphoto.pathOfQuad!=null) {
+          var photo = self.girlsId.girl.user.mainphoto.pathOfQuad
+          self.girlsId.girl.photoAvatar = photo.slice(0, photo.length-4) + '_300_420_crop' + photo.slice(-4);
+        } else self.girlsId.girl.photoAvatar = 'null'
       },
       function(error) {
         console.log(error);
@@ -2523,17 +2722,21 @@ this.getUserData();
     girlsService.getGirlPhoto(id).$promise.then(
       function(data) {
         self.girlsPhotos = data;
+
+
       },
       function(error) {
         console.log(error);
       }
     );
   };
+
+
 /*Функция показавет весь текст письма в переписке*/
   this.switchMore = function(letterText) {
     if (letterText==null) {
-      return false;}
-      else if(letterText.length>90) {
+      return true;}
+      else if(letterText.length>200) {
       return false;
     } else return true;
   };
@@ -2544,8 +2747,8 @@ this.getUserData();
     } else {
       if (letterText==null) {
         return 0;
-      } else if(letterText.length>90) {
-        var text = letterText.slice(0, 90);
+      } else if(letterText.length>200) {
+        var text = letterText.slice(0, 200);
         return text;
       }
       return letterText;
@@ -2556,11 +2759,11 @@ this.getUserData();
 
 
 girlsController.$inject = ['$document', '$stateParams', '$location', 'mailService', 'userService', 'girlsService', '$scope', '$rootScope'];
-},{}],13:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 module.exports = girlsViewController;
 
 
-function girlsViewController ($document, $stateParams, $location, girlsService, $scope) {
+function girlsViewController ($document, $stateParams, $location, girlsService, $scope, $rootScope, userService) {
 /*Забираем id из URL*/
   var id = $stateParams.id.split('-')[4];
 /*Функция определяет возраст*/
@@ -2571,8 +2774,8 @@ function girlsViewController ($document, $stateParams, $location, girlsService, 
   /*Функция показавет весь текст письма в переписке*/
   this.switchMore = function(letterText) {
     if (letterText==null) {
-      return false;}
-      else if(letterText.length>90) {
+      return true;}
+      else if(letterText.length>200) {
       return false;
     } else return true;
   };
@@ -2583,19 +2786,86 @@ function girlsViewController ($document, $stateParams, $location, girlsService, 
     } else {
       if (letterText==null) {
         return 0;
-      } else if(letterText.length>90) {
-        var text = letterText.slice(0, 90);
+      } else if(letterText.length>200) {
+        var text = letterText.slice(0, 200);
         return text;
       }
       return letterText;
     }
+  };
+  /*Функция делает запрос к сервису и получает данные залогиненного пользователя*/
+  this.getUserData = function () {
+    var self = this;
+    userService.getUser().$promise.then(
+      function(data) {
+        $rootScope.global2 = data;
+        self.user = data;
+        $('.head_footer').show();
+      },
+      function(error) {
+        console.log(error);
+        $('.head_footer').show();
+      }
+    );
+  };
+
+  this.getUserData();
+  /*Функция зпускает карусель фото и видео*/
+  this.caruselPhotoVideo = function() {
+    var owl4 = $("#owl-demo4");
+
+      owl4.owlCarousel({
+          items : 1, //10 items above 1000px browser width
+          itemsDesktop : [1000,2], //5 items between 1000px and 901px
+          itemsDesktopSmall : [900,3], // betweem 900px and 601px
+          itemsTablet: [600,2], //2 items between 600 and 0
+          pagination:true,
+          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+      });
+
+      // Custom Navigation Events
+      $(".profile-left-side-carousel .next").click(function(){
+        owl4.trigger('owl.next');
+      })
+      $(".profile-left-side-carousel .prev").click(function(){
+        owl4.trigger('owl.prev');
+      })
+      // }, 2000);
+
+      setTimeout(function(){
+        var owl5 = $("#owl-demo5");
+
+        owl5.owlCarousel({
+            items : 4, //10 items above 1000px browser width
+            itemsDesktop : [1000,2], //5 items between 1000px and 901px
+            itemsDesktopSmall : [900,3], // betweem 900px and 601px
+            itemsTablet: [600,2], //2 items between 600 and 0
+            pagination:true,
+            itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+        });
+
+        // Custom Navigation Events
+        $(".profile-right-side-photos-container .next").click(function(){
+          owl5.trigger('owl.next');
+        })
+        $(".profile-right-side-photos-container .prev").click(function(){
+          owl5.trigger('owl.prev');
+        })
+        //}
+      }, 1500);
   }
 /*Функция меняет название фотграфии подставляя _300_420_crop*/
+  // this.photoAvatar2 = function(arg) {
+  //   var photo = String(arg);
+  //   if(photo.length<64) {
+  //     photo = photo.slice(0, 51) + '_300_420_crop' + photo.slice(-4);
+  //   }
+  //   return photo;
+  // };
   this.photoAvatar2 = function(arg) {
     var photo = String(arg);
-    if(photo.length<64) {
-      photo = photo.slice(0, 51) + '_300_420_crop' + photo.slice(-4);
-    }
+    photo = photo.slice(0, photo.length-4) + '_300_420_crop' + photo.slice(-4);
+    console.log('pathOfQuad:' + photo);
     return photo;
   };
 /*Функция получает данные девушки из girlsService*/
@@ -2605,6 +2875,14 @@ function girlsViewController ($document, $stateParams, $location, girlsService, 
       function(data) {
         self.girlsId = data;
         self.photosGirl(self.girlsId.girl.userId);
+        self.caruselPhotoVideo();
+        if(self.girlsId.girl.user &&
+          self.girlsId.girl.user.mainphoto &&
+          self.girlsId.girl.user.mainphoto.pathOfQuad &&
+          self.girlsId.girl.user.mainphoto.pathOfQuad!=null) {
+          var photo = self.girlsId.girl.user.mainphoto.pathOfQuad
+          self.girlsId.girl.photoAvatar = photo.slice(0, photo.length-4) + '_300_420_crop' + photo.slice(-4);
+        } else self.girlsId.girl.photoAvatar = 'null'
       },
       function(error) {
         console.log(error);
@@ -2627,8 +2905,8 @@ this.photosGirl = function(id) {
   };
 };
 
-girlsViewController.$inject = ['$document', '$stateParams', '$location', 'girlsService', '$scope'];
-},{}],14:[function(require,module,exports){
+girlsViewController.$inject = ['$document', '$stateParams', '$location', 'girlsService', '$scope', '$rootScope', 'userService'];
+},{}],17:[function(require,module,exports){
 module.exports = girlsService;
 /*Фабрика*/
 function girlsService ($resource) {
@@ -2649,13 +2927,286 @@ function girlsService ($resource) {
 };
 
 girlsService.$inject = ['$resource'];
-},{}],15:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
+module.exports = ladyAllController;
+
+function ladyAllController ($document, $location, $stateParams, userService, girlsAllService, $rootScope, $http, $timeout, $interval) {
+
+  /*Функция определяет возраст*/
+  this.agePerson = function(birthdate) {
+    return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
+  };
+  /*Функция делает запрос к сервису и получает данные залогиненного пользователя*/
+  this.getUserData = function () {
+    var self = this;
+    userService.getUser().$promise.then(
+      function(data) {
+        $rootScope.global2 = data;
+        self.user = data;
+        $('.head_footer').show();
+      },
+      function(error) {
+        $location.path('/home/-ag-18-30-co-Ukraine')
+        console.log(error);
+        $('.head_footer').show();
+      }
+    );
+  };
+
+  this.getUserData();
+
+/*Функция делает запрос к сервису  и получает названия стран*/
+  this.getCountries = function() {
+    var self = this;
+    girlsAllService.getCountries().$promise.then(
+      function(data) {
+        self.countries = data;
+        self.arrCountries = self.countries.countries;
+        // $('select').select2();
+        for(var i=0; i<self.arrCountries.length; i++) {
+          if(self.arrCountries[i].name==self.counryUrl) {
+            self.countryIdURL = self.arrCountries[i].id;
+            self.paginaGirl();
+          }
+        };
+
+        // $(".owl-carousel").owlCarousel();
+         var owl = $("#owl-demo");
+
+      owl.owlCarousel({
+          items : 2, //10 items above 1000px browser width
+          itemsDesktop : [1000,2], //5 items between 1000px and 901px
+          itemsDesktopSmall : [900,3], // betweem 900px and 601px
+          itemsTablet: [600,2], //2 items between 600 and 0
+          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+      });
+
+      // Custom Navigation Events
+      $(".next").click(function(){
+        owl.trigger('owl.next');
+      })
+      $(".prev").click(function(){
+        owl.trigger('owl.prev');
+      })
+      var owl2 = $("#owl-demo2");
+
+      owl2.owlCarousel({
+          items : 1, //10 items above 1000px browser width
+          itemsDesktop : [1000,2], //5 items between 1000px and 901px
+          itemsDesktopSmall : [900,3], // betweem 900px and 601px
+          itemsTablet: [600,2], //2 items between 600 and 0
+          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+      });
+
+      // Custom Navigation Events
+      $(".next").click(function(){
+        owl2.trigger('owl.next');
+      })
+      $(".prev").click(function(){
+        owl2.trigger('owl.prev');
+      })
+
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+
+  this.getCountries();
+/*Функция поиска леди по возрасту и стране, делает API запрос*/
+  this.searchGirls = function(page) {
+    console.log(page);
+    var self = this;
+    this.arrURL = [];
+    var keyValURL = '';
+    this.arrURL[0] = ['ag', this.fromDateModel.name + "-" + this.toDateModel.name];
+    this.arrURL[1] = ['co', this.countryModel.name];
+    for(var i=0; i<2; i++) {
+      // if(self.arrURL[i][1] && self.arrURL[i][1] != "undefined" && self.arrURL[i][1] != "undefined-undefined" && self.arrURL[i][1] != null)
+      keyValURL += self.arrURL[i][0] + '-' + self.arrURL[i][1] + '-';
+    };
+
+    var resultURL = keyValURL.slice(0, keyValURL.length-1);
+    console.log(resultURL);
+
+    $location.path(page + '-' + resultURL);
+    };
+
+  // this.searchHomeGirls = function() {
+
+  //   $location.path('/home/' + this.fromDateModel + '-' + this.toDateModel + '-' + this.countryModel)
+  //     console.log('this.fromDateModel, this.toDateModel');
+  //    console.log(this.fromDateModel, this.toDateModel, this.countryModel);
+  // };
+/*парсим ULR, полученные данные приводим к нужному формату*/
+    var urlId = $stateParams.id;
+/*Получаем возраст из ULR*/
+  if(urlId.indexOf('-ag-')!= -1 ) {
+    var start = urlId.indexOf('-ag-') + 4;
+    var end = urlId.indexOf('-', start);
+    var birthDateArrId  = urlId.slice(start, end);
+    var start2 = urlId.indexOf('-', end );
+    var end2 = urlId.indexOf('-', end+1);
+    if(urlId.indexOf('-', end+1)==-1){
+      var birthDateToArrId = urlId.slice(start2+1, urlId.length);
+    } else var birthDateToArrId = urlId.slice(start2+1, end2);
+  } else {
+    var birthDateArrId = 18;
+    var birthDateToArrId = 60;
+  };
+/*Получаем страну из ULR*/
+    if(urlId.indexOf('-co-')!= -1) {
+      var start = urlId.indexOf('-co-') + 4;
+      var end = urlId.indexOf('-', start);
+      if(urlId.indexOf('-', start)==-1) {
+        var country = urlId.slice(start, urlId.length);
+      } else var country = urlId.slice(start, end);
+      ;
+    } else var country = undefined;
+/*Приводим к нужному формату для API запроса*/
+  this.counryUrl = country;
+  var dateBirthdateFrom = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*birthDateArrId);
+  var resFromDate = new Date(dateBirthdateFrom);
+  var resMonth = resFromDate.getMonth() +1;
+  var arrRes = new String(resFromDate).split(' ');
+  this.birthdateTo = arrRes[3] + '-' + resMonth + '-' + arrRes[2];
+  var dateBirthdateTo = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*birthDateToArrId);
+  var resToDate = new Date(dateBirthdateTo);
+  var arrRes2 = new String(resToDate).split(' ');
+  this.birthdateFrom = arrRes2[3] + '-' + resMonth + '-' + arrRes2[2];
+
+  /*Полученные данные в нужном формате*/
+  this.fromDateModel = { name: birthDateArrId };
+  this.toDateModel = { name: birthDateToArrId };
+  this.countryModel = { name: country };
+  // console.log('this.fromDateModel');
+  // console.log(this.fromDateModel);
+/*Функция делает запрос к сервису, чтобы получить леди согласно выбранных параметров*/
+  this.girlsAllGet = function() {
+    var self = this;
+    var options = {
+      birthdateFrom: this.birthdateFrom,
+      birthdateTo: this.birthdateTo,
+      countryId: this.countryIdURL,
+      direction: 'asc',
+      limit: self.limit,
+      offset: 0
+    };
+    girlsAllService.getGirlsAll(options).$promise.then(
+      function(data) {
+        self.girlsAll = data;
+        self.gillsLength = self.girlsAll.totalCount;
+        self.countPage = self.gillsLength / 16;
+        self.totalPage = Math.ceil(self.countPage);
+        for(var i=0; i<self.girlsAll.girls.length; i++) {
+          if(self.girlsAll.girls[i].user &&
+            self.girlsAll.girls[i].user.mainphoto &&
+            self.girlsAll.girls[i].user.mainphoto.pathOfQuad &&
+            self.girlsAll.girls[i].user.mainphoto.pathOfQuad!=null) {
+            var photo = self.girlsAll.girls[i].user.mainphoto.pathOfQuad;
+            self.girlsAll.girls[i].photoAvatar = photo.slice(0, photo.length-4) + '_220_220_auto' + photo.slice(-4);;
+          } else self.girlsAll.girls[i].photoAvatar = null;
+        }
+        // self.fromDateModel = { name: undefined };
+        // self.toDateModel = { name: undefined };
+        // self.countryModel = { name: undefined };
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+
+  this.page = 0;
+  this.limit = 16;
+  if(this.totalPage==this.page) this.buttonAdd = true;
+/*Функция пагинации - добавляем, пока есть кого добавлять*/
+  this.paginaGirl = function() {
+    if (this.totalPage){
+      if(this.totalPage > this.page) {
+
+        this.girlsAllGet();
+        this.page += 1;
+        this.limit+= 16;
+        if(this.totalPage==this.page) this.buttonAdd = true;
+      }
+    } else {
+      this.girlsAllGet();
+      this.page += 1;
+      this.limit += 16;
+      if(this.totalPage==this.page) this.buttonAdd = true;
+    }
+  };
+/*Функция создаёт массив данных для поля возраст в поиске*/
+this.makeAge = function() {
+    this.listAge = [];
+    var count = 17;
+    for(var i=0; i<43; i++){
+      count ++;
+      this.listAge[i] = {id: i, name: count};
+    };
+  };
+
+  this.makeAge();
+/*Функция подставляет в название фото нужные параметры*/
+  this.photoAvatar2 = function(arg) {
+    var photo = String(arg);
+    photo = photo.slice(0, photo.length-4) + '_220_220_auto' + photo.slice(-4);
+    return photo;
+  };
+/*меняем стили на выпадающих списках в select*/
+  $(document).ready(function(){
+   setTimeout(function(){
+    // $('.selectpicker').selectpicker({
+    //     style: 'btn-info',
+    //     size: 4
+    //   });
+  }, 1000);
+  });
+
+
+};
+
+ladyAllController.$inject = ['$document', '$location', '$stateParams','userService', 'girlsAllService', '$rootScope', '$http', '$timeout', '$interval'];
+},{}],19:[function(require,module,exports){
 module.exports = mailController;
 
-function mailController ($document, $location, $timeout, $anchorScroll, mailService, userService , girlsService, $scope, $rootScope) {
+function mailController ($document, $location, $timeout, $anchorScroll, mailService, userService , girlsService, $scope, $rootScope, girlsService) {
 
-  // $('#ui-datepicker-div').hide();
+  this.showLetter = true;
 
+  this.girlsId = [];
+
+  this.girlsIdGet = function(recipientID) {
+    var self = this;
+    girlsService.getGirlsId(recipientID).$promise.then(
+      function(data) {
+        self.girlsId[recipientID] = data;
+        $location.path('/home/-ag-18-30-co-Ukraine');
+        console.log(self.girlsId);
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  }
+
+  this.functionDataRecipiend = function(messageObg, userID, model) {
+console.log('recipientID');
+console.log(messageObg);
+console.log('userID');
+console.log(userID);
+console.log('model');
+console.log(model);
+    if(messageObg.recipientId==userID) {
+      if(model==false && messageObg.isRead==true)
+      return 0;
+
+    } else return 1
+
+
+  }
 /*Функция определяет возраст*/
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
@@ -2684,8 +3235,8 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
 /*Функция показывает и скрывает список возможностей в области отправки письма*/
   this.showFilter = function() {
     this.toDate = new Date();
-    var dateFrom = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*20);
-    this.fromDate = new Date(dateFrom);
+    // var dateFrom = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*20);
+    // this.fromDate = new Date(dateFrom);
     this.filterDiv = this.filterDiv ? false : true;
   };
 /*Функция запрашивает данные залогиненного пользователя*/
@@ -2695,9 +3246,12 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       function(data) {
         self.user = data;
         $rootScope.global2 = data;
+        self.userID = data.user.id;
+        $('.head_footer').show();
       },
       function(error) {
         console.log(error);
+        $('.head_footer').show();
       }
     );
   };
@@ -2705,6 +3259,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
   this.getUserData();
 /*Функция, отвечающая за параметры в запросе на получение писем*/
   this.changeType = function (type) {
+
     this.resultFromDate = undefined;
     this.resultToDate = undefined;
     this.tumbler = true;
@@ -2714,13 +3269,16 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     this.getMessages();
     this.onThisWeek = false;
     this.onLastWeek = false;
+    if(type=='outbox')
+      this.showLetter = false
+    else this.showLetter = true;
   };
 /*Функция запроса писем через сервис*/
   this.getMessages = function () {
     if(this.tumbler==false) {
       this.tumbler=true
     }
-    console.log(this.type);
+    // console.log(this.type);
     var self = this;
     var options = {
       dateTimeFrom: self.resultFromDate,
@@ -2741,6 +3299,17 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
         angular.forEach(self.messages.letters, function(letter, index) {
           self.messages.letters[index]['deleted'] = false;
         });
+
+        for(var i=0; i<self.messages.letters.length; i++) {
+          if(self.messages.letters[i].senderId==self.user.user.id) {
+            self.messages.letters[i].isRead = true;
+          }
+        //   // console.log(self.userID + ' : ' + self.messages.letters[i].recipientId)
+        //   if(self.userID!=self.messages.letters[i].recipientId) {
+        //     console.log(self.messages.letters[i].recipientId);
+        //     self.girlsIdGet(self.messages.letters[i].recipientId);
+        //   }
+        }
       },
       function(error) {
         console.log(error);
@@ -3160,12 +3729,12 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
 };
 
 
-mailController.$inject = ['$document', '$location', '$timeout', '$anchorScroll', 'mailService', 'userService', 'girlsService', '$scope', '$rootScope'];
+mailController.$inject = ['$document', '$location', '$timeout', '$anchorScroll', 'mailService', 'userService', 'girlsService', '$scope', '$rootScope', 'girlsService'];
 
-},{}],16:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 module.exports = mailIdController;
 
-function mailIdController ($document, $stateParams, $location, $anchorScroll, $timeout, $rootScope, mailService, userService , girlsService, mailIdService) {
+function mailIdController ($document, $stateParams, $location, $anchorScroll, $timeout, mailService,   userService , girlsService, mailIdService, $rootScope) {
 /*Функция после загрузки страницы подымает scroll вверх*/
   this.anchorScrollPage = function() {
      //$location.hash('top_anchorScroll');
@@ -3188,9 +3757,11 @@ function mailIdController ($document, $stateParams, $location, $anchorScroll, $t
       function(data) {
         $rootScope.global2 = data;
         self.user = data;
+        $('.head_footer').show();
       },
       function(error) {
         console.log(error);
+        $('.head_footer').show();
       }
     );
   };
@@ -3430,7 +4001,9 @@ this.onThisWeekDate = function() {
 };
 
 mailIdController.$inject = ['$document', '$stateParams', '$location', '$anchorScroll', '$timeout', 'mailService', 'userService', 'girlsService', 'mailIdService', '$rootScope'];
-},{}],17:[function(require,module,exports){
+
+
+},{}],21:[function(require,module,exports){
 module.exports = mailIdService;
 
 function mailIdService ($resource) {
@@ -3445,7 +4018,7 @@ function mailIdService ($resource) {
 };
 
 mailIdService.$inject = ['$resource'];
-},{}],18:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 module.exports = mailService;
 
 function mailService ($resource) {
@@ -3507,7 +4080,8 @@ function mailService ($resource) {
       type: options.type,
       limit: options.limit,
       offset: options.offset,
-      relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'
+      relations: '{"recipient": {"country": {}, "mainphoto": {}, "girl": {} }, "sender": { "country": {}, "girl": {}, "mainphoto": {} } }'
+      // relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'
     });
   };
 
@@ -3520,7 +4094,10 @@ function mailService ($resource) {
   };
 
   this.getMessagesId = function (id) {
-    return mailResource.get({mail_id: id, relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'});
+    return mailResource.get({
+      mail_id: id,
+      relations: '{"recipient": {"country": {}, "mainphoto": {} }, "sender": { "country": {}, "girl": {}, "mainphoto": {} } }'
+    });
   };
 
   // this.correspondenceGet = function(id, timeFrom, timeTo) {
@@ -3553,34 +4130,78 @@ function mailService ($resource) {
 
 mailService.$inject = ['$resource'];
 
-},{}],19:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 module.exports = searchController;
 
-function searchController ($document, $location, $stateParams, $timeout, $rootScope, userService, searchService, girlsAllService, girlsService) {
+function searchController ($document, $location, $stateParams, $rootScope, $timeout, userService, searchService, girlsAllService, girlsService) {
 
-  var urlId = $stateParams.id
+  /*Функция обертка забирает число из значения где есть символ '/'*/
+  this.getNumberInModel = function(data) {
+    if(data) {
+      var arrRes = data.split('/')[1];
+      return arrRes
+    } else return undefined;
+  };
+  /*Функция обертка проверяет существует объект*/
+  this.dataUndefined = function(model) {
+    if(model)
+      return model.name
+    else return undefined;
+  };
+  /*функция обрезает текст girl.message, если в нём более 60 символов*/
+  this.repliceMessages = function(message) {
+    var newMessage = message;
+    if(newMessage.length>60) {
+      var corMessage = newMessage.slice(0, 60);
+      return corMessage + '...';
+    } else return newMessage;
+  }
+  /*Функция дописывает втрое значение, когда выбрано один параметр, а нужно передавать два параметра*/
+  this.dataUndefined2 = function(model, value, model2) {
+    if (model2 && model2.name && !model) {
+      return value;
+    } else if(model) {
+      return model.name;
+    } else return undefined;
+  };
 
-this.getUserData = function () {
+  var urlData = $stateParams.id
+  var urlId = urlData.replace(/\*/g, "\/");
+
+  this.getUserData = function () {
     var self = this;
     userService.getUser().$promise.then(
       function(data) {
         $rootScope.global2 = data;
-        console.log('$rootScope.global2');
-        console.log($rootScope.global2)
         self.user = data;
+        $('.head_footer').show();
+        $('.search-right-side-girls-item').mouseenter(function(){
+          $(this).find('.search-right-side-girls-item-list').fadeIn();
+      });
       },
       function(error) {
+        $location.path('/home/-ag-18-30-co-Ukraine');
         console.log(error);
+        $('.head_footer').show();
       }
     );
   };
-
   this.getUserData();
 
-  this.birthdateFromModel = 18;
-  this.birthdateToModel = 60;
+  this.showListImg = [];
+  /*Функция отображает скрытый список при наведении на фото девушки*/
+  this.mouseenterImg = function(index) {
+    this.showListImg[index] = true;
+  };
+  /*Функция прячит список когда курсор уходит с фото девушки*/
+  this.mouseleave = function(index) {
+    this.showListImg[index] = false;
+  };
 
+/*Конструктор №1 парсит URL*/
   this.urlParsing = function(key, keyLength) {
+    var model = '';
+    var model2 = '';
     if(urlId.indexOf(key)!= -1 ) {
       var start = urlId.indexOf(key) + keyLength;
       var end = urlId.indexOf('-', start);
@@ -3590,11 +4211,13 @@ this.getUserData = function () {
       if(urlId.indexOf('-', end+1)==-1){
         model2 = urlId.slice(start2+1, urlId.length);
       } else model2 = urlId.slice(start2+1, end2);
-    } else model1 = undefined;
+    } else model1 = null;
     return model1;
   };
-
+/*Конструктор №2 парсит URL*/
   this.urlParsing1 = function(key, keyLength) {
+    var model = '';
+    var model2 = '';
     if(urlId.indexOf(key)!= -1 ) {
       var start = urlId.indexOf(key) + keyLength;
       var end = urlId.indexOf('-', start);
@@ -3604,10 +4227,10 @@ this.getUserData = function () {
       if(urlId.indexOf('-', end+1)==-1){
         model2 = urlId.slice(start2+1, urlId.length);
       } else model2 = urlId.slice(start2+1, end2);
-    } else model2 = undefined;
+    } else model2 = null;
     return model2;
   };
-
+/*Конструктор №3 парсит URL*/
   this.urlParsing2 = function(key, keyLength){
     if(urlId.indexOf(key)!= -1) {
       var start = urlId.indexOf(key) + keyLength;
@@ -3617,105 +4240,102 @@ this.getUserData = function () {
         var result = model.replace(/_/g, " ");
       } else {
         var model = urlId.slice(start, end);
-        var result = model.replace('_', " ");
+        var result = model.replace(/_/g, " ");
       };
-    } else var result = undefined;
+    } else var result = null;
+    // console.log(key + ' = ' + result);
     return result;
   };
+/*Вызываем конструктор с нужными параметрами*/
+  this.birthdateFromModel = { name: this.urlParsing('-ag-', 4) };
+  this.birthdateToModel = { name: this.urlParsing1('-ag-', 4) };
+  this.heightFromModel = { name: this.urlParsing('-h-', 3) };
+  this.heightToModel = { name: this.urlParsing1('-h-', 3) };
+  this.childrenNumberFromModel = { name: this.urlParsing('-nch-', 5) };
+  this.childrenNumberToModel = { name: this.urlParsing1('-nch-', 5) };
+  this.weightFromModel = { name: this.urlParsing('-we-', 4) };
+  this.weightToModel = { name:this.urlParsing1('-we-', 4) };
+  this.countryModel = { name: this.urlParsing2('-co-', 4) };
+  this.drinkingModel = { name: this.urlParsing2('-dr-', 4) };
+  this.educationModel = { name: this.urlParsing2('-ed-', 4) };
+  this.englishRatingModel = { name: this.urlParsing2('-en-', 4) };
+  this.eyeColorModel = { name: this.urlParsing2('-ec-', 4) };
+  this.firstNameModel = { name: this.urlParsing2('-fr-', 4) };
+  this.hairColorModel = { name: this.urlParsing2('-hc-', 4) };
+  this.lookingForModel = { name: this.urlParsing2('-lf-', 4) };
+  this.maritalStatusModel = { name: this.urlParsing2('-ms-', 4) };
+  this.professionModel = { name: this.urlParsing2('-pro-', 5) };
+  this.religionModel = { name: this.urlParsing2('-r-', 3) };
+  this.smokingModel = { name: this.urlParsing2('-sm-', 4) };
+  this.zodiacSignModel = { name: this.urlParsing2('-zs-', 4) };
+  this.cityModel = { name: this.urlParsing2('-ct-', 4) };
 
-  this.birthdateFromModel = this.urlParsing('-ag-', 4);
-  this.birthdateToModel = this.urlParsing1('-ag-', 4);
-  this.heightFromModel = this.urlParsing('-h-', 3);
-  this.heightToModel = this.urlParsing1('-h-', 3);
-  this.childrenNumberFromModel = this.urlParsing('-nch-', 5);
-  this.childrenNumberToModel = this.urlParsing1('-nch-', 5);
-  this.weightFromModel = this.urlParsing('-we-', 4);
-  this.weightToModel = this.urlParsing1('-we-', 4);
-  this.countryModel = this.urlParsing2('-co-', 4);
-  this.drinkingModel = this.urlParsing2('-dr-', 4);
-  this.educationModel = this.urlParsing2('-ed-', 4);
-  this.englishRatingModel = this.urlParsing2('-en-', 4);
-  this.eyeColorModel = this.urlParsing2('-ec-', 4);
-  this.firstNameModel = this.urlParsing2('-fr-', 4);
-  this.hairColorModel = this.urlParsing2('-hc-', 4);
-  this.lookingForModel = this.urlParsing2('-lf-', 4);
-  this.maritalStatusModel = this.urlParsing2('-ms-', 4);
-  this.professionModel = this.urlParsing2('-pro-', 5);
-  this.religionModel = this.urlParsing2('-r-', 3);
-  this.smokingModel = this.urlParsing2('-sm-', 4);
-  this.zodiacSignModel = this.urlParsing2('-zs-', 4);
-  this.cityModel = this.urlParsing2('-ct-', 4);
+// console.log('11111111111');
+// console.log(this.heightFromModel);
 
-
+// this.arrURL = initializesArray();
     this.arrURL = [];
-    this.arrURL[0] = ['ag', this.birthdateFromModel + "-" + this.birthdateToModel];
-    this.arrURL[1] = ['co', this.countryModel];
-    this.arrURL[2] = ['dr', this.drinkingModel];
-    this.arrURL[3] = ['ed', this.educationModel];
-    this.arrURL[4] = ['en', this.englishRatingModel];
-    this.arrURL[5] = ['ec', this.eyeColorModel];
-    this.arrURL[6] = ['fr', this.firstNameModel];
-    this.arrURL[7] = ['h', this.heightFromModel+ '-' + this.heightToModel];
-    this.arrURL[8] = ['hc', this.hairColorModel];
-    this.arrURL[9] = ['lf', this.lookingForModel];
-    this.arrURL[10] = ['ms', this.maritalStatusModel];
-    this.arrURL[11] = ['nch', this.childrenNumberFromModel + '-' + this.childrenNumberToModel];
-    this.arrURL[12] = ['pro', this.professionModel];
-    this.arrURL[13] = ['r', this.religionModel];
-    this.arrURL[14] = ['sm', this.smokingModel];
-    this.arrURL[15] = ['we', this.weightFromModel + '-' + this.weightToModel];
-    this.arrURL[16] = ['zs', this.zodiacSignModel];
-    this.arrURL[17] = ['ct', this.cityModel];
-
-
-
-
+    this.arrURL[0] = ['ag', this.birthdateFromModel.name + "-" + this.birthdateToModel.name];
+    this.arrURL[1] = ['co', this.countryModel.name];
+    this.arrURL[2] = ['dr', this.drinkingModel.name];
+    this.arrURL[3] = ['ed', this.educationModel.name];
+    this.arrURL[4] = ['en', this.englishRatingModel.name];
+    this.arrURL[5] = ['ec', this.eyeColorModel.name];
+    this.arrURL[6] = ['fr', this.firstNameModel.name];
+    this.arrURL[7] = ['h', this.heightFromModel.name + '-' + this.heightToModel.name];
+    this.arrURL[8] = ['hc', this.hairColorModel.name];
+    this.arrURL[9] = ['lf', this.lookingForModel.name];
+    this.arrURL[10] = ['ms', this.maritalStatusModel.name];
+    this.arrURL[11] = ['nch', this.childrenNumberFromModel.name + '-' + this.childrenNumberToModel.name];
+    this.arrURL[12] = ['pro', this.professionModel.name];
+    this.arrURL[13] = ['r', this.religionModel.name];
+    this.arrURL[14] = ['sm', this.smokingModel.name];
+    this.arrURL[15] = ['we', this.weightFromModel.name + '-' + this.weightToModel.name];
+    this.arrURL[16] = ['zs', this.zodiacSignModel.name];
+    this.arrURL[17] = ['ct', this.cityModel.name];
+  /*Функция делает поиск девушек по выбранным критериям через составление URL*/
   this.searchGirlsURL = function() {
     var self = this;
     this.arrURL = [];
     var keyValURL = '';
-    this.arrURL[0] = ['ag', this.birthdateFromModel + "-" + this.birthdateToModel];
-    this.arrURL[1] = ['co', this.countryModel];
-    this.arrURL[2] = ['dr', this.drinkingModel];
-    this.arrURL[3] = ['ed', this.educationModel];
-    this.arrURL[4] = ['en', this.englishRatingModel];
-    this.arrURL[5] = ['ec', this.eyeColorModel];
-    this.arrURL[6] = ['fr', this.firstNameModel];
-    this.arrURL[7] = ['h', this.heightFromModel+ '-' + this.heightToModel];
-    this.arrURL[8] = ['hc', this.hairColorModel];
-    this.arrURL[9] = ['lf', this.lookingForModel];
-    this.arrURL[10] = ['ms', this.maritalStatusModel];
-    this.arrURL[11] = ['nch', this.childrenNumberFromModel + '-' + this.childrenNumberToModel];
-    this.arrURL[12] = ['pro', this.professionModel];
-    this.arrURL[13] = ['r', this.religionModel];
-    this.arrURL[14] = ['sm', this.smokingModel];
-    this.arrURL[15] = ['we', this.weightFromModel + '-' + this.weightToModel];
-    this.arrURL[16] = ['zs', this.zodiacSignModel];
-    this.arrURL[17] = ['ct', this.cityModel];
-
-
+    this.arrURL[0] = ['ag', this.dataUndefined2(this.birthdateFromModel, 18, this.birthdateToModel) + '-' + this.dataUndefined2(this.birthdateToModel, 60, this.birthdateFromModel)];
+    this.arrURL[1] = ['co', this.dataUndefined(this.countryModel)];
+    this.arrURL[2] = ['dr', this.dataUndefined(this.drinkingModel)];
+    this.arrURL[3] = ['ed', this.dataUndefined(this.educationModel)];
+    this.arrURL[4] = ['en', this.dataUndefined(this.englishRatingModel)];
+    this.arrURL[5] = ['ec', this.dataUndefined(this.eyeColorModel)];
+    this.arrURL[6] = ['fr', this.dataUndefined(this.firstNameModel)];
+    this.arrURL[7] = ['h', this.dataUndefined2(this.heightFromModel, '5.0/152', this.heightToModel) +'-' + this.dataUndefined2(this.heightToModel, '6.1/185', this.heightFromModel)];
+    this.arrURL[8] = ['hc', this.dataUndefined(this.hairColorModel)];
+    this.arrURL[9] = ['lf', this.dataUndefined(this.lookingForModel)];
+    this.arrURL[10] = ['ms', this.dataUndefined(this.maritalStatusModel)];
+    this.arrURL[11] = ['nch', this.dataUndefined2(this.childrenNumberFromModel, 0, this.childrenNumberToModel) + '-' + this.dataUndefined2(this.childrenNumberToModel, 5, this.childrenNumberFromModel)];
+    this.arrURL[12] = ['pro', this.dataUndefined(this.professionModel)];
+    this.arrURL[13] = ['r', this.dataUndefined(this.religionModel)];
+    this.arrURL[14] = ['sm', this.dataUndefined(this.smokingModel)];
+    this.arrURL[15] = ['we', this.dataUndefined2(this.weightFromModel, '99/45', this.weightToModel) + '-' + this.dataUndefined2(this.weightToModel, '198/90', this.weightFromModel)];
+    this.arrURL[16] = ['zs', this.dataUndefined(this.zodiacSignModel)];
+    this.arrURL[17] = ['ct', this.dataUndefined(this.cityModel)];
     for(var i=0; i<18; i++) {
-      if(self.arrURL[i][1] && self.arrURL[i][1] != "undefined" && self.arrURL[i][1] != "undefined-undefined" && self.arrURL[i][1] != null) keyValURL += self.arrURL[i][0] + '-' + self.arrURL[i][1] + '-';
+      if(self.arrURL[i][1] && self.arrURL[i][1] != "undefined" && self.arrURL[i][1] != "undefined-undefined" && self.arrURL[i][1] != null && self.arrURL[i][1] != null+'-'+null)
+        keyValURL += self.arrURL[i][0] + '-' + self.arrURL[i][1] + '-';
     };
-    // console.log(this.arrURL);
-    // console.log(keyValURL);
     var resultURL = keyValURL.slice(0, keyValURL.length-1);
-    console.log('resultURL');
-    console.log(resultURL);
-    $location.path('/search/' + '-' + resultURL);
+    var resultURL2 = resultURL.replace(/ /g, "_");
+    var resultURL3 = resultURL2.replace(/\//g, "*");
+    $location.path('/search/' + '-' + resultURL3);
   }
-
+/*Функция определяет возраст*/
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;
   };
-
+/*Функция запрашивает страны у сервиса girlsAllService*/
   this.getCountries = function() {
     var self = this;
-
     girlsAllService.getCountries().$promise.then(
       function(data) {
         self.countries = data;
-        $('select').select2();
+        // $('select').select2();
         self.searchGirls()
       },
       function(error) {
@@ -3725,32 +4345,31 @@ this.getUserData = function () {
   };
 
   this.getCountries();
-
+/**/
   this.setCountryId = function() {
     this.arrCountries = this.countries.countries;
+       if(this.countryModel) {
         for(var i=0; i<this.arrCountries.length; i++) {
-          if(this.arrCountries[i].name == this.countryModel) {
-            this.countryId = this.arrCountries[i].id
-            // console.log(this.countryId);
-            // self.paginaGirl();
-          }
+          if(this.countryModel && this.arrCountries[i].name == this.countryModel.name) {
+            this.countryId = this.arrCountries[i].id;
+          };
         }
-  }
+        }
+  };
 
 this.birthdateFromAge = function() {
-  var dateBirthdateFrom = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*this.birthdateFromModel);
+  var dateBirthdateFrom = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*this.birthdateFromModel.name);
   var resFromDate = new Date(dateBirthdateFrom);
   var resMonth = resFromDate.getMonth() +1;
   var arrRes = new String(resFromDate).split(' ');
   this.birthdateTo = arrRes[3] + '-' + resMonth + '-' + arrRes[2];
 
-  var dateBirthdateTo = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*this.birthdateToModel);
+  var dateBirthdateTo = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*this.birthdateToModel.name);
   var resToDate = new Date(dateBirthdateTo);
   // var resMonth = resFromDate.getMonth() +1;
   var arrRes2 = new String(resToDate).split(' ');
   this.birthdateFrom = arrRes2[3] + '-' + resMonth + '-' + arrRes2[2];
 };
-
 
   this.searchGirls = function() {
     this.setCountryId();
@@ -3759,36 +4378,69 @@ this.birthdateFromAge = function() {
     var options = {
       birthdateFrom: this.birthdateFrom,
       birthdateTo: this.birthdateTo,
-      countryId: this.countryId,//this.,
-      city: this.cityModel,
-      firstname: this.firstNameModel,
-      heightFrom: this.heightFromModel,
-      heightTo: this.heightToModel,
-      weightFrom: this.weightFromModel,
-      weightTo: this.weightToModel,
-      hairColor: this.hairColorModel,
-      eyeColor: this.eyeColorModel,
-      englishRating: this.englishRatingModel,
-      maritalStatus: this.maritalStatusModel,
-      profession: this.professionModel,
-      education: this.educationModel,
-      religion: this.religionModel,
-      smoking: this.smokingModel,
-      drinking: this.drinkingModel,
-      zodiacSign: this.zodiacSignModel,
-      childrenNumberFrom: this.childrenNumberFromModel,
-      childrenNumberTo: this.childrenNumberToModel,
+      countryId: this.countryId,
+      city: this.dataUndefined(this.cityModel),
+      firstname: this.dataUndefined(this.firstNameModel),
+      heightFrom: this.getNumberInModel(this.dataUndefined(this.heightFromModel)),
+      heightTo: this.getNumberInModel(this.dataUndefined(this.heightToModel)),
+      weightFrom: this.getNumberInModel(this.dataUndefined(this.weightFromModel)),
+      weightTo: this.getNumberInModel(this.dataUndefined(this.weightToModel)),
+      hairColor: this.dataUndefined(this.hairColorModel),
+      eyeColor: this.dataUndefined(this.eyeColorModel),
+      englishRating: this.dataUndefined(this.englishRatingModel),
+      maritalStatus: this.dataUndefined(this.maritalStatusModel),
+      profession: this.dataUndefined(this.professionModel),
+      education: this.dataUndefined(this.educationModel),
+      religion: this.dataUndefined(this.religionModel),
+      smoking: this.dataUndefined(this.smokingModel),
+      drinking: this.dataUndefined(this.drinkingModel),
+      zodiacSign: this.dataUndefined(this.zodiacSignModel),
+      childrenNumberFrom: this.dataUndefined(this.childrenNumberFromModel),
+      childrenNumberTo: this.dataUndefined(this.childrenNumberToModel),
+      lookingFor: this.dataUndefined(this.lookingForModel),
       limit: self.limit,
       offset: 0
     };
-
     searchService.getSearch(options).$promise.then(
       function(data) {
         self.girlsAll = data;
         self.resultGirls = self.girlsAll.girls
         self.gillsLength = self.girlsAll.totalCount;
-        self.countPage = self.gillsLength / 4;
+        self.countPage = self.gillsLength / 16;
         self.totalPage = Math.ceil(self.countPage);
+        // self.girlsAll.girls[0].user.mainphoto.pathOfQuad=null
+        for(var i=0; i<self.girlsAll.girls.length; i++) {
+          if(self.girlsAll.girls[i].user &&
+            self.girlsAll.girls[i].user.mainphoto &&
+            self.girlsAll.girls[i].user.mainphoto.pathOfQuad &&
+            self.girlsAll.girls[i].user.mainphoto.pathOfQuad!=null) {
+            var photo = self.girlsAll.girls[i].user.mainphoto.pathOfQuad;
+            self.girlsAll.girls[i].photoAvatar = photo.slice(0, photo.length-4) + '_150_150_auto' + photo.slice(-4);
+          } else self.girlsAll.girls[i].photoAvatar = null;
+        }
+        if(self.countryModel && self.countryModel.name==null) self.countryModel = undefined;
+        if(self.birthdateFromModel && self.birthdateFromModel.name==null) self.birthdateFromModel = undefined;
+        if(self.birthdateToModel && self.birthdateToModel.name==null) self.birthdateToModel = undefined;
+        if(self.heightFromModel && self.heightFromModel.name==null) self.heightFromModel = undefined;
+        if(self.heightToModel && self.heightToModel.name==null) self.heightToModel = undefined;
+        if(self.eyeColorModel && self.eyeColorModel.name==null) self.eyeColorModel = undefined;
+        if(self.englishRatingModel && self.englishRatingModel.name==null) self.englishRatingModel = undefined;
+        if(self.maritalStatusModel && self.maritalStatusModel.name==null) self.maritalStatusModel = undefined;
+        if(self.professionModel && self.professionModel.name==null) self.professionModel = undefined;
+        if(self.educationModel && self.educationModel.name==null) self.educationModel = undefined;
+        if(self.lookingForModel && self.lookingForModel.name==null) self.lookingForModel = undefined;
+        if(self.religionModel && self.religionModel.name==null) self.religionModel = undefined;
+        if(self.smokingModel && self.smokingModel.name==null) self.smokingModel = undefined;
+        if(self.drinkingModel && self.drinkingModel.name==null) self.drinkingModel = undefined;
+        if(self.childrenNumberFromModel && self.childrenNumberFromModel.name==null) self.childrenNumberFromModel = undefined;
+        if(self.childrenNumberToModel && self.childrenNumberToModel.name==null) self.childrenNumberToModel = undefined;
+
+        if(self.hairColorModel && self.hairColorModel.name==null) self.hairColorModel = undefined;
+        if(self.firstNameModel && self.firstNameModel.name==null) self.firstNameModel = undefined;
+        if(self.weightFromModel && self.weightFromModel.name==null) self.weightFromModel = undefined;
+        if(self.weightToModel && self.weightToModel.name==null) self.weightToModel = undefined;
+        if(self.cityModel && self.cityModel.name==null) self.cityModel = undefined;
+        if(self.zodiacSignModel && self.zodiacSignModel.name ==null) self.zodiacSignModel = undefined;
       },
       function(error) {
         console.log(error);
@@ -3797,18 +4449,18 @@ this.birthdateFromAge = function() {
   };
 
   this.page = 0;
-  this.limit = 4;
-
+  this.limit = 16;
+/*Функция добавляет девушек*/
  this.paginaGirl = function() {
      if (this.totalPage){
       this.page += 1;
-      this.limit += 4;
+      this.limit += 16;
       this.searchGirls();
       if(this.page==this.totalPage)
         this.buttonAdd = true;
     };
   };
-
+/*Функция получает имена девушек для отображения в select*/
   this.searchGirlId = function(id) {
     var self = this;
     girlsService.getGirlsId(id).$promise.then(
@@ -3825,62 +4477,57 @@ this.birthdateFromAge = function() {
       }
     );
   };
-
+/*Функция паказывает блок-кнопку если критерий есть*/
   this.showParam = function(arg) {
-    return arg == 'undefined-undefined' || arg == undefined || arg == null? false : true;
+    return arg == 'undefined-undefined' || arg == undefined || arg == null || arg==null+'-'+null? false : true;
   };
-
+/*Функция прячет блок-кнопку если на неё кликнули*/
   this.hideParam = function(index) {
     this.arrURL[index][1] = undefined;
 
     if(index==0) {
-      this.birthdateFromModel = undefined;
-      this.birthdateToModel = undefined;
+      this.birthdateFromModel.name = null;
+      this.birthdateToModel.name = null;
     };
-    if(index==1) this.countryModel = undefined;
-    if(index==2) this.drinkingModel = undefined;
-    if(index==3) this.educationModel = undefined;
-    if(index==4) this.englishRatingModel = undefined;
-    if(index==5) this.eyeColorModel = undefined;
-    if(index==6) this.firstNameModel = undefined;
+    if(index==1) this.countryModel.name = null;
+    if(index==2) this.drinkingModel.name = null;
+    if(index==3) this.educationModel.name = null;
+    if(index==4) this.englishRatingModel.name = null;
+    if(index==5) this.eyeColorModel.name = null;
+    if(index==6) this.firstNameModel.name = null;
     if(index==7) {
-      this.heightFromModel = undefined
-      this.heightToModel = undefined;
+      this.heightFromModel = null
+      this.heightToModel = null;
     };
-    if(index==8) this.hairColorModel = undefined;
-    if(index==9) this.lookingForModel = undefined;;
-    if(index==10) this.maritalStatusModel = undefined;
+    if(index==8) this.hairColorModel.name = null;
+    if(index==9) this.lookingForModel.name = null;;
+    if(index==10) this.maritalStatusModel.name = null;
     if(index==11) {
-      this.childrenNumberFromModel = undefined;
-      this.childrenNumberToModel = undefined;
+      this.childrenNumberFromModel.name = null;
+      this.childrenNumberToModel.name = null;
     };
-    if(index==12) this.professionModel = undefined;
-    if(index==13) this.religionModel = undefined;
-    if(index==14) this.smokingModel = undefined;
+    if(index==12) this.professionModel.name = null;
+    if(index==13) this.religionModel.name = null;
+    if(index==14) this.smokingModel.name = null;
     if(index==15) {
-      this.weightFromModel = undefined;
-      this.weightToModel = undefined;
+      this.weightFromModel = null;
+      this.weightToModel = null;
     };
-    if(index==16) this.zodiacSignModel= undefined;
-    if(index==17) this.cityModel = undefined;
+    if(index==16) this.zodiacSignModel.name= null;
+    if(index==17) this.cityModel.name = null;
     this.searchGirlsURL();
   };
-
-  this.allNameGirl = function() {
-    this.birthdateFromAge();
+/*Функция получает имена девушек для отображения в select*/
+  this.allNamesGirls = function() {
     var self = this;
-    var options = {
-      birthdateFrom: this.birthdateFrom,
-      birthdateTo: this.birthdateTo,
-      countryId: undefined,
-      direction: undefined,
-      limit: undefined,
-      offset: 0
-    };
-    girlsAllService.getGirlsAll(options).$promise.then(
+    userService.getUsersNames().$promise.then(
       function(data) {
-        self.arrNameGilrs = data;
-
+        self.dataNames = data.list;
+        self.namesGirls = [];
+        for(var i=0; i<self.dataNames.length; i++) {
+          self.namesGirls[i] = { id:i, name: self.dataNames[i] };
+        };
+        // console.log(self.namesGirls);
       },
       function(error) {
         console.log(error);
@@ -3888,8 +4535,9 @@ this.birthdateFromAge = function() {
     );
   };
 
-  this.allNameGirl();
+  this.allNamesGirls();
 
+/*Фукция сооставляет массив данных по росту для select*/
   this.makeHeights =  function() {
     var arrListHieght = [];
     var count = 149;
@@ -3901,94 +4549,312 @@ this.birthdateFromAge = function() {
     }
     this.arrHieght = arrListHieght;
   };
+/*Фукция сооставляет массив данных по росту для select*/
+  this.arrHieghts = [];
+  this.arrHeightsFunction =  function() {
+    var count = 149;
+    var countR = 4.9;
+    for(var i=0; i<12; i++) {
+      count +=3;
+      countR +=0.1;
+      this.arrHieghts[i] = { name: countR.toFixed(1) + '/' + count };
+    }
+  };
 
-  this.makeHeights();
+  this.arrHieghts[0] = { name: '4\'11\"/149' };
+  this.arrHieghts[1] = { name: '4\'11\"/150' };
+  this.arrHieghts[2] = { name: '4\'11\"/151' };
+  this.arrHieghts[3] = { name: '5\'0\"/152' };
+  this.arrHieghts[4] = { name: '5\'0\"/153' };
+  this.arrHieghts[5] = { name: '5\'0\"/154' };
+  this.arrHieghts[6] = { name: '5\'1\"/155' };
+  this.arrHieghts[7] = { name: '5\'1\"/156' };
+  this.arrHieghts[8] = { name: '5\'2\"/157' };
+  this.arrHieghts[9] = { name: '5\'2\"/158' };
+  this.arrHieghts[10] = { name: '5\'3\"/159' };
+  this.arrHieghts[11] = { name: '5\'3\"/160' };
+  this.arrHieghts[12] = { name: '5\'3\"/161' };
+  this.arrHieghts[13] = { name: '5\'4\"/162' };
+  this.arrHieghts[14] = { name: '5\'4\"/163' };
+  this.arrHieghts[15] = { name: '5\'4\"/164' };
+  this.arrHieghts[16] = { name: '5\'5\"/165' };
+  this.arrHieghts[17] = { name: '5\'5\"/166' };
+  this.arrHieghts[18] = { name: '5\'6\"/167' };
+  this.arrHieghts[19] = { name: '5\'6\"/168' };
+  this.arrHieghts[20] = { name: '5\'7\"/169' };
+  this.arrHieghts[21] = { name: '5\'7\"/170' };
+  this.arrHieghts[22] = { name: '5\'7\"/171' };
+  this.arrHieghts[23] = { name: '5\'8\"/172' };
+  this.arrHieghts[24] = { name: '5\'8\"/173' };
+  this.arrHieghts[25] = { name: '5\'8\"/174' };
+  this.arrHieghts[26] = { name: '5\'9\"/175' };
+  this.arrHieghts[27] = { name: '5\'9\"/176' };
+  this.arrHieghts[28] = { name: '5\'10\"/177' };
+  this.arrHieghts[29] = { name: '5\'10\"/178' };
+  this.arrHieghts[30] = { name: '5\'10\"/179' };
+  this.arrHieghts[31] = { name: '5\'11\"/180' };
+  this.arrHieghts[32] = { name: '5\'11\"/181' };
+  this.arrHieghts[33] = { name: '6\'0\"/182' };
+  this.arrHieghts[34] = { name: '6\'0\"/183' };
+  this.arrHieghts[35] = { name: '6\'0\"/184' };
+  this.arrHieghts[36] = { name: '6\'1\"/185' };
+  this.arrHieghts[37] = { name: '6\'1\"/186' };
+  this.arrHieghts[38] = { name: '6\'2\"/187' };
+  this.arrHieghts[39] = { name: '6\'2\"/188' };
+  this.arrHieghts[40] = { name: '6\'2\"/189' };
+  this.arrHieghts[41] = { name: '6\'3\"/190' };
+  this.arrHieghts[42] = { name: '6\'3\"/191' };
+  this.arrHieghts[43] = { name: '6\'4\"/192' };
+  this.arrHieghts[44] = { name: '6\'4\"/193' };
+  this.arrHieghts[45] = { name: '6\'4\"/194' };
+  this.arrHieghts[46] = { name: '6\'5\"/195' };
+  this.arrHieghts[47] = { name: '6\'5\"/196' };
+  this.arrHieghts[48] = { name: '6\'5\"/197' };
+  this.arrHieghts[49] = { name: '6\'6\"/198' };
+  this.arrHieghts[50] = { name: '6\'6\"/199' };
+  this.arrHieghts[51] = { name: '6\'7\"/200' };
+  this.arrHieghts[52] = { name: '6\'7\"/201' };
+  this.arrHieghts[53] = { name: '6\'7\"/202' };
+  this.arrHieghts[54] = { name: '6\'8\"/203' };
+  this.arrHieghts[55] = { name: '6\'8\"/204' };
+  this.arrHieghts[56] = { name: '6\'9\"/205' };
+  this.arrHieghts[57] = { name: '6\'9\"/206' };
+  this.arrHieghts[58] = { name: '6\'9\"/207' };
+  this.arrHieghts[59] = { name: '6\'10\"/208' };
+  this.arrHieghts[60] = { name: '6\'10\"/209' };
+  this.arrHieghts[61] = { name: '6\'11\"/210' };
 
-  this.makeAge = function() {
-    var arrlistAge = [];
+
+  // this.arrHeightsFunction();
+/*Функция создаёт массив данных для поля возраст в поиске*/
+this.makeAge = function() {
+    this.listAge = [];
     var count = 17;
     for(var i=0; i<43; i++){
       count ++;
-      arrlistAge[i] = count;
+      this.listAge[i] = {id: i, name: count};
     };
-    this.listAge = arrlistAge;
   };
 
   this.makeAge();
-
+  /*Функция убирает все выбранные параметры для поиска*/
   this.clearDataSearch = function() {
     $location.path('/search/-ag-18-30');
   };
+/*Массив данных по весу для select*/
+  // this.arrWeight = [];
+  // this.arrWeight[0] = [99, 45];
+  // this.arrWeight[1] = [101, 46];
+  // this.arrWeight[2] = [104, 47];
+  // this.arrWeight[3] = [106, 48];
+  // this.arrWeight[4] = [106, 48];
+  // this.arrWeight[5] = [108, 49];
+  // this.arrWeight[6] = [110, 50];
+  // this.arrWeight[7] = [112, 51];
+  // this.arrWeight[8] = [115, 52];
+  // this.arrWeight[9] = [117, 53];
+  // this.arrWeight[10] = [119, 54];
+  // this.arrWeight[11] = [121, 55];
+  // this.arrWeight[12] = [123, 56];
+  // this.arrWeight[13] = [126, 57];
+  // this.arrWeight[14] = [128, 58];
+  // this.arrWeight[15] = [130, 59];
+  // this.arrWeight[16] = [132, 60];
+  // this.arrWeight[17] = [135, 61];
+  // this.arrWeight[18] = [137, 62];
+  // this.arrWeight[19] = [139, 63];
+  // this.arrWeight[20] = [141, 64];
+  // this.arrWeight[21] = [143, 65];
+  // this.arrWeight[22] = [146, 66];
+  // this.arrWeight[23] = [148, 67];
+  // this.arrWeight[24] = [150, 68];
+  // this.arrWeight[25] = [152, 69];
+  // this.arrWeight[26] = [154, 70];
+  // this.arrWeight[27] = [157, 71];
+  // this.arrWeight[28] = [159, 72];
+  // this.arrWeight[29] = [161, 73];
+  // this.arrWeight[30] = [163, 74];
+  // this.arrWeight[31] = [165, 75];
+  // this.arrWeight[32] = [168, 76];
+  // this.arrWeight[33] = [170, 77];
+  // this.arrWeight[34] = [172, 78];
+  // this.arrWeight[35] = [174, 79];
+  // this.arrWeight[36] = [176, 80];
+  // this.arrWeight[37] = [179, 81];
+  // this.arrWeight[38] = [181, 82];
+  // this.arrWeight[39] = [183, 83];
+  // this.arrWeight[40] = [185, 84];
+  // this.arrWeight[41] = [187, 85];
+  // this.arrWeight[42] = [190, 86];
+  // this.arrWeight[43] = [192, 87];
+  // this.arrWeight[44] = [194, 88];
+  // this.arrWeight[45] = [196, 89];
+  // this.arrWeight[46] = [198, 90];
 
-  this.arrWeight = [];
-  this.arrWeight[0] = [99, 45];
-  this.arrWeight[1] = [101, 46];
-  this.arrWeight[2] = [104, 47];
-  this.arrWeight[3] = [106, 48];
-  this.arrWeight[4] = [106, 48];
-  this.arrWeight[5] = [108, 49];
-  this.arrWeight[6] = [110, 50];
-  this.arrWeight[7] = [112, 51];
-  this.arrWeight[8] = [115, 52];
-  this.arrWeight[9] = [117, 53];
-  this.arrWeight[10] = [119, 54];
-  this.arrWeight[11] = [121, 55];
-  this.arrWeight[12] = [123, 56];
-  this.arrWeight[13] = [126, 57];
-  this.arrWeight[14] = [128, 58];
-  this.arrWeight[15] = [130, 59];
-  this.arrWeight[16] = [132, 60];
-  this.arrWeight[17] = [135, 61];
-  this.arrWeight[18] = [137, 62];
-  this.arrWeight[19] = [139, 63];
-  this.arrWeight[20] = [141, 64];
-  this.arrWeight[21] = [143, 65];
-  this.arrWeight[22] = [146, 66];
-  this.arrWeight[23] = [148, 67];
-  this.arrWeight[24] = [150, 68];
-  this.arrWeight[25] = [152, 69];
-  this.arrWeight[26] = [154, 70];
-  this.arrWeight[27] = [157, 71];
-  this.arrWeight[28] = [159, 72];
-  this.arrWeight[29] = [161, 73];
-  this.arrWeight[30] = [163, 74];
-  this.arrWeight[31] = [165, 75];
-  this.arrWeight[32] = [168, 76];
-  this.arrWeight[33] = [170, 77];
-  this.arrWeight[34] = [172, 78];
-  this.arrWeight[35] = [174, 79];
-  this.arrWeight[36] = [176, 80];
-  this.arrWeight[37] = [179, 81];
-  this.arrWeight[38] = [181, 82];
-  this.arrWeight[39] = [183, 83];
-  this.arrWeight[40] = [185, 84];
-  this.arrWeight[41] = [187, 85];
-  this.arrWeight[42] = [190, 86];
-  this.arrWeight[43] = [192, 87];
-  this.arrWeight[44] = [194, 88];
-  this.arrWeight[45] = [196, 89];
-  this.arrWeight[46] = [198, 90];
-
+  this.arrWeights = [];
+  this.arrWeights[0] = { name: '99/45' };
+  this.arrWeights[1] = { name: '101/46' };
+  this.arrWeights[2] = { name: '104/47' };
+  this.arrWeights[3] = { name: '106/48' };
+  this.arrWeights[4] = { name: '106/48' };
+  this.arrWeights[5] = { name: '108/49' };
+  this.arrWeights[6] = { name: '110/50' };
+  this.arrWeights[7] = { name: '112/51' };
+  this.arrWeights[8] = { name: '115/52' };
+  this.arrWeights[9] = { name: '117/53' };
+  this.arrWeights[10] = { name: '119/54' };
+  this.arrWeights[11] = { name: '121/55' };
+  this.arrWeights[12] = { name: '123/56' };
+  this.arrWeights[13] = { name: '126/57' };
+  this.arrWeights[14] = { name: '128/58' };
+  this.arrWeights[15] = { name: '130/59' };
+  this.arrWeights[16] = { name: '132/60' };
+  this.arrWeights[17] = { name: '135/61' };
+  this.arrWeights[18] = { name: '137/62' };
+  this.arrWeights[19] = { name: '139/63' };
+  this.arrWeights[20] = { name: '141/64' };
+  this.arrWeights[21] = { name: '143/65' };
+  this.arrWeights[22] = { name: '146/66' };
+  this.arrWeights[23] = { name: '148/67' };
+  this.arrWeights[24] = { name: '150/68' };
+  this.arrWeights[25] = { name: '152/69' };
+  this.arrWeights[26] = { name: '154/70' };
+  this.arrWeights[27] = { name: '157/71' };
+  this.arrWeights[28] = { name: '159/72' };
+  this.arrWeights[29] = { name: '161/73' };
+  this.arrWeights[30] = { name: '163/74' };
+  this.arrWeights[31] = { name: '165/75' };
+  this.arrWeights[32] = { name: '168/76' };
+  this.arrWeights[33] = { name: '170/77' };
+  this.arrWeights[34] = { name: '172/78' };
+  this.arrWeights[35] = { name: '174/79' };
+  this.arrWeights[36] = { name: '176/80' };
+  this.arrWeights[37] = { name: '179/81' };
+  this.arrWeights[38] = { name: '181/82' };
+  this.arrWeights[39] = { name: '183/83' };
+  this.arrWeights[40] = { name: '185/84' };
+  this.arrWeights[41] = { name: '187/85' };
+  this.arrWeights[42] = { name: '190/86' };
+  this.arrWeights[43] = { name: '192/87' };
+  this.arrWeights[44] = { name: '194/88' };
+  this.arrWeights[45] = { name: '196/89' };
+  this.arrWeights[46] = { name: '198/90' };
+/*Массив данных цвет волос для select*/
+  this.arrHairColor = [];
+  this.arrHairColor[0] = { name: 'Black', value:'Black' };
+  this.arrHairColor[1] = { name: 'Blonde', value: 'Blonde' };
+  this.arrHairColor[2] = { name: 'Brown', value: 'Brown' };
+  this.arrHairColor[3] = { name: 'Light brown', value: 'Light_brown' };
+/*Массив данных цвета глаз для select*/
+  this.arreYeColor = [];
+  this.arreYeColor[0] = { name: 'Blue' };
+  this.arreYeColor[1] = { name: 'Brown' };
+  this.arreYeColor[2] = { name: 'Gray' };
+  this.arreYeColor[3] = { name: 'Green' };
+  this.arreYeColor[4] = { name: 'Hazel' };
+/*Массив данных по рейтингу знания английского для select*/
+  this.arrEnglishRating = [];
+  this.arrEnglishRating[0] = { name: 'Beginner' };
+  this.arrEnglishRating[1] = { name: 'Intermediate' };
+  this.arrEnglishRating[2] = { name: 'Advanced' };
+  this.arrEnglishRating[3] = { name: 'Fluent' };
+/*Массив данных количества детей для select*/
+  this.arrChildrenNumber = [];
+  this.arrChildrenNumber[0] = { name: 0 };
+  this.arrChildrenNumber[1] = { name: 1 };
+  this.arrChildrenNumber[2] = { name: 2 };
+  this.arrChildrenNumber[3] = { name: 3 };
+  this.arrChildrenNumber[4] = { name: 4 };
+  this.arrChildrenNumber[5] = { name: 5 };
+/**/
+  this.arrMaritalStatus = [];
+  this.arrMaritalStatus[0] = { name: 'Never married' };
+  this.arrMaritalStatus[1] = { name: 'Divorced' };
+  this.arrMaritalStatus[2] = { name: 'Widow' };
+/**/
+  this.arrCities = [];
+  this.arrCities[0] = { name: 'Kiev' };
+  this.arrCities[1] = { name: 'Rivne' }
+  this.arrCities[2] = { name: 'Odessa' };
+  this.arrCities[3] = { name: 'Vinnica' };
+/**/
+  this.arrLookingFor = [];
+  this.arrLookingFor[0] = { name: 'Marriage' };
+  this.arrLookingFor[1] = { name: 'Find a person with children' };
+  this.arrLookingFor[2] = { name: 'Find a person who is good with children' };
+  this.arrLookingFor[3] = { name: 'A long term relationship' };
+  this.arrLookingFor[4] = { name: 'Penpal relationship' };
+  this.arrLookingFor[5] = { name: 'Meeting with foreign person while they are travelling to CIS' };
+  this.arrLookingFor[6] = { name: 'A casual relationship' };
+  this.arrLookingFor[7] = { name: 'Meet person of different cultures' };
+  this.arrLookingFor[8] = { name: 'Online chat (Phone, Video, Live)' };
+  this.arrLookingFor[9] = { name: 'Online Flirting' };
+/**/
+  this.arrProfessions = [];
+  this.arrProfessions[0] = { name: 'Doctor' };
+  this.arrProfessions[1] = { name: 'Teacher' };
+  this.arrProfessions[2] = { name: 'Accountant' };
+  this.arrProfessions[3] = { name: 'Developer' };
+  this.arrProfessions[4] = { name: 'Manager' };
+  this.arrProfessions[5] = { name: 'Engineer' };
+/**/
+  this.arrEducation = [];
+  this.arrEducation[0] = { name: 'University degree' };
+  this.arrEducation[1] = { name: 'University (unfinished)' };
+  this.arrEducation[2] = { name: 'Medical degree' };
+  this.arrEducation[3] = { name: 'Student' };
+  this.arrEducation[4] = { name: 'College degree' };
+  this.arrEducation[5] = { name: 'High school' };
+/**/
+  this.arrReligions = [];
+  this.arrReligions[0] = { name: 'Not Religious' };
+  this.arrReligions[1] = { name: 'Muslim' };
+  this.arrReligions[2] = { name: 'Jewish' };
+  this.arrReligions[3] = { name: 'Russian Orthodox' };
+  this.arrReligions[4] = { name: 'Buddhism' };
+  this.arrReligions[5] = { name: 'Catholic' };
+  this.arrReligions[6] = { name: 'Baptist' };
+  this.arrReligions[7] = { name: 'Christian' };
+  this.arrReligions[8] = { name: 'Protestant' };
+  this.arrReligions[9] = { name: 'Lutheran' };
+  this.arrReligions[10] = { name: 'Mormon' };
+  this.arrReligions[11] = { name: 'Other' };
+/**/
+  this.arrZodiacs = [];
+  this.arrZodiacs[0] = { name: 'Aries' };
+  this.arrZodiacs[1] = { name: 'Taurus' };
+  this.arrZodiacs[2] = { name: 'Gemini' };
+  this.arrZodiacs[3] = { name: 'Cancer' };
+  this.arrZodiacs[4] = { name: 'Leo' };
+  this.arrZodiacs[5] = { name: 'Virgo' };
+  this.arrZodiacs[6] = { name: 'Libra' };
+  this.arrZodiacs[7] = { name: 'Scorpio' };
+  this.arrZodiacs[8] = { name: 'Sagittarius'};
+  this.arrZodiacs[9] = { name: 'Capricorn'};
+  this.arrZodiacs[10] = { name: 'Aquarius'};
+  this.arrZodiacs[11] = { name: 'Pisces'};
+/**/
+  this.arrSmokingOptions = [];
+  this.arrSmokingOptions[0] = { name: 'No' };
+  this.arrSmokingOptions[1] = { name: 'Yes' };
+  this.arrSmokingOptions[2] = { name: 'Sometimes' };
+/**/
+  this.arrDrinkingOptions = [];
+  this.arrDrinkingOptions[0] = {name: 'Never' };
+  this.arrDrinkingOptions[1] = {name: 'Socially' };
+  this.arrDrinkingOptions[2] = {name: 'Occasionally' };
+  /*Функция меняет размеры фото*/
   this.photoAvatar2 = function(arg) {
     var photo = String(arg);
     photo = photo.slice(0, photo.length-4) + '_150_150_auto' + photo.slice(-4);
     return photo;
   };
 
-// $(document).ready(function(){
-  //  setInterval(function(){
-  //   $('.selectpicker').selectpicker({
-  //       style: 'btn-info',
-  //       size: 4
-  //     });
-  // }, 1000);
-  // })
-
 };
 
   searchController.$inject = ['$document', '$location','$stateParams', '$rootScope', '$timeout', 'userService', 'searchService', 'girlsAllService','girlsService'];
 
-},{}],20:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 module.exports = searchService;
 
 function searchService ($resource) {
@@ -4029,7 +4895,7 @@ function searchService ($resource) {
 };
 
 searchService.$inject = ['$resource'];
-},{}],21:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 module.exports = userService;
 
 function userService ($resource) {
@@ -4066,7 +4932,7 @@ function userService ($resource) {
   // };
 
   var userResource = $resource('/api/users', {},
-   {
+    {
       registUser: {
         method: 'POST',
         transformRequest: angular.identity,
@@ -4076,9 +4942,35 @@ function userService ($resource) {
       }
     }
   );
+  var userLogResource = $resource('/index/signin', {},
+    {
+      loginUser: {
+        method: 'POST',
+        transformRequest: angular.identity,
+        headers: {
+          'Content-Type': undefined
+        }
+      }
+    }
+  )
+  var userResourceLogout = $resource('index/logout');
+  var usersNamesResource = $resource('/api/users/unique');//, {},
+    // {
+    //   namesGirls: {
+    //     method: 'GET',
+    //     transformRequest: angular.identity,
+    //     headers: {
+    //       'Content-Type': undefined
+    //     }
+    //   }
+    // });
 /*Отправляем feedback*/
   this.registUser = function(formData) {
     return userResource.registUser({}, formData);
+  };
+
+  this.loginUser = function(formData) {
+    return userLogResource.loginUser({}, formData);
   };
 
   // this.registUser = function(User) {
@@ -4089,64 +4981,63 @@ function userService ($resource) {
   //     response: User.response
   //   })
   // };
+  this.logout = function() {
+    return userResourceLogout.get();
+  };
   this.currentUserData = {};
 
   this.getUser = function () {
     return userResource.get({ relations: '{ "mainphoto": {} }' });
   };
 
+  this.getUsersNames = function() {
+    return usersNamesResource.get({ attribute: 'firstname', groupId: 2 })
+  }
+
 
   return this;
 };
 
 userService.$inject = ['$resource'];
-},{}],22:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 module.exports = usersController;
 
 function usersController ($document, $location, userService, $rootScope ) {
-  this.getUserData = function () {
-    var self = this;
-    userService.getUser().$promise.then(
-      function(data) {
-        self.user = data;
-        $rootScope.global2 = data;//self.user.user.additionalData.groupId;
-
-        if (self.user.user.additionalData.groupId == 1) {
-          $location.path('/man');
-        } else if(self.user.user.additionalData.groupId == 2){
-          $location.path('/lady');
-        }
-        else $location.path('/home/-ag-18-30-co-Ukraine');
-      },
-      function(error) {
-        $location.path('/home/-ag-18-30-co-Ukraine');
-        // console.log(error);
-      }
-    );
-  };
-  this.getUserData();
-
-
-  // if(this.user.user.additionalData.groupId) {
-  //   $rootScope.global2 = this.user.user.additionalData.groupId;
-  //   console.log('$rootScope.global');
-  //   console.log($rootScope.global);
+  $location.path('/home/-ag-18-30-co-Ukraine');
+  // $rootScope.userLogout = function(){
+  //   // console.log('!!!!!!');
+  //   userService.logout();
+  //   $location.path('/home/-ag-18-30-co-Ukraine');
   // }
-  this.isMan = function(id) {
-    id == 1? true : false;
-  };
+  // this.getUserData = function () {
+  //   var self = this;
+  //   userService.getUser().$promise.then(
+  //     function(data) {
+  //       self.user = data;
+  //       $rootScope.global2 = data;//self.user.user.additionalData.groupId;
 
-  this.isLady = function(id) {
-    id == 2? true : false;
-  }
+  //       if (self.user.user.additionalData.groupId == 1) {
+  //         $location.path('/man');
+  //       } else if(self.user.user.additionalData.groupId == 2){
+  //         $location.path('/lady');
+  //       }
+  //       else $location.path('/home/-ag-18-30-co-Ukraine');
+  //     },
+  //     function(error) {
+  //       $location.path('/home/-ag-18-30-co-Ukraine');
+  //       // console.log(error);
+  //     }
+  //   );
+  // };
+  // this.getUserData();
 }
 
 usersController.$inject = ['$document', '$location', 'userService', '$rootScope'];
-},{}],23:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 require('./src/angular-base64-upload.js');
 module.exports = 'naif.base64';
 
-},{"./src/angular-base64-upload.js":24}],24:[function(require,module,exports){
+},{"./src/angular-base64-upload.js":28}],28:[function(require,module,exports){
 (function(window, undefined) {
 
   'use strict';
@@ -4432,7 +5323,7 @@ module.exports = 'naif.base64';
 
 })(window);
 
-},{}],25:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.3
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -4756,11 +5647,11 @@ angular.module('ngCookies').provider('$$cookieWriter', function $$CookieWriterPr
 
 })(window, window.angular);
 
-},{}],26:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 require('./angular-cookies');
 module.exports = 'ngCookies';
 
-},{"./angular-cookies":25}],27:[function(require,module,exports){
+},{"./angular-cookies":29}],31:[function(require,module,exports){
 angular.module('angular-img-cropper', []).directive("imageCropper", ['$document', '$window', 'imageCropperDataShare', function ($document, $window, imageCropperDataShare) {
     return {
         scope: {
@@ -6162,7 +7053,7 @@ angular.module('angular-img-cropper').factory("imageCropperDataShare", function 
     return share;
 });
 
-},{}],28:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 /**
  * angular-recaptcha build:2016-02-18 
  * https://github.com/vividcortex/angular-recaptcha 
@@ -6391,7 +7282,7 @@ angular.module('angular-img-cropper').factory("imageCropperDataShare", function 
 
 }(angular));
 
-},{}],29:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.0
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -7161,11 +8052,11 @@ angular.module('ngResource', ['ng']).
 
 })(window, window.angular);
 
-},{}],30:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 require('./angular-resource');
 module.exports = 'ngResource';
 
-},{"./angular-resource":29}],31:[function(require,module,exports){
+},{"./angular-resource":33}],35:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.5
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -7884,11 +8775,11 @@ angular.module('ngSanitize').filter('linky', ['$sanitize', function($sanitize) {
 
 })(window, window.angular);
 
-},{}],32:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 require('./angular-sanitize');
 module.exports = 'ngSanitize';
 
-},{"./angular-sanitize":31}],33:[function(require,module,exports){
+},{"./angular-sanitize":35}],37:[function(require,module,exports){
 /*
  * @license
  * angular-socket-io v0.7.0
@@ -7993,7 +8884,7 @@ angular.module('btford.socket-io', []).
     }];
   });
 
-},{}],34:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 /*
  * angular-ui-bootstrap
  * http://angular-ui.github.io/bootstrap/
@@ -15390,12 +16281,12 @@ angular.module('ui.bootstrap.datepicker').run(function() {!angular.$$csp().noInl
 angular.module('ui.bootstrap.tooltip').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTooltipCss && angular.element(document).find('head').prepend('<style type="text/css">[uib-tooltip-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-popup].tooltip.right-bottom > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.right-bottom > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.right-bottom > .tooltip-arrow,[uib-popover-popup].popover.top-left > .arrow,[uib-popover-popup].popover.top-right > .arrow,[uib-popover-popup].popover.bottom-left > .arrow,[uib-popover-popup].popover.bottom-right > .arrow,[uib-popover-popup].popover.left-top > .arrow,[uib-popover-popup].popover.left-bottom > .arrow,[uib-popover-popup].popover.right-top > .arrow,[uib-popover-popup].popover.right-bottom > .arrow,[uib-popover-html-popup].popover.top-left > .arrow,[uib-popover-html-popup].popover.top-right > .arrow,[uib-popover-html-popup].popover.bottom-left > .arrow,[uib-popover-html-popup].popover.bottom-right > .arrow,[uib-popover-html-popup].popover.left-top > .arrow,[uib-popover-html-popup].popover.left-bottom > .arrow,[uib-popover-html-popup].popover.right-top > .arrow,[uib-popover-html-popup].popover.right-bottom > .arrow,[uib-popover-template-popup].popover.top-left > .arrow,[uib-popover-template-popup].popover.top-right > .arrow,[uib-popover-template-popup].popover.bottom-left > .arrow,[uib-popover-template-popup].popover.bottom-right > .arrow,[uib-popover-template-popup].popover.left-top > .arrow,[uib-popover-template-popup].popover.left-bottom > .arrow,[uib-popover-template-popup].popover.right-top > .arrow,[uib-popover-template-popup].popover.right-bottom > .arrow{top:auto;bottom:auto;left:auto;right:auto;margin:0;}[uib-popover-popup].popover,[uib-popover-html-popup].popover,[uib-popover-template-popup].popover{display:block !important;}</style>'); angular.$$uibTooltipCss = true; });
 angular.module('ui.bootstrap.timepicker').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTimepickerCss && angular.element(document).find('head').prepend('<style type="text/css">.uib-time input{width:50px;}</style>'); angular.$$uibTimepickerCss = true; });
 angular.module('ui.bootstrap.typeahead').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTypeaheadCss && angular.element(document).find('head').prepend('<style type="text/css">[uib-typeahead-popup].dropdown-menu{display:block;}</style>'); angular.$$uibTypeaheadCss = true; });
-},{}],35:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 require('./dist/ui-bootstrap-tpls');
 
 module.exports = 'ui.bootstrap';
 
-},{"./dist/ui-bootstrap-tpls":34}],36:[function(require,module,exports){
+},{"./dist/ui-bootstrap-tpls":38}],40:[function(require,module,exports){
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("jquery"), require("angular"), require("jquery-ui/datepicker"));
@@ -15691,7 +16582,7 @@ return /******/ (function(modules) { // webpackBootstrap
 });
 ;
 //# sourceMappingURL=date.js.map
-},{"angular":40,"jquery":44,"jquery-ui/datepicker":42}],37:[function(require,module,exports){
+},{"angular":44,"jquery":48,"jquery-ui/datepicker":46}],41:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -20062,7 +20953,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],38:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
@@ -21879,7 +22770,7 @@ $templateCache.put("select2/select.tpl.html","<div class=\"ui-select-container s
 $templateCache.put("selectize/choices.tpl.html","<div ng-show=\"$select.open\" class=\"ui-select-choices ui-select-dropdown selectize-dropdown single\"><div class=\"ui-select-choices-content selectize-dropdown-content\"><div class=\"ui-select-choices-group optgroup\" role=\"listbox\"><div ng-show=\"$select.isGrouped\" class=\"ui-select-choices-group-label optgroup-header\" ng-bind=\"$group.name\"></div><div role=\"option\" class=\"ui-select-choices-row\" ng-class=\"{active: $select.isActive(this), disabled: $select.isDisabled(this)}\"><div class=\"option ui-select-choices-row-inner\" data-selectable=\"\"></div></div></div></div></div>");
 $templateCache.put("selectize/match.tpl.html","<div ng-hide=\"($select.open || $select.isEmpty())\" class=\"ui-select-match\" ng-transclude=\"\"></div>");
 $templateCache.put("selectize/select.tpl.html","<div class=\"ui-select-container selectize-control single\" ng-class=\"{\'open\': $select.open}\"><div class=\"selectize-input\" ng-class=\"{\'focus\': $select.open, \'disabled\': $select.disabled, \'selectize-focus\' : $select.focus}\" ng-click=\"$select.activate()\"><div class=\"ui-select-match\"></div><input type=\"text\" autocomplete=\"off\" tabindex=\"-1\" class=\"ui-select-search ui-select-toggle\" ng-click=\"$select.toggle($event)\" placeholder=\"{{$select.placeholder}}\" ng-model=\"$select.search\" ng-hide=\"!$select.searchEnabled || ($select.selected && !$select.open)\" ng-disabled=\"$select.disabled\" aria-label=\"{{ $select.baseTitle }}\"></div><div class=\"ui-select-choices\"></div></div>");}]);
-},{}],39:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.5
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -52748,11 +53639,11 @@ $provide.value("$locale", {
 })(window);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],40:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":39}],41:[function(require,module,exports){
+},{"./angular":43}],45:[function(require,module,exports){
 var jQuery = require('jquery');
 
 /*!
@@ -53076,7 +53967,7 @@ $.extend( $.ui, {
 
 })( jQuery );
 
-},{"jquery":44}],42:[function(require,module,exports){
+},{"jquery":48}],46:[function(require,module,exports){
 var jQuery = require('jquery');
 require('./core');
 
@@ -55119,7 +56010,7 @@ $.datepicker.version = "1.10.4";
 
 })(jQuery);
 
-},{"./core":41,"jquery":44}],43:[function(require,module,exports){
+},{"./core":45,"jquery":48}],47:[function(require,module,exports){
 var jQuery = require('jquery');
 
 /*! jQuery UI - v1.10.3 - 2013-05-03
@@ -70126,7 +71017,7 @@ $.widget( "ui.tooltip", {
 
 }( jQuery ) );
 
-},{"jquery":44}],44:[function(require,module,exports){
+},{"jquery":48}],48:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.2.3
  * http://jquery.com/
@@ -79970,7 +80861,7 @@ if ( !noGlobal ) {
 return jQuery;
 }));
 
-},{}],45:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 /**!
  * AngularJS file upload directives and services. Supoorts: file upload/drop/paste, resume, cancel/abort,
  * progress, resize, thumbnail, preview, validation and CORS
@@ -82773,10 +83664,10 @@ ngFileUpload.service('UploadExif', ['UploadResize', '$q', function (UploadResize
 }]);
 
 
-},{}],46:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 require('./dist/ng-file-upload-all');
 module.exports = 'ngFileUpload';
-},{"./dist/ng-file-upload-all":45}],47:[function(require,module,exports){
+},{"./dist/ng-file-upload-all":49}],51:[function(require,module,exports){
 // Generated by CoffeeScript 1.9.0
 (function() {
   angular.module("ocNgRepeat", []).directive('ngRepeatOwlCarousel', function() {

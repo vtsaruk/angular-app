@@ -1,91 +1,23 @@
-module.exports = girlsAllController;
+module.exports = ladyAllController;
 
-var meConfig = require('../config');
+function ladyAllController ($document, $location, $stateParams, userService, girlsAllService, $rootScope, $http, $timeout, $interval) {
 
-function girlsAllController ($document, $location, $stateParams, userService, girlsAllService, $rootScope, $http, $timeout, $interval) {
-
-  this.recaptchaKey = meConfig.recaptcha;
-  // console.log('recaptchaKey = ' + this.recaptchaKey);
-  // console.log('secret = ' + meConfig.recapthaSecret);
-  this.disabled = undefined;
-/*Функция определяет возраст*/
+  /*Функция определяет возраст*/
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
   };
-  this.formUseModel = true;
-  this.formUser = function() {
-    if(this.formUseModel)
-      this.formUseModel = false;
-    else this.formUseModel = true;
-  };
-
-  // this.loginUser = function(User) {
-  //   var self = this;
-  //   console.log(User.name2 + ' , ' + User.password2);
-  //   var fd = new FormData();
-  //   fd.append('email', User.email2);
-  //   fd.append('password', User.password2);
-  //   userService.loginUser(fd).$promise.then(
-  //     function(data) {
-  //       self.user = data;
-  //       if (self.user.user.additionalData.groupId == 1) {
-  //         $location.path('/man');
-  //       } else if(self.user.user.additionalData.groupId == 2){
-  //         $location.path('/lady');
-  //       }
-  //       else $location.path('/home/-ag-18-30-co-Ukraine');
-  //     },
-  //     function(error) {
-  //       $location.path('/home/-ag-18-30-co-Ukraine');
-  //     }
-  //   );
-  // };
-
-  this.registUser = function(User) {
-    var self = this;
-    // var user = {};
-
-var fd = new FormData();
-    fd.append('email', User.email);
-    fd.append('password', User.message);
-    fd.append('secret', meConfig.recapthaSecret );
-    // fd.append('secret', '6LeKeR0TAAAAAHgv7QcaVHtTWT7ScsfeGpCMDQwB' );
-    fd.append('response', this.myRecaptchaResponse);
-    userService.registUser(fd);//.$promise.then(
-    //   function(data) {
-    //     self.user = data;
-    //     if (self.user.user.additionalData.groupId == 1) {
-    //       $location.path('/man');
-    //     } else if(self.user.user.additionalData.groupId == 2){
-    //       $location.path('/lady');
-    //     }
-    //     else $location.path('/home/-ag-18-30-co-Ukraine');
-    //   },
-    //   function(error) {
-    //     $location.path('/home/-ag-18-30-co-Ukraine');
-    //   }
-    // );
-  };
-
-/*Функция делает запрос к сервису и получает данные залогиненного пользователя*/
+  /*Функция делает запрос к сервису и получает данные залогиненного пользователя*/
   this.getUserData = function () {
     var self = this;
     userService.getUser().$promise.then(
       function(data) {
-
         $rootScope.global2 = data;
         self.user = data;
-        if (self.user.user.additionalData.groupId == 1) {
-          $location.path('/man');
-        } else if(self.user.user.additionalData.groupId == 2){
-          $location.path('/lady');
-        }
-        else $location.path('/home/-ag-18-30-co-Ukraine');
         $('.head_footer').show();
       },
       function(error) {
-        // $rootScope.global2=0;
-        // console.log(error);
+        $location.path('/home/-ag-18-30-co-Ukraine')
+        console.log(error);
         $('.head_footer').show();
       }
     );
@@ -103,10 +35,11 @@ var fd = new FormData();
         // $('select').select2();
         for(var i=0; i<self.arrCountries.length; i++) {
           if(self.arrCountries[i].name==self.counryUrl) {
-            self.countryIdURL = self.arrCountries[i].id
+            self.countryIdURL = self.arrCountries[i].id;
             self.paginaGirl();
           }
         };
+
         // $(".owl-carousel").owlCarousel();
          var owl = $("#owl-demo");
 
@@ -150,20 +83,10 @@ var fd = new FormData();
     );
   };
 
-  // this.replaceUndefFrom = function(arg) {
-  //   if(arg) return arg.name.name
-  //   else return 18
-  // };
-
-  // this.replaceUndefTo = function(arg) {
-  //   if(arg) return arg.name.name
-  //   else return 60
-  // };
-
   this.getCountries();
 /*Функция поиска леди по возрасту и стране, делает API запрос*/
   this.searchGirls = function(page) {
-    // console.log(this.fromDateModel.name.name);
+    console.log(page);
     var self = this;
     this.arrURL = [];
     var keyValURL = '';
@@ -175,7 +98,7 @@ var fd = new FormData();
     };
 
     var resultURL = keyValURL.slice(0, keyValURL.length-1);
-    // console.log(resultURL);
+    console.log(resultURL);
 
     $location.path(page + '-' + resultURL);
     };
@@ -305,10 +228,6 @@ this.makeAge = function() {
 /*меняем стили на выпадающих списках в select*/
   $(document).ready(function(){
    setTimeout(function(){
-
-    // $('select').select2();
-
-
     // $('.selectpicker').selectpicker({
     //     style: 'btn-info',
     //     size: 4
@@ -316,18 +235,7 @@ this.makeAge = function() {
   }, 1000);
   });
 
-  // this.disabled = true;
-  // this.country2 = {};
-  // this.country2.selected = undefined;
-  // this.countries2 = [ // Taken from https://gist.github.com/unceus/6501985
-  //   {name: 'Afghanistan', code: 'AF'},
-  //   {name: 'Åland Islands', code: 'AX'},
-  //   {name: 'Albania', code: 'AL'},
-  //   {name: 'Algeria', code: 'DZ'},
-  //   {name: 'American Samoa', code: 'AS'},
-  //   {name: 'Andorra', code: 'AD'}
-  // ];
 
 };
 
-girlsAllController.$inject = ['$document', '$location', '$stateParams','userService', 'girlsAllService', '$rootScope', '$http', '$timeout', '$interval'];
+ladyAllController.$inject = ['$document', '$location', '$stateParams','userService', 'girlsAllService', '$rootScope', '$http', '$timeout', '$interval'];
