@@ -150,8 +150,6 @@ function ladyAllController ($document, $location, $stateParams, userService, gir
   this.fromDateModel = { name: birthDateArrId };
   this.toDateModel = { name: birthDateToArrId };
   this.countryModel = { name: country };
-  // console.log('this.fromDateModel');
-  // console.log(this.fromDateModel);
 /*Функция делает запрос к сервису, чтобы получить леди согласно выбранных параметров*/
   this.girlsAllGet = function() {
     var self = this;

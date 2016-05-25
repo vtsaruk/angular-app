@@ -33,7 +33,6 @@ function searchService ($resource) {
     });
   };
 
-
   return this;
 };
 

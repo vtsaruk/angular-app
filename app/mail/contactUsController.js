@@ -10,7 +10,6 @@ function contactUsController ($anchorScroll, $rootScope, userService, contactUsS
   };
 
   this.anchorScrollPage();
-
 /*Функция получает данние пользователя из сервиса userService*/
   this.getUserData = function () {
     var self = this;

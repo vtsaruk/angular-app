@@ -5,8 +5,6 @@ var meConfig = require('../config');
 function girlsAllController ($document, $location, $stateParams, userService, girlsAllService, $rootScope, $http, $timeout, $interval) {
 
   this.recaptchaKey = meConfig.recaptcha;
-  // console.log('recaptchaKey = ' + this.recaptchaKey);
-  // console.log('secret = ' + meConfig.recapthaSecret);
   this.disabled = undefined;
 
 /*Функция определяет возраст*/

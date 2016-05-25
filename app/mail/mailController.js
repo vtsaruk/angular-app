@@ -541,5 +541,4 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
 
 };
 
-
 mailController.$inject = ['$document', '$location', '$timeout', '$anchorScroll', 'mailService', 'userService', 'girlsService', '$scope', '$rootScope', 'girlsService'];

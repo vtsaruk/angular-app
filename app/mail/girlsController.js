@@ -1,6 +1,5 @@
 module.exports = girlsController;
 
-
 function girlsController ($document, $stateParams, $location, mailService, userService, girlsService, $scope, $rootScope) {
   /*Забираем id из URL*/
   var idArr =$stateParams.id.split('-');

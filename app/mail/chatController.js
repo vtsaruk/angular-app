@@ -69,7 +69,6 @@ function chatController ($document, $location, chatService, userService, socketF
       return false;
     }
   };
-
 /*Функция отрисовывает состояние Waiting request*/
   this.isWaitingRequest = function(partner, groupId) {
     // console.log(['sessionId', 'startDateTime', 'isInitByBoy'].map(function (val) {

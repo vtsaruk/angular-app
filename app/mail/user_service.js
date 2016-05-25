@@ -1,3 +1,4 @@
+
 module.exports = userService;
 
 function userService ($resource) {

@@ -17,7 +17,7 @@ function favoriteController (formService, $scope, $timeout, userService, $rootSc
   };
 
   this.getUserData();
-  console.log('!!!!!!!!!!!!!');
+  console.log();
 
   };
 

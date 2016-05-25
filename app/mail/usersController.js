@@ -1,3 +1,4 @@
+
 module.exports = usersController;
 
 function usersController ($document, $location, userService, $rootScope ) {

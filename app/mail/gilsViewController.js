@@ -1,6 +1,5 @@
 module.exports = girlsViewController;
 
-
 function girlsViewController ($document, $stateParams, $location, girlsService) {
 
 };

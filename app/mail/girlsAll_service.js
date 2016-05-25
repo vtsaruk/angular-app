@@ -22,4 +22,5 @@ function girlsAllService ($resource) {
   return this;
 };
 
+
 girlsAllService.$inject = ['$resource'];

@@ -127,8 +127,6 @@ function formController (formService, $scope, $timeout, userService, $rootScope)
       fd.append('width', heightPhotoA);
       fd.append('height', heightPhotoA);//420);//heightPhoto)
     }
-    // console.log(fd);
-  // console.log(fd);
 
     formService.addPhotos(fd);
     // htmlFiles[0].files[0] = undefined;

@@ -10,7 +10,6 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     var list = angular.element(document.getElementsByClassName('message-tabs-item'));
     for(var i=0; i<list.length; i++){
       list[i].className = 'message-tabs-item';
-      // list[i].on('click', 'activeAddClass')
     };
     list[arg].className = 'message-tabs-item active';
   };

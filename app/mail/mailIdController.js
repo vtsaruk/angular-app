@@ -6,7 +6,6 @@ function mailIdController ($document, $stateParams, $location, $anchorScroll, $t
      //$location.hash('top_anchorScroll');
      $anchorScroll.yOffset = 200;
      $anchorScroll();
-
   };
 
   this.anchorScrollPage();
