@@ -79,16 +79,14 @@
                                     </div>
                                 </div> -->
 
-                                <div class="customNavigation">
+                                <!-- <div class="customNavigation">
                                     <a class="btn next"><img src="/assets/main/img/profile-arrow-right.png" alt=""></a>
                                     <a class="btn prev"><img src="/assets/main/img/profile-arrow-right.png" alt=""></a>
-                                </div>
-
-
+                                </div> -->
                             </div>
                             <ul class="profile-left-side-list">
-                                <li><a href="#">Add to favorites</a></li>
-                                <li><a href="#" class="chatting">Invite for a chat</a></li>
+                                <li><a href="">Add to favorites</a></li>
+                                <li><a href="" class="chatting">Invite for a chat</a></li>
                                 <li><a href="/#/mail/{{ctrl.girlsId.girl.id}}" class="snd-message">Send a message</a></li>
                                 <li><a href="#" class="snd-gift">Send a gift</a></li>
                                 <li><a href="#" class="purchase">Purchase contact info</a></li>
@@ -153,10 +151,15 @@
 
                                         <div class="profile-right-side-photos-container">
                     <div id="owl-demo5" class="owl-carousel owl-theme" owl-carousel-item="">
-                      <div class="item" ng-repeat="photos in ctrl.girlsPhotos.photos">
-                        <div class="profile-left-side-carousel-popup"></div>
-                        <img src="{{photos.path}}" alt="">
-                      </div>
+                     <div ng-repeat="photo in ctrl.photos" class="js-item" style="background-image:url({{photo.path}})" data-mfp-src={{photo.path}}>
+                     <!-- <div ng-repeat="photo in ctrl.photos" class="item">
+                      <img src="{{photo.path}}" alt="">
+                      <div ng-show="photo.lockPicture" class="profile-left-side-carousel-popup"></div> -->
+                     </div>
+                      <!-- <div class="item" ng-repeat="photo in ctrl.photos">
+                        <div ng-show="photo.lockPicture" class="profile-left-side-carousel-popup"></div>
+                        <img src="{{photo.path}}" alt="">
+                      </div> -->
                     </div>
                     <div class="customNavigation">
                       <a class="btn next"><img src="assets/angular-app/public/img/profile-arrow-right.png" alt=""></a>

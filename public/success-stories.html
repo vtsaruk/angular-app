@@ -1,3 +1,4 @@
+<!-- <div>{{ctrl.stories}} </div> -->
 	<!-- page-message -->
 <main class="page-message page-blog">
 	<div class="container">
@@ -9,48 +10,17 @@
 					</div>
 					<div class="page-blog-news clearfix">
 						<!-- page-blog-news-item -->
-						<div class="col-md-6">
+						<div class="col-md-6" ng-repeat="story in ctrl.stories">
 							<div class="page-blog-news-item">
-								<span class="page-blog-news-item-date grey-14-Lt">January 21</span>
-								<h2><a href="#">Love, Love, Love...<br>Love</a></h2>
-								<img src="assets/angular-app/public/img/blog-img-1.jpg" alt="">
-								<p class="grey-18-Lt">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aliquipquia consequuntur magni dolores.</p>
-								<button class="btn-send">Open</button>
+								<span class="page-blog-news-item-date grey-14-Lt" ng-bind="story.date | date:'MMMM d'"></span>
+								<h2><a href="" ng-bind="story.title"><br>Love</a></h2>
+								<img src="{{story.path}}" alt="">
+								<p class="grey-18-Lt" ng-bind="ctrl.sliseText(story.text)"></p>
+								<a href="/#/single-post/{{story.id}}"><button class="btn-send">Open</button></a>
 							</div>
 						</div>
-						<!-- page-blog-news-item -->
-						<div class="col-md-6">
-							<div class="page-blog-news-item">
-								<span class="page-blog-news-item-date grey-14-Lt">January 21</span>
-								<h2><a href="#">Security Issues with <br>Medical Devices</a></h2>
-								<img src="assets/angular-app/public/img/blog-img-2.jpg" alt="">
-								<p class="grey-18-Lt">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aliquipquia consequuntur magni dolores.</p>
-								<button class="btn-send">Open</button>
-							</div>
-						</div>
-						<!-- page-blog-news-item -->
-						<div class="col-md-6">
-							<div class="page-blog-news-item">
-								<span class="page-blog-news-item-date grey-14-Lt">January 21</span>
-								<h2><a href="#">Love, Love, Love...<br>Love</a></h2>
-								<img src="assets/angular-app/public/img/blog-img-1.jpg" alt="">
-								<p class="grey-18-Lt">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aliquipquia consequuntur magni dolores.</p>
-								<button class="btn-send">Open</button>
-							</div>
-						</div>
-						<!-- page-blog-news-item -->
-						<div class="col-md-6">
-							<div class="page-blog-news-item">
-								<span class="page-blog-news-item-date grey-14-Lt">January 21</span>
-								<h2><a href="#">Security Issues with <br>Medical Devices</a></h2>
-								<img src="assets/angular-app/public/img/blog-img-2.jpg" alt="">
-								<p class="grey-18-Lt">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aliquipquia consequuntur magni dolores.</p>
-								<button class="btn-send">Open</button>
-							</div>
-						</div>
-						<!-- bottom-arrow -->
-					</div>
-					<div class="girls-arrow">
+          </div>
+					<div class="girls-arrow" ng-hide="ctrl.showPagin" ng-click="ctrl.paginStories()">
 						<img src="assets/angular-app/public/img/girls-arrow.png" alt="">
 					</div>
 				</div>

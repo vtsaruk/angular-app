@@ -2,6 +2,7 @@
 <html ng-app="app" lang="en">
 <head>
 	<meta charset="UTF-8">
+  <!-- <meta = csrf_meta_tags> -->
   <base href='/' />
 	<title>My App</title>
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css">
@@ -17,10 +18,12 @@
   <link rel="stylesheet" href="assets/angular-app/public/css/normalize.css">
   <link rel="stylesheet" href="assets/angular-app/public/css/owl.carousel.css">
   <link rel="stylesheet" href="assets/angular-app/public/css/owl.theme.css">
-  <!-- <link rel="stylesheet" href="assets/angular-app/public/css/print.css"> -->
+  <link rel="stylesheet" href="assets/angular-app/public/css/screen.css.map">
   <link rel="stylesheet" href="assets/angular-app/public/css/print.css">
   <link rel="stylesheet" href="assets/angular-app/public/css/style.css">
+  <link rel="stylesheet" href="assets/angular-app/public/css/magnific-popup.css">
   <link rel="stylesheet" href="assets/angular-app/public/css/screen.css">
+  <link rel="stylesheet" href="assets/angular-app/public/css/screen.css.map">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="assets/angular-app/public/css/select.css">
 
@@ -31,22 +34,24 @@
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
   <script data-require="jquery@2.1.3" data-semver="2.1.3" src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-  <script src="assets/angular-app/public/js/owl.carousel.min.js"></script>
+  <!-- <script src="assets/angular-app/public/js/jquery-1.12.2.min.js"></script> -->
+  <script src="assets/angular-app/public/js/jquery.magnific-popup.js"></script>
   <script src="assets/angular-app/public/js/bootstrap-select.min.js"></script>
+  <script src="assets/angular-app/public/js/owl.carousel.min.js"></script>
+  <!-- <script src="assets/angular-app/public/js/profile-popup.js"></script> -->
   <script src="assets/angular-app/public/js/main.js"></script>
 
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css" /> -->
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css" /> -->
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.transitions.min.css" /> -->
 </head>
-<body>
+<body class="body_box">
 <!-- hello -->
 <!-- hello
 {{$root.global2}} -->
 <!-- header for not logined used-->
 <div class="head_footer">
-<header ng-if="$root.global2==undefind" class="home-page">
-
+  <header ng-if="$root.global2==undefind" class="home-page">
     <div class="container">
       <div class="container">
       <div class="row">
@@ -59,14 +64,14 @@
           </a>
           <!-- end small-menu -->
           <!-- logo -->
-          <a href="/home/-ag-18-30-co-Ukraine" class="header--logo">
+          <a href="/home/-ag-18-30-co-All_countries" class="header--logo">
             <img src="assets/angular-app/public/img/logo.png"  alt=""></a>
           <!-- end logo -->
           <!-- navigation -->
           <nav class="header--nav">
             <ul class="clearfix">
               <li>
-                <a href="/home/-ag-18-30-co-Ukraine">Ladies</a>
+                <a href="/home/-ag-18-30-co-All_countries">Ladies</a>
               </li>
               <li>
                 <a href="#">Chat</a>
@@ -93,7 +98,17 @@
 </header>
 <!-- end header for not logined used-->
 <!-- header for man-->
-  <header ng-if="$root.global2.user.additionalData.groupId==1">
+  <header  ng-if="$root.global2.user.additionalData.groupId==1">
+    <div class="filter-girls-top-menu show_filter_top_menu" >
+      <ul class="filter-girls-top-menu__nav show_filter_top_menu">
+        <li><a class="show_filter_top_menu" href="/#/girls/All_Ladies-ag-18-27-co-All_countries">All Ladies</a></li>
+        <li><a class="show_filter_top_menu" href="/#/girls/Online_Ladies">Online Ladies</a></li>
+        <li><a class="show_filter_top_menu" href="/#/girls/New_Ladies">New Ladies</a></li>
+        <li><a class="show_filter_top_menu" href="/#/girls/Top_50">Top 50</a></li>
+        <li><a class="show_filter_top_menu" href="/#/girls/favorites">Favorites</a></li>
+        <li><a class="show_filter_top_menu" href="/#/girls/Upcoming_Birthdays">Upcoming Birthdays</a></li>
+      </ul>
+    </div>
     <div class="container">
       <div class="row">
         <div class="col-md-12">
@@ -105,18 +120,18 @@
           </a>
           <!-- end small-menu -->
           <!-- logo -->
-          <!-- <a ui-sref="main" class="header--logo"> -->
-          <a href="/#/girls/-ag-18-30-co-Ukraine" class="header--logo">
+          <!-- <a ui-sref="main" class="header-logo"> -->
+          <a href="/#/girls/-ag-18-30-co-All_countries" class="header--logo">
             <img src="assets/angular-app/public/img/logo.png"  alt=""></a>
           <!-- end logo -->
           <!-- navigation -->
           <nav class="header--nav">
             <ul class="clearfix">
               <li>
-                <a href="/#/girls/-ag-18-27-co-Ukraine">Ladies</a>
+                <a href="" id="href_Show_Top_Menu" class="show_filter_top_menu">Ladies</a>
               </li>
               <li>
-                <a href="/#/search/-ag-18-30-co-Ukraine">Search</a>
+                <a href="/#/search/-ag-18-30-co-All_countries">Search</a>
               </li>
               <li>
                 <a href="/#/man">Mail</a>
@@ -125,7 +140,7 @@
                 <a href="/#/chat">Chat</a>
               </li>
               <li>
-                <a href="">Gifts Delivery</a>
+                <a href="" ng-click="$root.logOut()">Gifts Delivery</a>
               </li>
               <li>
                 <a id="not_check_box" href="">Offers</a>
@@ -152,8 +167,7 @@
               </p>
               <a href="/#/men-account">My Profile</a>
               &nbsp;  |&nbsp;&nbsp;
-              <a href="http://dev.irinadating.com/index/logout" target="_self">
-              <!-- <a href="http://irinadating.loc/#/log_out" ng-click="$root.userLogout()"> -->
+              <a ng-click="$root.logOut()" href="http://dev.irinadating.com/index/logout" target="_self">
                 <span>Log out</span>
               </a>
             </div>
@@ -164,6 +178,70 @@
     </div>
   </header><!--
   <!-- end header for man-->
+
+  <!-- header for transleder-->
+  <header ng-if="$root.global2.user.additionalData.groupId==5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- small-menu -->
+          <a href="#" class="small-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </a>
+          <!-- end small-menu -->
+          <!-- logo -->
+          <!-- <a ui-sref="main" class="header-logo"> -->
+          <a href="/#/girls/-ag-18-30-co-All_countries" class="header--logo">
+            <img src="assets/angular-app/public/img/logo.png"  alt=""></a>
+          <!-- end logo -->
+          <!-- navigation -->
+          <nav class="header--nav">
+            <ul class="clearfix">
+              <li>
+                <a ng-hide="$root.hrefLadies" href="/#/girls/-ag-18-27-co-All_countries">Ladies</a>
+                <a ng-show="$root.hrefLadies" href="" id="href_Show_Top_Menu" class="show_filter_top_menu">Ladies</a>
+              </li>
+              <li>
+                <a href="/#/transleder">Mail</a>
+              </li>
+              <li>
+                <a href="/#/chat">Chat</a>
+              </li>
+            </ul>
+          </nav>
+          <!-- end navigation -->
+          <!-- header-profile info -->
+          <div class="header--profile">
+            <div class="header--profile-img-likes">
+              <a href="#">
+                <img src="{{$root.global2.user.mainphoto.pathOfQuad}}" width="40" height="40" alt=""></a>
+              <div class="header--heart">
+                <p>
+                  <img src="assets/angular-app/public/img/header-heart.png" alt=""></p>
+                <p>2000</p>
+              </div>
+
+            </div>
+            <div class="header--profile-info">
+              <p>
+                Welcome,
+                <span>{{$root.global2.user.firstname}} {{$root.global2.user.lastname}}</span>
+              </p>
+              <a href="/#/men-account">My Profile</a>
+              &nbsp;  |&nbsp;&nbsp;
+              <a href="http://dev.irinadating.com/index/logout" target="_self">
+                <span>Log out</span>
+              </a>
+            </div>
+          </div>
+          <!-- end header-profile info -->
+        </div>
+      </div>
+    </div>
+  </header><!--
+  <!-- end header for transleder-->
 
 <!-- header for lady-->
   <header ng-if="$root.global2.user.additionalData.groupId==2">
@@ -178,7 +256,7 @@
           </a>
           <!-- end small-menu -->
           <!-- logo -->
-          <a href="/#/girls/-ag-18-27-co-Ukraine" class="header--logo">
+          <a href="/#/girls/-ag-18-27" class="header--logo">
             <img src="assets/angular-app/public/img/logo.png"  alt=""></a>
           <!-- end logo -->
           <!-- navigation -->
@@ -217,7 +295,7 @@
               </p>
               <a href="/#/form">My Profile</a>
               &nbsp;  |&nbsp;&nbsp;
-              <a href="http://dev.irinadating.com/index/logout" target="_self">
+              <a ng-click="$root.logOut()" href="http://dev.irinadating.com/index/logout" target="_self">
                 <span>Log out</span>
               </a>
             </div>
@@ -326,6 +404,5 @@
   <!-- <script src="assets/angular-app/public/js/bootstrap-select.js.map"></script> -->
   <!-- <script src="assets/angular-app/public/js/owl.carousel.min.js"></script> -->
   </div>
-  <script src="assets/angular-app/public/js/main2.js"></script>
 </body>
 </html>

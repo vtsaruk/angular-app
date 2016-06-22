@@ -50,7 +50,6 @@ function girlsViewController ($document, $stateParams, $location, girlsService, 
   /*Функция зпускает карусель фото и видео*/
   this.caruselPhotoVideo = function() {
     var owl4 = $("#owl-demo4");
-
       owl4.owlCarousel({
           items : 1, //10 items above 1000px browser width
           itemsDesktop : [1000,2], //5 items between 1000px and 901px
@@ -59,28 +58,23 @@ function girlsViewController ($document, $stateParams, $location, girlsService, 
           pagination:true,
           itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
       });
-
       // Custom Navigation Events
       $(".profile-left-side-carousel .next").click(function(){
         owl4.trigger('owl.next');
       })
       $(".profile-left-side-carousel .prev").click(function(){
         owl4.trigger('owl.prev');
-      })
-      // }, 2000);
-
+      });
       setTimeout(function(){
         var owl5 = $("#owl-demo5");
-
         owl5.owlCarousel({
-            items : 4, //10 items above 1000px browser width
-            itemsDesktop : [1000,2], //5 items between 1000px and 901px
-            itemsDesktopSmall : [900,3], // betweem 900px and 601px
-            itemsTablet: [600,2], //2 items between 600 and 0
-            pagination:true,
-            itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+          items : 2, //10 items above 1000px browser width
+          itemsDesktop : [1000,3], //5 items between 1000px and 901px
+          itemsDesktopSmall : [900,4], // betweem 900px and 601px
+          itemsTablet: [600,4], //2 items between 600 and 0
+          pagination:true,
+          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
         });
-
         // Custom Navigation Events
         $(".profile-right-side-photos-container .next").click(function(){
           owl5.trigger('owl.next');
@@ -88,17 +82,28 @@ function girlsViewController ($document, $stateParams, $location, girlsService, 
         $(".profile-right-side-photos-container .prev").click(function(){
           owl5.trigger('owl.prev');
         })
+        $('.js-item').magnificPopup({
+          type: 'image',
+          gallery:{
+              enabled:true
+          }
+      })
         //}
-      }, 1500);
+
+    var popupImg = $('.js-item').length;
+    if (popupImg > 2) {
+        $('.js-item:gt(1)').parent().append('<div class="js-lock"></div>');
+        $('.js-item:lt(2)').addClass('js-notLocked');
+    };
+    $('.js-notLocked').magnificPopup({
+        type: 'image',
+        gallery:{
+            enabled:true
+        }
+    });
+    }, 1500);
   }
 /*Функция меняет название фотграфии подставляя _300_420_crop*/
-  // this.photoAvatar2 = function(arg) {
-  //   var photo = String(arg);
-  //   if(photo.length<64) {
-  //     photo = photo.slice(0, 51) + '_300_420_crop' + photo.slice(-4);
-  //   }
-  //   return photo;
-  // };
   this.photoAvatar2 = function(arg) {
     var photo = String(arg);
     photo = photo.slice(0, photo.length-4) + '_300_420_crop' + photo.slice(-4);
@@ -133,7 +138,14 @@ this.photosGirl = function(id) {
     var self = this;
     girlsService.getGirlPhoto(id).$promise.then(
       function(data) {
-        self.girlsPhotos = data;
+        self.photos = data.photos;
+        if(self.photos.length>3) {
+          for(var i=2; i<self.photos.length; i++) {
+          // i==0 || i==1? self.photos[i].lockPicture = false: self.photos[i].lockPicture = true;
+            self.photos[i].lockPicture = true;
+            console.log(self.photos[i]);
+          }
+        }
       },
       function(error) {
         console.log(error);

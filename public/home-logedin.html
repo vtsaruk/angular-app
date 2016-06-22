@@ -1,27 +1,16 @@
-<div class="home-logedin">
-
+<main class="home-logedin">
 <!-- filter girls -->
 <section class="filter-girls">
 <div class="filter-girls-wrap">
 	<div class="container">
-<!-- <div>{{ctrl.girlsAll.girls[0]}}</div> -->
+<!-- <div>{{ctrl.favoritGirls[0]}}</div> -->
+<!-- <div>{{ctrl.girlsAll[0]}}</div> -->
 
 		<div class="row">
 			<div class="col-md-12">
 				<div class="filter-girls-container">
-					<!-- filter-girls-top-menu -->
-					<div class="filter-girls-top-menu">
-						<ul class="clearfix">
-							<li><a href="#">Online Ladies</a></li>
-							<li><a href="#">New Ladies</a></li>
-							<li><a href="#">Top 50</a></li>
-							<li><a href="#">Favorites</a></li>
-							<li><a href="#">Upcoming Birthdays</a></li>
-
-						</ul>
-					</div>
 					<!-- vote-lady -->
-					<div class="vote-lady clearfix">
+					<div ng-show="ctrl.topFav" class="vote-lady clearfix">
 						<div class="col-md-4 please-take">
 							<h2>Please take some time to vote for your favorite lady!</h2>
 							<p>Ladies will see a list of who has voted for them, it's a quick way to let her know of your interest in her.</p>
@@ -39,7 +28,6 @@
 						</div>
 						<div class="col-md-1"><span class="or">or</span></div>
 						<div class="col-md-3">
-
 							<div class="girl-item">
 								<img src="assets/angular-app/public/img/vote-girl-2.jpg" alt="">
 								<div class="girls-info clearfix">
@@ -50,7 +38,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="filter-girls-filter clearfix">
+					<div class="filter-girls-filter clearfix" ng-hide="ctrl.filterGirls">
 						<div class="col-md-3 age-container">
 							<div class="age clearfix">
 								<p>Age</p>
@@ -95,16 +83,17 @@
 					</div>
           <!-- girls -->
 					<div class="girls clearfix">
-						<!-- girl-item -->
-						<div class="col-md-3"ng-repeat="girl in ctrl.girlsAll.girls">
+						<!-- girl-item All-Ladies-->
+						<div class="col-md-3" ng-repeat="girl in ctrl.girlsAll" ng-show="ctrl.girlsAll">
 							<div class="girl-item">
 								<img src="{{girl.photoAvatar}}" alt="">
 								<div class="girls-info clearfix">
 									<div class="girls-fix-info">
 										<ul class="tooltips-list">
 											<li>
-                        <p class="tooltips add-f">Add to favorites</p>
-                        <a href="#" class="add-f-icon"></a></li>
+                        <p  class="tooltips add-f">Add to favorites</p>
+                        <a ng-show="girl.user.additionalData.isInFavorites" href="" ng-click="ctrl.deleteFavoritStatus(girl.userId, $index)" class="add-f-icon2"></a>
+                        <a ng-hide="girl.user.additionalData.isInFavorites" href="" ng-click="ctrl.addfavoritStatus(girl.userId, $index)" class="add-f-icon"></a></li>
                       <li>
                         <p class="tooltips add-gift">Send a gift</p><a href="#" class="add-f-gift"></a></li>
                       <li>
@@ -115,7 +104,8 @@
                         <a href="/#/mail/{{girl.id}}" class="add-f-message"></a></li>
 										</ul>
 									</div>
-									<span class="status online"></span>
+                  <span class="status online"></span>
+									<!-- <span class="status offline"></span> -->
 									<div class="girl-info-cont">
                     <a href="/#/girl/{{girl.user.firstname}}-{{ctrl.agePerson(girl.user.birthdate)}}-{{girl.user.country.name}}-{{girl.user.city}}-{{girl.id}}">
                       <p>{{girl.user.firstname}}, {{ctrl.agePerson(girl.user.birthdate)}}</p>
@@ -123,32 +113,48 @@
                     </a>
 									</div>
                   <a href="#" class="like">
-                    <img src="assets/angular-app/public/img/like.png" alt=""></a>
+                    <img ng-show="girl.user.additionalData.isInFavorites" src="assets/angular-app/public/img/like.png" alt=""></a>
 								</div>
 							</div>
 						</div>
-						<!-- end girl-item -->
-
-
-
-
-
-
-
-
-
-
-
-
-
+						<!-- end girl-item All-Ladies-->
+            <!-- girl-item Favorites-Ladies-->
+            <div class="col-md-3" ng-repeat="girl in ctrl.favoritGirls" ng-show="ctrl.favoritGirls">
+              <div class="girl-item">
+                <img src="{{girl.photoAvatar}}" alt="">
+                <div class="girls-info clearfix">
+                  <div class="girls-fix-info">
+                    <ul class="tooltips-list">
+                      <li>
+                        <p  class="tooltips add-f">Add to favorites</p>
+                        <a ng-show="girl.additionalData.isInFavorites" href="" ng-click="ctrl.deleteFavoritStatus(girl.id, $index)" class="add-f-icon2"></a>
+                        <a ng-hide="girl.additionalData.isInFavorites" href="" ng-click="ctrl.addfavoritStatus(girl.id, $index)" class="add-f-icon"></a></li>
+                      <li>
+                        <p class="tooltips add-gift">Send a gift</p><a href="#" class="add-f-gift"></a></li>
+                      <li>
+                        <p class="tooltips add-chat">Chat</p>
+                        <a href="#" class="add-f-chat"></a></li>
+                      <li>
+                        <p class="tooltips add-message">Send message</p>
+                        <a href="/#/mail/{{girl.id}}" class="add-f-message"></a></li>
+                    </ul>
+                  </div>
+                  <span class="status online"></span>
+                  <div class="girl-info-cont">
+                    <a href="/#/girl/{{girl.user.firstname}}-{{ctrl.agePerson(girl.user.birthdate)}}-{{girl.user.country.name}}-{{girl.user.city}}-{{girl.id}}">
+                      <p>{{girl.firstname}}, {{ctrl.agePerson(girl.birthdate)}}</p>
+                      <p class="girl-location">{{girl.country.name}}, {{girl.city}}</p>
+                    </a>
+                  </div>
+                  <a href="#" class="like">
+                    <img ng-show="girl.additionalData.isInFavorites" src="assets/angular-app/public/img/like.png" alt=""></a>
+                </div>
+              </div>
+            </div>
+            <!-- end girl-item Favorites-Ladies-->
 </div>
-
-
-
-
-
 <!-- end girls -->
-<div class="girls-arrow" ng-hide="ctrl.buttonAdd" ng-click="ctrl.paginaGirl()" ng-model="ctrl.buttonAdd">
+<div class="girls-arrow" ng-show="ctrl.buttonAddGirls" ng-click="ctrl.paginaGirl()">
 <img src="assets/angular-app/public/img/girls-arrow.png" alt=""></div>
 </div>
 </div>
@@ -304,72 +310,23 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 			<div class="col-md-10 col-md-offset-1">
 				<div class="stories-container clearfix">
 				<div id="owl-demo2" class="owl-carousel owl-theme">
-<div class="item">
-
+          <div class="item" ng-repeat="story in ctrl.stories">
 					<div class="stories-left-side">
-						<img src="assets/angular-app/public/img/stories-happy.jpg" alt="">
-						<p class="stories-date">May, 2015</p>
+						<img src="{{story.path}}" alt="">
+						<p class="stories-date" ng-bind="story.date | date:'MMM, yyyy'"></p>
 					</div>
 					<div class="stories-right-side">
-						<p>Anna and Rick</p>
-						<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aliquipquia consequuntur magni dolores. eos qui ratione voluptatem sequi nesciunt.
-Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.</span>
-<a href="#">Read more...</a>
-					</div>
-				</div>
-
-			<div class="item">
-
-					<div class="stories-left-side">
-						<img src="assets/angular-app/public/img/stories-happy.jpg" alt="">
-						<p class="stories-date">May, 2015</p>
-					</div>
-					<div class="stories-right-side">
-						<p>Anna and Rick</p>
-						<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aliquipquia consequuntur magni dolores. eos qui ratione voluptatem sequi nesciunt.
-Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.</span>
-<a href="#">Read more...</a>
-					</div>
-				</div>
-
-			<div class="item">
-
-					<div class="stories-left-side">
-						<img src="assets/angular-app/public/img/stories-happy.jpg" alt="">
-						<p class="stories-date">May, 2015</p>
-					</div>
-					<div class="stories-right-side">
-						<p>Anna and Rick</p>
-						<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aliquipquia consequuntur magni dolores. eos qui ratione voluptatem sequi nesciunt.
-Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.</span>
-<a href="#">Read more...</a>
-					</div>
-				</div>
-
-			<div class="item">
-
-					<div class="stories-left-side">
-						<img src="assets/angular-app/public/img/stories-happy.jpg" alt="">
-						<p class="stories-date">May, 2015</p>
-					</div>
-					<div class="stories-right-side">
-						<p>Anna and Rick</p>
-						<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aliquipquia consequuntur magni dolores. eos qui ratione voluptatem sequi nesciunt.
-Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.</span>
-<a href="#">Read more...</a>
+						<p ng-bind="story.title"></p>
+						<span ng-bind="ctrl.sliceText(story.text)"></span>
+            <a href="/#/success-stories">Read more...</a>
 					</div>
 				</div>
 			</div>
 <!-- 			<div class="customNavigation">
 <a class="btn prev"></a>
 <a class="btn next"></a>
-
 </div> -->
 		</div>
-
 	</div>
 </section>
-</div>
-<script src="assets/angular-app/public/js/owl.carousel.min.js"></script>
-<script src="assets/angular-app/public/js/main2.js"></script>
-
+</main>

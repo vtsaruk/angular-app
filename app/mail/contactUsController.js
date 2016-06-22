@@ -17,6 +17,7 @@ function contactUsController ($anchorScroll, $rootScope, userService, contactUsS
       function(data) {
         self.user = data;
         $rootScope.global2 = data;
+        $rootScope.hrefLadies =false;
         $('.head_footer').show();
       },
       function(error) {
@@ -39,12 +40,6 @@ this.getUserData();
     this.feedback.message = '';
     this.feedback.subject = '';
   };
-/*Делаем обертку для select*/
-  $(document).ready(function(){
-    // setTimeout(function(){
-      // $('select').select2();
-    // }, 100);
-  });
 
   this.country = {};
   this.countries = [ // Taken from https://gist.github.com/unceus/6501985
@@ -61,6 +56,15 @@ this.getUserData();
     {name: 'Argentina', code: 'AR'},
     {name: 'Armenia', code: 'AM'},
     ];
+    $('.filter-girls-top-menu').hide();
+  $('body').on('click', function(event) {
+    if (event.target.className == 'show_filter_top_menu' ||
+      event.target.className == 'clearfix show_filter_top_menu') {
+      $('.filter-girls-top-menu').show();
+    } else {
+      $('.filter-girls-top-menu').hide();
+    }
+  });
 };
 
 

@@ -27,6 +27,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     userService.getUser().$promise.then(
       function(data) {
         $rootScope.global2 = data;
+        $rootScope.hrefLadies = false;
         self.user = data;
         $('.head_footer').show();
       },

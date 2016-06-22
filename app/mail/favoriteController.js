@@ -7,6 +7,7 @@ function favoriteController (formService, $scope, $timeout, userService, $rootSc
       function(data) {
         self.user = data;
         $rootScope.global2 = data;
+
         $('.head_footer').show();
       },
       function(error) {

@@ -1,39 +1,79 @@
 module.exports = mailController;
 
-function mailController ($document, $location, $timeout, $anchorScroll, mailService, userService , girlsService, $scope, $rootScope, girlsService) {
+function mailController ($document, $location, $timeout, $anchorScroll, mailService, userService , $scope, $rootScope, favoriteService, chatService) {
 
   this.showLetter = true;
-
-  this.girlsId = [];
-
-  this.girlsIdGet = function(recipientID) {
+  var self2 = this
+  self2.partners = [];
+  /*Функция отклоняет все предложения начать сесию в чате при logOut*/
+  $rootScope.logOut = function() {
     var self = this;
-    girlsService.getGirlsId(recipientID).$promise.then(
+    chatService.emit('getCurChatPartners', {});
+    chatService.on('addPartner', function (data) {
+      self2.partners[data.id] = data;
+      for(var i in self2.partners) {
+        if(self2.partners[i] && self2.partners[i].sessionId && (!self2.partners[i].startDateTime) && (self2.partners[i].isDeclined == 0) && (self2.partners[i].isCancelled == 0)){
+          chatService.emit('declineRequest', { sessionId: self2.partners[i].sessionId });
+        }
+      }
+    });
+  };
+
+  /*Функция присваивает фаворит статус для девушки*/
+  this.addfavoritStatus = function(id) {
+    var self = this;
+    var fd = new FormData();
+    fd.append('id', id);
+    favoriteService.addFavorStatus(fd, id).$promise.then(
       function(data) {
-        self.girlsId[recipientID] = data;
-        $location.path('/home/-ag-18-30-co-Ukraine');
-        console.log(self.girlsId);
+        if(self.messagesId)
+          self.messagesId.letter.sender.additionalData.isInFavorites = true;
+        for(var i =0; i<self.messages.letters.length; i++) {
+          if(self.messages.letters[i].sender.id==id)
+            self.messages.letters[i].sender.additionalData.isInFavorites = true;
+        }
       },
       function(error) {
         console.log(error);
       }
     );
   };
-
-/*Функция определяет возраст*/
+  this.hearRed = 'assets/angular-app/public/img/grey-like-message-grey.png';
+  this.hearGrey = 'assets/angular-app/public/img/grey-like-message.png';
+  this.mouseenterImgFav = function() {
+    this.hearGrey = 'assets/angular-app/public/img/grey-like-message.png'
+    this.hearRed = 'assets/angular-app/public/img/grey-like-message-grey.png';
+  };
+  this.mouseleaveImgFav = function() {
+    this.hearGrey = 'assets/angular-app/public/img/grey-like-message-grey.png';
+    this.hearRed = 'assets/angular-app/public/img/grey-like-message.png';
+  };
+  this.deleteFavoritStatus = function(id) {
+    var self = this;
+    favoriteService.deleteFavorStatus(id).$promise.then(
+      function(data) {
+        if(self.messagesId)
+          self.messagesId.letter.sender.additionalData.isInFavorites = false;
+        for(var i =0; i<self.messages.letters.length; i++) {
+          if(self.messages.letters[i].sender.id==id)
+            self.messages.letters[i].sender.additionalData.isInFavorites = false;
+        }
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+  /*Функция определяет возраст*/
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
   };
-/*Функция показывает меню выделения писем прочитанных, непрочитанных*/
+  /*Функция показывает меню выделения писем прочитанных, непрочитанных*/
   this.showSelectCheck = function() {
     this.showTumblerCheck = true;
     this.deletedSelect = false;
-    // var list = angular.element(document.getElementsByClassName('message-sort-dropdown'));
-    // for(var i=1; i<8; i+=2){
-    //   list[0].childNodes[i].childNodes[1].className = '';
-    // };
   };
-/*Функция в меню выделения писем прочитанных, непрочитанных показывает текущее состояние */
+  /*Функция в меню выделения писем прочитанных, непрочитанных показывает текущее состояние */
   this.removeClassTab = function(arg) {
     var list = angular.element(document.getElementsByClassName('message-tabs-item'));
     for(var i=0; i<list.length; i++){
@@ -41,38 +81,40 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     };
     list[arg].className = 'message-tabs-item active';
   };
-/*Функция показывает и скрывает фильтры по датам*/
+  /*Функция показывает и скрывает фильтры по датам*/
   this.showList = function(){
     this.listDiv = this.listDiv ? false : true;
   };
-/*Функция показывает и скрывает список возможностей в области отправки письма*/
+  /*Функция показывает и скрывает список возможностей в области отправки письма*/
   this.showFilter = function() {
     this.toDate = new Date();
     // var dateFrom = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*20);
     // this.fromDate = new Date(dateFrom);
     this.filterDiv = this.filterDiv ? false : true;
   };
-/*Функция запрашивает данные залогиненного пользователя*/
+  /*Функция запрашивает данные залогиненного пользователя*/
   this.getUserData = function () {
     var self = this;
     userService.getUser().$promise.then(
       function(data) {
         self.user = data;
+        chatService.emit('getCurChatPartners', {});
         $rootScope.global2 = data;
+        $rootScope.hrefLadies =false;
         self.userID = data.user.id;
         $('.head_footer').show();
       },
       function(error) {
         console.log(error);
+        $location.path('/home/-ag-18-30-co-Ukraine');
         $('.head_footer').show();
       }
     );
   };
 
   this.getUserData();
-/*Функция, отвечающая за параметры в запросе на получение писем*/
+  /*Функция, отвечающая за параметры в запросе на получение писем*/
   this.changeType = function (type) {
-
     this.resultFromDate = undefined;
     this.resultToDate = undefined;
     this.tumbler = true;
@@ -86,12 +128,11 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       this.showLetter = false
     else this.showLetter = true;
   };
-/*Функция запроса писем через сервис*/
+  /*Функция запроса писем через сервис*/
   this.getMessages = function () {
     if(this.tumbler==false) {
       this.tumbler=true
     }
-    // console.log(this.type);
     var self = this;
     var options = {
       dateTimeFrom: self.resultFromDate,
@@ -117,11 +158,6 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
           if(self.messages.letters[i].senderId==self.user.user.id) {
             self.messages.letters[i].isRead = true;
           }
-        //   // console.log(self.userID + ' : ' + self.messages.letters[i].recipientId)
-        //   if(self.userID!=self.messages.letters[i].recipientId) {
-        //     console.log(self.messages.letters[i].recipientId);
-        //     self.girlsIdGet(self.messages.letters[i].recipientId);
-        //   }
         }
       },
       function(error) {
@@ -140,7 +176,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
   this.firstNamberPagin = function() {
     var self = this;
     $timeout(function(){
-      if(self.arrIndex.length>0) {
+      if(self.arrIndex && self.arrIndex.length>0) {
         self.paginaAddClass(0);
       }
     },100);
@@ -198,7 +234,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
     $anchorScroll();
 
   };
-/*Функция возвращает кол-во непрочитанных писем с типом Inbox*/
+  /*Функция возвращает кол-во непрочитанных писем с типом Inbox*/
   this.getMessagesInboxLength = function() {
     var self = this;
     mailService.getMessagesLengthInbox().$promise.then(
@@ -211,13 +247,13 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
   };
 
   this.getMessagesInboxLength();
-/*Функция отвечает за стили письма в переписке*/
+  /*Функция отвечает за стили письма в переписке*/
   this.addClass = function(arg1, arg2, arg3) {
     if(arg3==false) {
       return 2;
     }else return arg1==arg2? 0:1;
   };
-/*Функция оплаты письма, чтобы прочитать его*/
+  /*Функция оплаты письма, чтобы прочитать его*/
   this.payment =function(id, partnerid) {
     var self = this;
     mailService.paymentLetter(id).$promise.then(
@@ -265,9 +301,16 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
         self.letterAllCorLength = self.letterCor.totalCount;
         self.countPage2 = self.letterAllCorLength / 20;
         self.totalPage2 = Math.ceil(self.countPage2);
+        // console.log(self.letterCor);
         if(self.totalPage2==1) {
           self.buttonAddLetter = true;
         }
+        for(var i=0; i<self.letterCor.letters.length; i++) {
+          if(self.letterCor.letters[i].senderId==self.user.user.id)
+          self.letterCor.letters[i].isRead = true;
+        }
+
+
       },
       function(error) {
         console.log(error);
@@ -287,7 +330,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
         this.buttonAddLetter = true;
     }
   };
-/*Функция обрезает текст письма, если в письме больше 90 символов*/
+  /*Функция обрезает текст письма, если в письме больше 90 символов*/
   this.switchMore = function(letterText) {
     if (letterText==null) {
       return false;}
@@ -295,7 +338,7 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       return false;
     } else return true;
   };
-/*Функция показавет весь текст письма в переписке*/
+  /*Функция показавет весь текст письма в переписке*/
   this.letterTextSlice = function(letterText, switchComment) {
     if (switchComment) {
        return letterText;
@@ -309,12 +352,12 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
       return letterText;
     }
   }
-/*Функция устанавливает позицию слева/справа для каритнки в переписке*/
+  /*Функция устанавливает позицию слева/справа для каритнки в переписке*/
   this.showSendMessage =function(senderId, userId) {
     return senderId==userId? true: false;
   }
   this.textArea = false;
-/*функция создаёт эффект моргания при отправке письма*/
+  /*функция создаёт эффект моргания при отправке письма*/
   this.textAreaTime = function() {
     var self = this;
     self.textArea = true;
@@ -325,12 +368,17 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
 /*Функция отправляет письмо по API*/
   this.addMessage = function(id) {
     var self = this;
-    var msg = {
-      text: this.newMessage,
-      recipientId: id,
-      type: 'box'
-    };
-    mailService.addMessage2(msg).$promise.then(
+    var fd = new FormData();
+    fd.append('text', this.newMessage);
+    fd.append('recipientId', id);
+    fd.append('type', 'box');
+    // var msg = {
+    //   text: this.newMessage,
+    //   recipientId: id,
+    //   type: 'box'
+    // };
+    mailService.addMessage2(fd).$promise.then(
+    // mailService.addMessage2(msg).$promise.then(
       function(data) {
         self.textAreaTime();
         self.newMessage = '';
@@ -533,12 +581,41 @@ function mailController ($document, $location, $timeout, $anchorScroll, mailServ
   this.removeSelectBox = function(){
     this.showTumblerCheck = false;
   };
+  /*Объект для input type=date*/
   this.dateOptions = {
     changeYear: true,
     changeMonth: true,
     yearRange: '1900:-0'
     };
+  /*Функция растягивает на всю ширину экрана, если две закладки для папок с письмами*/
+  this.autoWidthItem = function() {
+    var lengthMsg =$('.message-tabs-item').length;
+    if (lengthMsg == 4) {
+      $('.message-tabs-item').css('width', '49.9%');
+    } else {
+      $('.message-tabs-item').css('width', '24.9%');
+    };
+  };
+  this.autoWidthItem();
+  /*подгрузка писем в переписку*/
+  var self5 = this;
+  $(window).on('scroll', function(event) {
+    if(!self5.tumbler) {
+      if($(this).scrollTop()>2500 && self5.letterCor.letters.length<50) {
+        self5.paginaLetterCor();
+      }
+    }
+  });
+  $('.filter-girls-top-menu').hide();
+  $('body').on('click', function(event) {
+    if (event.target.className == 'show_filter_top_menu' ||
+      event.target.className == 'clearfix show_filter_top_menu') {
+      $('.filter-girls-top-menu').show();
+    } else {
+      $('.filter-girls-top-menu').hide();
+    }
+  });
 
 };
 
-mailController.$inject = ['$document', '$location', '$timeout', '$anchorScroll', 'mailService', 'userService', 'girlsService', '$scope', '$rootScope', 'girlsService'];
+mailController.$inject = ['$document', '$location', '$timeout', '$anchorScroll', 'mailService', 'userService', '$scope', '$rootScope', 'favoriteService', 'chatService'];

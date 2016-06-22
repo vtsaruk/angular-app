@@ -9,11 +9,11 @@
               <!-- <div class="message-tabs-item" ng-click="ctrl.changeType('introductions'); ctrl.removeClassTab(0); ctrl.firstNamberPagin()">
                 <p>Introductions</p>
               </div> -->
-              <div class="message-tabs-item active" ng-click="ctrl.changeType('inbox'); ctrl.removeClassTab(1); ctrl.firstNamberPagin()">
+              <div class="message-tabs-item active" ng-click="ctrl.changeType('inbox'); ctrl.removeClassTab(0); ctrl.firstNamberPagin()">
                 <p>Inbox <span ng-show="ctrl.messagesInbox.letters.length">({{ctrl.messagesInbox.totalNewCount}})</span></p>
               </div>
               <div class="message-tabs-item" ng-click="ctrl.changeType('outbox');
-              ctrl.removeClassTab(2); ctrl.firstNamberPagin()">
+              ctrl.removeClassTab(1); ctrl.firstNamberPagin()">
                 <p>Sent</p>
               </div>
               <!-- <div class="message-tabs-item" ng-click="ctrl.changeType('deleted');
@@ -65,28 +65,20 @@
               <a href="" class="on-last-week" ng-class="{true:'activ_message-filter'}[ctrl.onLastWeek]" ng-model="ctrl.onLastWeek" ng-click="ctrl.onLastWeekDate()">On last week</a>
               <div class="message-filter-select clearfix">
               <input ng-model="ctrl.fromDate" ui-date class="calendar_mail">
-                <!-- <select name="" id="" class="selectpicker">
-                  <option value="">From date</option>
-                  <option value="">19</option>
-                  <option value="">20</option>
-                  <option value="">21</option>
-                </select> -->
                 <span class="message-filter-select-line"></span>
                 <input ng-model="ctrl.toDate" ui-date class="calendar_mail">
-                <!-- <select name="" id="" class="selectpicker">
-                  <option value="">To Date</option>
-                  <option value="">31</option>
-                  <option value="">32</option>
-                  <option value="">33</option>
-                </select> -->
               </div>
-              <p><a href="" class="active" ng-class="{true:'activ_sort_button'}[ctrl.watchInputDate(ctrl.fromDate, ctrl.toDate)]" ng-click="ctrl.showDate()">Sort</a><a href="" ng-click="ctrl.resetSortDate()">Reset</a></p>
+              <p><a href="" class="active"
+                ng-class="{true:'activ_sort_button'}[ctrl.watchInputDate(ctrl.fromDate, ctrl.toDate)]"
+                ng-click="ctrl.showDate()">Sort</a>
+                <a href="" ng-click="ctrl.resetSortDate()">Reset</a>
+              </p>
   <!-- <div ng-click="ctrl.readTheLetter(19)">{{ctrl.messages.letters}}</div> -->
             </div>
-            <!-- <div>{{ctrl.messages.letters[5]}}</div> -->
+            <!-- <div>{{ctrl.messages.letters[1]}}</div> -->
             <div class="girls-messages">
              <div ng-repeat="messag in ctrl.messages.letters"
-                  ng-class="{'girls-message-item': messag.isRead==true, 'girls-message-item red-bg': messag.isRead==false, 'girls-message-item active': messag.deleted}">
+                  ng-class="{'girls-message-item': messag.additionalData.isRead==true, 'girls-message-item red-bg': messag.additionalData.isRead==false, 'girls-message-item active': messag.deleted}">
                 <div class="girls-messega-item-content">
                   <div class="girls-message-checkbox">
                   <label class="checkbox-1">
@@ -133,32 +125,26 @@
   </div>
 </main>
 
-
-
-
-
-
-
 <main class="page-message conversation chat-with-girl" ng-hide="ctrl.tumbler">
   <div class="container">
     <div class="row">
         <div class="col-md-12">
           <div class="main-content clearfix">
             <div class="message-tabs">
-              <div class="message-tabs-item" ng-click="ctrl.changeType('introductions');
+              <!-- <div class="message-tabs-item" ng-click="ctrl.changeType('introductions');
               ctrl.removeClassTab(0)">
                 <p>Introductions</p>
-              </div>
-              <div class="message-tabs-item" ng-click="ctrl.changeType('inbox'); ctrl.removeClassTab(1)">
+              </div> -->
+              <div class="message-tabs-item" ng-click="ctrl.changeType('inbox'); ctrl.removeClassTab(0)">
                 <p>Inbox <span ng-show="ctrl.messagesInbox.letters.length">({{ctrl.messagesInbox.totalNewCount}})</span></p>
               </div>
               <div class="message-tabs-item" ng-click="ctrl.changeType('outbox');
-              ctrl.removeClassTab(2)">
+              ctrl.removeClassTab(1)">
                 <p>Sent</p>
               </div>
-              <div class="message-tabs-item" ng-click="ctrl.changeType('deleted'); ctrl.removeClassTab(3)">
+              <!-- <div class="message-tabs-item" ng-click="ctrl.changeType('deleted'); ctrl.removeClassTab(3)">
                 <p>Deleted</p>
-              </div>
+              </div> -->
             </div>
             <div class="line"></div>
             <div class="girls-messages">
@@ -215,9 +201,7 @@
                   <li class="not-choose"><a href="#"><img src="assets/angular-app/public/img/grey-heart-in.png" alt="">Choose files</a><span>Someone name</span></li>
                   <li class="not-choose"><a href="#"><img src="assets/angular-app/public/img/grey-heart-in.png" alt="">Choose files</a><span>Someone name</span></li>
                 </ul>
-
                 <button class="btn-send" ng-click="ctrl.addMessage(ctrl.messagesId.letter.senderId)">Send</button>
-
               </div>
               <div class="history clearfix">
                 <h4><img src="assets/angular-app/public/img/clock-icon.png" alt="">Correspondence history</h4>
@@ -228,21 +212,8 @@
                 <a href="" class="on-last-week" ng-class="{true:'activ_message-filter'}[ctrl.onLastWeek]" ng-model="ctrl.onLastWeek" ng-click="ctrl.onLastWeekDate()">On last week</a>
                 <div class="message-filter-select clearfix">
                   <input ng-model="ctrl.fromDate" ui-date class="calendar_mail">
-
-                  <!-- <select name="" id="" class="selectpicker">
-                    <option value="">From date</option>
-                    <option value="">19</option>
-                    <option value="">20</option>
-                    <option value="">21</option>
-                  </select> -->
                   <span class="message-filter-select-line"></span>
                   <input ng-model="ctrl.toDate" ui-date class="calendar_mail">
-                  <!-- <select name="" id="" class="selectpicker">
-                    <option value="">To Date</option>
-                    <option value="">31</option>
-                    <option value="">32</option>
-                    <option value="">33</option>
-                  </select> -->
                 </div>
                 <p class="message-filter-sort-end">
                   <a href="" class="active" ng-class="{true:'activ_sort_button'}[ctrl.watchInputDate(ctrl.fromDate, ctrl.toDate)]" ng-click="ctrl.showDate()">Sort</a>
@@ -251,18 +222,14 @@
               </div>
 <!-- <div>{{ctrl.letterCor.letters[0]}}</div> -->
               <div class="dialog-container">
-                <!-- <div class=" clearfix" ng-class="{'dialog-item' : ctrl.addClass(ctrl.messagesId.message.Sender.id, letter.senderId)}"> -->
                 <div ng-repeat="letter in ctrl.letterCor.letters" ng-class="{1:'dialog-item dialog-item-out clearfix', 0:'dialog-item dialog-item-in clearfix'}[ctrl.addClass(ctrl.messagesId.letter.senderId, letter.senderId)]">
-                <!-- <div class="clearfix" ng-class="{ctrl.add ? 'dialog-item' : 'dialog-item-out'}"> -->
-
-                <!-- <div class="clearfix" ng-class="ctrl.add && 'dialog-item' || !ctrl.add &&'dialog-item-out'}"> -->
                   <img src="{{letter.sender.mainphoto.pathOfQuad}}" alt="" class="img-dialog">
                   <div class="girls-message-item-info open clearfix">
                     <div>
                       <a href=""><span>{{letter.sender.firstname}}</span></a>
                     </div>
                     <div class="clear"></div>
-                    <p class="girls-message-item-descr" ng-show="letter.isPaid" ng-model="ctrl.switchComment[$index]">{{ctrl.letterTextSlice(letter.additionalData.text, ctrl.switchComment[$index])}}
+                    <p class="girls-message-item-descr" ng-show="letter.isRead" ng-model="ctrl.switchComment[$index]">{{ctrl.letterTextSlice(letter.additionalData.text, ctrl.switchComment[$index])}}
                       <a ng-hide="ctrl.switchComment[$index] || ctrl.switchMore(letter.additionalData.text)" href="" ng-click="ctrl.switchComment[$index]=true" class="message-toggle">&nbsp;more<i class="fa fa-chevron-right"></i>
                       </a>
                       <a ng-show="ctrl.switchComment[$index] " href="" ng-click="ctrl.switchComment[$index]=false" class="message-toggle">&nbsp;hide<i class="fa fa-chevron-up"></i>
@@ -270,7 +237,6 @@
                     </p>
                     <p class="girl-message-date">{{letter.createdAt| date:'yyyy-MM-dd HH:mm'}}</p>
                     <a href="#" class="girl-message-photo"><img src="assets/angular-app/public/img/photo.png" alt="" class="mn-t-10"><span>3</span></a>
-                    <!-- <button class="btn-send" ng-click="ctrl.readTheLetter(letter.id, sender.senderId)">Read the letter</button> -->
                   </div>
                 </div>
 

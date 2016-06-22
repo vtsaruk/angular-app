@@ -1,9 +1,44 @@
 module.exports = chatController;
 var meConfig = require('../config');
 
-function chatController ($document, $location, chatService, userService, socketFactory, $rootScope) {
-
+function chatController ($document, $location, chatService, userService, socketFactory, $rootScope, favoriteService, $timeout) {
+  this.addFavorit = [];
+  this.mouseenterFav = function(index) {
+    this.addFavorit[index] = true;
+  };
+  this.mouseleaveFav = function(index) {
+    this.addFavorit[index] = false;
+  };
+  this.letterActiv = [];
+  this.mouseenterLetter = function(index) {
+    this.letterActiv[index] = true;
+  };
+  this.mouseleaveLetter = function(index) {
+    this.letterActiv[index] = false;
+  };
+  /*Функция присваивает фаворит статус для девушки*/
+  this.addfavoritStatus = function(id) {
+    var fd = new FormData();
+    fd.append('id', id);
+    favoriteService.addFavorStatus(fd, id);
+  };
   this.phtoPartner = meConfig.ioConnect;
+
+  var self2 = this
+  self2.partners = [];
+  /*Функция отклоняет все предложения начать сесию в чате при logOut*/
+  $rootScope.logOut = function() {
+    var self = this;
+    chatService.emit('getCurChatPartners', {});
+    chatService.on('addPartner', function (data) {
+      self2.partners[data.id] = data;
+      for(var i in self2.partners) {
+        if(self2.partners[i] && self2.partners[i].sessionId && (!self2.partners[i].startDateTime) && (self2.partners[i].isDeclined == 0) && (self2.partners[i].isCancelled == 0)){
+          chatService.emit('declineRequest', { sessionId: self2.partners[i].sessionId });
+        }
+      }
+    });
+  };
   /*Функция запрашивает данные пользователя через userService*/
   this.getUserData = function () {
     var self = this;
@@ -11,11 +46,13 @@ function chatController ($document, $location, chatService, userService, socketF
       function(data) {
         self.user = data;
         $rootScope.global2 = data;
+        $rootScope.hrefLadies =false;
         $('.head_footer').show();
         // self.getlogChat(self.user.user.id);
       },
       function(error) {
         console.log(error);
+        $location.path('/home/-ag-18-30-co-Ukraine');
         $('.head_footer').show();
       }
     );
@@ -126,7 +163,6 @@ function chatController ($document, $location, chatService, userService, socketF
   this.count = 0;
 /*Функция отресовавает день отправки письма*/
   this.functionDate = function(sentTimeMsg) {
-
     if(new Date().getTime() - new Date(sentTimeMsg).getTime() > new Date().getUTCHours()*3600*1000+ new Date().getMinutes()*60*1000) {
       // self2.count += 1;
       var day = '';
@@ -139,38 +175,29 @@ function chatController ($document, $location, chatService, userService, socketF
       return 'Yesterday';
     }
   };
-
-  self2.partners = {};
-/*Функция отслеживает событие-сигнал addPartner и записывает данные партнёров*/
-  chatService.on('addPartner', function (data) {
-    self2.partners[data.id] = data;
-    self2.partners[data.id].newLetters = false;
-
-    // console.log(self2 .partners);
-
-  });
-/*Функция делает сигнал-запрос на получение данных о партнёрах*/
+  /*Функция делает сигнал-запрос на получение данных о партнёрах*/
   chatService.emit('getCurChatPartners', {});
-/*Функция отправляет запрос на чат сессию без видео*/
+  /*Функция отправляет запрос на чат сессию без видео*/
   this.sendRequest = function(id) {
     chatService.emit('sendRequest', { partnerId: id, withVideo: false });
   };
-/*Функция подтверждение на сессию*/
+  /*Функция подтверждение на сессию*/
   this.approveRequest = function(Id) {
+    this.showButtonSend = true;
     // console.log(Id);
     chatService.emit('approveRequest', { sessionId: Id });
   };
-/*Функция отклоненея предлагаемой сессии*/
+  /*Функция отклоненея предлагаемой сессии*/
   this.declineRequest = function(Id) {
      // console.log(Id);
     chatService.emit('declineRequest', { sessionId: Id });
   };
-/*Функция окончания сессии*/
+  /*Функция окончания сессии*/
   this.endChatSession = function(Id) {
     // console.log(Id);
     chatService.emit('endChatSession', { sessionId: Id });
   };
-/*Функция отправляет сообщение в переписке*/
+  /*Функция отправляет сообщение в переписке*/
   this.sendMsg = function(Id, msg) {
     // console.log(Id + ' , ' + msg);
     this.notSendLetters[Id] = '';
@@ -180,18 +207,6 @@ function chatController ($document, $location, chatService, userService, socketF
 
   this.removePartner = function(Id) {
     chatService.emit('removePartner', { partnerId: Id });
-  };
-/*Функция выделяет выбранного партнёра в директориях online, request, recent*/
-  this.addClassActiv = function(index, number) {
-    if(index==0)
-      var index2 = 2;
-    else var index2 = index * 2 + 2;
-    var arr = angular.element(document.getElementsByClassName('box_directory'));
-    for(var i=2; i<arr[number].childNodes.length-2; i+=2) {
-      if(i==index2) {
-        arr[number].childNodes[i].className = 'main-members-item active clearfix';
-      } else arr[number].childNodes[i].className = 'main-members-item clearfix';
-    };
   };
   this.funcActivStatu = function(partner) {
     // console.log(partner.id);
@@ -219,12 +234,27 @@ function chatController ($document, $location, chatService, userService, socketF
         }
       }
     }
-  }
+  };
+  this.deleteStatusNew = function(partnerID) {
+    console.log(partnerID);
+  // chatService.emit('markAllMsgsAsRead', { partnerId: partnerID });
+  };
+  this.messages = [];
+  this.messages2 = [];
+  this.messages3 = [];
   /*Функция запрашивает переписку сообщений с выбранным партнёром*/
   this.correspondence = function(partner) {
+    // if(this.addMsgModel && this.partnerID==undefined) {
+    //   this.notSendLetters[partner.id] = this.addMsgModel
+    // };
+    // this.deleteStatusNew(partner.id);
+    // chatService.emit('markAllMsgsAsRead', { partnerId: partner.id });
+    if(partner.startDateTime && (!partner.ceaseDateTime)) {
+      this.showButtonSend = true;
+    } else this.showButtonSend = false;
     if(this.addMsgModel) {
       this.notSendLetters[this.partnerID] = this.addMsgModel;
-      this.addMsgModel = '';
+      // this.addMsgModel = '';
     }
     this.addMsgModel = this.notSendLetters[partner.id];
     this.namePartner = partner.firstname;
@@ -232,9 +262,7 @@ function chatController ($document, $location, chatService, userService, socketF
     this.sessionID = partner.sessionId;
     this.partnerAge = partner.age;
     this.photoAvatPartner = partner.photoAvatar;
-    this.messages = [];
-    this.messages2 = [];
-    this.messages3 = [];
+
     this.part[partner.id] = false;
     chatService.emit('getChatLogDeeper', { partnerId: partner.id });
   };
@@ -250,8 +278,18 @@ function chatController ($document, $location, chatService, userService, socketF
   });
   this.funcShow = function(arg) {
     return arg? true: false;
-  }
-/*Получение нового письма, только что написанного для пользователя в переписке*/
+  };
+  // chatService.on('inboundReqBadge', function(data) {
+  //   console.log(data);
+  // });
+
+  // chatService.on('inboundNewMsgBadge', function(data) {
+  //   console.log(data);
+  // });
+  this.deleteStatusNew = function(partnerID) {
+  chatService.emit('markAllMsgsAsRead', { partnerId: partnerID });
+  };
+  /*Получение нового письма, только что написанного для пользователя в переписке*/
   chatService.on('newMsg', function(data) {
     if(self2.partnerID!=data.partnerId) {
       self2.part[data.partnerId] = { newLetters: true };
@@ -278,23 +316,108 @@ function chatController ($document, $location, chatService, userService, socketF
   };
 
   this.namePartnerFunc = function() {
-    // console.log(self2.partners[self2.partnerID].sessionId);
+    if(self2.partnerID && self2.partners[self2.partnerID].firstname)
     return self2.partners[self2.partnerID].firstname;
-  }
+  };
+  this.allRequestDec = function(data) {
+    for(var key in data) {
+      if(data[key].sessionId && !data[key].startDateTime) {
+        chatService.emit('declineRequest', { sessionId: data[key].sessionId });
+        chatService.emit('cancelRequest', { sessionId: data[key].sessionId })
+      }
+    }
+    // (partner.sessionId && (!partner.startDateTime) &&(partner.isInitByBoy!=0) && (partner.isDeclined == 0) && (partner.isCancelled == 0))
+  };
 
 
+
+
+  // for(var i=this.offsetForReq; i<arr.length; i++) {
+  //     var res = arr[i];
+  //     var index = Math.floor(Math.random() * (arr.length - this.offsetForReq) + this.offsetForReq);
+  //     if(!resArr[index]) {
+  //       resArr[index] = res;
+  //     } else i-=1;
+  //   };
+  self2.online
+  self2.arrPartData = [];
+  self2.partners = {};
+  self2.arrParners = [];
+/*Функция отслеживает событие-сигнал addPartner и записывает данные партнёров*/
+  chatService.on('addPartner', function (data) {
+    self2.partners[data.id] = data;
+    self2.partners[data.id].newLetters = false;
+    self2.arrParners[data.id] = data;
+
+    for(var key in self2.partners) {
+        // self2.partners[key].isOnline = true;
+      if(self2.partners[key] && self2.partners[key].id==self2.partnerID && self2.partners[key].startDateTime && self2.partners[key].ceaseDateTime) {
+        self2.showButtonSend = false;
+      };
+      if(self2.partners[key] && self2.partners[key].id==self2.partnerID && self2.partners[key].startDateTime && (!self2.partners[key].ceaseDateTime)) {
+        self2.showButtonSend = true;
+      };
+      if(self2.partners[key] && self2.partners[key].startDateTime && (!self2.partners[key].ceaseDateTime) && (!self2.partners[key].isOnline)) {
+        self2.endChatSession(self2.partners[key].sessionId);
+      };
+      if(self2.partners[key] && self2.partners[key].sessionId && (!self2.partners[key].startDateTime) && (self2.partners[key].isDeclined == 0) && (self2.partners[key].isCancelled == 0) && (!self2.partners[key].isOnline)){
+        chatService.emit('declineRequest', { sessionId: self2.partners[key].sessionId });
+      };
+    };
+    // for(var i=0; i<self2.partners.length; i++) {
+      // if(self2.partners[i] && self2.partners[i].id==self2.partnerID && self2.partners[i].startDateTime && self2.partners[i].ceaseDateTime) {
+      // }
+        // console.log(self2.partners[i].id);
+    // }
+  });
+  this.randomNum = function(arr, resArr) {
+    for(var i=0; i<arr.length; i++) {
+      var res = arr[i];
+      var index = Math.floor(Math.random() * arr.length);
+      if(!resArr[index]) {
+        resArr[index] = res;
+      } else i-=1;
+    };
+  };
+
+
+  this.randomArr = function() {
+    self2.arrPartData = [];
+    for(var key in self2.partners) {
+      self2.arrPartData.push(self2.partners[key]);
+    };
+    self2.resultArr = [];
+    self2.randomNum(self2.arrPartData, self2.resultArr);
+    // console.log(self2.resultArr);
+  };
+  self2.arrPartData2 = [];
+  self2.resultArr2 = [];
+  this.randomArr2 = function(arr, resArr, arrPart) {
+    arr = [];
+    for(var key in arrPart) {
+      arr.push(arrPart[key]);
+    };
+    resArr = [];
+    self2.randomNum(arr, resArr);
+    // console.log(resArr);
+  };
+  // this.randomArr();
+  $timeout(this.randomArr2(self2.arrPartData2, self2.resultArr2, self2.partners), 3000);
 /*Функция ослеживает сообытие scroll и добавляет письма*/
-  //jQuery(function($) {
     $('.chat-box').on('scroll', function(event) {
-        // console.log(event);
         if($(this).scrollTop() + $(this).innerHeight() + 100 >= $(this)[0].scrollHeight) {
-          // console.log('end reached');
-          // console.log(self2.partnerID + ' , ' + self2.lastMessageID);
           chatService.emit('getChatLogDeeper', { partnerId: self2.partnerID, lastMsgId:self2.lastMessageID });
         }
     });
-  //});
-
+  $('.filter-girls-top-menu').hide();
+  $('body').on('click', function(event) {
+    if (event.target.className == 'show_filter_top_menu' ||
+      event.target.className == 'clearfix show_filter_top_menu') {
+      $('.filter-girls-top-menu').show();
+    } else {
+      $('.filter-girls-top-menu').hide();
+    }
+  });
 };
 
-chatController.$inject = ['$document', '$location', 'chatService', 'userService', 'socketFactory', '$rootScope'];
+chatController.$inject = ['$document', '$location', 'chatService', 'userService', 'socketFactory', '$rootScope', 'favoriteService', '$timeout'];

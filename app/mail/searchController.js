@@ -1,7 +1,19 @@
 module.exports = searchController;
 
-function searchController ($document, $location, $stateParams, $rootScope, $timeout, userService, searchService, girlsAllService, girlsService) {
+function searchController ($document, $location, $stateParams, $rootScope, $timeout, userService, searchService, girlsAllService, girlsService, favoriteService, chatService) {
 
+  /*Функция присваивает фаворит статус для девушки*/
+  this.addfavoritStatus = function(id, index) {
+    // this.girlsAll[index].user.additionalData.isInFavorites = true;
+    var fd = new FormData();
+    fd.append('id', id);
+    favoriteService.addFavorStatus(fd, id);
+  };
+  /*Функция убирает фаворит статус у девушки*/
+  this.deleteFavoritStatus = function(id, index) {
+    favoriteService.deleteFavorStatus(id);
+    // this.girlsAll[index].user.additionalData.isInFavorites = false;
+  };
   /*Функция обертка забирает число из значения где есть символ '/'*/
   this.getNumberInModel = function(data) {
     if(data) {
@@ -22,7 +34,7 @@ function searchController ($document, $location, $stateParams, $rootScope, $time
       var corMessage = newMessage.slice(0, 60);
       return corMessage + '...';
     } else return newMessage;
-  }
+  };
   /*Функция дописывает втрое значение, когда выбрано один параметр, а нужно передавать два параметра*/
   this.dataUndefined2 = function(model, value, model2) {
     if (model2 && model2.name && !model) {
@@ -35,11 +47,29 @@ function searchController ($document, $location, $stateParams, $rootScope, $time
   var urlData = $stateParams.id
   var urlId = urlData.replace(/\*/g, "\/");
 
+  var self2 = this
+  self2.partners = [];
+  /*Функция отклоняет все предложения начать сесию в чате при logOut*/
+  $rootScope.logOut = function() {
+    var self = this;
+    chatService.emit('getCurChatPartners', {});
+    chatService.on('addPartner', function (data) {
+      self2.partners[data.id] = data;
+      for(var i in self2.partners) {
+        if(self2.partners[i] && self2.partners[i].sessionId && (!self2.partners[i].startDateTime) && (self2.partners[i].isDeclined == 0) && (self2.partners[i].isCancelled == 0)){
+          chatService.emit('declineRequest', { sessionId: self2.partners[i].sessionId });
+        }
+      }
+    });
+  };
+
   this.getUserData = function () {
     var self = this;
     userService.getUser().$promise.then(
       function(data) {
+        chatService.emit('getCurChatPartners', {});
         $rootScope.global2 = data;
+        $rootScope.hrefLadies = false;
         self.user = data;
         $('.head_footer').show();
         $('.search-right-side-girls-item').mouseenter(function(){
@@ -137,10 +167,7 @@ function searchController ($document, $location, $stateParams, $rootScope, $time
   this.zodiacSignModel = { name: this.urlParsing2('-zs-', 4) };
   this.cityModel = { name: this.urlParsing2('-ct-', 4) };
 
-// console.log('11111111111');
-// console.log(this.heightFromModel);
 
-// this.arrURL = initializesArray();
     this.arrURL = [];
     this.arrURL[0] = ['ag', this.birthdateFromModel.name + "-" + this.birthdateToModel.name];
     this.arrURL[1] = ['co', this.countryModel.name];
@@ -190,28 +217,15 @@ function searchController ($document, $location, $stateParams, $rootScope, $time
     var resultURL = keyValURL.slice(0, keyValURL.length-1);
     var resultURL2 = resultURL.replace(/ /g, "_");
     var resultURL3 = resultURL2.replace(/\//g, "*");
+    this.girlsAll2 = [];
+    this.girlsAll0 = [];
     $location.path('/search/' + '-' + resultURL3);
   }
 /*Функция определяет возраст*/
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;
   };
-/*Функция запрашивает страны у сервиса girlsAllService*/
-  this.getCountries = function() {
-    var self = this;
-    girlsAllService.getCountries().$promise.then(
-      function(data) {
-        self.countries = data;
-        // $('select').select2();
-        self.searchGirls()
-      },
-      function(error) {
-        console.log(error);
-      }
-    );
-  };
 
-  this.getCountries();
 /**/
   this.setCountryId = function() {
     this.arrCountries = this.countries.countries;
@@ -237,9 +251,43 @@ this.birthdateFromAge = function() {
   var arrRes2 = new String(resToDate).split(' ');
   this.birthdateFrom = arrRes2[3] + '-' + resMonth + '-' + arrRes2[2];
 };
+  this.paginCount = 16;
+  this.girlsAll = [];
+  this.offsetForReq = 0;
+  this.girlsAll2 = [];
+  this.girlsAll0 = [];
+  /*Функция перестраивает массив и записывает в другой*/
+  this.randomNum = function(arr, resArr) {
+    for(var i=this.offsetForReq; i<arr.length; i++) {
+      var res = arr[i];
+      var index = Math.floor(Math.random() * (arr.length - this.offsetForReq) + this.offsetForReq);
+      if(!resArr[index]) {
+        resArr[index] = res;
+      } else i-=1;
+    };
+  };
+  this.functionPa = function(arr) {
+    if(arr && arr.length>16) {
+      this.girlsAll = arr.slice(0, this.paginCount);
+    } else this.girlsAll = arr;
+  };
+  this.addPhotoGirl = function(arr) {
+    if(arr && arr.length) {
+      for(var i=0; i<arr.length; i++) {
+        if(arr[i].user &&
+        arr[i].user.mainphoto &&
+        arr[i].user.mainphoto.pathOfQuad &&
+        arr[i].user.mainphoto.pathOfQuad!=null) {
+        var photo = arr[i].user.mainphoto.pathOfQuad;
+        arr[i].photoAvatar = photo.slice(0, photo.length-4) + '_220_220_auto' + photo.slice(-4);;
+        } else arr[i].photoAvatar = null;
+      }
+    }
+  };
+
 
   this.searchGirls = function() {
-    this.setCountryId();
+
     this.birthdateFromAge();
     var self = this;
     var options = {
@@ -265,26 +313,23 @@ this.birthdateFromAge = function() {
       childrenNumberFrom: this.dataUndefined(this.childrenNumberFromModel),
       childrenNumberTo: this.dataUndefined(this.childrenNumberToModel),
       lookingFor: this.dataUndefined(this.lookingForModel),
-      limit: self.limit,
-      offset: 0
+      limit: 50,
+      offset: this.offsetForReq
     };
+    // console.log(options);
     searchService.getSearch(options).$promise.then(
       function(data) {
-        self.girlsAll = data;
-        self.resultGirls = self.girlsAll.girls
-        self.gillsLength = self.girlsAll.totalCount;
-        self.countPage = self.gillsLength / 16;
-        self.totalPage = Math.ceil(self.countPage);
-        // self.girlsAll.girls[0].user.mainphoto.pathOfQuad=null
-        for(var i=0; i<self.girlsAll.girls.length; i++) {
-          if(self.girlsAll.girls[i].user &&
-            self.girlsAll.girls[i].user.mainphoto &&
-            self.girlsAll.girls[i].user.mainphoto.pathOfQuad &&
-            self.girlsAll.girls[i].user.mainphoto.pathOfQuad!=null) {
-            var photo = self.girlsAll.girls[i].user.mainphoto.pathOfQuad;
-            self.girlsAll.girls[i].photoAvatar = photo.slice(0, photo.length-4) + '_150_150_auto' + photo.slice(-4);
-          } else self.girlsAll.girls[i].photoAvatar = null;
-        }
+        self.girlTotal = data.totalCount;
+        for(var i=0; i<data.girls.length; i++) {
+          self.girlsAll0.push(data.girls[i]);
+        };
+        self.randomNum(self.girlsAll0, self.girlsAll2);
+        self.functionPa(self.girlsAll2);
+        self.addPhotoGirl(self.girlsAll);
+        if(self.paginCount<self.girlTotal) {
+          self.buttonAddGirls = true;
+        } else self.buttonAddGirls = false;
+
         if(self.countryModel && self.countryModel.name==null) self.countryModel = undefined;
         if(self.birthdateFromModel && self.birthdateFromModel.name==null) self.birthdateFromModel = undefined;
         if(self.birthdateToModel && self.birthdateToModel.name==null) self.birthdateToModel = undefined;
@@ -314,18 +359,20 @@ this.birthdateFromAge = function() {
       }
     );
   };
-
-  this.page = 0;
-  this.limit = 16;
-/*Функция добавляет девушек*/
- this.paginaGirl = function() {
-     if (this.totalPage){
-      this.page += 1;
-      this.limit += 16;
+/*Функция пагинации - добавляем, пока есть кого добавлять*/
+   this.paginaGirl = function() {
+    this.paginCount += 16;
+    if(this.paginCount>this.offsetForReq + 50) {
+      this.offsetForReq += 50;
       this.searchGirls();
-      if(this.page==this.totalPage)
-        this.buttonAdd = true;
+      };
+    if(this.paginCount>this.offsetForReq || this.paginCount==this.offsetForReq) {
+      this.functionPa(this.girlsAll2);
+      this.addPhotoGirl(this.girlsAll);
     };
+    if(this.girlsAll2 && this.paginCount<this.girlTotal) {
+      this.buttonAddGirls = true;
+    } else this.buttonAddGirls = false;
   };
 /*Функция получает имена девушек для отображения в select*/
   this.searchGirlId = function(id) {
@@ -335,12 +382,14 @@ this.birthdateFromAge = function() {
         self.girlsAll = data;
         if(self.girlsAll.girl) {
           self.res = self.girlsAll.girl
-          self.resultGirls = [];
-          self.resultGirls[0] = self.res;
-        } else self.resultGirls = [];
+          self.girlsAll = [];
+          self.girlsAll[0] = self.res;
+          self.addPhotoGirl(self.girlsAll);
+        } else self.girlsAll = [];
       },
       function(error) {
         console.log(error);
+        self.girlsAll = [];
       }
     );
   };
@@ -384,7 +433,7 @@ this.birthdateFromAge = function() {
     if(index==17) this.cityModel.name = null;
     this.searchGirlsURL();
   };
-/*Функция получает имена девушек для отображения в select*/
+  /*Функция получает имена девушек для отображения в select*/
   this.allNamesGirls = function() {
     var self = this;
     userService.getUsersNames().$promise.then(
@@ -394,7 +443,6 @@ this.birthdateFromAge = function() {
         for(var i=0; i<self.dataNames.length; i++) {
           self.namesGirls[i] = { id:i, name: self.dataNames[i] };
         };
-        // console.log(self.namesGirls);
       },
       function(error) {
         console.log(error);
@@ -404,7 +452,25 @@ this.birthdateFromAge = function() {
 
   this.allNamesGirls();
 
-/*Фукция сооставляет массив данных по росту для select*/
+  /*Функция запрашивает страны у сервиса girlsAllService*/
+  this.getCountries = function() {
+    var self = this;
+    girlsAllService.getCountries().$promise.then(
+      function(data) {
+        self.countries = data;
+        self.countries.countries.unshift({ id: 0, name: 'All countries' });
+        self.setCountryId();
+        self.searchGirls();
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+
+  this.getCountries();
+
+  /*Фукция сооставляет массив данных по росту для select*/
   this.makeHeights =  function() {
     var arrListHieght = [];
     var count = 149;
@@ -418,15 +484,6 @@ this.birthdateFromAge = function() {
   };
 /*Фукция сооставляет массив данных по росту для select*/
   this.arrHieghts = [];
-  this.arrHeightsFunction =  function() {
-    var count = 149;
-    var countR = 4.9;
-    for(var i=0; i<12; i++) {
-      count +=3;
-      countR +=0.1;
-      this.arrHieghts[i] = { name: countR.toFixed(1) + '/' + count };
-    }
-  };
 
   this.arrHieghts[0] = { name: '4\'11\"/149' };
   this.arrHieghts[1] = { name: '4\'11\"/150' };
@@ -506,7 +563,7 @@ this.makeAge = function() {
   this.makeAge();
   /*Функция убирает все выбранные параметры для поиска*/
   this.clearDataSearch = function() {
-    $location.path('/search/-ag-18-30');
+    $location.path('/search/-ag-18-30-co-All_countries');
   };
 /*Массив данных по весу для select*/
   this.arrWeights = [];
@@ -667,7 +724,15 @@ this.makeAge = function() {
     photo = photo.slice(0, photo.length-4) + '_150_150_auto' + photo.slice(-4);
     return photo;
   };
-
+  $('.filter-girls-top-menu').hide();
+  $('body').on('click', function(event) {
+    if (event.target.className == 'show_filter_top_menu' ||
+      event.target.className == 'clearfix show_filter_top_menu') {
+      $('.filter-girls-top-menu').show();
+    } else {
+      $('.filter-girls-top-menu').hide();
+    }
+  });
 };
 
-  searchController.$inject = ['$document', '$location','$stateParams', '$rootScope', '$timeout', 'userService', 'searchService', 'girlsAllService','girlsService'];
+  searchController.$inject = ['$document', '$location','$stateParams', '$rootScope', '$timeout', 'userService', 'searchService', 'girlsAllService','girlsService', 'favoriteService', 'chatService'];

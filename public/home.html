@@ -1,4 +1,4 @@
-<div class="home-page">
+<main class="home-page">
 <!-- promo -->
 <div class="promo">
 <div class="container">
@@ -130,7 +130,7 @@
 					</div>
 					<!-- girls -->
 					<div class="girls clearfix">
-            <div class="col-md-3"ng-repeat="girl in ctrl.girlsAll.girls">
+            <div class="col-md-3"ng-repeat="girl in ctrl.girlsAll">
               <div class="girl-item">
                 <img src="{{girl.photoAvatar}}" alt="">
                 <div class="girls-info clearfix">
@@ -177,7 +177,7 @@
 <!-- end girl-item -->
 </div>
 <!-- end girls -->
-<div class="girls-arrow" ng-hide="ctrl.buttonAdd" ng-click="ctrl.paginaGirl()" ng-model="ctrl.buttonAdd">
+<div class="girls-arrow" ng-show="ctrl.buttonAddGirls" ng-click="ctrl.paginaGirl()">
 <img src="assets/angular-app/public/img/girls-arrow.png" alt=""></div>
 </div>
 </div>
@@ -333,72 +333,26 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
       <div class="col-md-10 col-md-offset-1">
         <div class="stories-container clearfix">
         <div id="owl-demo2" class="owl-carousel owl-theme">
-<div class="item">
-
+          <div class="item" ng-repeat="story in ctrl.stories">
           <div class="stories-left-side">
-            <img src="assets/angular-app/public/img/stories-happy.jpg" alt="">
-            <p class="stories-date">May, 2015</p>
+            <img src="{{story.path}}" alt="">
+            <p class="stories-date" ng-bind="story.date | date:'MMM, yyyy'"></p>
           </div>
           <div class="stories-right-side">
-            <p>Anna and Rick</p>
-            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aliquipquia consequuntur magni dolores. eos qui ratione voluptatem sequi nesciunt.
-Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.</span>
-<a href="#">Read more...</a>
-          </div>
-        </div>
-
-      <div class="item">
-
-          <div class="stories-left-side">
-            <img src="assets/angular-app/public/img/stories-happy.jpg" alt="">
-            <p class="stories-date">May, 2015</p>
-          </div>
-          <div class="stories-right-side">
-            <p>Anna and Rick</p>
-            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aliquipquia consequuntur magni dolores. eos qui ratione voluptatem sequi nesciunt.
-Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.</span>
-<a href="#">Read more...</a>
-          </div>
-        </div>
-
-      <div class="item">
-
-          <div class="stories-left-side">
-            <img src="assets/angular-app/public/img/stories-happy.jpg" alt="">
-            <p class="stories-date">May, 2015</p>
-          </div>
-          <div class="stories-right-side">
-            <p>Anna and Rick</p>
-            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aliquipquia consequuntur magni dolores. eos qui ratione voluptatem sequi nesciunt.
-Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.</span>
-<a href="#">Read more...</a>
-          </div>
-        </div>
-
-      <div class="item">
-
-          <div class="stories-left-side">
-            <img src="assets/angular-app/public/img/stories-happy.jpg" alt="">
-            <p class="stories-date">May, 2015</p>
-          </div>
-          <div class="stories-right-side">
-            <p>Anna and Rick</p>
-            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco aliquipquia consequuntur magni dolores. eos qui ratione voluptatem sequi nesciunt.
-Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.</span>
-<a href="#">Read more...</a>
+            <p ng-bind="story.title"></p>
+            <span ng-bind="ctrl.sliceText(story.text)"></span>
+            <a href="/#/success-stories">Read more...</a>
           </div>
         </div>
       </div>
 <!--      <div class="customNavigation">
 <a class="btn prev"></a>
 <a class="btn next"></a>
-
 </div> -->
     </div>
-
   </div>
 </section>
-</div>
+</main>
   <script src="assets/angular-app/public/js/owl.carousel.min.js"></script>
   <script src="assets/angular-app/public/js/main2.js"></script>
 

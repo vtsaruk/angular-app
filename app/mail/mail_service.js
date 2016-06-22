@@ -18,11 +18,8 @@ function mailService ($resource) {
       },
       saveMesg: {
           method: 'POST',
-          params: {
-            type: '@type',
-            text: '@text',
-            recipientId: '@recipientId'
-          },
+          transformRequest: angular.identity,
+          headers: { 'Content-Type': undefined }
         },
       update: {
         method: 'PATCH',
@@ -38,9 +35,9 @@ function mailService ($resource) {
       }
       }
     });
-  //this.mService = mailResource;
-  this.addMessage2 = function (msg) {
-    return mailResource.saveMesg(msg);
+
+  this.addMessage2 = function (fd) {
+    return mailResource.saveMesg( {}, fd);
   };
 
   this.paymentLetter = function(id) {
@@ -53,13 +50,15 @@ function mailService ($resource) {
 
   this.getAllMessages = function (options) {
     return mailResource.get({
+      recipientId: options.recipientId,
+      senderId: options.senderId,
+      userId: options.userId,
       dateTimeFrom: options.dateTimeFrom,
       dateTimeTo: options.dateTimeTo,
       type: options.type,
       limit: options.limit,
       offset: options.offset,
       relations: '{"recipient": {"country": {}, "mainphoto": {}, "girl": {} }, "sender": { "country": {}, "girl": {}, "mainphoto": {} } }'
-      // relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'
     });
   };
 
@@ -78,12 +77,10 @@ function mailService ($resource) {
     });
   };
 
-  // this.correspondenceGet = function(id, timeFrom, timeTo) {
-  //   return mailResource.get({partnerId:id, dateTimeFrom: timeFrom, dateTimeTo: timeTo, relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'})
-  // };
-
   this.correspondenceGet = function(options) {
     return mailResource.get({
+      userId: options.userId,
+      partnerId: options.partnerId,
       dateTimeFrom: options.dateTimeFrom,
       dateTimeTo: options.dateTimeTo,
       limit: options.limit,
@@ -91,6 +88,9 @@ function mailService ($resource) {
       partnerId: options.partnerId,
       relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'
     })
+  };
+  this.correspondenceGet2 = function(options) {
+    return mailResource.get({ userId: options.userId, recipientId: options.recipientId })
   };
 
   this.deleteMessage = function (id) {
@@ -101,9 +101,7 @@ function mailService ($resource) {
     return mailResource.save(message);
   };
 
-
   return this;
 };
-
 
 mailService.$inject = ['$resource'];

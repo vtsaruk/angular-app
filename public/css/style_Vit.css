@@ -1,3 +1,9 @@
+.search .main-content .search-right-side .search-right-side-results-container h3 {
+  margin-top: 0px !important;
+};
+.search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-list {
+  display: block !important;
+}
 .head_footer {
   display: none;
 }
@@ -30,13 +36,47 @@
   text-align: center;
   border-radius: 5px;
 }
-
+main .main-content .main-content-left .main-members-list .main-members-wrap .main-members-item-ava img{
+  width: 60px !important;
+}
 .message-sort-dropdown li a:hover {
   color:#9e0039 !important;
 }
 .text_width {
   font-weight: 900 !important;
 }
+.favor_girl{
+  background: url(../img/grey-like-message-grey.png) no-repeat !important;
+}
+.favor_girl:hover{
+  background: url(../img/grey-like-message.png) no-repeat !important;
+}
+.tooltips-list li .add-f-icon2{
+  width: 20px;
+  height: 18px;
+  display: block;
+  background: url(../img/grey-like-message-grey.png) no-repeat;
+}
+.tooltips-list li .add-f-icon2:hover {
+  background: url(../img/grey-like-message.png) no-repeat;
+}
+
+.search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-list li .heart2 {
+  background: url(../img/grey-like-message-grey.png) no-repeat;
+}
+.search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-list li .heart2 .tooltipps {
+  width: 120px;
+}
+.search .main-content .search-right-side .search-right-side-girls-item .search-right-side-girls-item-list li .heart2:hover {
+  background: url(../img/grey-like.png) no-repeat;
+}
+.tooltips-list li .add-f-icon2 {
+  width: 20px;
+  height: 18px;
+  display: block;
+  background: url(../img/grey-like-message-grey.png) no-repeat; }
+.tooltips-list li .add-f-icon2:hover {
+  background: url(../img/grey-like-message.png) no-repeat; }
 
 .not_check_box {
   /*display: none !important;*/
@@ -93,5 +133,51 @@
   display: inline-block;
 };
 
+.actv {
+  width: 20px;
+  height: 18px;
+  display: block;
+  background: url(../img/grey-like-message-grey.png) no-repeat !important;
+}
+.window_for_photos{
+  height: 600px;
+  width: 800px;
+  margin: 50px;
+}
+.margin_but {
+  display: block;
+  margin: 10px;
+  position: absolute;
+  left:900px;
+}
+.displ_none {
+  display: none !important;
+}
+.box_change_avatar {
+  height: 600px;
+  min-width: 1000px;
+  position: fixed;
+  background: red;
+  top:10px;
+  left:200px;
+}
+footer{
+  /*padding-top: 45px;*/
+}
+.main {
+  /*padding: 10px 0 0 0  !important;*/
+}
+.selectize-dropdown, .selectize-input, .selectize-input input {
+  font-size: 18px !important;
+}
 
+.selectize-input{
+  padding: 9px 9px;
+  font-family: HelveticaLt;
+  /*src: url(../fonts/HelveticaNeueLTW1G-Bd_0.otf);*/
+  font-weight: 500;
+}
+.blue_remove {
+  background: #c7ebf3 !important;
+}
 

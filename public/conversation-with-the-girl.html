@@ -21,11 +21,8 @@
 						</div> -->
 						<div class="line"></div>
 						<div class="girls-messages">
-            <!-- <div>{{ctrl.girlsId.girl.userId}}</div> -->
+            <!-- <div>{{ctrl.girlsId.girl.user.id}}</div> -->
             <!-- <div>{{ctrl.letterCor}}</div> -->
-
-
-
  <div class="girls-message-item" ng-show="ctrl.messagesId.letter.additionalData.text">
 								<div class="girls-message-checkbox">
 									<label class="checkbox-1">
@@ -75,15 +72,15 @@
 
 								<p class="area-info">Files in GIF, JPG and PNG maximum 4096 KB size. Attach TWO photos for free. 10 credits will be deducted from your account for each additional photo</p>
 								<div class="attach-button" ng-click="ctrl.showList()">Attach photo</div>
-								<ul class="choose-files-list" ng-show="ctrl.listDiv">
+							<!-- 	<ul class="choose-files-list" ng-show="ctrl.listDiv">
 									<li><img src="assets/angular-app/public/img/check-mark.png" alt="" class="choose-arrow"><a href="#"><img src="assets/angular-app/public/img/photo-icon.png" alt="">Choose files</a><span>Someone name.jpg <img src="assets/angular-app/public/img/delete.png" alt=""></span></li>
 									<li><img src="assets/angular-app/public/img/check-mark.png" alt="" class="choose-arrow"><a href="#"><img src="assets/angular-app/public/img/photo-icon.png" alt="">Choose files</a><span>Someone name.jpg <img src="assets/angular-app/public/img/delete.png" alt=""></span></li>
 									<li class="not-choose"><a href="#"><img src="assets/angular-app/public/img/grey-heart-in.png" alt="">Choose files</a><span>Someone name</span></li>
 									<li class="not-choose"><a href="#"><img src="assets/angular-app/public/img/grey-heart-in.png" alt="">Choose files</a><span>Someone name</span></li>
 									<li class="not-choose"><a href="#"><img src="assets/angular-app/public/img/grey-heart-in.png" alt="">Choose files</a><span>Someone name</span></li>
-								</ul>
+								</ul> -->
 
-								<button class="btn-send" ng-click="ctrl.addMessage(ctrl.girlsId.girl.userId)">Send</button>
+								<button class="btn-send" ng-click="ctrl.addMessage(ctrl.girlsId.girl.user.id)">Send</button>
 
 							</div>
 <div ><!-- ng-show="ctrl.letterCor.totalCount" -->
@@ -138,8 +135,7 @@
                     <button class="btn-send"ng-hide="letter.isPaid" ng-click="ctrl.payment(letter.id, letter.senderId)">Read the letter</button>
                   </div>
 									</div>
-                  <button ng-hide="ctrl.buttonAddLetter" class="button_add_letter" ng-click="ctrl.paginaLetterCor()" ng-model="ctrl.buttonAddLetter">Ещё</button>
-								</div>
+                  </div>
 							</div>
 </div>
 						</div>

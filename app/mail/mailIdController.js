@@ -21,6 +21,7 @@ function mailIdController ($document, $stateParams, $location, $anchorScroll, $t
     userService.getUser().$promise.then(
       function(data) {
         $rootScope.global2 = data;
+        $rootScope.hrefLadies = false;
         self.user = data;
         $('.head_footer').show();
       },
@@ -43,10 +44,10 @@ function mailIdController ($document, $stateParams, $location, $anchorScroll, $t
 
   this.getUserData();
 /*Функция получает письма из переписки из сервиса mailService*/
-  this.correspondence = function() {
+  this.correspondence = function(Id) {
     var self = this;
     var options = {
-      partnerId: self.girlCorres,
+      partnerId: Id,
       dateTimeFrom: self.resultFromDate,
       dateTimeTo: self.resultToDate,
       limit: self.limit,
@@ -58,9 +59,6 @@ function mailIdController ($document, $stateParams, $location, $anchorScroll, $t
         self.gillsLength = self.letterCor.totalCount;
         self.countPage = self.gillsLength / 20;
         self.totalPage = Math.ceil(self.countPage);
-        if(self.totalPage==1) {
-          self.buttonAddLetter = true;
-        }
       },
       function(error) {
         console.log(error);
@@ -76,19 +74,19 @@ function mailIdController ($document, $stateParams, $location, $anchorScroll, $t
       this.page += 1;
       this.limit += 20;
       this.correspondence();
-      if(this.page==this.totalPage)
+      if(this.page==this.totalPage && this.letterCor.totalCount>20)
         this.buttonAddLetter = true;
     }
   };
 /*Функция получае данные с кем ведется переписка из сервиса mailIdService*/
-   this.girlsIdGet = function(id) {
-    console.log(id, id);
+   this.girlsIdGet = function() {
+    // console.log(id, id);
     var self = this;
     mailIdService.conversationGirlsId(id).$promise.then(
       function(data) {
         self.girlsId = data;
         self.girlCorres = self.girlsId.girl.userId;
-        self.correspondence();
+        self.correspondence(self.girlsId.girl.userId);
       },
       function(error) {
         console.log(error);
@@ -97,18 +95,17 @@ function mailIdController ($document, $stateParams, $location, $anchorScroll, $t
   };
   this.girlsIdGet(id);
 /*Функция отправки письма обращается к сервису mailService*/
-  this.addMessage = function(id) {
+  this.addMessage = function(Id) {
     var self = this;
-    var msg = {
-      text: this.newMessage,
-      recipientId: id,
-      type: 'box'
-    };
-    mailService.addMessage2(msg).$promise.then(
+    var fd = new FormData();
+    fd.append('text', this.newMessage);
+    fd.append('recipientId', Id);
+    fd.append('type', 'box');
+    mailService.addMessage2(fd).$promise.then(
       function(data) {
         self.textAreaTime();
         self.newMessage = '';
-        self.correspondence(id);
+        self.correspondence(Id);
       },
       function(error) {
         console.log(error);
@@ -261,7 +258,23 @@ this.onThisWeekDate = function() {
     this.resultToDate = undefined;
     this.buttonAddLetter = false;
     this.correspondence();
-  }
+  };
+  /*подгрузка писем в переписку на событие*/
+  var self5 = this;
+  $(window).on('scroll', function(event) {
+    if($(this).scrollTop()>2500 && self5.letterCor.letters.length<50) {
+      self5.paginaLetterCor();
+    }
+  });
+  $('.filter-girls-top-menu').hide();
+  $('body').on('click', function(event) {
+    if (event.target.className == 'show_filter_top_menu' ||
+      event.target.className == 'clearfix show_filter_top_menu') {
+      $('.filter-girls-top-menu').show();
+    } else {
+      $('.filter-girls-top-menu').hide();
+    }
+  });
 
 };
 

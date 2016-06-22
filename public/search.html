@@ -422,7 +422,7 @@
 							<div class="search-right-side-girls-container">
 								<div class="row">
 <!-- <div>{{ctrl.girlsAll.girls[0]}}</div> -->
-									<div class="col-md-6" ng-repeat="girl in ctrl.resultGirls">
+									<div class="col-md-6" ng-repeat="girl in ctrl.girlsAll">
 										<div class="search-right-side-girls-item clearfix">
 											<img ng-mouseenter="ctrl.mouseenterImg($index)"
                            ng-mouseleave="ctrl.mouseleave($index)" src="{{girl.photoAvatar}}" alt="" class="s-img">
@@ -442,13 +442,18 @@
 													</a></li>
 													<li><a href="/#/mail/{{girl.user.id}}" class="e-mail"><span class="tooltipps">Send message</span></a></li>
 													<li><a href="#" class="gift"><span class="tooltipps">Send a gift</span></a></li>
-													<li><a href="#" class="heart"><span class="tooltipps">Add to favorites</span></a></li>
+													<li>
+                            <a ng-show="girl.user.additionalData.isInFavorites" href="" ng-click="ctrl.deleteFavoritStatus(girl.user.id, $index)" class="heart2">
+                            <a ng-hide="girl.user.additionalData.isInFavorites" href="" ng-click="ctrl.addfavoritStatus(girl.user.id, $index)" class="heart">
+                              <span class="tooltipps">Add to favorites</span>
+                            </a>
+                          </li>
 												</ul>
 											</div>
 										</div>
 									</div>
 								</div>
-								<div class="girls-arrow" ng-hide="ctrl.buttonAdd" ng-click="ctrl.paginaGirl()" ng-model="ctrl.buttonAdd">
+								<div class="girls-arrow" ng-show="ctrl.buttonAddGirls" ng-click="ctrl.paginaGirl()">
 									<img src="assets/angular-app/public/img/girls-arrow.png" alt="">
 								</div>
 							</div>

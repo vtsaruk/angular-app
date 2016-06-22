@@ -4,10 +4,8 @@ require('angular-ui-router');
 require('angular-resource');
 require('ng-file-upload');
 require('angular-img-cropper');
-require('angular-base64-upload');
 require('./../node_modules/ng-repeat-owl-carousel/src/ngRepeatOwlCarousel');
 require('angular-ui-bootstrap');
-require('angular-cookies');
 require('jquery');
 // require('angular-websocket');
  require('angular-socket-io');
@@ -36,6 +34,9 @@ var chatController = require('./mail/chatController');
 var searchController = require('./mail/searchController');
 var contactUsController = require('./mail/contactUsController');
 var favoriteController = require('./mail/favoriteController');
+var storiesController = require('./mail/storiesController');
+var storyIdController = require('./mail/storyIdController');
+var translatorsController = require('./mail/translatorsController');
 
 var cropDirective = require('./directives/crop');
 var fileDirective = require('./directives/angular-file-model');
@@ -51,13 +52,15 @@ var chatService = require('./mail/chat_service');
 var searchService = require('./mail/search_service');
 var contactUsService = require('./mail/contactUs_service');
 var favoriteService = require('./mail/favorite_service');
+var storiesService = require('./mail/stories_service');
+var translatorsService = require('./mail/translators_service');
 
-var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper', 'naif.base64', 'ocNgRepeat', 'btford.socket-io', 'ui.select', 'ngSanitize', 'ui.date', 'vcRecaptcha'])
+var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper', 'ocNgRepeat', 'btford.socket-io', 'ui.select', 'ngSanitize', 'ui.date', 'vcRecaptcha'])
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
   //$rootScope.global = 'global';
 
-  $urlRouterProvider.otherwise("/home/-ag-18-30-co-Ukraine");
+  $urlRouterProvider.otherwise("/home/-ag-18-30-co-All_countries");
   $stateProvider
     .state('index', {
         url: '/index',
@@ -81,6 +84,12 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
       url: '/lady',
       templateUrl: 'assets/angular-app/public/lady.html',
       controller: mailController,
+      controllerAs: 'ctrl'
+    })
+    .state('transleder', {
+      url: '/transleder',
+      templateUrl: 'assets/angular-app/public/transleder.html',
+      controller: translatorsController,
       controllerAs: 'ctrl'
     })
     .state('girl', {
@@ -158,7 +167,13 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
     .state('success-stories', {
       url: '/success-stories',
       templateUrl: 'assets/angular-app/public/success-stories.html',
-      controller: formController,
+      controller: storiesController,
+      controllerAs: 'ctrl'
+    })
+    .state('single-post', {
+      url: '/single-post/:id',
+      templateUrl: 'assets/angular-app/public/single-post.html',
+      controller: storyIdController,
       controllerAs: 'ctrl'
     })
     .state('terms-conditions', {
@@ -186,8 +201,8 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
 })
 // .controller('conversationsController', conversationsController)
 .controller('usersController', ['userService', usersController])
-.controller('mailController', ['mailService','userService', 'girlsService', mailController])
-.controller('girlsController', ['mailService','userService', 'girlsService', girlsController])
+.controller('mailController', ['mailService','userService', 'favoriteService', 'chatService', mailController])
+.controller('girlsController', ['mailService','userService', 'girlsService', 'favoriteService', girlsController])
 .directive("owlCarousel", function() {
   return {
     restrict: 'E',
@@ -219,15 +234,18 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
     }
   };
 }])
-.controller('girlsAllController', ['userService', 'girlsAllService', girlsAllController])
-.controller('ladyAllController', ['userService', 'girlsAllService', ladyAllController])
+.controller('girlsAllController', ['userService', 'girlsAllService', 'storiesService', girlsAllController])
+.controller('ladyAllController', ['userService', 'girlsAllService', 'favoriteService', 'chatService', 'storiesService', ladyAllController])
 .controller('mailIdController', ['userService', 'mailService', 'girlsAllService', 'mailIdService', mailIdController])
 .controller('formController', ['formService', 'userService', formController])
 .controller('girlsViewController', ['girlsService', 'userService', girlsViewController])
-.controller('chatController', ['chatService', 'userService', chatController])
-.controller('searchController', ['searchService', 'userService', searchController])
+.controller('chatController', ['chatService', 'userService', 'favoriteService', chatController])
+.controller('searchController', ['searchService', 'userService', 'favoriteService', 'chatService', searchController])
 .controller('contactUsController', ['contactUsService', 'userService', contactUsController])
 .controller('favoriteController', ['favoriteService', 'userService', favoriteController])
+.controller('storiesController', ['storiesService', 'userService', storiesController])
+.controller('storyIdController', ['storiesService', 'userService', storyIdController])
+.controller('translatorsController', ['translatorsService', 'userService', 'mailService',translatorsController])
 .factory('userService', ['$resource', userService])
 .factory('mailService', ['$resource', mailService])
 .factory('girlsService', ['$resource', girlsService])
@@ -237,9 +255,11 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
 .factory('chatService', ['socketFactory', chatService])
 .factory('searchService', ['$resource', searchService])
 .factory('contactUsService', ['$resource', contactUsService])
-.factory('favoriteService', ['$resource', favoriteService]);
+.factory('favoriteService', ['$resource', favoriteService])
+.factory('storiesService', ['$resource', storiesService])
+.factory('translatorsService', ['$resource', translatorsService]);
 
-},{"./../node_modules/angular-ui-select/select.js":42,"./../node_modules/ng-repeat-owl-carousel/src/ngRepeatOwlCarousel":51,"./directives/angular-file-model":3,"./directives/crop":4,"./mail/chatController":5,"./mail/chat_service":6,"./mail/contactUsController":7,"./mail/contactUs_service":8,"./mail/favoriteController":9,"./mail/favorite_service":10,"./mail/formController":11,"./mail/form_service":12,"./mail/girlsAllController":13,"./mail/girlsAll_service":14,"./mail/girlsController":15,"./mail/girlsViewController":16,"./mail/girls_service":17,"./mail/ladyAllController":18,"./mail/mailController":19,"./mail/mailIdController":20,"./mail/mailId_service":21,"./mail/mail_service":22,"./mail/searchController":23,"./mail/search_service":24,"./mail/user_service":25,"./mail/usersController":26,"angular":44,"angular-base64-upload":27,"angular-cookies":30,"angular-img-cropper":31,"angular-recaptcha":32,"angular-resource":34,"angular-sanitize":36,"angular-socket-io":37,"angular-ui-bootstrap":39,"angular-ui-date":40,"angular-ui-router":41,"jquery":48,"jquery-ui":47,"ng-file-upload":50}],2:[function(require,module,exports){
+},{"./../node_modules/angular-ui-select/select.js":43,"./../node_modules/ng-repeat-owl-carousel/src/ngRepeatOwlCarousel":52,"./directives/angular-file-model":3,"./directives/crop":4,"./mail/chatController":5,"./mail/chat_service":6,"./mail/contactUsController":7,"./mail/contactUs_service":8,"./mail/favoriteController":9,"./mail/favorite_service":10,"./mail/formController":11,"./mail/form_service":12,"./mail/girlsAllController":13,"./mail/girlsAll_service":14,"./mail/girlsController":15,"./mail/girlsViewController":16,"./mail/girls_service":17,"./mail/ladyAllController":18,"./mail/mailController":19,"./mail/mailIdController":20,"./mail/mailId_service":21,"./mail/mail_service":22,"./mail/searchController":23,"./mail/search_service":24,"./mail/storiesController":25,"./mail/stories_service":26,"./mail/storyIdController":27,"./mail/translatorsController":28,"./mail/translators_service":29,"./mail/user_service":30,"./mail/usersController":31,"angular":45,"angular-img-cropper":32,"angular-recaptcha":33,"angular-resource":35,"angular-sanitize":37,"angular-socket-io":38,"angular-ui-bootstrap":40,"angular-ui-date":41,"angular-ui-router":42,"jquery":49,"jquery-ui":48,"ng-file-upload":51}],2:[function(require,module,exports){
 var meConfig = {
   ioConnect: 'http://dev.irinadating.com/',
   recaptcha: '6LeKeR0TAAAAAKTzT16ysklE14u7stpxQ5wuuF7j',
@@ -1629,9 +1649,44 @@ angular.module('angular-img-cropper').factory("imageCropperDataShare", function 
 module.exports = chatController;
 var meConfig = require('../config');
 
-function chatController ($document, $location, chatService, userService, socketFactory, $rootScope) {
-
+function chatController ($document, $location, chatService, userService, socketFactory, $rootScope, favoriteService, $timeout) {
+  this.addFavorit = [];
+  this.mouseenterFav = function(index) {
+    this.addFavorit[index] = true;
+  };
+  this.mouseleaveFav = function(index) {
+    this.addFavorit[index] = false;
+  };
+  this.letterActiv = [];
+  this.mouseenterLetter = function(index) {
+    this.letterActiv[index] = true;
+  };
+  this.mouseleaveLetter = function(index) {
+    this.letterActiv[index] = false;
+  };
+  /*Функция присваивает фаворит статус для девушки*/
+  this.addfavoritStatus = function(id) {
+    var fd = new FormData();
+    fd.append('id', id);
+    favoriteService.addFavorStatus(fd, id);
+  };
   this.phtoPartner = meConfig.ioConnect;
+
+  var self2 = this
+  self2.partners = [];
+  /*Функция отклоняет все предложения начать сесию в чате при logOut*/
+  $rootScope.logOut = function() {
+    var self = this;
+    chatService.emit('getCurChatPartners', {});
+    chatService.on('addPartner', function (data) {
+      self2.partners[data.id] = data;
+      for(var i in self2.partners) {
+        if(self2.partners[i] && self2.partners[i].sessionId && (!self2.partners[i].startDateTime) && (self2.partners[i].isDeclined == 0) && (self2.partners[i].isCancelled == 0)){
+          chatService.emit('declineRequest', { sessionId: self2.partners[i].sessionId });
+        }
+      }
+    });
+  };
   /*Функция запрашивает данные пользователя через userService*/
   this.getUserData = function () {
     var self = this;
@@ -1639,11 +1694,13 @@ function chatController ($document, $location, chatService, userService, socketF
       function(data) {
         self.user = data;
         $rootScope.global2 = data;
+        $rootScope.hrefLadies =false;
         $('.head_footer').show();
         // self.getlogChat(self.user.user.id);
       },
       function(error) {
         console.log(error);
+        $location.path('/home/-ag-18-30-co-Ukraine');
         $('.head_footer').show();
       }
     );
@@ -1754,7 +1811,6 @@ function chatController ($document, $location, chatService, userService, socketF
   this.count = 0;
 /*Функция отресовавает день отправки письма*/
   this.functionDate = function(sentTimeMsg) {
-
     if(new Date().getTime() - new Date(sentTimeMsg).getTime() > new Date().getUTCHours()*3600*1000+ new Date().getMinutes()*60*1000) {
       // self2.count += 1;
       var day = '';
@@ -1767,38 +1823,29 @@ function chatController ($document, $location, chatService, userService, socketF
       return 'Yesterday';
     }
   };
-
-  self2.partners = {};
-/*Функция отслеживает событие-сигнал addPartner и записывает данные партнёров*/
-  chatService.on('addPartner', function (data) {
-    self2.partners[data.id] = data;
-    self2.partners[data.id].newLetters = false;
-
-    // console.log(self2 .partners);
-
-  });
-/*Функция делает сигнал-запрос на получение данных о партнёрах*/
+  /*Функция делает сигнал-запрос на получение данных о партнёрах*/
   chatService.emit('getCurChatPartners', {});
-/*Функция отправляет запрос на чат сессию без видео*/
+  /*Функция отправляет запрос на чат сессию без видео*/
   this.sendRequest = function(id) {
     chatService.emit('sendRequest', { partnerId: id, withVideo: false });
   };
-/*Функция подтверждение на сессию*/
+  /*Функция подтверждение на сессию*/
   this.approveRequest = function(Id) {
+    this.showButtonSend = true;
     // console.log(Id);
     chatService.emit('approveRequest', { sessionId: Id });
   };
-/*Функция отклоненея предлагаемой сессии*/
+  /*Функция отклоненея предлагаемой сессии*/
   this.declineRequest = function(Id) {
      // console.log(Id);
     chatService.emit('declineRequest', { sessionId: Id });
   };
-/*Функция окончания сессии*/
+  /*Функция окончания сессии*/
   this.endChatSession = function(Id) {
     // console.log(Id);
     chatService.emit('endChatSession', { sessionId: Id });
   };
-/*Функция отправляет сообщение в переписке*/
+  /*Функция отправляет сообщение в переписке*/
   this.sendMsg = function(Id, msg) {
     // console.log(Id + ' , ' + msg);
     this.notSendLetters[Id] = '';
@@ -1808,18 +1855,6 @@ function chatController ($document, $location, chatService, userService, socketF
 
   this.removePartner = function(Id) {
     chatService.emit('removePartner', { partnerId: Id });
-  };
-/*Функция выделяет выбранного партнёра в директориях online, request, recent*/
-  this.addClassActiv = function(index, number) {
-    if(index==0)
-      var index2 = 2;
-    else var index2 = index * 2 + 2;
-    var arr = angular.element(document.getElementsByClassName('box_directory'));
-    for(var i=2; i<arr[number].childNodes.length-2; i+=2) {
-      if(i==index2) {
-        arr[number].childNodes[i].className = 'main-members-item active clearfix';
-      } else arr[number].childNodes[i].className = 'main-members-item clearfix';
-    };
   };
   this.funcActivStatu = function(partner) {
     // console.log(partner.id);
@@ -1847,12 +1882,27 @@ function chatController ($document, $location, chatService, userService, socketF
         }
       }
     }
-  }
+  };
+  this.deleteStatusNew = function(partnerID) {
+    console.log(partnerID);
+  // chatService.emit('markAllMsgsAsRead', { partnerId: partnerID });
+  };
+  this.messages = [];
+  this.messages2 = [];
+  this.messages3 = [];
   /*Функция запрашивает переписку сообщений с выбранным партнёром*/
   this.correspondence = function(partner) {
+    // if(this.addMsgModel && this.partnerID==undefined) {
+    //   this.notSendLetters[partner.id] = this.addMsgModel
+    // };
+    // this.deleteStatusNew(partner.id);
+    // chatService.emit('markAllMsgsAsRead', { partnerId: partner.id });
+    if(partner.startDateTime && (!partner.ceaseDateTime)) {
+      this.showButtonSend = true;
+    } else this.showButtonSend = false;
     if(this.addMsgModel) {
       this.notSendLetters[this.partnerID] = this.addMsgModel;
-      this.addMsgModel = '';
+      // this.addMsgModel = '';
     }
     this.addMsgModel = this.notSendLetters[partner.id];
     this.namePartner = partner.firstname;
@@ -1860,9 +1910,7 @@ function chatController ($document, $location, chatService, userService, socketF
     this.sessionID = partner.sessionId;
     this.partnerAge = partner.age;
     this.photoAvatPartner = partner.photoAvatar;
-    this.messages = [];
-    this.messages2 = [];
-    this.messages3 = [];
+
     this.part[partner.id] = false;
     chatService.emit('getChatLogDeeper', { partnerId: partner.id });
   };
@@ -1878,8 +1926,18 @@ function chatController ($document, $location, chatService, userService, socketF
   });
   this.funcShow = function(arg) {
     return arg? true: false;
-  }
-/*Получение нового письма, только что написанного для пользователя в переписке*/
+  };
+  // chatService.on('inboundReqBadge', function(data) {
+  //   console.log(data);
+  // });
+
+  // chatService.on('inboundNewMsgBadge', function(data) {
+  //   console.log(data);
+  // });
+  this.deleteStatusNew = function(partnerID) {
+  chatService.emit('markAllMsgsAsRead', { partnerId: partnerID });
+  };
+  /*Получение нового письма, только что написанного для пользователя в переписке*/
   chatService.on('newMsg', function(data) {
     if(self2.partnerID!=data.partnerId) {
       self2.part[data.partnerId] = { newLetters: true };
@@ -1906,38 +1964,126 @@ function chatController ($document, $location, chatService, userService, socketF
   };
 
   this.namePartnerFunc = function() {
-    // console.log(self2.partners[self2.partnerID].sessionId);
+    if(self2.partnerID && self2.partners[self2.partnerID].firstname)
     return self2.partners[self2.partnerID].firstname;
-  }
+  };
+  this.allRequestDec = function(data) {
+    for(var key in data) {
+      if(data[key].sessionId && !data[key].startDateTime) {
+        chatService.emit('declineRequest', { sessionId: data[key].sessionId });
+        chatService.emit('cancelRequest', { sessionId: data[key].sessionId })
+      }
+    }
+    // (partner.sessionId && (!partner.startDateTime) &&(partner.isInitByBoy!=0) && (partner.isDeclined == 0) && (partner.isCancelled == 0))
+  };
 
 
+
+
+  // for(var i=this.offsetForReq; i<arr.length; i++) {
+  //     var res = arr[i];
+  //     var index = Math.floor(Math.random() * (arr.length - this.offsetForReq) + this.offsetForReq);
+  //     if(!resArr[index]) {
+  //       resArr[index] = res;
+  //     } else i-=1;
+  //   };
+  self2.online
+  self2.arrPartData = [];
+  self2.partners = {};
+  self2.arrParners = [];
+/*Функция отслеживает событие-сигнал addPartner и записывает данные партнёров*/
+  chatService.on('addPartner', function (data) {
+    self2.partners[data.id] = data;
+    self2.partners[data.id].newLetters = false;
+    self2.arrParners[data.id] = data;
+
+    for(var key in self2.partners) {
+        // self2.partners[key].isOnline = true;
+      if(self2.partners[key] && self2.partners[key].id==self2.partnerID && self2.partners[key].startDateTime && self2.partners[key].ceaseDateTime) {
+        self2.showButtonSend = false;
+      };
+      if(self2.partners[key] && self2.partners[key].id==self2.partnerID && self2.partners[key].startDateTime && (!self2.partners[key].ceaseDateTime)) {
+        self2.showButtonSend = true;
+      };
+      if(self2.partners[key] && self2.partners[key].startDateTime && (!self2.partners[key].ceaseDateTime) && (!self2.partners[key].isOnline)) {
+        self2.endChatSession(self2.partners[key].sessionId);
+      };
+      if(self2.partners[key] && self2.partners[key].sessionId && (!self2.partners[key].startDateTime) && (self2.partners[key].isDeclined == 0) && (self2.partners[key].isCancelled == 0) && (!self2.partners[key].isOnline)){
+        chatService.emit('declineRequest', { sessionId: self2.partners[key].sessionId });
+      };
+    };
+    // for(var i=0; i<self2.partners.length; i++) {
+      // if(self2.partners[i] && self2.partners[i].id==self2.partnerID && self2.partners[i].startDateTime && self2.partners[i].ceaseDateTime) {
+      // }
+        // console.log(self2.partners[i].id);
+    // }
+  });
+  this.randomNum = function(arr, resArr) {
+    for(var i=0; i<arr.length; i++) {
+      var res = arr[i];
+      var index = Math.floor(Math.random() * arr.length);
+      if(!resArr[index]) {
+        resArr[index] = res;
+      } else i-=1;
+    };
+  };
+
+
+  this.randomArr = function() {
+    self2.arrPartData = [];
+    for(var key in self2.partners) {
+      self2.arrPartData.push(self2.partners[key]);
+    };
+    self2.resultArr = [];
+    self2.randomNum(self2.arrPartData, self2.resultArr);
+    // console.log(self2.resultArr);
+  };
+  self2.arrPartData2 = [];
+  self2.resultArr2 = [];
+  this.randomArr2 = function(arr, resArr, arrPart) {
+    arr = [];
+    for(var key in arrPart) {
+      arr.push(arrPart[key]);
+    };
+    resArr = [];
+    self2.randomNum(arr, resArr);
+    // console.log(resArr);
+  };
+  // this.randomArr();
+  $timeout(this.randomArr2(self2.arrPartData2, self2.resultArr2, self2.partners), 3000);
 /*Функция ослеживает сообытие scroll и добавляет письма*/
-  //jQuery(function($) {
     $('.chat-box').on('scroll', function(event) {
-        // console.log(event);
         if($(this).scrollTop() + $(this).innerHeight() + 100 >= $(this)[0].scrollHeight) {
-          // console.log('end reached');
-          // console.log(self2.partnerID + ' , ' + self2.lastMessageID);
           chatService.emit('getChatLogDeeper', { partnerId: self2.partnerID, lastMsgId:self2.lastMessageID });
         }
     });
-  //});
-
+  $('.filter-girls-top-menu').hide();
+  $('body').on('click', function(event) {
+    if (event.target.className == 'show_filter_top_menu' ||
+      event.target.className == 'clearfix show_filter_top_menu') {
+      $('.filter-girls-top-menu').show();
+    } else {
+      $('.filter-girls-top-menu').hide();
+    }
+  });
 };
 
-chatController.$inject = ['$document', '$location', 'chatService', 'userService', 'socketFactory', '$rootScope'];
+chatController.$inject = ['$document', '$location', 'chatService', 'userService', 'socketFactory', '$rootScope', 'favoriteService', '$timeout'];
 },{"../config":2}],6:[function(require,module,exports){
 module.exports = chatService;
 /*фабрика*/
 var meConfig = require('../config');
 function chatService (socketFactory) {
   // console.log('meConfig')
+  // var getPartnerChat =  io.connect(meConfig.ioConnect),
+  //   getPartnerChat.on('addPartner', function() { /* notify about new message */ });
   // console.log(meConfig.ioConnect)
   return  socketFactory({ioSocket: io.connect(meConfig.ioConnect)});
   // return  socketFactory({ioSocket: io.connect('http://irinadating.loc/')});
 };
 
 chatService.$inject = ['socketFactory'];
+
 },{"../config":2}],7:[function(require,module,exports){
 module.exports = contactUsController;
 
@@ -1951,7 +2097,6 @@ function contactUsController ($anchorScroll, $rootScope, userService, contactUsS
   };
 
   this.anchorScrollPage();
-
 /*Функция получает данние пользователя из сервиса userService*/
   this.getUserData = function () {
     var self = this;
@@ -1959,6 +2104,7 @@ function contactUsController ($anchorScroll, $rootScope, userService, contactUsS
       function(data) {
         self.user = data;
         $rootScope.global2 = data;
+        $rootScope.hrefLadies =false;
         $('.head_footer').show();
       },
       function(error) {
@@ -1981,12 +2127,6 @@ this.getUserData();
     this.feedback.message = '';
     this.feedback.subject = '';
   };
-/*Делаем обертку для select*/
-  $(document).ready(function(){
-    // setTimeout(function(){
-      // $('select').select2();
-    // }, 100);
-  });
 
   this.country = {};
   this.countries = [ // Taken from https://gist.github.com/unceus/6501985
@@ -2003,6 +2143,15 @@ this.getUserData();
     {name: 'Argentina', code: 'AR'},
     {name: 'Armenia', code: 'AM'},
     ];
+    $('.filter-girls-top-menu').hide();
+  $('body').on('click', function(event) {
+    if (event.target.className == 'show_filter_top_menu' ||
+      event.target.className == 'clearfix show_filter_top_menu') {
+      $('.filter-girls-top-menu').show();
+    } else {
+      $('.filter-girls-top-menu').hide();
+    }
+  });
 };
 
 
@@ -2041,6 +2190,7 @@ function favoriteController (formService, $scope, $timeout, userService, $rootSc
       function(data) {
         self.user = data;
         $rootScope.global2 = data;
+
         $('.head_footer').show();
       },
       function(error) {
@@ -2051,7 +2201,7 @@ function favoriteController (formService, $scope, $timeout, userService, $rootSc
   };
 
   this.getUserData();
-  console.log('!!!!!!!!!!!!!');
+  console.log();
 
   };
 
@@ -2059,8 +2209,8 @@ favoriteController.$inject = ['formService', '$scope', '$timeout', 'userService'
 },{}],10:[function(require,module,exports){
 module.exports = favoriteService;
 
-function favoriteService() {
-  var favoriteResource = $resource('/users/:user_id/favorite', { user_id: '@id' },
+function favoriteService($resource) {
+  var favoriteResource = $resource('api/users/:user_id/favorite', { user_id: '@id' },
     {
       addUserFavor: {
         method:'POST',
@@ -2068,6 +2218,11 @@ function favoriteService() {
           id: '@id'
         }
       },
+      saveGirlFavorit: {
+          method: 'POST',
+          transformRequest: angular.identity,
+          headers: { 'Content-Type': undefined }
+        },
       deletedUserFavor: {
         method: 'DELETE',
         params: {
@@ -2076,34 +2231,60 @@ function favoriteService() {
       }
     }
   );
+  var favorGetResource = $resource('api/users/me/favorite');
 
-  this.addFavorStatus = function(id) {
-    return favoriteResource.addUserFavor(userId);
+  this.getFavorGirls = function(options) {
+    return favorGetResource.get({
+      limit: options.limit,
+      offset: options.offset,
+      relations: '{"country":{}, "mainphoto": {} }' });
+  }
+  this.addFavorStatus = function(fd, Id) {
+    return favoriteResource.saveGirlFavorit( { user_id: Id }, fd );
   };
-  this.deleteFavorStatus = function(id) {
-    return favoriteResource.deletedUserFavor(iuserId);
+  this.deleteFavorStatus = function(Id) {
+    return favoriteResource.deletedUserFavor( { user_id: Id, id: Id } );
   };
   return this;
 };
 
 favoriteService.$inject = ['$resource'];
+
 },{}],11:[function(require,module,exports){
 module.exports = formController;
 
 function formController (formService, $scope, $timeout, userService, $rootScope) {
   this.showMainContent = 1;
-
+  this.isMainPhoto = true;
+  this.idPhotoForPathc = 0;
   this.showBlock = function(id) {
     this.showMainContent = id;
-  }
+  };
+  this.arrModelSh = [];
+  this.getPhotos = function(id) {
+    var self = this;
+    formService.getPhotosUser(id).$promise.then(
+      function(data) {
+        self.Photos= data;
+        for(var i=0; i<data.photos.length; i++) {
+          self.arrModelSh[i] = false;
+        }
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
 
   this.getUserData = function () {
     var self = this;
     userService.getUser().$promise.then(
       function(data) {
         self.user = data;
+        $rootScope.hrefLadies =false;
         $rootScope.global2 = data;
         $('.head_footer').show();
+        self.getPhotos(self.user.user.id);
       },
       function(error) {
         console.log(error);
@@ -2115,8 +2296,9 @@ function formController (formService, $scope, $timeout, userService, $rootScope)
   this.getUserData();
 
   $scope.cropper = {};
-  $scope.cropper.sourceImage = null;
-  this.cropperSourceImg = $scope.cropper.sourceImage = null;
+  $scope.cropper.sourceImage = [];
+  // $scope.cropper.sourceImage = null;
+  // this.cropperSourceImg = $scope.cropper.sourceImage = null;
   $scope.cropper.croppedImage = null;
   $scope.bounds = {};
   $scope.bounds.left = 0;
@@ -2147,7 +2329,7 @@ function formController (formService, $scope, $timeout, userService, $rootScope)
   //irinadating.loc/upload/photos/384/EsFeKxMO.jpg
 
 
-  this.postPhoto = function ($event)  {
+  this.postPhoto = function ($event, index)  {
     var self = this;
 
     // var photo = {
@@ -2169,24 +2351,25 @@ function formController (formService, $scope, $timeout, userService, $rootScope)
     // var photo = $scope.cropper.croppedImage
     //var photo = this.image;
     // var im = $('#subImg').val();
-    var htmlFiles = angular.element(document.forms[0].photo);
+    console.log(index);
+    var htmlFiles = angular.element(document.forms[index+1].photoAdd);
     var fd = new FormData();
     // console.log('$scope.cropper.sourceImage');
     // console.log($scope.cropper.sourceImage);
 
-    var canvas = document.getElementById("canvas");
+    var canvas = document.getElementById("canvas"+index);
     var context = canvas.getContext('2d');
     var imageObj = new Image();
     imageObj.onload = function () {
       self.heightPicture = imageObj.naturalHeight;
       self.widthPicture = imageObj.naturalWidth;
       // self.topWindow =imageObj.naturalHeight;
-      // console.log(imageObj.naturalHeight);
+      console.log(imageObj.naturalHeight);
     };
       // console.log('onload');
       // console.log(imageObj.naturalWidth);
     //imageObj.src = document.getElementById("tempImg").src;
-    imageObj.src = $scope.cropper.sourceImage;
+    imageObj.src = $scope.cropper.sourceImage[index];
     // console.log('self.topWindow');
     // console.log(this.heightPicture - $scope.bounds.top);
     // console.log(htmlFiles[0].files[0]);
@@ -2200,27 +2383,37 @@ function formController (formService, $scope, $timeout, userService, $rootScope)
 
       fd.append('isMainPhoto', true);
       var widthPhoto = $scope.bounds.right - $scope.bounds.left;
+      this.WidthPhoto = widthPhoto;
       var heightPhotoA = $scope.bounds.top - $scope.bounds.bottom;
       var startXPhoto = $scope.bounds.left;
-      var startYPhoto = this.heightPicture - $scope.bounds.top;
+      if(self.heightPicture) {
+      var startYPhoto = self.heightPicture - $scope.bounds.top;
+    } else var startYPhoto =1;
+      // console.log(startYPhoto);
+      // console.log(self.heightPicture);
+      // console.log($scope.bounds.top);
+      // if(1>startYPhoto && startYPhoto>1000)
+      //   startYPhoto = 1;
+      this.StartYPhoto = startYPhoto;
+      this.StartXPhoto = startXPhoto;
+      // startYPhoto= 20;
       if (startYPhoto==0) startYPhoto = 1;
       if(heightPhotoA<420) {
         startYPhoto = this.heightPicture-420;
         startXPhoto =800-420;
         heightPhotoA = 420;
+
       }
-      console.log(heightPhotoA);
-      console.log(startXPhoto);
-      console.log(startYPhoto);
+      // console.log(heightPhotoA);
+      // console.log(startXPhoto);
+      // console.log(startYPhoto);
       fd.append('startX', startXPhoto);
       fd.append('startY', startYPhoto);
       fd.append('width', heightPhotoA);
       fd.append('height', heightPhotoA);//420);//heightPhoto)
     }
-    // console.log(fd);
-  // console.log(fd);
 
-    formService.addPhotos(fd);
+    // formService.addPhotos(fd);
     // htmlFiles[0].files[0] = undefined;
     // console.log(photo);
     // alert("Фотография загружена");
@@ -2228,6 +2421,118 @@ function formController (formService, $scope, $timeout, userService, $rootScope)
   // this.cropperSourceImg = null;
   };
 
+  this.addSaveAvatar = function($event, index, starX, starY, width) {
+    this.postPhoto($event, index);
+    // if(startYPhoto == NaN || startYPhoto==0 )
+    //   this.StartYPhoto=1;
+    var imgElement = document.getElementById('img' + index);
+    var imgHeight = imgElement.naturalHeight;
+
+
+    var startPointY = imgHeight - starY;
+    var cof = imgHeight/600;
+    if(imgHeight>600) {
+      var natHeig = Math.floor(cof*width);
+    } else var natHeig = width;
+    if(natHeig<420) {
+      natHeig=420;
+    }
+    var fd = new FormData();
+    fd.append('isMainPhoto', true);
+    fd.append('startX', starX);
+    fd.append('startY', startPointY);
+    fd.append('width', natHeig);
+    fd.append('height', natHeig);
+    // console.log(cof);
+    // console.log('imgHeight');
+    // console.log(imgHeight);
+    // console.log('natHeig');
+    // console.log(natHeig);
+    // console.log('startPointY');
+    // console.log(startPointY);
+    // console.log('startPointX');
+    // console.log(starX);
+    var option = {
+      id: this.idPhotoForPathc,
+      isMainPhoto: true,
+      // startX: this.StartXPhoto,
+      startX: starX,
+      startY: startPointY,
+      width: natHeig,
+      height: natHeig
+    };
+
+    // var request = new XMLHttpRequest();
+    // request.open('PATCH', 'irinadating.loc/api/photos/' + this.idPhotoForPathc, fd);
+    // request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    // request.send(fd);
+
+    // $.ajax({
+    //   url : 'irinadating.loc/api/photos/' + this.idPhotoForPathc,
+    //   data : data,
+    //   type : 'PATCH',
+    //   contentType : 'application/json'
+    // )};
+      $.ajax(
+        {
+            url: '/api/photos/' + this.idPhotoForPathc,
+            type: 'PATCH',
+            data: option,
+            success: function(msg){
+              // alert( "Data Saved: " + msg );
+            }
+        }
+      );
+
+    // formService.removeAvatPhot(fd, this.idPhotoForPathc, option);
+    // formService.removeAvatPhot(option);
+    // $scope.cropper.sourceImage = '';
+
+  };
+
+  this.addPostPhoto = function ($event) {
+    var htmlFiles = angular.element(document.forms[0].photoAdd);
+    var fd = new FormData();
+    fd.append('photo', htmlFiles[0].files[0]);
+    formService.addPhotos(fd);
+
+  };
+  this.heightIngCan = [];
+
+
+  // for(var i=0; i<50; i++) {
+  //     var imgElement = document.getElementById('img' + i);
+  //     console.log(imgElement);
+  //     // var imgHeight = imgElement.naturalHeight;
+  //     // this.heightIngCan[i] = imgHeight;
+  //   };
+    console.log(this.heightIngCan);
+  this.recordWindowPhoto = function(namePhoto, index) {
+    var imgElement = document.getElementById('img' + index);
+    var imgHeight = imgElement.naturalHeight;
+    this.heightIngCan = imgHeight;
+    console.log(this.heightIngCan);
+    $scope.cropper.sourceImage[index] = namePhoto.path;
+    this.idPhotoForPathc = namePhoto.id;
+
+    for(var i=0; i<this.arrModelSh.length; i++) {
+      this.arrModelSh[i] = false;
+    }
+    this.arrModelSh[index] = true;
+    // var divEl = document.createElement('div');
+    // divEl.className = 'box_change_avatar';
+    // document.body.appendChild(divEl);
+    // divEl.innerHTML = '';
+  };
+  $('.filter-girls-top-menu').hide();
+  $('body').on('click', function(event) {
+    if (event.target.className == 'show_filter_top_menu' ||
+      event.target.className == 'clearfix show_filter_top_menu') {
+      $('.filter-girls-top-menu').show();
+    } else {
+      $('.filter-girls-top-menu').hide();
+    }
+  });
 };
 
 formController.$inject = ['formService', '$scope', '$timeout', 'userService','$rootScope'];
@@ -2237,7 +2542,7 @@ module.exports = formService;
 function formService ($resource) {
 
   var formResource = $resource('/api/photos',
-  { },
+    { },
     { savePhoto: {
       method: 'POST',
       // params: {
@@ -2249,27 +2554,80 @@ function formService ($resource) {
       }
     }
   );
+  var removePhotoRes = $resource('/api/photos/:photo_id',
+    { photo_id: '@id' },
+    { removeAvatarPhoto: {
+        method: 'PATCH',
+        isArray: false,
+        headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'},
+        isMainPhoto: '@isMainPhoto',
+        startX: '@startX',
+        startY: '@startY',
+        width: '@width',
+        height: '@height'
+        // transformRequest: angular.identity
+  //       // headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        },
+        logAvatarPhoto: {
+          method: 'PATCH',
+          header: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          transformRequest: function (data, headersGetter) {
+            var str = [];
+            for (var d in data) {
+              str.push(
+                encodeURIComponent(d) + '=' + encodeURIComponent(data[d])
+              );
+            }
+            console.log(str.join('&'))
+            return str.join('&');
+          }
+         }
+    }
+  );
+  var getAllPhotoUser = $resource('/api/users/:user_id/photos', { user_id: '@id' });
+
 /*Загружаем фото*/
   this.addPhotos = function (photo) {
-    return formResource.savePhoto({}, photo);
+    return formResource.savePhoto( {}, photo);
+  };
+  /*Функция выводит все фото пользователя*/
+  this.getPhotosUser = function(Id) {
+    return getAllPhotoUser.get({ user_id: Id, id:Id });
+  };
+  this.removeAvatPhot = function(fd, photoId, data) {
+  // this.removeAvatPhot = function(data) {
+    // console.log('option');
+    // console.log(option);
+    // return removePhotoRes.removeAvatarPhoto({
+    //   photo_id: option.id}, {
+    //   isMainPhoto: option.isMainPhoto,
+    //   startX: option.startX,
+    //   startY: option.startY,
+    //   width: option.width,
+    //   height: option.height}
+    // );
+    // return removePhotoRes.removeAvatarPhoto({ photo_id: photoId }, fd);
+    return removePhotoRes.logAvatarPhoto({ photo_id: photoId }, data );
   };
 
   return this;
 };
 
 formService.$inject = ['$resource'];
+
 },{}],13:[function(require,module,exports){
 module.exports = girlsAllController;
 
 var meConfig = require('../config');
 
-function girlsAllController ($document, $location, $stateParams, userService, girlsAllService, $rootScope, $http, $timeout, $interval) {
+function girlsAllController ($document, $location, $stateParams, userService, girlsAllService, $rootScope, $http, $timeout, $interval, storiesService) {
 
   this.recaptchaKey = meConfig.recaptcha;
-  // console.log('recaptchaKey = ' + this.recaptchaKey);
-  // console.log('secret = ' + meConfig.recapthaSecret);
   this.disabled = undefined;
-/*Функция определяет возраст*/
+
+  /*Функция определяет возраст*/
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
   };
@@ -2333,15 +2691,16 @@ var fd = new FormData();
     var self = this;
     userService.getUser().$promise.then(
       function(data) {
-
         $rootScope.global2 = data;
         self.user = data;
         if (self.user.user.additionalData.groupId == 1) {
           $location.path('/man');
         } else if(self.user.user.additionalData.groupId == 2){
           $location.path('/lady');
+        } else if(self.user.user.additionalData.groupId == 5){
+          $location.path('/transleder');
         }
-        else $location.path('/home/-ag-18-30-co-Ukraine');
+        else $location.path('/home/-ag-18-30-All_countries');
         $('.head_footer').show();
       },
       function(error) {
@@ -2353,7 +2712,163 @@ var fd = new FormData();
   };
 
   this.getUserData();
+/*Функция поиска леди по возрасту и стране, делает API запрос*/
+  this.searchGirls = function(page) {
+    // console.log(this.fromDateModel.name.name);
+    var self = this;
+    this.arrURL = [];
+    var keyValURL = '';
+    this.arrURL[0] = ['ag', this.fromDateModel.name + "-" + this.toDateModel.name];
+    this.arrURL[1] = ['co', this.countryModel.name];
+    for(var i=0; i<2; i++) {
+      // if(self.arrURL[i][1] && self.arrURL[i][1] != "undefined" && self.arrURL[i][1] != "undefined-undefined" && self.arrURL[i][1] != null)
+      keyValURL += self.arrURL[i][0] + '-' + self.arrURL[i][1] + '-';
+    };
+    var resultURL = keyValURL.slice(0, keyValURL.length-1);
+    var resultURL2 = resultURL.replace(/ /g, "_");
+    $location.path(page + '-' + resultURL2);
+    };
 
+/*парсим ULR, полученные данные приводим к нужному формату*/
+    var urlId = $stateParams.id;
+/*Получаем возраст из ULR*/
+  if(urlId.indexOf('-ag-')!= -1 ) {
+    var start = urlId.indexOf('-ag-') + 4;
+    var end = urlId.indexOf('-', start);
+    var birthDateArrId  = urlId.slice(start, end);
+    var start2 = urlId.indexOf('-', end );
+    var end2 = urlId.indexOf('-', end+1);
+    if(urlId.indexOf('-', end+1)==-1){
+      var birthDateToArrId = urlId.slice(start2+1, urlId.length);
+    } else var birthDateToArrId = urlId.slice(start2+1, end2);
+  } else {
+    var birthDateArrId = 18;
+    var birthDateToArrId = 60;
+  };
+/*Получаем страну из ULR*/
+    if(urlId.indexOf('-co-')!= -1) {
+      var start = urlId.indexOf('-co-') + 4;
+      var end = urlId.indexOf('-', start);
+      if(urlId.indexOf('-', start)==-1) {
+        var country2 = urlId.slice(start, urlId.length);
+      } else var country2 = urlId.slice(start, end);
+      ;
+    } else var country2 = undefined;
+    if(country2)
+      var country = country2.replace(/_/g, " ");
+/*Приводим к нужному формату для API запроса*/
+  this.counryUrl = country;
+  var dateBirthdateFrom = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*birthDateArrId);
+  var resFromDate = new Date(dateBirthdateFrom);
+  var resMonth = resFromDate.getMonth() +1;
+  var arrRes = new String(resFromDate).split(' ');
+  this.birthdateTo = arrRes[3] + '-' + resMonth + '-' + arrRes[2];
+  var dateBirthdateTo = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*birthDateToArrId);
+  var resToDate = new Date(dateBirthdateTo);
+  var arrRes2 = new String(resToDate).split(' ');
+  this.birthdateFrom = arrRes2[3] + '-' + resMonth + '-' + arrRes2[2];
+  /*Полученные данные в нужном формате*/
+  this.fromDateModel = { name: birthDateArrId };
+  this.toDateModel = { name: birthDateToArrId };
+  this.countryModel = { name: country };
+
+
+  /*Функция перестраивает массив и записывает в другой*/
+  this.randomNum = function(arr, resArr) {
+    for(var i=this.offsetForReq; i<arr.length; i++) {
+      var res = arr[i];
+      var index = Math.floor(Math.random() * (arr.length - this.offsetForReq) + this.offsetForReq);
+      if(!resArr[index]) {
+        resArr[index] = res;
+      } else i-=1;
+    };
+  };
+
+  this.paginCount = 16;
+  this.girlsAll = [];
+  this.offsetForReq = 0;
+  this.girlsAll2 = [];
+  this.girlsAll0 = [];
+
+  this.functionPa = function(arr) {
+    if(arr && arr.length>16) {
+      this.girlsAll = arr.slice(0, this.paginCount);
+    } else this.girlsAll = arr;
+  };
+  this.addPhotoGirl = function(arr) {
+          if(arr && arr.length) {
+            for(var i=0; i<arr.length; i++) {
+              if(arr[i] &&arr[i].user &&
+                arr[i].user.mainphoto &&
+                arr[i].user.mainphoto.pathOfQuad &&
+                arr[i].user.mainphoto.pathOfQuad!=null) {
+                var photo = arr[i].user.mainphoto.pathOfQuad;
+                arr[i].photoAvatar = photo.slice(0, photo.length-4) + '_220_220_auto' + photo.slice(-4);;
+              } //else arr[i].photoAvatar = null;
+            }
+          }
+        };
+/*Функция делает запрос к сервису, чтобы получить леди согласно выбранных параметров*/
+  this.girlsAllGet = function() {
+    var self = this;
+    var options = {
+      birthdateFrom: this.birthdateFrom,
+      birthdateTo: this.birthdateTo,
+      countryId: this.countryIdURL,
+      direction: 'asc',
+      limit: 50,
+      offset: this.offsetForReq
+    };
+    girlsAllService.getGirlsAll(options).$promise.then(
+      function(data) {
+        self.girlTotal = data.totalCount;
+        for(var i=0; i<data.girls.length; i++) {
+          self.girlsAll0.push(data.girls[i]);
+        };
+        self.randomNum(self.girlsAll0, self.girlsAll2);
+        self.functionPa(self.girlsAll2);
+        self.addPhotoGirl(self.girlsAll);
+        if(self.paginCount<self.girlTotal) {
+          self.buttonAddGirls = true;
+        } else self.buttonAddGirls = false;
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+/*Функция пагинации - добавляем, пока есть кого добавлять*/
+  this.paginaGirl = function() {
+    this.paginCount += 16;
+    if(this.paginCount>this.offsetForReq + 50) {
+      this.offsetForReq += 50;
+      this.girlsAllGet();
+      };
+    if(this.paginCount>this.offsetForReq || this.paginCount==this.offsetForReq) {
+      this.functionPa(this.girlsAll2);
+      this.addPhotoGirl(this.girlsAll);
+    };
+    if(this.girlsAll2 && this.paginCount<this.girlTotal) {
+      this.buttonAddGirls = true;
+    } else this.buttonAddGirls = false;
+  };
+/*Функция создаёт массив данных для поля возраст в поиске*/
+this.makeAge = function() {
+    this.listAge = [];
+    var count = 17;
+    for(var i=0; i<43; i++){
+      count ++;
+      this.listAge[i] = {id: i, name: count};
+    };
+  };
+
+  this.makeAge();
+/*Функция подставляет в название фото нужные параметры*/
+  this.photoAvatar2 = function(arg) {
+    var photo = String(arg);
+    photo = photo.slice(0, photo.length-4) + '_220_220_auto' + photo.slice(-4);
+    return photo;
+  };
 /*Функция делает запрос к сервису  и получает названия стран*/
   this.getCountries = function() {
     var self = this;
@@ -2361,15 +2876,44 @@ var fd = new FormData();
       function(data) {
         self.countries = data;
         self.arrCountries = self.countries.countries;
-        // $('select').select2();
+        self.arrCountries = self.countries.countries;
+        var addAllCountries = {
+          id: 0,
+          name: 'All countries'
+        };
+        self.arrCountries.unshift(addAllCountries);
         for(var i=0; i<self.arrCountries.length; i++) {
           if(self.arrCountries[i].name==self.counryUrl) {
-            self.countryIdURL = self.arrCountries[i].id
-            self.paginaGirl();
+            self.countryIdURL = self.arrCountries[i].id;
+            self.girlsAllGet();
           }
         };
-        // $(".owl-carousel").owlCarousel();
-         var owl = $("#owl-demo");
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+  this.getCountries();
+    this.offset = 0;
+  this.stories = [];
+  this.getStories = function () {
+    var option = {
+      limit: 8,
+      offset: this.offset
+    };
+    var self = this;
+    storiesService.getAllStories(option).$promise.then(
+      function(data) {
+        self.stories = data.stories;
+        // for(var i=0; i<data.stories.length; i++) {
+        //   self.stories.push(data.stories[i]);
+        // }
+        // if(data.totalCount<self.offset + 8)
+        //   self.showPagin = true;
+
+        setTimeout(function(){
+        var owl = $("#owl-demo");
 
       owl.owlCarousel({
           items : 2, //10 items above 1000px browser width
@@ -2404,194 +2948,23 @@ var fd = new FormData();
         owl2.trigger('owl.prev');
       })
 
+      }, 1500);
+
       },
       function(error) {
         console.log(error);
       }
     );
   };
+  this.getStories();
 
-  // this.replaceUndefFrom = function(arg) {
-  //   if(arg) return arg.name.name
-  //   else return 18
-  // };
-
-  // this.replaceUndefTo = function(arg) {
-  //   if(arg) return arg.name.name
-  //   else return 60
-  // };
-
-  this.getCountries();
-/*Функция поиска леди по возрасту и стране, делает API запрос*/
-  this.searchGirls = function(page) {
-    // console.log(this.fromDateModel.name.name);
-    var self = this;
-    this.arrURL = [];
-    var keyValURL = '';
-    this.arrURL[0] = ['ag', this.fromDateModel.name + "-" + this.toDateModel.name];
-    this.arrURL[1] = ['co', this.countryModel.name];
-    for(var i=0; i<2; i++) {
-      // if(self.arrURL[i][1] && self.arrURL[i][1] != "undefined" && self.arrURL[i][1] != "undefined-undefined" && self.arrURL[i][1] != null)
-      keyValURL += self.arrURL[i][0] + '-' + self.arrURL[i][1] + '-';
-    };
-
-    var resultURL = keyValURL.slice(0, keyValURL.length-1);
-    // console.log(resultURL);
-
-    $location.path(page + '-' + resultURL);
-    };
-
-  // this.searchHomeGirls = function() {
-
-  //   $location.path('/home/' + this.fromDateModel + '-' + this.toDateModel + '-' + this.countryModel)
-  //     console.log('this.fromDateModel, this.toDateModel');
-  //    console.log(this.fromDateModel, this.toDateModel, this.countryModel);
-  // };
-/*парсим ULR, полученные данные приводим к нужному формату*/
-    var urlId = $stateParams.id;
-/*Получаем возраст из ULR*/
-  if(urlId.indexOf('-ag-')!= -1 ) {
-    var start = urlId.indexOf('-ag-') + 4;
-    var end = urlId.indexOf('-', start);
-    var birthDateArrId  = urlId.slice(start, end);
-    var start2 = urlId.indexOf('-', end );
-    var end2 = urlId.indexOf('-', end+1);
-    if(urlId.indexOf('-', end+1)==-1){
-      var birthDateToArrId = urlId.slice(start2+1, urlId.length);
-    } else var birthDateToArrId = urlId.slice(start2+1, end2);
-  } else {
-    var birthDateArrId = 18;
-    var birthDateToArrId = 60;
+  this.sliceText = function(text) {
+    var newText = text.slice(0, 300) + ' ...';
+    return newText;
   };
-/*Получаем страну из ULR*/
-    if(urlId.indexOf('-co-')!= -1) {
-      var start = urlId.indexOf('-co-') + 4;
-      var end = urlId.indexOf('-', start);
-      if(urlId.indexOf('-', start)==-1) {
-        var country = urlId.slice(start, urlId.length);
-      } else var country = urlId.slice(start, end);
-      ;
-    } else var country = undefined;
-/*Приводим к нужному формату для API запроса*/
-  this.counryUrl = country;
-  var dateBirthdateFrom = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*birthDateArrId);
-  var resFromDate = new Date(dateBirthdateFrom);
-  var resMonth = resFromDate.getMonth() +1;
-  var arrRes = new String(resFromDate).split(' ');
-  this.birthdateTo = arrRes[3] + '-' + resMonth + '-' + arrRes[2];
-  var dateBirthdateTo = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*birthDateToArrId);
-  var resToDate = new Date(dateBirthdateTo);
-  var arrRes2 = new String(resToDate).split(' ');
-  this.birthdateFrom = arrRes2[3] + '-' + resMonth + '-' + arrRes2[2];
-
-  /*Полученные данные в нужном формате*/
-  this.fromDateModel = { name: birthDateArrId };
-  this.toDateModel = { name: birthDateToArrId };
-  this.countryModel = { name: country };
-  // console.log('this.fromDateModel');
-  // console.log(this.fromDateModel);
-/*Функция делает запрос к сервису, чтобы получить леди согласно выбранных параметров*/
-  this.girlsAllGet = function() {
-    var self = this;
-    var options = {
-      birthdateFrom: this.birthdateFrom,
-      birthdateTo: this.birthdateTo,
-      countryId: this.countryIdURL,
-      direction: 'asc',
-      limit: self.limit,
-      offset: 0
-    };
-    girlsAllService.getGirlsAll(options).$promise.then(
-      function(data) {
-        self.girlsAll = data;
-        self.gillsLength = self.girlsAll.totalCount;
-        self.countPage = self.gillsLength / 16;
-        self.totalPage = Math.ceil(self.countPage);
-        for(var i=0; i<self.girlsAll.girls.length; i++) {
-          if(self.girlsAll.girls[i].user &&
-            self.girlsAll.girls[i].user.mainphoto &&
-            self.girlsAll.girls[i].user.mainphoto.pathOfQuad &&
-            self.girlsAll.girls[i].user.mainphoto.pathOfQuad!=null) {
-            var photo = self.girlsAll.girls[i].user.mainphoto.pathOfQuad;
-            self.girlsAll.girls[i].photoAvatar = photo.slice(0, photo.length-4) + '_220_220_auto' + photo.slice(-4);;
-          } else self.girlsAll.girls[i].photoAvatar = null;
-        }
-        // self.fromDateModel = { name: undefined };
-        // self.toDateModel = { name: undefined };
-        // self.countryModel = { name: undefined };
-      },
-      function(error) {
-        console.log(error);
-      }
-    );
-  };
-
-  this.page = 0;
-  this.limit = 16;
-  if(this.totalPage==this.page) this.buttonAdd = true;
-/*Функция пагинации - добавляем, пока есть кого добавлять*/
-  this.paginaGirl = function() {
-    if (this.totalPage){
-      if(this.totalPage > this.page) {
-
-        this.girlsAllGet();
-        this.page += 1;
-        this.limit+= 16;
-        if(this.totalPage==this.page) this.buttonAdd = true;
-      }
-    } else {
-      this.girlsAllGet();
-      this.page += 1;
-      this.limit += 16;
-      if(this.totalPage==this.page) this.buttonAdd = true;
-    }
-  };
-/*Функция создаёт массив данных для поля возраст в поиске*/
-this.makeAge = function() {
-    this.listAge = [];
-    var count = 17;
-    for(var i=0; i<43; i++){
-      count ++;
-      this.listAge[i] = {id: i, name: count};
-    };
-  };
-
-  this.makeAge();
-/*Функция подставляет в название фото нужные параметры*/
-  this.photoAvatar2 = function(arg) {
-    var photo = String(arg);
-    photo = photo.slice(0, photo.length-4) + '_220_220_auto' + photo.slice(-4);
-    return photo;
-  };
-/*меняем стили на выпадающих списках в select*/
-  $(document).ready(function(){
-   setTimeout(function(){
-
-    // $('select').select2();
-
-
-    // $('.selectpicker').selectpicker({
-    //     style: 'btn-info',
-    //     size: 4
-    //   });
-  }, 1000);
-  });
-
-  // this.disabled = true;
-  // this.country2 = {};
-  // this.country2.selected = undefined;
-  // this.countries2 = [ // Taken from https://gist.github.com/unceus/6501985
-  //   {name: 'Afghanistan', code: 'AF'},
-  //   {name: 'Åland Islands', code: 'AX'},
-  //   {name: 'Albania', code: 'AL'},
-  //   {name: 'Algeria', code: 'DZ'},
-  //   {name: 'American Samoa', code: 'AS'},
-  //   {name: 'Andorra', code: 'AD'}
-  // ];
-
 };
 
-girlsAllController.$inject = ['$document', '$location', '$stateParams','userService', 'girlsAllService', '$rootScope', '$http', '$timeout', '$interval'];
+girlsAllController.$inject = ['$document', '$location', '$stateParams','userService', 'girlsAllService', '$rootScope', '$http', '$timeout', '$interval', 'storiesService'];
 },{"../config":2}],14:[function(require,module,exports){
 module.exports = girlsAllService;
 /*фабрика*/
@@ -2601,15 +2974,23 @@ function girlsAllService ($resource) {
 /*Получаем данные девушек согласно выбранных критериев*/
   this.getGirlsAll = function (options) {
     return girlsResource.get({
+      firstTimeActivatedAtFrom: options.firstTimeActivatedAtFrom,
+      birthdateRemainingDays: options.birthdateRemainingDays,
+      sort: options.sort,
       birthdateFrom: options.birthdateFrom,
       birthdateTo: options.birthdateTo,
       countryId: options.countryId,
-      direction: options.direction,
+      isOnline: options.isOnline,
       limit: options.limit,
       offset: options.offset,
       relations: '{"user":{"country":{}, "mainphoto": {} } }'
     });
   };
+  // this.getGirlsTop = function() {
+  //   return girlsResource.get({
+
+  //   })
+  // }
 /*Получаем странны*/
   this.getCountries = function() {
     return countriesResource.get({direction: 'asc'});
@@ -2617,19 +2998,19 @@ function girlsAllService ($resource) {
   return this;
 };
 
+
 girlsAllService.$inject = ['$resource'];
 },{}],15:[function(require,module,exports){
 module.exports = girlsController;
 
-
-function girlsController ($document, $stateParams, $location, mailService, userService, girlsService, $scope, $rootScope) {
+function girlsController ($document, $stateParams, $location, mailService, userService, girlsService, $scope, $rootScope, favoriteService) {
   /*Забираем id из URL*/
   var idArr =$stateParams.id.split('-');
   var id = idArr[idArr.length-1];
   /*Функция определяет возраст*/
   this.agePerson = function(birthdate) {
-    return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
-  }
+    return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;
+  };
   /*Функция зпускает карусель фото и видео*/
   this.caruselPhotoVideo = function() {
     var owl4 = $("#owl-demo4");
@@ -2654,16 +3035,14 @@ function girlsController ($document, $stateParams, $location, mailService, userS
 
       setTimeout(function(){
         var owl5 = $("#owl-demo5");
-
         owl5.owlCarousel({
-            items : 4, //10 items above 1000px browser width
-            itemsDesktop : [1000,2], //5 items between 1000px and 901px
-            itemsDesktopSmall : [900,3], // betweem 900px and 601px
-            itemsTablet: [600,2], //2 items between 600 and 0
-            pagination:true,
-            itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+          items : 2, //10 items above 1000px browser width
+          itemsDesktop : [1000,3], //5 items between 1000px and 901px
+          itemsDesktopSmall : [900,4], // betweem 900px and 601px
+          itemsTablet: [600,4], //2 items between 600 and 0
+          pagination:true,
+          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
         });
-
         // Custom Navigation Events
         $(".profile-right-side-photos-container .next").click(function(){
           owl5.trigger('owl.next');
@@ -2671,15 +3050,21 @@ function girlsController ($document, $stateParams, $location, mailService, userS
         $(".profile-right-side-photos-container .prev").click(function(){
           owl5.trigger('owl.prev');
         })
-        //}
+      $('.js-item').magnificPopup({
+          type: 'image',
+          gallery:{
+              enabled:true
+          }
+      })
       }, 1500);
-  }
+  };
 /*Функция получает данние пользователя из сервиса userService*/
   this.getUserData = function () {
     var self = this;
     userService.getUser().$promise.then(
       function(data) {
         $rootScope.global2 = data;
+        $rootScope.hrefLadies = false;
         self.user = data;
         $('.head_footer').show();
       },
@@ -2698,16 +3083,16 @@ this.getUserData();
     var self = this;
     girlsService.getGirlsId(id).$promise.then(
       function(data) {
-        self.girlsId = data;
-        self.photosGirl(self.girlsId.girl.userId);
+        self.girl = data.girl;
+        self.photosGirl(self.girl.userId);
+        if(self.girl.user &&
+          self.girl.user.mainphoto &&
+          self.girl.user.mainphoto.pathOfQuad &&
+          self.girl.user.mainphoto.pathOfQuad!=null) {
+          var photo = self.girl.user.mainphoto.pathOfQuad
+          self.girl.photoAvatar = photo.slice(0, photo.length-4) + '_300_420_crop' + photo.slice(-4);
+        } else self.girl.photoAvatar = 'null'
         self.caruselPhotoVideo();
-        if(self.girlsId.girl.user &&
-          self.girlsId.girl.user.mainphoto &&
-          self.girlsId.girl.user.mainphoto.pathOfQuad &&
-          self.girlsId.girl.user.mainphoto.pathOfQuad!=null) {
-          var photo = self.girlsId.girl.user.mainphoto.pathOfQuad
-          self.girlsId.girl.photoAvatar = photo.slice(0, photo.length-4) + '_300_420_crop' + photo.slice(-4);
-        } else self.girlsId.girl.photoAvatar = 'null'
       },
       function(error) {
         console.log(error);
@@ -2754,14 +3139,35 @@ this.getUserData();
       return letterText;
     }
   }
+  /*Функция присваивает фаворит статус для девушки*/
+  this.addfavoritStatus = function(id) {
+    this.girl.user.additionalData.isInFavorites = true;
+    var fd = new FormData();
+    fd.append('id', id);
+    favoriteService.addFavorStatus(fd, id);
+  };
+  /*Функция убирает фаворит статус у девушки*/
+  this.deleteFavoritStatus = function(id) {
+    this.girl.user.additionalData.isInFavorites = false;
+    favoriteService.deleteFavorStatus(id);
+  };
+  /*показуем или скрываем подменю с фильтрами*/
+  $('.filter-girls-top-menu').hide();
+  $('body').on('click', function(event) {
+    if (event.target.className == 'show_filter_top_menu' ||
+      event.target.className == 'clearfix show_filter_top_menu') {
+      $('.filter-girls-top-menu').show();
+    } else {
+      $('.filter-girls-top-menu').hide();
+    }
+  });
 
 };
 
 
-girlsController.$inject = ['$document', '$stateParams', '$location', 'mailService', 'userService', 'girlsService', '$scope', '$rootScope'];
+girlsController.$inject = ['$document', '$stateParams', '$location', 'mailService', 'userService', 'girlsService', '$scope', '$rootScope', 'favoriteService'];
 },{}],16:[function(require,module,exports){
 module.exports = girlsViewController;
-
 
 function girlsViewController ($document, $stateParams, $location, girlsService, $scope, $rootScope, userService) {
 /*Забираем id из URL*/
@@ -2813,7 +3219,6 @@ function girlsViewController ($document, $stateParams, $location, girlsService, 
   /*Функция зпускает карусель фото и видео*/
   this.caruselPhotoVideo = function() {
     var owl4 = $("#owl-demo4");
-
       owl4.owlCarousel({
           items : 1, //10 items above 1000px browser width
           itemsDesktop : [1000,2], //5 items between 1000px and 901px
@@ -2822,28 +3227,23 @@ function girlsViewController ($document, $stateParams, $location, girlsService, 
           pagination:true,
           itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
       });
-
       // Custom Navigation Events
       $(".profile-left-side-carousel .next").click(function(){
         owl4.trigger('owl.next');
       })
       $(".profile-left-side-carousel .prev").click(function(){
         owl4.trigger('owl.prev');
-      })
-      // }, 2000);
-
+      });
       setTimeout(function(){
         var owl5 = $("#owl-demo5");
-
         owl5.owlCarousel({
-            items : 4, //10 items above 1000px browser width
-            itemsDesktop : [1000,2], //5 items between 1000px and 901px
-            itemsDesktopSmall : [900,3], // betweem 900px and 601px
-            itemsTablet: [600,2], //2 items between 600 and 0
-            pagination:true,
-            itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
+          items : 2, //10 items above 1000px browser width
+          itemsDesktop : [1000,3], //5 items between 1000px and 901px
+          itemsDesktopSmall : [900,4], // betweem 900px and 601px
+          itemsTablet: [600,4], //2 items between 600 and 0
+          pagination:true,
+          itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
         });
-
         // Custom Navigation Events
         $(".profile-right-side-photos-container .next").click(function(){
           owl5.trigger('owl.next');
@@ -2851,17 +3251,28 @@ function girlsViewController ($document, $stateParams, $location, girlsService, 
         $(".profile-right-side-photos-container .prev").click(function(){
           owl5.trigger('owl.prev');
         })
+        $('.js-item').magnificPopup({
+          type: 'image',
+          gallery:{
+              enabled:true
+          }
+      })
         //}
-      }, 1500);
+
+    var popupImg = $('.js-item').length;
+    if (popupImg > 2) {
+        $('.js-item:gt(1)').parent().append('<div class="js-lock"></div>');
+        $('.js-item:lt(2)').addClass('js-notLocked');
+    };
+    $('.js-notLocked').magnificPopup({
+        type: 'image',
+        gallery:{
+            enabled:true
+        }
+    });
+    }, 1500);
   }
 /*Функция меняет название фотграфии подставляя _300_420_crop*/
-  // this.photoAvatar2 = function(arg) {
-  //   var photo = String(arg);
-  //   if(photo.length<64) {
-  //     photo = photo.slice(0, 51) + '_300_420_crop' + photo.slice(-4);
-  //   }
-  //   return photo;
-  // };
   this.photoAvatar2 = function(arg) {
     var photo = String(arg);
     photo = photo.slice(0, photo.length-4) + '_300_420_crop' + photo.slice(-4);
@@ -2896,7 +3307,14 @@ this.photosGirl = function(id) {
     var self = this;
     girlsService.getGirlPhoto(id).$promise.then(
       function(data) {
-        self.girlsPhotos = data;
+        self.photos = data.photos;
+        if(self.photos.length>3) {
+          for(var i=2; i<self.photos.length; i++) {
+          // i==0 || i==1? self.photos[i].lockPicture = false: self.photos[i].lockPicture = true;
+            self.photos[i].lockPicture = true;
+            console.log(self.photos[i]);
+          }
+        }
       },
       function(error) {
         console.log(error);
@@ -2927,26 +3345,47 @@ function girlsService ($resource) {
 };
 
 girlsService.$inject = ['$resource'];
+
 },{}],18:[function(require,module,exports){
 module.exports = ladyAllController;
 
-function ladyAllController ($document, $location, $stateParams, userService, girlsAllService, $rootScope, $http, $timeout, $interval) {
+function ladyAllController ($document, $location, $stateParams, userService, girlsAllService, $rootScope, $http, $timeout, $interval, favoriteService, chatService, storiesService) {
 
+  /*парсим ULR, полученные данные приводим к нужному формату*/
+    var urlId = $stateParams.id;
+    var urlId2 = $stateParams.id.split('-')[0];
   /*Функция определяет возраст*/
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
+  };
+  var self2 = this
+  self2.partners = [];
+  /*Функция отклоняет все предложения начать сесию в чате при logOut*/
+  $rootScope.logOut = function() {
+    var self = this;
+    chatService.emit('getCurChatPartners', {});
+    chatService.on('addPartner', function (data) {
+      self2.partners[data.id] = data;
+      for(var i in self2.partners) {
+        if(self2.partners[i] && self2.partners[i].sessionId && (!self2.partners[i].startDateTime) && (self2.partners[i].isDeclined == 0) && (self2.partners[i].isCancelled == 0)){
+          chatService.emit('declineRequest', { sessionId: self2.partners[i].sessionId });
+        }
+      }
+    });
   };
   /*Функция делает запрос к сервису и получает данные залогиненного пользователя*/
   this.getUserData = function () {
     var self = this;
     userService.getUser().$promise.then(
       function(data) {
+        chatService.emit('getCurChatPartners', {});
         $rootScope.global2 = data;
+        $rootScope.hrefLadies = true;
         self.user = data;
         $('.head_footer').show();
       },
       function(error) {
-        $location.path('/home/-ag-18-30-co-Ukraine')
+        $location.path('/home/-ag-18-30');
         console.log(error);
         $('.head_footer').show();
       }
@@ -2954,24 +3393,313 @@ function ladyAllController ($document, $location, $stateParams, userService, gir
   };
 
   this.getUserData();
+  /*Функция присваивает фаворит статус для девушки*/
+  this.addfavoritStatus = function(id, index) {
+    if(this.girlsAll[index]) {
+      this.girlsAll[index].user.additionalData.isInFavorites = true;
+    };
+    if(this.favoritGirls[index]) {
+      this.favoritGirls[index].additionalData.isInFavorites = true;
+    };
+    var fd = new FormData();
+    fd.append('id', id);
+    favoriteService.addFavorStatus(fd, id);
+  };
+  /*Функция убирает фаворит статус у девушки*/
+  this.deleteFavoritStatus = function(id, index) {
+    favoriteService.deleteFavorStatus(id);
+    if(this.girlsAll[index]) {
+      this.girlsAll[index].user.additionalData.isInFavorites = false;
+    };
+    if(this.favoritGirls[index]) {
+      this.favoritGirls[index].additionalData.isInFavorites = false;
+    };
+  };
+  this.isIfUndefined1 = function() {
+    if(this.countryModel.name) {
+      return '-co-' + this.countryModel.name;
+    } else return '-co-All_countries';
+  };
+  this.isIfUndefined2 = function() {
+    if(this.fromDateModel.name && this.toDateModel.name){
+      return '-ag-' + this.fromDateModel.name + '-' + this.toDateModel.name;
+    } else if(this.fromDateModel.name && !this.toDateModel.name) {
+      return '-ag-' + this.fromDateModel.name + '-60';
+    } else if(!this.fromDateModel.name && this.toDateModel.name) {
+      return '-ag-18-' + this.toDateModel.name;
+    } else return '';
+  };
+/*Функция поиска леди по возрасту и стране, делает API запрос*/
+  this.searchGirls = function(page) {
+    var result = this.isIfUndefined2() + this.isIfUndefined1();
+    var resultURL = result.replace(/ /g, "_");
+    $location.path(page + urlId2 + resultURL);
+  };
+/*Получаем возраст из ULR*/
+  if(urlId.indexOf('-ag-')!= -1 ) {
+    var start = urlId.indexOf('-ag-') + 4;
+    var end = urlId.indexOf('-', start);
+    var birthDateArrId  = urlId.slice(start, end);
+    var start2 = urlId.indexOf('-', end );
+    var end2 = urlId.indexOf('-', end+1);
+    if(urlId.indexOf('-', end+1)==-1){
+      var birthDateToArrId = urlId.slice(start2+1, urlId.length);
+    } else var birthDateToArrId = urlId.slice(start2+1, end2);
+  };
+/*Получаем страну из ULR*/
+    if(urlId.indexOf('-co-')!= -1) {
+      var start = urlId.indexOf('-co-') + 4;
+      var end = urlId.indexOf('-', start);
+      if(urlId.indexOf('-', start)==-1) {
+        var country2 = urlId.slice(start, urlId.length);
+      } else var country2 = urlId.slice(start, end);
+      ;
+    } else var country2 = undefined;
+    if(country2)
+    var country = country2.replace(/_/g, " ");
+/*Приводим к нужному формату для API запроса*/
+  this.counryUrl = country;
+  if(birthDateArrId) {
+    var dateBirthdateFrom = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*birthDateArrId);
+    var resFromDate = new Date(dateBirthdateFrom);
+    var resMonth = resFromDate.getMonth() +1;
+    var arrRes = new String(resFromDate).split(' ');
+    this.birthdateTo = arrRes[3] + '-' + resMonth + '-' + arrRes[2];
+  };
+  if(birthDateToArrId) {
+  var dateBirthdateTo = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*birthDateToArrId);
+  var resToDate = new Date(dateBirthdateTo);
+  var arrRes2 = new String(resToDate).split(' ');
+  this.birthdateFrom = arrRes2[3] + '-' + resMonth + '-' + arrRes2[2];
+  };
 
-/*Функция делает запрос к сервису  и получает названия стран*/
+  /*Полученные данные в нужном формате*/
+  this.fromDateModel = { name: birthDateArrId };
+  this.toDateModel = { name: birthDateToArrId };
+  this.countryModel = { name: country };
+  /*Функция перестраивает массив и записывает в другой*/
+  this.randomNum = function(arr, resArr) {
+    for(var i=this.offsetForReq; i<arr.length; i++) {
+      var res = arr[i];
+      var index = Math.floor(Math.random() * (arr.length - this.offsetForReq) + this.offsetForReq);
+      if(!resArr[index]) {
+        resArr[index] = res;
+      } else i-=1;
+    };
+  };
+
+  this.paginCount = 16;
+  this.offsetForReq = 0;
+
+  this.functionPa = function(arr) {
+    if(arr && arr.length>16)
+      this.girlsAll = arr.slice(0, this.paginCount);
+    else this.girlsAll = arr;
+  };
+  this.functionPa2 = function(arr) {
+    if(arr && arr.length>16)
+      this.favoritGirls = arr.slice(0, this.paginCount);
+    else this.favoritGirls = arr;
+  };
+  this.addPhotoGirl = function(arr) {
+          if(arr && arr.length) {
+            for(var i=0; i<arr.length; i++) {
+              if(arr[i] && arr[i].user &&
+                arr[i].user.mainphoto &&
+                arr[i].user.mainphoto.pathOfQuad &&
+                arr[i].user.mainphoto.pathOfQuad!=null) {
+                var photo = arr[i].user.mainphoto.pathOfQuad;
+                arr[i].photoAvatar = photo.slice(0, photo.length-4) + '_220_220_auto' + photo.slice(-4);
+              }
+              if(arr[i] && arr[i].mainphoto && arr[i].mainphoto.pathOfQuad) {
+                var photo = arr[i].mainphoto.pathOfQuad;
+                arr[i].photoAvatar = photo.slice(0, photo.length-4) + '_220_220_auto' + photo.slice(-4);
+              }
+            }
+          }
+        };
+        this.girlsAll = [];
+        this.girlsAll2 = [];
+        this.girlsAll0 = [];
+/*Функция делает запрос к сервису, чтобы получить леди согласно выбранных параметров*/
+  this.girlsAllGet = function() {
+    var self = this;
+    var options = {
+      firstTimeActivatedAtFrom: this.firstTimeActivatedAtFrom,
+      birthdateRemainingDays: this.birthdateRemainingDays,
+      sort: this.sortType,
+      birthdateFrom: this.birthdateFrom,
+      birthdateTo: this.birthdateTo,
+      countryId: this.countryIdURL,
+      isOnline: this.isOnline,
+      limit: 50,
+      offset: this.offsetForReq
+    };
+    girlsAllService.getGirlsAll(options).$promise.then(
+      function(data) {
+        self.girlTotal = data.totalCount;
+        for(var i=0; i<data.girls.length; i++) {
+          self.girlsAll0.push(data.girls[i]);
+        };
+        // self.randomNum(self.girlsAll0, self.girlsAll2);
+        self.functionPa(self.girlsAll0);
+        self.addPhotoGirl(self.girlsAll);
+        if(self.paginCount<self.girlTotal) {
+          self.buttonAddGirls = true;
+        } else self.buttonAddGirls = false;
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+  this.favoritGirls = [];
+  this.favoritGirls0 = [];
+  this.favoritGirls2 = [];
+  this.getFavoritGirls = function() {
+    var self = this;
+    var options = {
+      limit: 50,
+      offset: this.offsetForReq
+    };
+    favoriteService.getFavorGirls(options).$promise.then(
+      function(data) {
+        self.girlTotal = data.totalCount;
+        for(var i=0; i<data.users.length; i++) {
+          self.favoritGirls0.push(data.users[i]);
+        };
+        // self.randomNum(self.favoritGirls0, self.favoritGirls2);
+        self.functionPa2(self.favoritGirls0);
+        self.addPhotoGirl(self.favoritGirls);
+        if(self.paginCount<self.girlTotal) {
+          self.buttonAddGirls = true;
+        } else self.buttonAddGirls = false;
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+  /*Функция делает запрос к сервису  и получает названия стран*/
   this.getCountries = function() {
     var self = this;
     girlsAllService.getCountries().$promise.then(
       function(data) {
         self.countries = data;
         self.arrCountries = self.countries.countries;
-        // $('select').select2();
-        for(var i=0; i<self.arrCountries.length; i++) {
-          if(self.arrCountries[i].name==self.counryUrl) {
-            self.countryIdURL = self.arrCountries[i].id;
-            self.paginaGirl();
-          }
+        var addAllCountries = {
+          id: 0,
+          name: 'All countries'
         };
+        self.arrCountries.unshift(addAllCountries);
+        if(self.counryUrl && self.counryUrl!= 'All countries') {
+          for(var i=0; i<self.arrCountries.length; i++) {
+            if(self.arrCountries[i].name==self.counryUrl) {
+              self.countryIdURL = self.arrCountries[i].id;
+              self.girlsAllGet();
+            }
+          }
+        } else {
+          self.counryUrl== 'All countries';
+          self.girlsAllGet();
+        }
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+/*Функция пагинации - добавляем, пока есть кого добавлять*/
+  this.paginaGirl = function() {
+    this.paginCount +=3;//16;
+    if(this.paginCount>this.offsetForReq+50) {
+        this.offsetForReq += 50;
+        if(this.girlsAll.length>0) {
+          this.girlsAllGet();
+        };
+        if(this.favoritGirls.length>0) {
+          this.getFavoritGirls();
+        };
+      };
 
-        // $(".owl-carousel").owlCarousel();
-         var owl = $("#owl-demo");
+
+    if(this.paginCount>this.offsetForReq || this.paginCount==this.offsetForReq) {
+      if(this.girlsAll.length>0) {
+        this.functionPa(this.girlsAll2);
+        this.addPhotoGirl(this.girlsAll);
+      };
+      if(this.favoritGirls.length>0) {
+        this.functionPa(this.favoritGirls2);
+        this.addPhotoGirl(this.favoritGirls);
+      };
+    };
+    if(this.paginCount<this.girlTotal) {
+      this.buttonAddGirls = true;
+    } else this.buttonAddGirls = false;
+  };
+  /*Функция создаёт массив данных для поля возраст в поиске*/
+  this.makeAge = function() {
+    this.listAge = [];
+    var count = 17;
+    for(var i=0; i<43; i++){
+      count ++;
+      this.listAge[i] = {id: i, name: count};
+    };
+  };
+  this.makeAge();
+  if(urlId2=='All_Ladies') {
+    this.sortType = 'rating';
+    this.getCountries();
+  };if(urlId2=='favorites') {
+    this.filterGirls = true;
+    this.getCountries();
+  };
+  if(urlId2=='Top_50') {
+    this.filterGirls = true;
+    this.sortType = 'rating';
+    this.getCountries();
+  };
+  if(urlId2=='Upcoming_Birthdays') {
+    this.sortType = 'random';
+    this.birthdateRemainingDays = 7;
+    this.getCountries();
+  };
+  if(urlId2=='New_Ladies') {
+    this.sortType = 'random';
+    var dateToday = new Date().getTime()-(24 * 3600*30*1000);
+    var dateToday2 = new Date(dateToday)
+    this.firstTimeActivatedAtFrom = dateToday2.getFullYear() + '-' + dateToday2.getMonth() + '-' + dateToday2.getDate();
+    this.getCountries();
+  };if(urlId2=='Online_Ladies') {
+    this.sortType = 'random';
+    this.isOnline = true;
+    this.getCountries();
+  };
+/*Функция подставляет в название фото нужные параметры*/
+  this.photoAvatar2 = function(arg) {
+    var photo = String(arg);
+    photo = photo.slice(0, photo.length-4) + '_220_220_auto' + photo.slice(-4);
+    return photo;
+  };
+  this.offset = 0;
+  this.stories = [];
+  this.getStories = function () {
+    var option = {
+      limit: 8,
+      offset: this.offset
+    };
+    var self = this;
+    storiesService.getAllStories(option).$promise.then(
+      function(data) {
+        self.stories = data.stories;
+        // for(var i=0; i<data.stories.length; i++) {
+        //   self.stories.push(data.stories[i]);
+        // }
+        // if(data.totalCount<self.offset + 8)
+        //   self.showPagin = true;
+
+        setTimeout(function(){
+        var owl = $("#owl-demo");
 
       owl.owlCarousel({
           items : 2, //10 items above 1000px browser width
@@ -3006,221 +3734,110 @@ function ladyAllController ($document, $location, $stateParams, userService, gir
         owl2.trigger('owl.prev');
       })
 
+      }, 1500);
+
       },
       function(error) {
         console.log(error);
       }
     );
   };
+  this.getStories();
 
-  this.getCountries();
-/*Функция поиска леди по возрасту и стране, делает API запрос*/
-  this.searchGirls = function(page) {
-    console.log(page);
-    var self = this;
-    this.arrURL = [];
-    var keyValURL = '';
-    this.arrURL[0] = ['ag', this.fromDateModel.name + "-" + this.toDateModel.name];
-    this.arrURL[1] = ['co', this.countryModel.name];
-    for(var i=0; i<2; i++) {
-      // if(self.arrURL[i][1] && self.arrURL[i][1] != "undefined" && self.arrURL[i][1] != "undefined-undefined" && self.arrURL[i][1] != null)
-      keyValURL += self.arrURL[i][0] + '-' + self.arrURL[i][1] + '-';
-    };
-
-    var resultURL = keyValURL.slice(0, keyValURL.length-1);
-    console.log(resultURL);
-
-    $location.path(page + '-' + resultURL);
-    };
-
-  // this.searchHomeGirls = function() {
-
-  //   $location.path('/home/' + this.fromDateModel + '-' + this.toDateModel + '-' + this.countryModel)
-  //     console.log('this.fromDateModel, this.toDateModel');
-  //    console.log(this.fromDateModel, this.toDateModel, this.countryModel);
-  // };
-/*парсим ULR, полученные данные приводим к нужному формату*/
-    var urlId = $stateParams.id;
-/*Получаем возраст из ULR*/
-  if(urlId.indexOf('-ag-')!= -1 ) {
-    var start = urlId.indexOf('-ag-') + 4;
-    var end = urlId.indexOf('-', start);
-    var birthDateArrId  = urlId.slice(start, end);
-    var start2 = urlId.indexOf('-', end );
-    var end2 = urlId.indexOf('-', end+1);
-    if(urlId.indexOf('-', end+1)==-1){
-      var birthDateToArrId = urlId.slice(start2+1, urlId.length);
-    } else var birthDateToArrId = urlId.slice(start2+1, end2);
-  } else {
-    var birthDateArrId = 18;
-    var birthDateToArrId = 60;
-  };
-/*Получаем страну из ULR*/
-    if(urlId.indexOf('-co-')!= -1) {
-      var start = urlId.indexOf('-co-') + 4;
-      var end = urlId.indexOf('-', start);
-      if(urlId.indexOf('-', start)==-1) {
-        var country = urlId.slice(start, urlId.length);
-      } else var country = urlId.slice(start, end);
-      ;
-    } else var country = undefined;
-/*Приводим к нужному формату для API запроса*/
-  this.counryUrl = country;
-  var dateBirthdateFrom = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*birthDateArrId);
-  var resFromDate = new Date(dateBirthdateFrom);
-  var resMonth = resFromDate.getMonth() +1;
-  var arrRes = new String(resFromDate).split(' ');
-  this.birthdateTo = arrRes[3] + '-' + resMonth + '-' + arrRes[2];
-  var dateBirthdateTo = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*birthDateToArrId);
-  var resToDate = new Date(dateBirthdateTo);
-  var arrRes2 = new String(resToDate).split(' ');
-  this.birthdateFrom = arrRes2[3] + '-' + resMonth + '-' + arrRes2[2];
-
-  /*Полученные данные в нужном формате*/
-  this.fromDateModel = { name: birthDateArrId };
-  this.toDateModel = { name: birthDateToArrId };
-  this.countryModel = { name: country };
-  // console.log('this.fromDateModel');
-  // console.log(this.fromDateModel);
-/*Функция делает запрос к сервису, чтобы получить леди согласно выбранных параметров*/
-  this.girlsAllGet = function() {
-    var self = this;
-    var options = {
-      birthdateFrom: this.birthdateFrom,
-      birthdateTo: this.birthdateTo,
-      countryId: this.countryIdURL,
-      direction: 'asc',
-      limit: self.limit,
-      offset: 0
-    };
-    girlsAllService.getGirlsAll(options).$promise.then(
-      function(data) {
-        self.girlsAll = data;
-        self.gillsLength = self.girlsAll.totalCount;
-        self.countPage = self.gillsLength / 16;
-        self.totalPage = Math.ceil(self.countPage);
-        for(var i=0; i<self.girlsAll.girls.length; i++) {
-          if(self.girlsAll.girls[i].user &&
-            self.girlsAll.girls[i].user.mainphoto &&
-            self.girlsAll.girls[i].user.mainphoto.pathOfQuad &&
-            self.girlsAll.girls[i].user.mainphoto.pathOfQuad!=null) {
-            var photo = self.girlsAll.girls[i].user.mainphoto.pathOfQuad;
-            self.girlsAll.girls[i].photoAvatar = photo.slice(0, photo.length-4) + '_220_220_auto' + photo.slice(-4);;
-          } else self.girlsAll.girls[i].photoAvatar = null;
-        }
-        // self.fromDateModel = { name: undefined };
-        // self.toDateModel = { name: undefined };
-        // self.countryModel = { name: undefined };
-      },
-      function(error) {
-        console.log(error);
-      }
-    );
+  this.sliceText = function(text) {
+    var newText = text.slice(0, 300) + ' ...';
+    return newText;
   };
 
-  this.page = 0;
-  this.limit = 16;
-  if(this.totalPage==this.page) this.buttonAdd = true;
-/*Функция пагинации - добавляем, пока есть кого добавлять*/
-  this.paginaGirl = function() {
-    if (this.totalPage){
-      if(this.totalPage > this.page) {
-
-        this.girlsAllGet();
-        this.page += 1;
-        this.limit+= 16;
-        if(this.totalPage==this.page) this.buttonAdd = true;
-      }
+  $('.filter-girls-top-menu').hide();
+  $('body').on('click', function(event) {
+    if (event.target.className == 'show_filter_top_menu' ||
+      event.target.className == 'clearfix show_filter_top_menu') {
+      $('.filter-girls-top-menu').show();
     } else {
-      this.girlsAllGet();
-      this.page += 1;
-      this.limit += 16;
-      if(this.totalPage==this.page) this.buttonAdd = true;
+      $('.filter-girls-top-menu').hide();
     }
-  };
-/*Функция создаёт массив данных для поля возраст в поиске*/
-this.makeAge = function() {
-    this.listAge = [];
-    var count = 17;
-    for(var i=0; i<43; i++){
-      count ++;
-      this.listAge[i] = {id: i, name: count};
-    };
-  };
-
-  this.makeAge();
-/*Функция подставляет в название фото нужные параметры*/
-  this.photoAvatar2 = function(arg) {
-    var photo = String(arg);
-    photo = photo.slice(0, photo.length-4) + '_220_220_auto' + photo.slice(-4);
-    return photo;
-  };
-/*меняем стили на выпадающих списках в select*/
-  $(document).ready(function(){
-   setTimeout(function(){
-    // $('.selectpicker').selectpicker({
-    //     style: 'btn-info',
-    //     size: 4
-    //   });
-  }, 1000);
   });
-
-
 };
 
-ladyAllController.$inject = ['$document', '$location', '$stateParams','userService', 'girlsAllService', '$rootScope', '$http', '$timeout', '$interval'];
+ladyAllController.$inject = ['$document', '$location', '$stateParams','userService', 'girlsAllService', '$rootScope', '$http', '$timeout', '$interval', 'favoriteService', 'chatService', 'storiesService'];
 },{}],19:[function(require,module,exports){
 module.exports = mailController;
 
-function mailController ($document, $location, $timeout, $anchorScroll, mailService, userService , girlsService, $scope, $rootScope, girlsService) {
+function mailController ($document, $location, $timeout, $anchorScroll, mailService, userService , $scope, $rootScope, favoriteService, chatService) {
 
   this.showLetter = true;
-
-  this.girlsId = [];
-
-  this.girlsIdGet = function(recipientID) {
+  var self2 = this
+  self2.partners = [];
+  /*Функция отклоняет все предложения начать сесию в чате при logOut*/
+  $rootScope.logOut = function() {
     var self = this;
-    girlsService.getGirlsId(recipientID).$promise.then(
+    chatService.emit('getCurChatPartners', {});
+    chatService.on('addPartner', function (data) {
+      self2.partners[data.id] = data;
+      for(var i in self2.partners) {
+        if(self2.partners[i] && self2.partners[i].sessionId && (!self2.partners[i].startDateTime) && (self2.partners[i].isDeclined == 0) && (self2.partners[i].isCancelled == 0)){
+          chatService.emit('declineRequest', { sessionId: self2.partners[i].sessionId });
+        }
+      }
+    });
+  };
+
+  /*Функция присваивает фаворит статус для девушки*/
+  this.addfavoritStatus = function(id) {
+    var self = this;
+    var fd = new FormData();
+    fd.append('id', id);
+    favoriteService.addFavorStatus(fd, id).$promise.then(
       function(data) {
-        self.girlsId[recipientID] = data;
-        $location.path('/home/-ag-18-30-co-Ukraine');
-        console.log(self.girlsId);
+        if(self.messagesId)
+          self.messagesId.letter.sender.additionalData.isInFavorites = true;
+        for(var i =0; i<self.messages.letters.length; i++) {
+          if(self.messages.letters[i].sender.id==id)
+            self.messages.letters[i].sender.additionalData.isInFavorites = true;
+        }
       },
       function(error) {
         console.log(error);
       }
     );
-  }
-
-  this.functionDataRecipiend = function(messageObg, userID, model) {
-console.log('recipientID');
-console.log(messageObg);
-console.log('userID');
-console.log(userID);
-console.log('model');
-console.log(model);
-    if(messageObg.recipientId==userID) {
-      if(model==false && messageObg.isRead==true)
-      return 0;
-
-    } else return 1
-
-
-  }
-/*Функция определяет возраст*/
+  };
+  this.hearRed = 'assets/angular-app/public/img/grey-like-message-grey.png';
+  this.hearGrey = 'assets/angular-app/public/img/grey-like-message.png';
+  this.mouseenterImgFav = function() {
+    this.hearGrey = 'assets/angular-app/public/img/grey-like-message.png'
+    this.hearRed = 'assets/angular-app/public/img/grey-like-message-grey.png';
+  };
+  this.mouseleaveImgFav = function() {
+    this.hearGrey = 'assets/angular-app/public/img/grey-like-message-grey.png';
+    this.hearRed = 'assets/angular-app/public/img/grey-like-message.png';
+  };
+  this.deleteFavoritStatus = function(id) {
+    var self = this;
+    favoriteService.deleteFavorStatus(id).$promise.then(
+      function(data) {
+        if(self.messagesId)
+          self.messagesId.letter.sender.additionalData.isInFavorites = false;
+        for(var i =0; i<self.messages.letters.length; i++) {
+          if(self.messages.letters[i].sender.id==id)
+            self.messages.letters[i].sender.additionalData.isInFavorites = false;
+        }
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+  /*Функция определяет возраст*/
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;;
   };
-/*Функция показывает меню выделения писем прочитанных, непрочитанных*/
+  /*Функция показывает меню выделения писем прочитанных, непрочитанных*/
   this.showSelectCheck = function() {
     this.showTumblerCheck = true;
     this.deletedSelect = false;
-    // var list = angular.element(document.getElementsByClassName('message-sort-dropdown'));
-    // for(var i=1; i<8; i+=2){
-    //   list[0].childNodes[i].childNodes[1].className = '';
-    // };
   };
-/*Функция в меню выделения писем прочитанных, непрочитанных показывает текущее состояние */
+  /*Функция в меню выделения писем прочитанных, непрочитанных показывает текущее состояние */
   this.removeClassTab = function(arg) {
     var list = angular.element(document.getElementsByClassName('message-tabs-item'));
     for(var i=0; i<list.length; i++){
@@ -3228,38 +3845,40 @@ console.log(model);
     };
     list[arg].className = 'message-tabs-item active';
   };
-/*Функция показывает и скрывает фильтры по датам*/
+  /*Функция показывает и скрывает фильтры по датам*/
   this.showList = function(){
     this.listDiv = this.listDiv ? false : true;
   };
-/*Функция показывает и скрывает список возможностей в области отправки письма*/
+  /*Функция показывает и скрывает список возможностей в области отправки письма*/
   this.showFilter = function() {
     this.toDate = new Date();
     // var dateFrom = new Date().getTime()-((24 * 3600 * 365.25 * 1000)*20);
     // this.fromDate = new Date(dateFrom);
     this.filterDiv = this.filterDiv ? false : true;
   };
-/*Функция запрашивает данные залогиненного пользователя*/
+  /*Функция запрашивает данные залогиненного пользователя*/
   this.getUserData = function () {
     var self = this;
     userService.getUser().$promise.then(
       function(data) {
         self.user = data;
+        chatService.emit('getCurChatPartners', {});
         $rootScope.global2 = data;
+        $rootScope.hrefLadies =false;
         self.userID = data.user.id;
         $('.head_footer').show();
       },
       function(error) {
         console.log(error);
+        $location.path('/home/-ag-18-30-co-Ukraine');
         $('.head_footer').show();
       }
     );
   };
 
   this.getUserData();
-/*Функция, отвечающая за параметры в запросе на получение писем*/
+  /*Функция, отвечающая за параметры в запросе на получение писем*/
   this.changeType = function (type) {
-
     this.resultFromDate = undefined;
     this.resultToDate = undefined;
     this.tumbler = true;
@@ -3273,12 +3892,11 @@ console.log(model);
       this.showLetter = false
     else this.showLetter = true;
   };
-/*Функция запроса писем через сервис*/
+  /*Функция запроса писем через сервис*/
   this.getMessages = function () {
     if(this.tumbler==false) {
       this.tumbler=true
     }
-    // console.log(this.type);
     var self = this;
     var options = {
       dateTimeFrom: self.resultFromDate,
@@ -3304,11 +3922,6 @@ console.log(model);
           if(self.messages.letters[i].senderId==self.user.user.id) {
             self.messages.letters[i].isRead = true;
           }
-        //   // console.log(self.userID + ' : ' + self.messages.letters[i].recipientId)
-        //   if(self.userID!=self.messages.letters[i].recipientId) {
-        //     console.log(self.messages.letters[i].recipientId);
-        //     self.girlsIdGet(self.messages.letters[i].recipientId);
-        //   }
         }
       },
       function(error) {
@@ -3327,7 +3940,7 @@ console.log(model);
   this.firstNamberPagin = function() {
     var self = this;
     $timeout(function(){
-      if(self.arrIndex.length>0) {
+      if(self.arrIndex && self.arrIndex.length>0) {
         self.paginaAddClass(0);
       }
     },100);
@@ -3385,7 +3998,7 @@ console.log(model);
     $anchorScroll();
 
   };
-/*Функция возвращает кол-во непрочитанных писем с типом Inbox*/
+  /*Функция возвращает кол-во непрочитанных писем с типом Inbox*/
   this.getMessagesInboxLength = function() {
     var self = this;
     mailService.getMessagesLengthInbox().$promise.then(
@@ -3398,13 +4011,13 @@ console.log(model);
   };
 
   this.getMessagesInboxLength();
-/*Функция отвечает за стили письма в переписке*/
+  /*Функция отвечает за стили письма в переписке*/
   this.addClass = function(arg1, arg2, arg3) {
     if(arg3==false) {
       return 2;
     }else return arg1==arg2? 0:1;
   };
-/*Функция оплаты письма, чтобы прочитать его*/
+  /*Функция оплаты письма, чтобы прочитать его*/
   this.payment =function(id, partnerid) {
     var self = this;
     mailService.paymentLetter(id).$promise.then(
@@ -3452,9 +4065,16 @@ console.log(model);
         self.letterAllCorLength = self.letterCor.totalCount;
         self.countPage2 = self.letterAllCorLength / 20;
         self.totalPage2 = Math.ceil(self.countPage2);
+        // console.log(self.letterCor);
         if(self.totalPage2==1) {
           self.buttonAddLetter = true;
         }
+        for(var i=0; i<self.letterCor.letters.length; i++) {
+          if(self.letterCor.letters[i].senderId==self.user.user.id)
+          self.letterCor.letters[i].isRead = true;
+        }
+
+
       },
       function(error) {
         console.log(error);
@@ -3474,7 +4094,7 @@ console.log(model);
         this.buttonAddLetter = true;
     }
   };
-/*Функция обрезает текст письма, если в письме больше 90 символов*/
+  /*Функция обрезает текст письма, если в письме больше 90 символов*/
   this.switchMore = function(letterText) {
     if (letterText==null) {
       return false;}
@@ -3482,7 +4102,7 @@ console.log(model);
       return false;
     } else return true;
   };
-/*Функция показавет весь текст письма в переписке*/
+  /*Функция показавет весь текст письма в переписке*/
   this.letterTextSlice = function(letterText, switchComment) {
     if (switchComment) {
        return letterText;
@@ -3496,12 +4116,12 @@ console.log(model);
       return letterText;
     }
   }
-/*Функция устанавливает позицию слева/справа для каритнки в переписке*/
+  /*Функция устанавливает позицию слева/справа для каритнки в переписке*/
   this.showSendMessage =function(senderId, userId) {
     return senderId==userId? true: false;
   }
   this.textArea = false;
-/*функция создаёт эффект моргания при отправке письма*/
+  /*функция создаёт эффект моргания при отправке письма*/
   this.textAreaTime = function() {
     var self = this;
     self.textArea = true;
@@ -3512,12 +4132,17 @@ console.log(model);
 /*Функция отправляет письмо по API*/
   this.addMessage = function(id) {
     var self = this;
-    var msg = {
-      text: this.newMessage,
-      recipientId: id,
-      type: 'box'
-    };
-    mailService.addMessage2(msg).$promise.then(
+    var fd = new FormData();
+    fd.append('text', this.newMessage);
+    fd.append('recipientId', id);
+    fd.append('type', 'box');
+    // var msg = {
+    //   text: this.newMessage,
+    //   recipientId: id,
+    //   type: 'box'
+    // };
+    mailService.addMessage2(fd).$promise.then(
+    // mailService.addMessage2(msg).$promise.then(
       function(data) {
         self.textAreaTime();
         self.newMessage = '';
@@ -3720,16 +4345,44 @@ console.log(model);
   this.removeSelectBox = function(){
     this.showTumblerCheck = false;
   };
+  /*Объект для input type=date*/
   this.dateOptions = {
     changeYear: true,
     changeMonth: true,
     yearRange: '1900:-0'
     };
+  /*Функция растягивает на всю ширину экрана, если две закладки для папок с письмами*/
+  this.autoWidthItem = function() {
+    var lengthMsg =$('.message-tabs-item').length;
+    if (lengthMsg == 4) {
+      $('.message-tabs-item').css('width', '49.9%');
+    } else {
+      $('.message-tabs-item').css('width', '24.9%');
+    };
+  };
+  this.autoWidthItem();
+  /*подгрузка писем в переписку*/
+  var self5 = this;
+  $(window).on('scroll', function(event) {
+    if(!self5.tumbler) {
+      if($(this).scrollTop()>2500 && self5.letterCor.letters.length<50) {
+        self5.paginaLetterCor();
+      }
+    }
+  });
+  $('.filter-girls-top-menu').hide();
+  $('body').on('click', function(event) {
+    if (event.target.className == 'show_filter_top_menu' ||
+      event.target.className == 'clearfix show_filter_top_menu') {
+      $('.filter-girls-top-menu').show();
+    } else {
+      $('.filter-girls-top-menu').hide();
+    }
+  });
 
 };
 
-
-mailController.$inject = ['$document', '$location', '$timeout', '$anchorScroll', 'mailService', 'userService', 'girlsService', '$scope', '$rootScope', 'girlsService'];
+mailController.$inject = ['$document', '$location', '$timeout', '$anchorScroll', 'mailService', 'userService', '$scope', '$rootScope', 'favoriteService', 'chatService'];
 
 },{}],20:[function(require,module,exports){
 module.exports = mailIdController;
@@ -3740,7 +4393,6 @@ function mailIdController ($document, $stateParams, $location, $anchorScroll, $t
      //$location.hash('top_anchorScroll');
      $anchorScroll.yOffset = 200;
      $anchorScroll();
-
   };
 
   this.anchorScrollPage();
@@ -3756,6 +4408,7 @@ function mailIdController ($document, $stateParams, $location, $anchorScroll, $t
     userService.getUser().$promise.then(
       function(data) {
         $rootScope.global2 = data;
+        $rootScope.hrefLadies = false;
         self.user = data;
         $('.head_footer').show();
       },
@@ -3778,10 +4431,10 @@ function mailIdController ($document, $stateParams, $location, $anchorScroll, $t
 
   this.getUserData();
 /*Функция получает письма из переписки из сервиса mailService*/
-  this.correspondence = function() {
+  this.correspondence = function(Id) {
     var self = this;
     var options = {
-      partnerId: self.girlCorres,
+      partnerId: Id,
       dateTimeFrom: self.resultFromDate,
       dateTimeTo: self.resultToDate,
       limit: self.limit,
@@ -3793,9 +4446,6 @@ function mailIdController ($document, $stateParams, $location, $anchorScroll, $t
         self.gillsLength = self.letterCor.totalCount;
         self.countPage = self.gillsLength / 20;
         self.totalPage = Math.ceil(self.countPage);
-        if(self.totalPage==1) {
-          self.buttonAddLetter = true;
-        }
       },
       function(error) {
         console.log(error);
@@ -3811,19 +4461,19 @@ function mailIdController ($document, $stateParams, $location, $anchorScroll, $t
       this.page += 1;
       this.limit += 20;
       this.correspondence();
-      if(this.page==this.totalPage)
+      if(this.page==this.totalPage && this.letterCor.totalCount>20)
         this.buttonAddLetter = true;
     }
   };
 /*Функция получае данные с кем ведется переписка из сервиса mailIdService*/
-   this.girlsIdGet = function(id) {
-    console.log(id, id);
+   this.girlsIdGet = function() {
+    // console.log(id, id);
     var self = this;
     mailIdService.conversationGirlsId(id).$promise.then(
       function(data) {
         self.girlsId = data;
         self.girlCorres = self.girlsId.girl.userId;
-        self.correspondence();
+        self.correspondence(self.girlsId.girl.userId);
       },
       function(error) {
         console.log(error);
@@ -3832,18 +4482,17 @@ function mailIdController ($document, $stateParams, $location, $anchorScroll, $t
   };
   this.girlsIdGet(id);
 /*Функция отправки письма обращается к сервису mailService*/
-  this.addMessage = function(id) {
+  this.addMessage = function(Id) {
     var self = this;
-    var msg = {
-      text: this.newMessage,
-      recipientId: id,
-      type: 'box'
-    };
-    mailService.addMessage2(msg).$promise.then(
+    var fd = new FormData();
+    fd.append('text', this.newMessage);
+    fd.append('recipientId', Id);
+    fd.append('type', 'box');
+    mailService.addMessage2(fd).$promise.then(
       function(data) {
         self.textAreaTime();
         self.newMessage = '';
-        self.correspondence(id);
+        self.correspondence(Id);
       },
       function(error) {
         console.log(error);
@@ -3996,7 +4645,23 @@ this.onThisWeekDate = function() {
     this.resultToDate = undefined;
     this.buttonAddLetter = false;
     this.correspondence();
-  }
+  };
+  /*подгрузка писем в переписку на событие*/
+  var self5 = this;
+  $(window).on('scroll', function(event) {
+    if($(this).scrollTop()>2500 && self5.letterCor.letters.length<50) {
+      self5.paginaLetterCor();
+    }
+  });
+  $('.filter-girls-top-menu').hide();
+  $('body').on('click', function(event) {
+    if (event.target.className == 'show_filter_top_menu' ||
+      event.target.className == 'clearfix show_filter_top_menu') {
+      $('.filter-girls-top-menu').show();
+    } else {
+      $('.filter-girls-top-menu').hide();
+    }
+  });
 
 };
 
@@ -4018,11 +4683,11 @@ function mailIdService ($resource) {
 };
 
 mailIdService.$inject = ['$resource'];
+
 },{}],22:[function(require,module,exports){
 module.exports = mailService;
 
 function mailService ($resource) {
-
 
   var mailResource = $resource('/api/mail/:mail_id',
     { mail_id:'@id' },
@@ -4040,11 +4705,8 @@ function mailService ($resource) {
       },
       saveMesg: {
           method: 'POST',
-          params: {
-            type: '@type',
-            text: '@text',
-            recipientId: '@recipientId'
-          },
+          transformRequest: angular.identity,
+          headers: { 'Content-Type': undefined }
         },
       update: {
         method: 'PATCH',
@@ -4060,9 +4722,9 @@ function mailService ($resource) {
       }
       }
     });
-  //this.mService = mailResource;
-  this.addMessage2 = function (msg) {
-    return mailResource.saveMesg(msg);
+
+  this.addMessage2 = function (fd) {
+    return mailResource.saveMesg( {}, fd);
   };
 
   this.paymentLetter = function(id) {
@@ -4075,13 +4737,15 @@ function mailService ($resource) {
 
   this.getAllMessages = function (options) {
     return mailResource.get({
+      recipientId: options.recipientId,
+      senderId: options.senderId,
+      userId: options.userId,
       dateTimeFrom: options.dateTimeFrom,
       dateTimeTo: options.dateTimeTo,
       type: options.type,
       limit: options.limit,
       offset: options.offset,
       relations: '{"recipient": {"country": {}, "mainphoto": {}, "girl": {} }, "sender": { "country": {}, "girl": {}, "mainphoto": {} } }'
-      // relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'
     });
   };
 
@@ -4100,12 +4764,10 @@ function mailService ($resource) {
     });
   };
 
-  // this.correspondenceGet = function(id, timeFrom, timeTo) {
-  //   return mailResource.get({partnerId:id, dateTimeFrom: timeFrom, dateTimeTo: timeTo, relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'})
-  // };
-
   this.correspondenceGet = function(options) {
     return mailResource.get({
+      userId: options.userId,
+      partnerId: options.partnerId,
       dateTimeFrom: options.dateTimeFrom,
       dateTimeTo: options.dateTimeTo,
       limit: options.limit,
@@ -4113,6 +4775,9 @@ function mailService ($resource) {
       partnerId: options.partnerId,
       relations: '{ "sender":{ "country": {}, "girl": {}, "mainphoto": {} } }'
     })
+  };
+  this.correspondenceGet2 = function(options) {
+    return mailResource.get({ userId: options.userId, recipientId: options.recipientId })
   };
 
   this.deleteMessage = function (id) {
@@ -4123,18 +4788,28 @@ function mailService ($resource) {
     return mailResource.save(message);
   };
 
-
   return this;
 };
-
 
 mailService.$inject = ['$resource'];
 
 },{}],23:[function(require,module,exports){
 module.exports = searchController;
 
-function searchController ($document, $location, $stateParams, $rootScope, $timeout, userService, searchService, girlsAllService, girlsService) {
+function searchController ($document, $location, $stateParams, $rootScope, $timeout, userService, searchService, girlsAllService, girlsService, favoriteService, chatService) {
 
+  /*Функция присваивает фаворит статус для девушки*/
+  this.addfavoritStatus = function(id, index) {
+    // this.girlsAll[index].user.additionalData.isInFavorites = true;
+    var fd = new FormData();
+    fd.append('id', id);
+    favoriteService.addFavorStatus(fd, id);
+  };
+  /*Функция убирает фаворит статус у девушки*/
+  this.deleteFavoritStatus = function(id, index) {
+    favoriteService.deleteFavorStatus(id);
+    // this.girlsAll[index].user.additionalData.isInFavorites = false;
+  };
   /*Функция обертка забирает число из значения где есть символ '/'*/
   this.getNumberInModel = function(data) {
     if(data) {
@@ -4155,7 +4830,7 @@ function searchController ($document, $location, $stateParams, $rootScope, $time
       var corMessage = newMessage.slice(0, 60);
       return corMessage + '...';
     } else return newMessage;
-  }
+  };
   /*Функция дописывает втрое значение, когда выбрано один параметр, а нужно передавать два параметра*/
   this.dataUndefined2 = function(model, value, model2) {
     if (model2 && model2.name && !model) {
@@ -4168,11 +4843,29 @@ function searchController ($document, $location, $stateParams, $rootScope, $time
   var urlData = $stateParams.id
   var urlId = urlData.replace(/\*/g, "\/");
 
+  var self2 = this
+  self2.partners = [];
+  /*Функция отклоняет все предложения начать сесию в чате при logOut*/
+  $rootScope.logOut = function() {
+    var self = this;
+    chatService.emit('getCurChatPartners', {});
+    chatService.on('addPartner', function (data) {
+      self2.partners[data.id] = data;
+      for(var i in self2.partners) {
+        if(self2.partners[i] && self2.partners[i].sessionId && (!self2.partners[i].startDateTime) && (self2.partners[i].isDeclined == 0) && (self2.partners[i].isCancelled == 0)){
+          chatService.emit('declineRequest', { sessionId: self2.partners[i].sessionId });
+        }
+      }
+    });
+  };
+
   this.getUserData = function () {
     var self = this;
     userService.getUser().$promise.then(
       function(data) {
+        chatService.emit('getCurChatPartners', {});
         $rootScope.global2 = data;
+        $rootScope.hrefLadies = false;
         self.user = data;
         $('.head_footer').show();
         $('.search-right-side-girls-item').mouseenter(function(){
@@ -4270,10 +4963,7 @@ function searchController ($document, $location, $stateParams, $rootScope, $time
   this.zodiacSignModel = { name: this.urlParsing2('-zs-', 4) };
   this.cityModel = { name: this.urlParsing2('-ct-', 4) };
 
-// console.log('11111111111');
-// console.log(this.heightFromModel);
 
-// this.arrURL = initializesArray();
     this.arrURL = [];
     this.arrURL[0] = ['ag', this.birthdateFromModel.name + "-" + this.birthdateToModel.name];
     this.arrURL[1] = ['co', this.countryModel.name];
@@ -4323,28 +5013,15 @@ function searchController ($document, $location, $stateParams, $rootScope, $time
     var resultURL = keyValURL.slice(0, keyValURL.length-1);
     var resultURL2 = resultURL.replace(/ /g, "_");
     var resultURL3 = resultURL2.replace(/\//g, "*");
+    this.girlsAll2 = [];
+    this.girlsAll0 = [];
     $location.path('/search/' + '-' + resultURL3);
   }
 /*Функция определяет возраст*/
   this.agePerson = function(birthdate) {
     return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;
   };
-/*Функция запрашивает страны у сервиса girlsAllService*/
-  this.getCountries = function() {
-    var self = this;
-    girlsAllService.getCountries().$promise.then(
-      function(data) {
-        self.countries = data;
-        // $('select').select2();
-        self.searchGirls()
-      },
-      function(error) {
-        console.log(error);
-      }
-    );
-  };
 
-  this.getCountries();
 /**/
   this.setCountryId = function() {
     this.arrCountries = this.countries.countries;
@@ -4370,9 +5047,43 @@ this.birthdateFromAge = function() {
   var arrRes2 = new String(resToDate).split(' ');
   this.birthdateFrom = arrRes2[3] + '-' + resMonth + '-' + arrRes2[2];
 };
+  this.paginCount = 16;
+  this.girlsAll = [];
+  this.offsetForReq = 0;
+  this.girlsAll2 = [];
+  this.girlsAll0 = [];
+  /*Функция перестраивает массив и записывает в другой*/
+  this.randomNum = function(arr, resArr) {
+    for(var i=this.offsetForReq; i<arr.length; i++) {
+      var res = arr[i];
+      var index = Math.floor(Math.random() * (arr.length - this.offsetForReq) + this.offsetForReq);
+      if(!resArr[index]) {
+        resArr[index] = res;
+      } else i-=1;
+    };
+  };
+  this.functionPa = function(arr) {
+    if(arr && arr.length>16) {
+      this.girlsAll = arr.slice(0, this.paginCount);
+    } else this.girlsAll = arr;
+  };
+  this.addPhotoGirl = function(arr) {
+    if(arr && arr.length) {
+      for(var i=0; i<arr.length; i++) {
+        if(arr[i].user &&
+        arr[i].user.mainphoto &&
+        arr[i].user.mainphoto.pathOfQuad &&
+        arr[i].user.mainphoto.pathOfQuad!=null) {
+        var photo = arr[i].user.mainphoto.pathOfQuad;
+        arr[i].photoAvatar = photo.slice(0, photo.length-4) + '_220_220_auto' + photo.slice(-4);;
+        } else arr[i].photoAvatar = null;
+      }
+    }
+  };
+
 
   this.searchGirls = function() {
-    this.setCountryId();
+
     this.birthdateFromAge();
     var self = this;
     var options = {
@@ -4398,26 +5109,23 @@ this.birthdateFromAge = function() {
       childrenNumberFrom: this.dataUndefined(this.childrenNumberFromModel),
       childrenNumberTo: this.dataUndefined(this.childrenNumberToModel),
       lookingFor: this.dataUndefined(this.lookingForModel),
-      limit: self.limit,
-      offset: 0
+      limit: 50,
+      offset: this.offsetForReq
     };
+    // console.log(options);
     searchService.getSearch(options).$promise.then(
       function(data) {
-        self.girlsAll = data;
-        self.resultGirls = self.girlsAll.girls
-        self.gillsLength = self.girlsAll.totalCount;
-        self.countPage = self.gillsLength / 16;
-        self.totalPage = Math.ceil(self.countPage);
-        // self.girlsAll.girls[0].user.mainphoto.pathOfQuad=null
-        for(var i=0; i<self.girlsAll.girls.length; i++) {
-          if(self.girlsAll.girls[i].user &&
-            self.girlsAll.girls[i].user.mainphoto &&
-            self.girlsAll.girls[i].user.mainphoto.pathOfQuad &&
-            self.girlsAll.girls[i].user.mainphoto.pathOfQuad!=null) {
-            var photo = self.girlsAll.girls[i].user.mainphoto.pathOfQuad;
-            self.girlsAll.girls[i].photoAvatar = photo.slice(0, photo.length-4) + '_150_150_auto' + photo.slice(-4);
-          } else self.girlsAll.girls[i].photoAvatar = null;
-        }
+        self.girlTotal = data.totalCount;
+        for(var i=0; i<data.girls.length; i++) {
+          self.girlsAll0.push(data.girls[i]);
+        };
+        self.randomNum(self.girlsAll0, self.girlsAll2);
+        self.functionPa(self.girlsAll2);
+        self.addPhotoGirl(self.girlsAll);
+        if(self.paginCount<self.girlTotal) {
+          self.buttonAddGirls = true;
+        } else self.buttonAddGirls = false;
+
         if(self.countryModel && self.countryModel.name==null) self.countryModel = undefined;
         if(self.birthdateFromModel && self.birthdateFromModel.name==null) self.birthdateFromModel = undefined;
         if(self.birthdateToModel && self.birthdateToModel.name==null) self.birthdateToModel = undefined;
@@ -4447,18 +5155,20 @@ this.birthdateFromAge = function() {
       }
     );
   };
-
-  this.page = 0;
-  this.limit = 16;
-/*Функция добавляет девушек*/
- this.paginaGirl = function() {
-     if (this.totalPage){
-      this.page += 1;
-      this.limit += 16;
+/*Функция пагинации - добавляем, пока есть кого добавлять*/
+   this.paginaGirl = function() {
+    this.paginCount += 16;
+    if(this.paginCount>this.offsetForReq + 50) {
+      this.offsetForReq += 50;
       this.searchGirls();
-      if(this.page==this.totalPage)
-        this.buttonAdd = true;
+      };
+    if(this.paginCount>this.offsetForReq || this.paginCount==this.offsetForReq) {
+      this.functionPa(this.girlsAll2);
+      this.addPhotoGirl(this.girlsAll);
     };
+    if(this.girlsAll2 && this.paginCount<this.girlTotal) {
+      this.buttonAddGirls = true;
+    } else this.buttonAddGirls = false;
   };
 /*Функция получает имена девушек для отображения в select*/
   this.searchGirlId = function(id) {
@@ -4468,12 +5178,14 @@ this.birthdateFromAge = function() {
         self.girlsAll = data;
         if(self.girlsAll.girl) {
           self.res = self.girlsAll.girl
-          self.resultGirls = [];
-          self.resultGirls[0] = self.res;
-        } else self.resultGirls = [];
+          self.girlsAll = [];
+          self.girlsAll[0] = self.res;
+          self.addPhotoGirl(self.girlsAll);
+        } else self.girlsAll = [];
       },
       function(error) {
         console.log(error);
+        self.girlsAll = [];
       }
     );
   };
@@ -4517,7 +5229,7 @@ this.birthdateFromAge = function() {
     if(index==17) this.cityModel.name = null;
     this.searchGirlsURL();
   };
-/*Функция получает имена девушек для отображения в select*/
+  /*Функция получает имена девушек для отображения в select*/
   this.allNamesGirls = function() {
     var self = this;
     userService.getUsersNames().$promise.then(
@@ -4527,7 +5239,6 @@ this.birthdateFromAge = function() {
         for(var i=0; i<self.dataNames.length; i++) {
           self.namesGirls[i] = { id:i, name: self.dataNames[i] };
         };
-        // console.log(self.namesGirls);
       },
       function(error) {
         console.log(error);
@@ -4537,7 +5248,25 @@ this.birthdateFromAge = function() {
 
   this.allNamesGirls();
 
-/*Фукция сооставляет массив данных по росту для select*/
+  /*Функция запрашивает страны у сервиса girlsAllService*/
+  this.getCountries = function() {
+    var self = this;
+    girlsAllService.getCountries().$promise.then(
+      function(data) {
+        self.countries = data;
+        self.countries.countries.unshift({ id: 0, name: 'All countries' });
+        self.setCountryId();
+        self.searchGirls();
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+
+  this.getCountries();
+
+  /*Фукция сооставляет массив данных по росту для select*/
   this.makeHeights =  function() {
     var arrListHieght = [];
     var count = 149;
@@ -4551,15 +5280,6 @@ this.birthdateFromAge = function() {
   };
 /*Фукция сооставляет массив данных по росту для select*/
   this.arrHieghts = [];
-  this.arrHeightsFunction =  function() {
-    var count = 149;
-    var countR = 4.9;
-    for(var i=0; i<12; i++) {
-      count +=3;
-      countR +=0.1;
-      this.arrHieghts[i] = { name: countR.toFixed(1) + '/' + count };
-    }
-  };
 
   this.arrHieghts[0] = { name: '4\'11\"/149' };
   this.arrHieghts[1] = { name: '4\'11\"/150' };
@@ -4639,58 +5359,9 @@ this.makeAge = function() {
   this.makeAge();
   /*Функция убирает все выбранные параметры для поиска*/
   this.clearDataSearch = function() {
-    $location.path('/search/-ag-18-30');
+    $location.path('/search/-ag-18-30-co-All_countries');
   };
 /*Массив данных по весу для select*/
-  // this.arrWeight = [];
-  // this.arrWeight[0] = [99, 45];
-  // this.arrWeight[1] = [101, 46];
-  // this.arrWeight[2] = [104, 47];
-  // this.arrWeight[3] = [106, 48];
-  // this.arrWeight[4] = [106, 48];
-  // this.arrWeight[5] = [108, 49];
-  // this.arrWeight[6] = [110, 50];
-  // this.arrWeight[7] = [112, 51];
-  // this.arrWeight[8] = [115, 52];
-  // this.arrWeight[9] = [117, 53];
-  // this.arrWeight[10] = [119, 54];
-  // this.arrWeight[11] = [121, 55];
-  // this.arrWeight[12] = [123, 56];
-  // this.arrWeight[13] = [126, 57];
-  // this.arrWeight[14] = [128, 58];
-  // this.arrWeight[15] = [130, 59];
-  // this.arrWeight[16] = [132, 60];
-  // this.arrWeight[17] = [135, 61];
-  // this.arrWeight[18] = [137, 62];
-  // this.arrWeight[19] = [139, 63];
-  // this.arrWeight[20] = [141, 64];
-  // this.arrWeight[21] = [143, 65];
-  // this.arrWeight[22] = [146, 66];
-  // this.arrWeight[23] = [148, 67];
-  // this.arrWeight[24] = [150, 68];
-  // this.arrWeight[25] = [152, 69];
-  // this.arrWeight[26] = [154, 70];
-  // this.arrWeight[27] = [157, 71];
-  // this.arrWeight[28] = [159, 72];
-  // this.arrWeight[29] = [161, 73];
-  // this.arrWeight[30] = [163, 74];
-  // this.arrWeight[31] = [165, 75];
-  // this.arrWeight[32] = [168, 76];
-  // this.arrWeight[33] = [170, 77];
-  // this.arrWeight[34] = [172, 78];
-  // this.arrWeight[35] = [174, 79];
-  // this.arrWeight[36] = [176, 80];
-  // this.arrWeight[37] = [179, 81];
-  // this.arrWeight[38] = [181, 82];
-  // this.arrWeight[39] = [183, 83];
-  // this.arrWeight[40] = [185, 84];
-  // this.arrWeight[41] = [187, 85];
-  // this.arrWeight[42] = [190, 86];
-  // this.arrWeight[43] = [192, 87];
-  // this.arrWeight[44] = [194, 88];
-  // this.arrWeight[45] = [196, 89];
-  // this.arrWeight[46] = [198, 90];
-
   this.arrWeights = [];
   this.arrWeights[0] = { name: '99/45' };
   this.arrWeights[1] = { name: '101/46' };
@@ -4849,10 +5520,18 @@ this.makeAge = function() {
     photo = photo.slice(0, photo.length-4) + '_150_150_auto' + photo.slice(-4);
     return photo;
   };
-
+  $('.filter-girls-top-menu').hide();
+  $('body').on('click', function(event) {
+    if (event.target.className == 'show_filter_top_menu' ||
+      event.target.className == 'clearfix show_filter_top_menu') {
+      $('.filter-girls-top-menu').show();
+    } else {
+      $('.filter-girls-top-menu').hide();
+    }
+  });
 };
 
-  searchController.$inject = ['$document', '$location','$stateParams', '$rootScope', '$timeout', 'userService', 'searchService', 'girlsAllService','girlsService'];
+  searchController.$inject = ['$document', '$location','$stateParams', '$rootScope', '$timeout', 'userService', 'searchService', 'girlsAllService','girlsService', 'favoriteService', 'chatService'];
 
 },{}],24:[function(require,module,exports){
 module.exports = searchService;
@@ -4890,12 +5569,342 @@ function searchService ($resource) {
     });
   };
 
-
   return this;
 };
 
 searchService.$inject = ['$resource'];
 },{}],25:[function(require,module,exports){
+module.exports = storiesController;
+
+function storiesController ($document, $stateParams, $location, userService, $rootScope, storiesService) {
+/*Функция получает данние пользователя из сервиса userService*/
+  this.getUserData = function () {
+    var self = this;
+    userService.getUser().$promise.then(
+      function(data) {
+        $rootScope.global2 = data;
+        $rootScope.hrefLadies = false;
+        self.user = data;
+        $('.head_footer').show();
+      },
+      function(error) {
+        console.log(error);
+        $('.head_footer').show();
+      }
+    );
+  };
+  this.getUserData();
+
+  this.offset = 0;
+  this.stories = [];
+  this.getStories = function () {
+    var option = {
+      limit: 8,
+      offset: this.offset
+    };
+    var self = this;
+    storiesService.getAllStories(option).$promise.then(
+      function(data) {
+        for(var i=0; i<data.stories.length; i++) {
+          self.stories.push(data.stories[i]);
+        }
+        if(data.totalCount<self.offset + 8)
+          self.showPagin = true;
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+  this.getStories();
+
+  this.paginStories = function() {
+    this.offset += 8;
+    this.getStories();
+  }
+
+  this.sliseText = function(text) {
+    var newText = text.slice(0, 220) + ' ...';
+    return newText;
+  };
+
+  $('.filter-girls-top-menu').hide();
+  $('body').on('click', function(event) {
+    if (event.target.className == 'show_filter_top_menu' ||
+      event.target.className == 'clearfix show_filter_top_menu') {
+      $('.filter-girls-top-menu').show();
+    } else {
+      $('.filter-girls-top-menu').hide();
+    }
+  });
+
+
+};
+
+
+storiesController.$inject = ['$document', '$stateParams', '$location', 'userService', '$rootScope', 'storiesService'];
+},{}],26:[function(require,module,exports){
+module.exports = storiesService;
+
+function storiesService($resource) {
+  var storiesResource = $resource('api/stories');
+  var storyResource = $resource('api/stories/:stories_id', { stories_id: '@stories' });
+  var commentStorResource = $resource('api/stories/:stories_id/comments', { stories_id: '@stories' });
+
+  this.getAllStories = function(option) {
+    return storiesResource.get({
+      limit: option.limit,
+      offset: option.offset
+    });
+  };
+  this.getStoryId = function(Id) {
+    return storyResource.get({ stories_id: Id });
+  };
+
+  this.getCommentStory = function(Id) {
+    return commentStorResource.get({ stories_id: Id, relations: '{"user":{"country":{}, "mainphoto": {} } }' });
+  };
+
+  return this;
+};
+storiesService.$inject = ['$resource'];
+},{}],27:[function(require,module,exports){
+module.exports = storyIdController;
+
+function storyIdController ($document, $stateParams, $location, userService, $rootScope, storiesService) {
+  var id = $stateParams.id;
+  /*Функция получает данние пользователя из сервиса userService*/
+  this.getUserData = function () {
+    var self = this;
+    userService.getUser().$promise.then(
+      function(data) {
+        $rootScope.global2 = data;
+        self.user = data;
+        $('.head_footer').show();
+      },
+      function(error) {
+        console.log(error);
+        $('.head_footer').show();
+      }
+    );
+  };
+  this.getUserData();
+
+
+  this.getStory = function (Id) {
+    var self = this;
+    storiesService.getStoryId(Id).$promise.then(
+      function(data) {
+        self.story = data.story;
+        var arrTextes = self.story.text.split('\n');
+        self.story.arrTextes = arrTextes;
+        // console.log(self.story.arrTextes);
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+  this.getStory(id);
+
+  this.getComments = function (Id) {
+    var self = this;
+    storiesService.getCommentStory(Id).$promise.then(
+      function(data) {
+        self.comments = data.comments;
+        for(var i=0; i<self.comments.length; i++){
+          self.comments[i].date = new Date(self.comments[i].date);
+        }
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+  this.getComments(id);
+
+  this.addComment = function() {
+
+  };
+
+  $('.filter-girls-top-menu').hide();
+  $('body').on('click', function(event) {
+    if (event.target.className == 'show_filter_top_menu' ||
+      event.target.className == 'clearfix show_filter_top_menu') {
+      $('.filter-girls-top-menu').show();
+    } else {
+      $('.filter-girls-top-menu').hide();
+    }
+  });
+
+
+};
+
+
+storyIdController.$inject = ['$document', '$stateParams', '$location', 'userService', '$rootScope', 'storiesService'];
+},{}],28:[function(require,module,exports){
+module.exports = translatorsController;
+
+function translatorsController ($document, $stateParams, $location, userService, $rootScope, translatorsService, mailService) {
+
+  this.tumbler = true;
+/*Функция получает данние пользователя из сервиса userService*/
+  this.getUserData = function () {
+    var self = this;
+    userService.getUser().$promise.then(
+      function(data) {
+        $rootScope.global2 = data;
+        $rootScope.hrefLadies = false;
+        self.user = data;
+        $('.head_footer').show();
+      },
+      function(error) {
+        console.log(error);
+        $location.path('/home/-ag-18-30-co-Ukraine');
+        $('.head_footer').show();      }
+    );
+  };
+
+  this.getUserData();
+
+  this.getAllGirls = function () {
+    var self = this;
+    translatorsService.getTranslIdGirl().$promise.then(
+      function(data) {
+        self.girls = data.girls;
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+  this.getAllGirls();
+
+  this.getMessages = function(userID) {
+    if(this.tumbler==false)
+      this.tumbler = true;
+    var self = this;
+    this.girlID = userID;
+    var options = {
+      senderId: userID,
+      // recipientId: userID,
+      type: 'for_translator'
+    };
+    mailService.getAllMessages(options).$promise.then(
+      function(data) {
+        self.letters = data.letters;
+        console.log(data.letters);
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+  /*Функция определяет возраст*/
+  this.agePerson = function(birthdate) {
+    return ((new Date().getTime() - new Date(birthdate)) / (24 * 3600 * 365.25 * 1000)) | 0;
+  };
+  this.correspondenceHistory = function(userID, recipientID) {
+    var self = this;
+    var options = {
+      userId: userID,
+      partnerId: recipientID
+      // type: 'for_translator'
+    };
+    mailService.correspondenceGet(options).$promise.then(
+      function(data) {
+        self.lettersInHistory = data.letters;
+        console.log(self.lettersInHistory);
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+  };
+
+  this.readTranslederLetter = function(letter) {
+    this.tumbler = false;
+    var self = this;
+    mailService.getMessagesId(letter.id).$promise.then(
+      function(data) {
+        // console.log(data);
+        self.letter = data.letter;
+        self.correspondenceHistory(letter.senderId, letter.recipientId);
+      },
+      function(error) {
+        console.log(error);
+      }
+    );
+    // console.log(letter);
+    // this.textLetter = letter.additionalData.text;
+    // this.firstNameRecipient = letter.recipient.firstname;
+    // this.recipientFromCountry = letter.recipient.country.name;
+    // this.recipientFromCity = letter.recipient.city;
+    // this.ricipientBirthdate = letter.recipient.birthdate;
+    // this.createdAtLetter = letter.createdAt;
+
+    // this.correspondenceHistory(letter.senderId, letter.recipientId);
+  };
+  /*Функция обрезает текст письма, если в письме больше 90 символов*/
+  this.switchMore = function(letterText) {
+    if (letterText==null) {
+      return false;}
+      else if(letterText.length>90) {
+      return false;
+    } else return true;
+  };
+  /*Функция показавет весь текст письма в переписке*/
+  this.letterTextSlice = function(letterText, switchComment) {
+    if (switchComment) {
+       return letterText;
+    } else {
+      if (letterText==null) {
+        return 0;
+      } else if(letterText.length>90) {
+        var text = letterText.slice(0, 90);
+        return text;
+      }
+      return letterText;
+    }
+  }
+  /*Функция устанавливает позицию слева/справа для каритнки в переписке*/
+  this.showSendMessage =function(senderId, userId) {
+    return senderId==userId? true: false;
+  }
+  /*Функция отвечает за стили письма в переписке*/
+  this.addClass = function(letter) {
+    return letter.senderId==this.girlID? 0:1;
+  };
+  this.sendLetterMan = function(letter) {
+    var fd = new FormData();
+    fd.append('senderId', letter.senderId);
+    fd.append('recipientId', letter.recipientId);
+    fd.append('text', this.newMessage);
+    fd.append('type', 'box');
+    mailService.addMessage2(fd);
+    this.newMessage = '';
+  };
+
+};
+
+translatorsController.$inject = ['$document', '$stateParams', '$location', 'userService', '$rootScope', 'translatorsService', 'mailService'];
+},{}],29:[function(require,module,exports){
+module.exports = translatorsService;
+
+function translatorsService($resource) {
+  // var translatorsResource = $resource('api/translators/:translators_id/girls',
+  //   { translators_id: '@translators' });
+  var translatorsResource = $resource('api/translators/me/girls');
+
+  this.getTranslIdGirl = function(Id) {
+    return translatorsResource.get({ relations: { user: {} } });
+  };
+
+  return this;
+};
+translatorsService.$inject = ['$resource'];
+},{}],30:[function(require,module,exports){
+
 module.exports = userService;
 
 function userService ($resource) {
@@ -4999,7 +6008,8 @@ function userService ($resource) {
 };
 
 userService.$inject = ['$resource'];
-},{}],26:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
+
 module.exports = usersController;
 
 function usersController ($document, $location, userService, $rootScope ) {
@@ -5033,625 +6043,7 @@ function usersController ($document, $location, userService, $rootScope ) {
 }
 
 usersController.$inject = ['$document', '$location', 'userService', '$rootScope'];
-},{}],27:[function(require,module,exports){
-require('./src/angular-base64-upload.js');
-module.exports = 'naif.base64';
-
-},{"./src/angular-base64-upload.js":28}],28:[function(require,module,exports){
-(function(window, undefined) {
-
-  'use strict';
-
-  /* istanbul ignore next */
-  window._arrayBufferToBase64 = function(buffer) { //http://stackoverflow.com/questions/9267899/arraybuffer-to-base64-encoded-string
-    var binary = '';
-    var bytes = new Uint8Array(buffer);
-    var len = bytes.byteLength;
-    for (var i = 0; i < len; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-    return window.btoa(binary);
-  };
-
-
-  var mod = window.angular.module('naif.base64', []);
-
-  mod.directive('baseSixtyFourInput', [
-    '$window',
-    '$q',
-    function($window, $q) {
-
-      var isolateScope = {
-        onChange: '&',
-        onAfterValidate: '&',
-        parser: '&'
-      };
-
-      var FILE_READER_EVENTS = ['onabort', 'onerror', 'onloadstart', 'onloadend', 'onprogress', 'onload'];
-      for (var i = FILE_READER_EVENTS.length - 1; i >= 0; i--) {
-        var e = FILE_READER_EVENTS[i];
-        isolateScope[e] = '&';
-      }
-
-      return {
-        restrict: 'A',
-        require: 'ngModel',
-        scope: isolateScope,
-        link: function(scope, elem, attrs, ngModel) {
-
-          /* istanbul ignore if */
-          if (!ngModel) {
-            return;
-          }
-
-          var rawFiles = [];
-          var fileObjects = [];
-
-          elem.on('change', function(e) {
-
-            if (!e.target.files.length) {
-              return;
-            }
-
-            fileObjects = [];
-            fileObjects = angular.copy(fileObjects);
-            rawFiles = e.target.files; // use event target so we can mock the files from test
-            _readFiles();
-            _onChange(e);
-            _onAfterValidate(e);
-          });
-
-          function _readFiles() {
-            var promises = [];
-            var i;
-            for (i = rawFiles.length - 1; i >= 0; i--) {
-              // append file a new promise, that waits until resolved
-              rawFiles[i].deferredObj = $q.defer();
-              promises.push(rawFiles[i].deferredObj.promise);
-              // TODO: Make sure all promises are resolved even during file reader error, otherwise view value wont be updated
-            }
-
-            // set view value once all files are read
-            $q.all(promises).then(_setViewValue);
-
-            for (i = rawFiles.length - 1; i >= 0; i--) {
-              var reader = new $window.FileReader();
-              var file = rawFiles[i];
-              var fileObject = {};
-
-              fileObject.filetype = file.type;
-              fileObject.filename = file.name;
-              fileObject.filesize = file.size;
-              
-              _attachEventHandlers(reader, file, fileObject);
-              reader.readAsArrayBuffer(file);
-            }
-          }
-
-          function _onChange(e) {
-            if (attrs.onChange) {
-              scope.onChange()(e, rawFiles);
-            }
-          }
-
-          function _onAfterValidate(e) {
-            if (attrs.onAfterValidate) {
-              // wait for all promises, in rawFiles,
-              //   then call onAfterValidate
-              var promises = [];
-              for (var i = rawFiles.length - 1; i >= 0; i--) {
-                promises.push(rawFiles[i].deferredObj.promise);
-              }
-              $q.all(promises).then(function() {
-                scope.onAfterValidate()(e, fileObjects, rawFiles);
-              });
-            }
-          }
-
-          function _attachEventHandlers(fReader, file, fileObject) {
-
-            for (var i = FILE_READER_EVENTS.length - 1; i >= 0; i--) {
-              var e = FILE_READER_EVENTS[i];
-              if (attrs[e] && e !== 'onload') { // don't attach handler to onload yet
-                _attachHandlerForEvent(e, scope[e], fReader, file, fileObject);
-              }
-            }
-
-            fReader.onload = _readerOnLoad(fReader, file, fileObject);
-          }
-
-          function _attachHandlerForEvent(eventName, handler, fReader, file, fileObject) {
-            fReader[eventName] = function(e) {
-              handler()(e, fReader, file, rawFiles, fileObjects, fileObject);
-            };
-          }
-
-          function _readerOnLoad(fReader, file, fileObject) {
-
-            return function(e) {
-
-              var buffer = e.target.result;
-              var promise;
-
-              fileObject.base64 = $window._arrayBufferToBase64(buffer);
-
-              if (attrs.parser) {
-                promise = $q.when(scope.parser()(file, fileObject));
-              } else {
-                promise = $q.when(fileObject);
-              }
-
-              promise.then(function(fileObj) {
-                fileObjects.push(fileObj);
-                // fulfill the promise here.
-                file.deferredObj.resolve();
-              });
-
-              if (attrs.onload) {
-                scope.onload()(e, fReader, file, rawFiles, fileObjects, fileObject);
-              }
-
-            };
-
-          }
-
-          function _setViewValue() {
-            var newVal = attrs.multiple ? fileObjects : fileObjects[0];
-            ngModel.$setViewValue(newVal);
-            _maxsize(newVal);
-            _minsize(newVal);
-            _maxnum(newVal);
-            _minnum(newVal);
-            _accept(newVal);
-          }
-
-          ngModel.$isEmpty = function(val) {
-            return !val || (angular.isArray(val) ? val.length === 0 : !val.base64);
-          };
-
-          // http://stackoverflow.com/questions/1703228/how-can-i-clear-an-html-file-input-with-javascript
-          scope._clearInput = function() {
-            elem[0].value = '';
-          };
-
-          scope.$watch(function() {
-            return ngModel.$viewValue;
-          }, function(val, oldVal) {
-            if (ngModel.$isEmpty(oldVal)) {
-              return; }
-            if (ngModel.$isEmpty(val)) {
-              scope._clearInput();
-            }
-          });
-
-          // VALIDATIONS =========================================================
-
-          function _maxnum(val) {
-            if (attrs.maxnum && attrs.multiple && val) {
-              var valid = val.length <= parseInt(attrs.maxnum);
-              ngModel.$setValidity('maxnum', valid);
-            }
-            return val;
-          }
-
-          function _minnum(val) {
-            if (attrs.minnum && attrs.multiple && val) {
-              var valid = val.length >= parseInt(attrs.minnum);
-              ngModel.$setValidity('minnum', valid);
-            }
-            return val;
-          }
-
-          function _maxsize(val) {
-            var valid = true;
-
-            if (attrs.maxsize && val) {
-              var max = parseFloat(attrs.maxsize) * 1000;
-
-              if (attrs.multiple) {
-                for (var i = 0; i < val.length; i++) {
-                  var file = val[i];
-                  if (file.filesize > max) {
-                    valid = false;
-                    break;
-                  }
-                }
-              } else {
-                valid = val.filesize <= max;
-              }
-              ngModel.$setValidity('maxsize', valid);
-            }
-
-            return val;
-          }
-
-          function _minsize(val) {
-            var valid = true;
-            var min = parseFloat(attrs.minsize) * 1000;
-
-            if (attrs.minsize && val) {
-              if (attrs.multiple) {
-                for (var i = 0; i < val.length; i++) {
-                  var file = val[i];
-                  if (file.filesize < min) {
-                    valid = false;
-                    break;
-                  }
-                }
-              } else {
-                valid = val.filesize >= min;
-              }
-              ngModel.$setValidity('minsize', valid);
-            }
-
-            return val;
-          }
-
-          function _accept(val) {
-            var valid = true;
-            var regExp, exp, fileExt;
-            if (attrs.accept) {
-              exp = attrs.accept.trim().replace(/[,\s]+/gi, "|").replace(/\./g, "\\.").replace(/\/\*/g, "/.*");
-              regExp = new RegExp(exp);
-            }
-
-            if (attrs.accept && val) {
-              if (attrs.multiple) {
-                for (var i = 0; i < val.length; i++) {
-                  var file = val[i];
-                  fileExt = "." + file.filename.split('.').pop();
-                  valid = regExp.test(file.filetype) || regExp.test(fileExt);
-
-                  if (!valid) {
-                    break; }
-                }
-              } else {
-                fileExt = "." + val.filename.split('.').pop();
-                valid = regExp.test(val.filetype) || regExp.test(fileExt);
-              }
-              ngModel.$setValidity('accept', valid);
-            }
-
-            return val;
-          }
-
-        }
-      };
-
-    }
-  ]);
-
-})(window);
-
-},{}],29:[function(require,module,exports){
-/**
- * @license AngularJS v1.5.3
- * (c) 2010-2016 Google, Inc. http://angularjs.org
- * License: MIT
- */
-(function(window, angular, undefined) {'use strict';
-
-/**
- * @ngdoc module
- * @name ngCookies
- * @description
- *
- * # ngCookies
- *
- * The `ngCookies` module provides a convenient wrapper for reading and writing browser cookies.
- *
- *
- * <div doc-module-components="ngCookies"></div>
- *
- * See {@link ngCookies.$cookies `$cookies`} for usage.
- */
-
-
-angular.module('ngCookies', ['ng']).
-  /**
-   * @ngdoc provider
-   * @name $cookiesProvider
-   * @description
-   * Use `$cookiesProvider` to change the default behavior of the {@link ngCookies.$cookies $cookies} service.
-   * */
-   provider('$cookies', [function $CookiesProvider() {
-    /**
-     * @ngdoc property
-     * @name $cookiesProvider#defaults
-     * @description
-     *
-     * Object containing default options to pass when setting cookies.
-     *
-     * The object may have following properties:
-     *
-     * - **path** - `{string}` - The cookie will be available only for this path and its
-     *   sub-paths. By default, this is the URL that appears in your `<base>` tag.
-     * - **domain** - `{string}` - The cookie will be available only for this domain and
-     *   its sub-domains. For security reasons the user agent will not accept the cookie
-     *   if the current domain is not a sub-domain of this domain or equal to it.
-     * - **expires** - `{string|Date}` - String of the form "Wdy, DD Mon YYYY HH:MM:SS GMT"
-     *   or a Date object indicating the exact date/time this cookie will expire.
-     * - **secure** - `{boolean}` - If `true`, then the cookie will only be available through a
-     *   secured connection.
-     *
-     * Note: By default, the address that appears in your `<base>` tag will be used as the path.
-     * This is important so that cookies will be visible for all routes when html5mode is enabled.
-     *
-     **/
-    var defaults = this.defaults = {};
-
-    function calcOptions(options) {
-      return options ? angular.extend({}, defaults, options) : defaults;
-    }
-
-    /**
-     * @ngdoc service
-     * @name $cookies
-     *
-     * @description
-     * Provides read/write access to browser's cookies.
-     *
-     * <div class="alert alert-info">
-     * Up until Angular 1.3, `$cookies` exposed properties that represented the
-     * current browser cookie values. In version 1.4, this behavior has changed, and
-     * `$cookies` now provides a standard api of getters, setters etc.
-     * </div>
-     *
-     * Requires the {@link ngCookies `ngCookies`} module to be installed.
-     *
-     * @example
-     *
-     * ```js
-     * angular.module('cookiesExample', ['ngCookies'])
-     *   .controller('ExampleController', ['$cookies', function($cookies) {
-     *     // Retrieving a cookie
-     *     var favoriteCookie = $cookies.get('myFavorite');
-     *     // Setting a cookie
-     *     $cookies.put('myFavorite', 'oatmeal');
-     *   }]);
-     * ```
-     */
-    this.$get = ['$$cookieReader', '$$cookieWriter', function($$cookieReader, $$cookieWriter) {
-      return {
-        /**
-         * @ngdoc method
-         * @name $cookies#get
-         *
-         * @description
-         * Returns the value of given cookie key
-         *
-         * @param {string} key Id to use for lookup.
-         * @returns {string} Raw cookie value.
-         */
-        get: function(key) {
-          return $$cookieReader()[key];
-        },
-
-        /**
-         * @ngdoc method
-         * @name $cookies#getObject
-         *
-         * @description
-         * Returns the deserialized value of given cookie key
-         *
-         * @param {string} key Id to use for lookup.
-         * @returns {Object} Deserialized cookie value.
-         */
-        getObject: function(key) {
-          var value = this.get(key);
-          return value ? angular.fromJson(value) : value;
-        },
-
-        /**
-         * @ngdoc method
-         * @name $cookies#getAll
-         *
-         * @description
-         * Returns a key value object with all the cookies
-         *
-         * @returns {Object} All cookies
-         */
-        getAll: function() {
-          return $$cookieReader();
-        },
-
-        /**
-         * @ngdoc method
-         * @name $cookies#put
-         *
-         * @description
-         * Sets a value for given cookie key
-         *
-         * @param {string} key Id for the `value`.
-         * @param {string} value Raw value to be stored.
-         * @param {Object=} options Options object.
-         *    See {@link ngCookies.$cookiesProvider#defaults $cookiesProvider.defaults}
-         */
-        put: function(key, value, options) {
-          $$cookieWriter(key, value, calcOptions(options));
-        },
-
-        /**
-         * @ngdoc method
-         * @name $cookies#putObject
-         *
-         * @description
-         * Serializes and sets a value for given cookie key
-         *
-         * @param {string} key Id for the `value`.
-         * @param {Object} value Value to be stored.
-         * @param {Object=} options Options object.
-         *    See {@link ngCookies.$cookiesProvider#defaults $cookiesProvider.defaults}
-         */
-        putObject: function(key, value, options) {
-          this.put(key, angular.toJson(value), options);
-        },
-
-        /**
-         * @ngdoc method
-         * @name $cookies#remove
-         *
-         * @description
-         * Remove given cookie
-         *
-         * @param {string} key Id of the key-value pair to delete.
-         * @param {Object=} options Options object.
-         *    See {@link ngCookies.$cookiesProvider#defaults $cookiesProvider.defaults}
-         */
-        remove: function(key, options) {
-          $$cookieWriter(key, undefined, calcOptions(options));
-        }
-      };
-    }];
-  }]);
-
-angular.module('ngCookies').
-/**
- * @ngdoc service
- * @name $cookieStore
- * @deprecated
- * @requires $cookies
- *
- * @description
- * Provides a key-value (string-object) storage, that is backed by session cookies.
- * Objects put or retrieved from this storage are automatically serialized or
- * deserialized by angular's toJson/fromJson.
- *
- * Requires the {@link ngCookies `ngCookies`} module to be installed.
- *
- * <div class="alert alert-danger">
- * **Note:** The $cookieStore service is **deprecated**.
- * Please use the {@link ngCookies.$cookies `$cookies`} service instead.
- * </div>
- *
- * @example
- *
- * ```js
- * angular.module('cookieStoreExample', ['ngCookies'])
- *   .controller('ExampleController', ['$cookieStore', function($cookieStore) {
- *     // Put cookie
- *     $cookieStore.put('myFavorite','oatmeal');
- *     // Get cookie
- *     var favoriteCookie = $cookieStore.get('myFavorite');
- *     // Removing a cookie
- *     $cookieStore.remove('myFavorite');
- *   }]);
- * ```
- */
- factory('$cookieStore', ['$cookies', function($cookies) {
-
-    return {
-      /**
-       * @ngdoc method
-       * @name $cookieStore#get
-       *
-       * @description
-       * Returns the value of given cookie key
-       *
-       * @param {string} key Id to use for lookup.
-       * @returns {Object} Deserialized cookie value, undefined if the cookie does not exist.
-       */
-      get: function(key) {
-        return $cookies.getObject(key);
-      },
-
-      /**
-       * @ngdoc method
-       * @name $cookieStore#put
-       *
-       * @description
-       * Sets a value for given cookie key
-       *
-       * @param {string} key Id for the `value`.
-       * @param {Object} value Value to be stored.
-       */
-      put: function(key, value) {
-        $cookies.putObject(key, value);
-      },
-
-      /**
-       * @ngdoc method
-       * @name $cookieStore#remove
-       *
-       * @description
-       * Remove given cookie
-       *
-       * @param {string} key Id of the key-value pair to delete.
-       */
-      remove: function(key) {
-        $cookies.remove(key);
-      }
-    };
-
-  }]);
-
-/**
- * @name $$cookieWriter
- * @requires $document
- *
- * @description
- * This is a private service for writing cookies
- *
- * @param {string} name Cookie name
- * @param {string=} value Cookie value (if undefined, cookie will be deleted)
- * @param {Object=} options Object with options that need to be stored for the cookie.
- */
-function $$CookieWriter($document, $log, $browser) {
-  var cookiePath = $browser.baseHref();
-  var rawDocument = $document[0];
-
-  function buildCookieString(name, value, options) {
-    var path, expires;
-    options = options || {};
-    expires = options.expires;
-    path = angular.isDefined(options.path) ? options.path : cookiePath;
-    if (angular.isUndefined(value)) {
-      expires = 'Thu, 01 Jan 1970 00:00:00 GMT';
-      value = '';
-    }
-    if (angular.isString(expires)) {
-      expires = new Date(expires);
-    }
-
-    var str = encodeURIComponent(name) + '=' + encodeURIComponent(value);
-    str += path ? ';path=' + path : '';
-    str += options.domain ? ';domain=' + options.domain : '';
-    str += expires ? ';expires=' + expires.toUTCString() : '';
-    str += options.secure ? ';secure' : '';
-
-    // per http://www.ietf.org/rfc/rfc2109.txt browser must allow at minimum:
-    // - 300 cookies
-    // - 20 cookies per unique domain
-    // - 4096 bytes per cookie
-    var cookieLength = str.length + 1;
-    if (cookieLength > 4096) {
-      $log.warn("Cookie '" + name +
-        "' possibly not set or overflowed because it was too large (" +
-        cookieLength + " > 4096 bytes)!");
-    }
-
-    return str;
-  }
-
-  return function(name, value, options) {
-    rawDocument.cookie = buildCookieString(name, value, options);
-  };
-}
-
-$$CookieWriter.$inject = ['$document', '$log', '$browser'];
-
-angular.module('ngCookies').provider('$$cookieWriter', function $$CookieWriterProvider() {
-  this.$get = $$CookieWriter;
-});
-
-
-})(window, window.angular);
-
-},{}],30:[function(require,module,exports){
-require('./angular-cookies');
-module.exports = 'ngCookies';
-
-},{"./angular-cookies":29}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 angular.module('angular-img-cropper', []).directive("imageCropper", ['$document', '$window', 'imageCropperDataShare', function ($document, $window, imageCropperDataShare) {
     return {
         scope: {
@@ -7053,7 +7445,7 @@ angular.module('angular-img-cropper').factory("imageCropperDataShare", function 
     return share;
 });
 
-},{}],32:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 /**
  * angular-recaptcha build:2016-02-18 
  * https://github.com/vividcortex/angular-recaptcha 
@@ -7282,7 +7674,7 @@ angular.module('angular-img-cropper').factory("imageCropperDataShare", function 
 
 }(angular));
 
-},{}],33:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.0
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -8052,11 +8444,11 @@ angular.module('ngResource', ['ng']).
 
 })(window, window.angular);
 
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 require('./angular-resource');
 module.exports = 'ngResource';
 
-},{"./angular-resource":33}],35:[function(require,module,exports){
+},{"./angular-resource":34}],36:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.5
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -8775,11 +9167,11 @@ angular.module('ngSanitize').filter('linky', ['$sanitize', function($sanitize) {
 
 })(window, window.angular);
 
-},{}],36:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 require('./angular-sanitize');
 module.exports = 'ngSanitize';
 
-},{"./angular-sanitize":35}],37:[function(require,module,exports){
+},{"./angular-sanitize":36}],38:[function(require,module,exports){
 /*
  * @license
  * angular-socket-io v0.7.0
@@ -8884,7 +9276,7 @@ angular.module('btford.socket-io', []).
     }];
   });
 
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 /*
  * angular-ui-bootstrap
  * http://angular-ui.github.io/bootstrap/
@@ -16281,12 +16673,12 @@ angular.module('ui.bootstrap.datepicker').run(function() {!angular.$$csp().noInl
 angular.module('ui.bootstrap.tooltip').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTooltipCss && angular.element(document).find('head').prepend('<style type="text/css">[uib-tooltip-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-popup].tooltip.right-bottom > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.right-bottom > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.right-bottom > .tooltip-arrow,[uib-popover-popup].popover.top-left > .arrow,[uib-popover-popup].popover.top-right > .arrow,[uib-popover-popup].popover.bottom-left > .arrow,[uib-popover-popup].popover.bottom-right > .arrow,[uib-popover-popup].popover.left-top > .arrow,[uib-popover-popup].popover.left-bottom > .arrow,[uib-popover-popup].popover.right-top > .arrow,[uib-popover-popup].popover.right-bottom > .arrow,[uib-popover-html-popup].popover.top-left > .arrow,[uib-popover-html-popup].popover.top-right > .arrow,[uib-popover-html-popup].popover.bottom-left > .arrow,[uib-popover-html-popup].popover.bottom-right > .arrow,[uib-popover-html-popup].popover.left-top > .arrow,[uib-popover-html-popup].popover.left-bottom > .arrow,[uib-popover-html-popup].popover.right-top > .arrow,[uib-popover-html-popup].popover.right-bottom > .arrow,[uib-popover-template-popup].popover.top-left > .arrow,[uib-popover-template-popup].popover.top-right > .arrow,[uib-popover-template-popup].popover.bottom-left > .arrow,[uib-popover-template-popup].popover.bottom-right > .arrow,[uib-popover-template-popup].popover.left-top > .arrow,[uib-popover-template-popup].popover.left-bottom > .arrow,[uib-popover-template-popup].popover.right-top > .arrow,[uib-popover-template-popup].popover.right-bottom > .arrow{top:auto;bottom:auto;left:auto;right:auto;margin:0;}[uib-popover-popup].popover,[uib-popover-html-popup].popover,[uib-popover-template-popup].popover{display:block !important;}</style>'); angular.$$uibTooltipCss = true; });
 angular.module('ui.bootstrap.timepicker').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTimepickerCss && angular.element(document).find('head').prepend('<style type="text/css">.uib-time input{width:50px;}</style>'); angular.$$uibTimepickerCss = true; });
 angular.module('ui.bootstrap.typeahead').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTypeaheadCss && angular.element(document).find('head').prepend('<style type="text/css">[uib-typeahead-popup].dropdown-menu{display:block;}</style>'); angular.$$uibTypeaheadCss = true; });
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 require('./dist/ui-bootstrap-tpls');
 
 module.exports = 'ui.bootstrap';
 
-},{"./dist/ui-bootstrap-tpls":38}],40:[function(require,module,exports){
+},{"./dist/ui-bootstrap-tpls":39}],41:[function(require,module,exports){
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("jquery"), require("angular"), require("jquery-ui/datepicker"));
@@ -16582,7 +16974,7 @@ return /******/ (function(modules) { // webpackBootstrap
 });
 ;
 //# sourceMappingURL=date.js.map
-},{"angular":44,"jquery":48,"jquery-ui/datepicker":46}],41:[function(require,module,exports){
+},{"angular":45,"jquery":49,"jquery-ui/datepicker":47}],42:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -20953,7 +21345,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],42:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
@@ -22770,7 +23162,7 @@ $templateCache.put("select2/select.tpl.html","<div class=\"ui-select-container s
 $templateCache.put("selectize/choices.tpl.html","<div ng-show=\"$select.open\" class=\"ui-select-choices ui-select-dropdown selectize-dropdown single\"><div class=\"ui-select-choices-content selectize-dropdown-content\"><div class=\"ui-select-choices-group optgroup\" role=\"listbox\"><div ng-show=\"$select.isGrouped\" class=\"ui-select-choices-group-label optgroup-header\" ng-bind=\"$group.name\"></div><div role=\"option\" class=\"ui-select-choices-row\" ng-class=\"{active: $select.isActive(this), disabled: $select.isDisabled(this)}\"><div class=\"option ui-select-choices-row-inner\" data-selectable=\"\"></div></div></div></div></div>");
 $templateCache.put("selectize/match.tpl.html","<div ng-hide=\"($select.open || $select.isEmpty())\" class=\"ui-select-match\" ng-transclude=\"\"></div>");
 $templateCache.put("selectize/select.tpl.html","<div class=\"ui-select-container selectize-control single\" ng-class=\"{\'open\': $select.open}\"><div class=\"selectize-input\" ng-class=\"{\'focus\': $select.open, \'disabled\': $select.disabled, \'selectize-focus\' : $select.focus}\" ng-click=\"$select.activate()\"><div class=\"ui-select-match\"></div><input type=\"text\" autocomplete=\"off\" tabindex=\"-1\" class=\"ui-select-search ui-select-toggle\" ng-click=\"$select.toggle($event)\" placeholder=\"{{$select.placeholder}}\" ng-model=\"$select.search\" ng-hide=\"!$select.searchEnabled || ($select.selected && !$select.open)\" ng-disabled=\"$select.disabled\" aria-label=\"{{ $select.baseTitle }}\"></div><div class=\"ui-select-choices\"></div></div>");}]);
-},{}],43:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.5
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -53639,11 +54031,11 @@ $provide.value("$locale", {
 })(window);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],44:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":43}],45:[function(require,module,exports){
+},{"./angular":44}],46:[function(require,module,exports){
 var jQuery = require('jquery');
 
 /*!
@@ -53967,7 +54359,7 @@ $.extend( $.ui, {
 
 })( jQuery );
 
-},{"jquery":48}],46:[function(require,module,exports){
+},{"jquery":49}],47:[function(require,module,exports){
 var jQuery = require('jquery');
 require('./core');
 
@@ -56010,7 +56402,7 @@ $.datepicker.version = "1.10.4";
 
 })(jQuery);
 
-},{"./core":45,"jquery":48}],47:[function(require,module,exports){
+},{"./core":46,"jquery":49}],48:[function(require,module,exports){
 var jQuery = require('jquery');
 
 /*! jQuery UI - v1.10.3 - 2013-05-03
@@ -71017,7 +71409,7 @@ $.widget( "ui.tooltip", {
 
 }( jQuery ) );
 
-},{"jquery":48}],48:[function(require,module,exports){
+},{"jquery":49}],49:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.2.3
  * http://jquery.com/
@@ -80861,7 +81253,7 @@ if ( !noGlobal ) {
 return jQuery;
 }));
 
-},{}],49:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 /**!
  * AngularJS file upload directives and services. Supoorts: file upload/drop/paste, resume, cancel/abort,
  * progress, resize, thumbnail, preview, validation and CORS
@@ -83664,10 +84056,10 @@ ngFileUpload.service('UploadExif', ['UploadResize', '$q', function (UploadResize
 }]);
 
 
-},{}],50:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 require('./dist/ng-file-upload-all');
 module.exports = 'ngFileUpload';
-},{"./dist/ng-file-upload-all":49}],51:[function(require,module,exports){
+},{"./dist/ng-file-upload-all":50}],52:[function(require,module,exports){
 // Generated by CoffeeScript 1.9.0
 (function() {
   angular.module("ocNgRepeat", []).directive('ngRepeatOwlCarousel', function() {

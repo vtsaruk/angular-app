@@ -1,6 +1,6 @@
 <form>
 <!-- action="api/photos" method="post" -->
-  <input type="file" img-cropper-fileread image="cropper.sourceImage" name="photo">
+  <input type="file" img-cropper-fileread image="cropper.sourceImage[51]" name="photoAdd">
   <!-- <input type="file" ng-model="cropper.sourceImage"  name="photo" base-sixty-four-input> -->
   <!-- <input  id="subImg" type="file" ng-model="ctrl.image"  name="photo"> -->
 
@@ -10,14 +10,30 @@
      <canvas ng-show="ctrl.tumblerHeight" width="800" height="500" id="canvas" image-cropper="" image="cropper.sourceImage" cropped-image="cropper.croppedImage" crop-width="ctrl.Height" crop-height="ctrl.rateHeight" min-width="ctrl.rateHeight" min-height="ctrl.rateHeight" keep-aspect="true" crop-area-bounds="bounds" class="ng-isolate-scope"></canvas>
   </div> -->
   <div>
-     <canvas width="900" height="600" id="canvas" image-cropper="" image="cropper.sourceImage" cropped-image="cropper.croppedImage" crop-width="420" crop-height="420" min-width="420" min-height="420" keep-aspect="true" crop-area-bounds="bounds" class="ng-isolate-scope"></canvas>
+     <canvas width="800" height="600" id="canvas" image-cropper="" image="cropper.sourceImage[51]" cropped-image="cropper.croppedImage[51]" crop-width="0" crop-height="0" min-width="0" min-height="0" keep-aspect="true" crop-area-bounds="bounds" class="ng-isolate-scope"></canvas>
   </div>
 
   <img src="" alt="">
-  <div>Cropped Image (Left: {{bounds.left}} Right: {{bounds.right}} Top: {{bounds.top}} Bottom: {{bounds.bottom}}) Height Window({{ctrl.rateHeight}})</div>
+  <!-- <div>Cropped Image (Left: {{bounds.left}} Right: {{bounds.right}} Top: {{bounds.top}} Bottom: {{bounds.bottom}}) Height Window({{ctrl.rateHeight}})</div> -->
   <!-- <div ng-show="cropper.croppedImage!=null"><img ng-src="{{cropper.croppedImage}}" /></div> -->
   <h2>Фото на аватарку</h2>
-  <input type="checkbox" ng-model="ctrl.isMainPhoto" ng-click="ctrl.onloadFotoCheck()">
-  <button value="" ng-click='ctrl.postPhoto($event)' height="30px">Submit</button>
+  <!-- <input type="checkbox" ng-model="ctrl.isMainPhoto" ng-click="ctrl.onloadFotoCheck()"> -->
+  <button value="" ng-click='ctrl.addPostPhoto($event)' height="30px">Загружаем картинку на сервер</button>
+  <!-- <button value="" ng-click='ctrl.postPhoto($event)' height="30px">Submit</button> -->
+  <!-- <button ng-click="ctrl.addSaveAvatar($event)">поставить выбранное фото на аватарку</button> -->
 </form>
+<!-- <div>{{ctrl.Photos}}</div> -->
+<div class="window_for_photos" ng-repeat="photo in ctrl.Photos.photos">
+  <form ng-show="ctrl.arrModelSh[$index]" name=patchId>
+    <input ng-show="cropper.sourceImage[$index]" type="file" class="displ_none" img-cropper-fileread image="cropper.sourceImage[$index]" name="photoAdd">
+    <div>
+     <canvas width="800" height={{ctrl.heightIngCan}} id={{"canvas"+$index}} image-cropper="" image="cropper.sourceImage[$index]" cropped-image="cropper.croppedImage" crop-width="420" crop-height="420" min-width="420" min-height="420" keep-aspect="true" crop-area-bounds="bounds" class="ng-isolate-scope"></canvas>
+  <button class="margin_but" ng-click="ctrl.addSaveAvatar($event, $index, bounds.left, bounds.top, bounds.right-bounds.left)">поставить выбранное фото на аватарку</button>
+  </div>
+  </form>
+  <img ng-hide="ctrl.arrModelSh[$index]" src="{{photo.path}}" id={{"img"+$index}} alt="" width="800" height="600" ng-click="ctrl.recordWindowPhoto(photo, $index)">
+  <!-- <img src="{{photo.path}}" id={{"igm"+$index}} alt="" width="800" height="600" ng-click="ctrl.recordWindowPhoto(photo, $index)"> -->
+
+  <div>Cropped Image (Left: {{bounds.left}} Right: {{bounds.right}} Top: {{bounds.top}} Bottom: {{bounds.bottom}}) Height Window({{ctrl.heightIngCan}})</div>
+</div>
 

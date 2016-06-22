@@ -3,10 +3,8 @@ require('angular-ui-router');
 require('angular-resource');
 require('ng-file-upload');
 require('angular-img-cropper');
-require('angular-base64-upload');
 require('./../node_modules/ng-repeat-owl-carousel/src/ngRepeatOwlCarousel');
 require('angular-ui-bootstrap');
-require('angular-cookies');
 require('jquery');
 // require('angular-websocket');
  require('angular-socket-io');
@@ -35,6 +33,9 @@ var chatController = require('./mail/chatController');
 var searchController = require('./mail/searchController');
 var contactUsController = require('./mail/contactUsController');
 var favoriteController = require('./mail/favoriteController');
+var storiesController = require('./mail/storiesController');
+var storyIdController = require('./mail/storyIdController');
+var translatorsController = require('./mail/translatorsController');
 
 var cropDirective = require('./directives/crop');
 var fileDirective = require('./directives/angular-file-model');
@@ -50,13 +51,15 @@ var chatService = require('./mail/chat_service');
 var searchService = require('./mail/search_service');
 var contactUsService = require('./mail/contactUs_service');
 var favoriteService = require('./mail/favorite_service');
+var storiesService = require('./mail/stories_service');
+var translatorsService = require('./mail/translators_service');
 
-var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper', 'naif.base64', 'ocNgRepeat', 'btford.socket-io', 'ui.select', 'ngSanitize', 'ui.date', 'vcRecaptcha'])
+var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper', 'ocNgRepeat', 'btford.socket-io', 'ui.select', 'ngSanitize', 'ui.date', 'vcRecaptcha'])
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
   //$rootScope.global = 'global';
 
-  $urlRouterProvider.otherwise("/home/-ag-18-30-co-Ukraine");
+  $urlRouterProvider.otherwise("/home/-ag-18-30-co-All_countries");
   $stateProvider
     .state('index', {
         url: '/index',
@@ -80,6 +83,12 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
       url: '/lady',
       templateUrl: 'assets/angular-app/public/lady.html',
       controller: mailController,
+      controllerAs: 'ctrl'
+    })
+    .state('transleder', {
+      url: '/transleder',
+      templateUrl: 'assets/angular-app/public/transleder.html',
+      controller: translatorsController,
       controllerAs: 'ctrl'
     })
     .state('girl', {
@@ -157,7 +166,13 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
     .state('success-stories', {
       url: '/success-stories',
       templateUrl: 'assets/angular-app/public/success-stories.html',
-      controller: formController,
+      controller: storiesController,
+      controllerAs: 'ctrl'
+    })
+    .state('single-post', {
+      url: '/single-post/:id',
+      templateUrl: 'assets/angular-app/public/single-post.html',
+      controller: storyIdController,
       controllerAs: 'ctrl'
     })
     .state('terms-conditions', {
@@ -185,8 +200,8 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
 })
 // .controller('conversationsController', conversationsController)
 .controller('usersController', ['userService', usersController])
-.controller('mailController', ['mailService','userService', 'girlsService', mailController])
-.controller('girlsController', ['mailService','userService', 'girlsService', girlsController])
+.controller('mailController', ['mailService','userService', 'favoriteService', 'chatService', mailController])
+.controller('girlsController', ['mailService','userService', 'girlsService', 'favoriteService', girlsController])
 .directive("owlCarousel", function() {
   return {
     restrict: 'E',
@@ -218,15 +233,18 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
     }
   };
 }])
-.controller('girlsAllController', ['userService', 'girlsAllService', girlsAllController])
-.controller('ladyAllController', ['userService', 'girlsAllService', ladyAllController])
+.controller('girlsAllController', ['userService', 'girlsAllService', 'storiesService', girlsAllController])
+.controller('ladyAllController', ['userService', 'girlsAllService', 'favoriteService', 'chatService', 'storiesService', ladyAllController])
 .controller('mailIdController', ['userService', 'mailService', 'girlsAllService', 'mailIdService', mailIdController])
 .controller('formController', ['formService', 'userService', formController])
 .controller('girlsViewController', ['girlsService', 'userService', girlsViewController])
-.controller('chatController', ['chatService', 'userService', chatController])
-.controller('searchController', ['searchService', 'userService', searchController])
+.controller('chatController', ['chatService', 'userService', 'favoriteService', chatController])
+.controller('searchController', ['searchService', 'userService', 'favoriteService', 'chatService', searchController])
 .controller('contactUsController', ['contactUsService', 'userService', contactUsController])
 .controller('favoriteController', ['favoriteService', 'userService', favoriteController])
+.controller('storiesController', ['storiesService', 'userService', storiesController])
+.controller('storyIdController', ['storiesService', 'userService', storyIdController])
+.controller('translatorsController', ['translatorsService', 'userService', 'mailService',translatorsController])
 .factory('userService', ['$resource', userService])
 .factory('mailService', ['$resource', mailService])
 .factory('girlsService', ['$resource', girlsService])
@@ -236,4 +254,6 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'angular-img-cropper
 .factory('chatService', ['socketFactory', chatService])
 .factory('searchService', ['$resource', searchService])
 .factory('contactUsService', ['$resource', contactUsService])
-.factory('favoriteService', ['$resource', favoriteService]);
+.factory('favoriteService', ['$resource', favoriteService])
+.factory('storiesService', ['$resource', storiesService])
+.factory('translatorsService', ['$resource', translatorsService]);

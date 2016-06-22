@@ -1,7 +1,7 @@
 module.exports = favoriteService;
 
-function favoriteService() {
-  var favoriteResource = $resource('/users/:user_id/favorite', { user_id: '@id' },
+function favoriteService($resource) {
+  var favoriteResource = $resource('api/users/:user_id/favorite', { user_id: '@id' },
     {
       addUserFavor: {
         method:'POST',
@@ -9,6 +9,11 @@ function favoriteService() {
           id: '@id'
         }
       },
+      saveGirlFavorit: {
+          method: 'POST',
+          transformRequest: angular.identity,
+          headers: { 'Content-Type': undefined }
+        },
       deletedUserFavor: {
         method: 'DELETE',
         params: {
@@ -17,12 +22,19 @@ function favoriteService() {
       }
     }
   );
+  var favorGetResource = $resource('api/users/me/favorite');
 
-  this.addFavorStatus = function(id) {
-    return favoriteResource.addUserFavor(userId);
+  this.getFavorGirls = function(options) {
+    return favorGetResource.get({
+      limit: options.limit,
+      offset: options.offset,
+      relations: '{"country":{}, "mainphoto": {} }' });
+  }
+  this.addFavorStatus = function(fd, Id) {
+    return favoriteResource.saveGirlFavorit( { user_id: Id }, fd );
   };
-  this.deleteFavorStatus = function(id) {
-    return favoriteResource.deletedUserFavor(iuserId);
+  this.deleteFavorStatus = function(Id) {
+    return favoriteResource.deletedUserFavor( { user_id: Id, id: Id } );
   };
   return this;
 };

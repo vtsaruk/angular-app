@@ -1,5 +1,4 @@
 var gulp = require('gulp');
-var sass = require('gulp-ruby-sass');
 var connect = require('gulp-connect');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
@@ -14,13 +13,19 @@ gulp.task('connect', function () {
 	})
 });
 
+gulp.task('def', function () {
+  return gulp.src('./css/*.css')
+    .pipe(concatCss('bundle.css'))
+    .pipe(gulp.dest('public/css/'));
+});
+
 gulp.task('css', function () {
   return gulp.src('css/*.css')
         .pipe(concatCss('bundle.css'))
-        .pipe(minifyCss())
-        .pipe(rename('bundle.min.css'))
-        .pipe(gulp.dest('public/css'))
-        .pipe(connect.reload());
+        // .pipe(minifyCss())
+        // .pipe(rename('bundle.min.css'))
+        .pipe(gulp.dest('public/css'));
+        // .pipe(connect.reload());
       });
 
 gulp.task('html', function () {

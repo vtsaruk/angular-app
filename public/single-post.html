@@ -1,0 +1,58 @@
+	<!-- page-message -->
+<main class="page-message page-blog single-post">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="main-content clearfix">
+					<div class="single-post-container">
+						<a href="/#/success-stories" class="back-to-the-list red-18-Lt-w600"><img src="assets/angular-app/public/img/single-post-arrow.png" alt="">Back to the list</a>
+						<div class="single-post-item">
+            <!-- <div>{{ctrl.comments[0].user.mainphoto.pathOfQuad}}</div> -->
+							<div class="page-blog-news-item">
+								<span class="page-blog-news-item-date grey-14-Lt" ng-bind="ctrl.story.date | date:'MMMM d'"></span>
+								<h2><a href="" ng-bind="ctrl.story.title"></a></h2>
+								<img src="{{ctrl.story.path}}" alt="">
+								<p class="grey-18-Lt" ng-repeat="text in ctrl.story.arrTextes" ng-bind="text"></p>
+							</div>
+							<div class="share-block">
+								<p class="grey-14-Lt">SHARE:</p>
+								<img src="assets/angular-app/public/img/tumblr.png" alt="">
+								<img src="assets/angular-app/public/img/g-plus-icon.png" alt="" class="mn-l-5">
+								<img src="assets/angular-app/public/img/fb-icon.png" alt="">
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="single-post-comments">
+							<p class="red-21-Lt-w600">Comments</p>
+							<div class="dialog-item dialog-item-in clearfix">
+									<img src="{{ctrl.user.user.mainphoto.pathOfQuad}}" alt="" class="img-dialog">
+									<div class="girls-message-item-info clearfix">
+										<textarea class="girls-message-item-descr gl-ms-overflow" placeholder="Your Text"></textarea>
+								</div>
+
+							</div>
+							<div class="live-the-comment">
+								<a href=""><img src="assets/angular-app/public/img/smile2.png" alt=""></a>
+								<button class="btn-send" ng-click="ctrl.addComment()">Live the comment</button>
+							</div>
+							<div class="clear"></div>
+							<div class="line"></div>
+							<div class="dialog-item dialog-item-in clearfix" ng-repeat="comment in ctrl.comments">
+								<img src="{{comment.user.mainphoto.pathOfQuad}}" alt="" class="img-dialog">
+								<div class="girls-message-item-info clearfix" ">
+										<div>
+											<a href=""><span ng-bind="comment.user.firstname"></span></a>
+										</div>
+										<div class="clear"></div>
+										<p class="girls-message-item-descr" ng-bind="comment.text"></p>
+										<p class="girl-message-date" ng-bind="comment.date| date:'d.MM.yyyy h:mm'"></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+<!-- end page-message -->

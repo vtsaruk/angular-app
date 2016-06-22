@@ -61,32 +61,15 @@
               <a href="" class="on-last-week" ng-class="{true:'activ_message-filter'}[ctrl.onLastWeek]" ng-model="ctrl.onLastWeek" ng-click="ctrl.onLastWeekDate()">On last week</a>
               <div class="message-filter-select clearfix">
                 <input ng-model="ctrl.fromDate" ui-date class="calendar_mail">
-                <!-- <select name="" id="" class="selectpicker">
-                  <option value="">From date</option>
-                  <option value="">19</option>
-                  <option value="">20</option>
-                  <option value="">21</option>
-                </select> -->
                 <span class="message-filter-select-line"></span>
                 <input ng-model="ctrl.toDate" ui-date class="calendar_mail">
-                <!-- <select name="" id="" class="selectpicker">
-                  <option value="">To Date</option>
-                  <option value="">31</option>
-                  <option value="">32</option>
-                  <option value="">33</option>
-                </select> -->
               </div>
               <p><a href="" class="active" ng-class="{true:'activ_sort_button'}[ctrl.watchInputDate(ctrl.fromDate, ctrl.toDate)]" ng-click="ctrl.showDate()">Sort</a><a href="" ng-click="ctrl.resetSortDate()">Reset</a></p>
-  <!-- <div ng-click="ctrl.readTheLetter(19)">{{ctrl.messages.letters}}</div> -->
-
             </div>
-<!-- <div>{{ctrl.girlsId[2]}}</div> -->
-<!-- <div>{{ctrl.messages.letters[0]}}</div> -->
+<!-- <div>{{ctrl.messages.letters[0].sender.additionalData.isInFavorites}}</div> -->
             <div class="girls-messages">
-
               <div ng-repeat="messag in ctrl.messages.letters"
                    ng-class="{'girls-message-item': messag.isPaid==true, 'girls-message-item red-bg': messag.isPaid==false, 'girls-message-item active': messag.deleted}">
-
                 <div class="girls-messega-item-content">
                   <div class="girls-message-checkbox">
                   <label class="checkbox-1">
@@ -97,7 +80,9 @@
                 <ul class="tooltips-list">
                   <li>
                     <p class="tooltips add-f">Add to favorites</p>
-                    <a href="#" class="add-f-icon"></a></li>
+                    <a href="" ng-show="messag.sender.additionalData.isInFavorites" ng-click="ctrl.deleteFavoritStatus(messag.sender.id)" class="add-f-icon2"></a>
+                    <a href="" ng-hide="messag.sender.additionalData.isInFavorites" ng-click="ctrl.addfavoritStatus(messag.sender.id)" class="add-f-icon"></a>
+                  </li>
                   <li>
                     <p class="tooltips add-gift">Send a gift</p><a href="#" class="add-f-gift"></a></li>
                   <li>
@@ -182,7 +167,18 @@
                 </div> -->
                 <div class="girls-messega-item-content">
                 <ul>
-                  <li><a href="#"><img src="assets/angular-app/public/img/grey-like-message.png" alt=""></a></li>
+                  <li>
+                    <a href="">
+                      <img ng-show="ctrl.messagesId.letter.sender.additionalData.isInFavorites"
+                      src="{{ctrl.hearRed}}"
+                      ng-click="ctrl.deleteFavoritStatus(ctrl.messagesId.letter.sender.id)"
+                      ng-mouseenter="ctrl.mouseleaveImgFav()"
+                      ng-mouseleave="ctrl.mouseenterImgFav()"
+                      alt="">
+                      <img ng-hide="ctrl.messagesId.letter.sender.additionalData.isInFavorites" src="{{ctrl.hearGrey}}" ng-click="ctrl.addfavoritStatus(ctrl.messagesId.letter.sender.id)" alt="" ng-mouseenter="ctrl.mouseleaveImgFav()"
+                      ng-mouseleave="ctrl.mouseenterImgFav()">
+                    </a>
+                  </li>
                   <li><a href="#"><img src="assets/angular-app/public/img/grey-box-message.png" alt=""></a></li>
                   <li><a href="#"><img src="assets/angular-app/public/img/grey-comments-message.png" alt=""></a></li>
                   <li><a href="#"><img src="assets/angular-app/public/img/grey-like2.png" alt=""></a></li>
@@ -211,20 +207,20 @@
                 <!-- <button class="btn-send">Read the letter</button> -->
                 </div>
               </div>
-<!-- <div>{{ctrl.messagesId}}</div> -->
+<!-- <div>{{ctrl.messagesId.letter.sender.additionalData.isInFavorites}}</div> -->
               <div class="send-message" ng-hide="ctrl.showSendMessage(ctrl.messagesId.letter.senderId, ctrl.user.user.id)">
                 <h4><img src="assets/angular-app/public/img/red-pensil.png" alt="">Send Message to {{ctrl.messagesId.letter.sender.firstname}}</h4>
 
                 <textarea type="text" class="send-message-input" ng-class="{'textarea_pink': ctrl.textArea}" ng-model="ctrl.newMessage" ng-minlength="1"></textarea>
                 <p class="area-info">Files in GIF, JPG and PNG maximum 4096 KB size. Attach TWO photos for free. 10 credits will be deducted from your account for each additional photo</p>
                 <div class="attach-button" ng-click="ctrl.showList()">Attach photo</div>
-                <ul class="choose-files-list" ng-show="ctrl.listDiv">
+                <!-- <ul class="choose-files-list" ng-show="ctrl.listDiv">
                   <li><img src="assets/angular-app/public/img/check-mark.png" alt="" class="choose-arrow"><a href="#"><img src="img/photo-icon.png" alt="">Choose files</a><span>Someone name.jpg <img src="assets/angular-app/public/img/delete.png" alt=""></span></li>
                   <li><img src="assets/angular-app/public/img/check-mark.png" alt="" class="choose-arrow"><a href="#"><img src="assets/angular-app/public/img/photo-icon.png" alt="">Choose files</a><span>Someone name.jpg <img src="assets/angular-app/public/img/delete.png" alt=""></span></li>
                   <li class="not-choose"><a href="#"><img src="assets/angular-app/public/img/grey-heart-in.png" alt="">Choose files</a><span>Someone name</span></li>
                   <li class="not-choose"><a href="#"><img src="assets/angular-app/public/img/grey-heart-in.png" alt="">Choose files</a><span>Someone name</span></li>
                   <li class="not-choose"><a href="#"><img src="assets/angular-app/public/img/grey-heart-in.png" alt="">Choose files</a><span>Someone name</span></li>
-                </ul>
+                </ul> -->
 
                 <button class="btn-send" ng-click="ctrl.addMessage(ctrl.messagesId.letter.senderId)">Send</button>
 
@@ -269,9 +265,6 @@
                     <button class="btn-send"ng-hide="letter.isPaid" ng-click="ctrl.payment(letter.id, sender.senderId)">Read the letter</button>
                   </div>
                 </div>
-
-                <button ng-hide="ctrl.buttonAddLetter" class="button_add_letter" ng-click="ctrl.paginaLetterCor()" ng-model="ctrl.buttonAddLetter">Ещё</button>
-
               </div>
             </div>
           </div>
